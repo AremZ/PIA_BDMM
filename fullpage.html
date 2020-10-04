@@ -8,11 +8,22 @@
 
     <link rel="stylesheet" href="CSS/fullpage.css">
     <link rel="shortcut icon" type="image/x-icon" href="Sources/LogoPag.png" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+    integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+    <script>
+        $(document).ready(function(){
+          $(".reply-popup").click(function(){
+            $(".reply-box").toggle();
+          });
+        });
+        </script>
+
 </head>
 
 <body>
@@ -136,209 +147,224 @@
 
     <!------ Title ------>
 
-    <div class="container-fluid" id="cuerpoNot">          
+    <div class="container-fluid padding" id="cuerpoNot">          
         <div class="row">
             <div class="col-md-9">   
                 <div class="row" id="noticiaHeader">        
-                    <div class="col-md-1" id="sectionHeader">                    
-                    </div>        
+                    <div class="col-md-1" id="sectionHeader"></div>        
                     <div class="col-md-11" id="tituloNoticia">
                         AQUI VA EL HEADER DE LA NOTICIA
+                        <div class="row">  
+                            <div class="col-md-5" id="nomReportero">Nota por Abraham Reyes Muñiz</div>
+                            <div class="col-md-7" id="datePublicacion">Publicado el 10 de Octubre del 2020 a las 8:18am</div>
+                        </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-11" id="noticiaBody">aa</div>
+                <div class="row" id="noticiaBG">
+                    <div class="col-md-12" id="datosAcontecimiento">09 de Octubre del 2020 a las 19:00pm,
+                                                                    Guadalupe, Nuevo Leon
+                    </div>
+                    <div class="col-md-12" id="noticiaBody">
+                        <div class="row">
+                            <div class="col-md-12" id="descripcion">
+                                DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA 
+                                DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA 
+                                DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA 
+                                DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA 
+                                DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA 
+                                DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA 
+                            </div>
+                            <div class="col-md-12">
+                                <hr>
+                            </div>
+                            <div class="col-md-12">
+                                <!--Slider -->
+                                <div id="slides" class="carousel slide carousel-fade" data-ride="carousel">
+                                    <ul class="carousel-indicators">
+                                        <li data-target="#slides" data-slide-to="0" class="active"></li>
+                                        <li data-target="#slides" data-slide-to="1"></li>
+                                        <li data-target="#slides" data-slide-to="2"></li>
+                                    </ul>
+                                    <div class="carousel-inner">
+                                        <div class="carousel-item active">
+                                            <img src="Sources/Note1.jpg">
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img src="Sources/Note2.jpg">
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img src="Sources/Note3.jpg">
+                                        </div>
+                                        <a class="carousel-control-prev" href="#slides" role="button" data-slide="prev">
+                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                            <span class="sr-only">Anterior</span>
+                                        </a>
+                                        <a class="carousel-control-next" href="#slides" role="button" data-slide="next">
+                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                            <span class="sr-only">Siguiente</span>
+                                        </a>
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-12" id="fullBody">
+                                   CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO
+                                   CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO
+                                   CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO
+                                   CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO
+                                   CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO
+                                   CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO
+                                    </div>
+                                </div>                           
+                            </div>
+                            <!--
+                                Los datos a mostrar son:
+
+                                Los comentarios deben de tener:
+                                Avatar
+                                Nombre
+                                Fecha y hora
+                                Comentario
+
+                                Lista de noticias relacionadas por palabras clave con la noticia principal
+
+                                Un usuario registrado puede dar likes , solo un like por publicación.
+                            -->             
+                            <div class="col-md-12" id="fechaCreacion">
+                                Nota creada el 08 de Octubre del 2020
+                            </div>                 
+                            <div class="col-md-12">
+                                <hr>
+                            </div>
+                        </div>
+                    </div>              
+                    <div class="col-md-8">
+                        <button class="btn btn-outline-danger" type="submit" id="BTLike"><i class="fa fa-thumbs-up"></i>Me Gusta</button>
+                        <span id="liked">
+                            A ti y 57765 personas mas les gusta esto.
+                        </span>
+                    </div>
                 </div>
+                
+                <div class="row" id="commentsBG">              
+                    <div class="col-md-12">
+                        <h2 id="titleComms">Comentarios</h2>   
+                        <span class="totalComments comments-sort">117 Comentarios</span>
+                        <hr>
+
+                        <div class="container-fluid">
+                            <div class="row">
+                              <div class="col-lg-12">
+                                <div class="comments">
+                                  <!--<div class="comments-details">
+                                    <span class="dropdown">
+                                        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">Sort By <span class="caret"></span></button>
+                                        <div class="dropdown-menu">
+                                          <a href="#" class="dropdown-item">Top Comments</a>
+                                        <a href="#" class="dropdown-item">Newest First</a>
+                                        </div>
+                                    </span>
+                                  </div>-->
+                                  <div class="comment-box add-comment">
+                                    <span class="commenter-pic-mine">
+                                      <img src="Sources/11.jpg" class="img-fluid">
+                                    </span>
+                                    <span class="commenter-name">
+                                      <input type="text" placeholder="Agregar un comentario..." name="Agregar Comentario">
+                                      <button type="submit" class="btn btn-outline-danger">Publicar</button>
+                                    </span>
+                                  </div>
+
+                                  <div class="comment-box">
+                                    <span class="commenter-pic">
+                                      <img src="Sources/14.jpg" class="img-fluid">
+                                    </span>
+                                    <span class="commenter-name">
+                                      <a>Alejandra Ramirez</a> <span class="comment-time">Octubre 9, 2020 a las 17:51</span>
+                                    </span>       
+                                    <p class="comment-txt">
+                                        Muy padre muy bueno
+                                    </p>
+                                    <div class="comment-meta">
+                                      <button class="comment-reply btn btn-outline-danger reply-popup"><i class="fa fa-reply-all" aria-hidden="true"></i> Responder</button>                                          
+                                    </div>
+                                    <div class="comment-box add-comment reply-box">
+                                        <span class="commenter-pic-mine">
+                                          <img src="Sources/11.jpg" class="img-fluid">
+                                        </span>
+                                        <span class="commenter-name">
+                                          <input type="text" placeholder="Responder a comentario..." name="Add Comment">
+                                          <button type="submit" class="btn btn-outline-danger">Responder</button>
+                                          <button type="cancel" class="btn btn-outline-danger reply-popup">Cancelar</button>
+                                        </span>
+                                    </div>
+                                    
+                                    <div class="comment-box replied">
+                                        <span class="commenter-pic">
+                                            <img src="Sources/12.jpg" class="img-fluid">
+                                          </span>
+                                          <span class="commenter-name">
+                                            <a>Maria Castañeda</a> <span class="comment-time">Octubre 9, 2020 a las 17:51</span>
+                                          </span>       
+                                          <p class="comment-txt">
+                                              Muy padre muy bueno
+                                          </p>
+                                          <div class="comment-meta">
+                                            <button class="comment-reply btn btn-outline-danger reply-popup"><i class="fa fa-reply-all" aria-hidden="true"></i> Responder</button>                                          
+                                            </div>
+
+                                        <div class="comment-box replied">
+                                            <span class="commenter-pic">
+                                                <img src="Sources/13.jpg" class="img-fluid">
+                                              </span>
+                                              <span class="commenter-name">
+                                                <a>Fernanda Gomez</a> <span class="comment-time">Octubre 9, 2020 a las 17:51</span>
+                                              </span>       
+                                              <p class="comment-txt">
+                                                  Muy padre muy bueno
+                                              </p>
+                                              <div class="comment-meta">
+                                                <button class="comment-reply btn btn-outline-danger reply-popup"><i class="fa fa-reply-all" aria-hidden="true"></i> Responder</button>                                          
+                                              </div>
+                                        </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                    </div>
+                </div>  
             </div>
             <div class="col-md-3">
                 <div class="card">
                     <img class="card-img-top" src="Sources/DisplayDGP1.png" >
                     <div class="card-body">
-                        <h4 class="card-title" id="Title">Dark Oak (Swing) Driveway Gate</h4>
-                        <p class="card-text">A beautiful swinging driveway gate, constructed from the most beautiful
-                            dark oak and
-                            <h4 class="card-title" id="Price">$500 dls + Tax</h4>
-                            <a href="product.html" class="btn btn-outline-danger">Buy now</a>
+                        <h4 class="card-title" id="Title">OTRA NOTICIA</h4>
+                        <p class="card-text">NOTICIA NOTICIA NOTICIA
+                        </p>
+                        <a href="product.html" class="btn btn-outline-danger">Ver noticia</a>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <!------ Slider 
-    <div id="slides" class="carousel slide" data-ride="carousel">
-        <ul class="carousel-indicators">
-            <li data-target="#slides" data-slide-to="0" class="active"></li>
-            <li data-target="#slides" data-slide-to="1"></li>
-            <li data-target="#slides" data-slide-to="2"></li>
-        </ul>
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img src="Imagenes/BG1.png">
-                <div class="carousel-caption">
-                    <h1 class="display-2">Fencing</h1>
-                    <h3>Choose your favorite style!</h3>
-                    <button type="button" class="btn btn-danger btn-lg">Check it out!</button>
-                </div>
-            </div>
-            <div class="carousel-item">
-                <img src="Imagenes/BG2.png">
-                <div class="carousel-caption">
-                    <h1 class="display-2">Driveway Gates</h1>
-                    <h3>Modern, private or custom!</h3>
-                    <button type="button" class="btn btn-danger btn-lg">Let me in!</button>
-                </div>
-            </div>
-            <div class="carousel-item">
-                <img src="Imagenes/BG3.png">
-                <div class="carousel-caption">
-                    <h1 class="display-2">Gate Openers</h1>
-                    <h3>Automatic gates for you!</h3>
-                    <button type="button" class="btn btn-danger btn-lg">Buy one!</button>
-                </div>
-            </div>
-        </div>
-    </div>------>
-    <!------ Body & Cards MOST SELLED ------>
-    <div class="containder-fluid padding">
-        <div class="row welcome text-center">
-            <hr class="DarkT">
-            <div class="col-12">
-                <h1 class="display-4" id="Headers">Most selled</h1>
-            </div>
-            <hr class="DarkB">
-        </div>
-    </div>
-
-    <div class="container-fluid padding">
-        <div class="row padding">
-            <div class="col-md-3">
                 <div class="card">
-                    <img class="card-img-top" src="Sources/DisplayDGP1.png">
+                    <img class="card-img-top" src="Sources/DisplayDGP1.png" >
                     <div class="card-body">
-                        <h4 class="card-title" id="Title">Dark Oak (Swing) Driveway Gate</h4>
-                        <p class="card-text">A beautiful swinging driveway gate, constructed from the most beautiful
-                            dark oak and
-                            reinforced with stainless steel, giving a very conmfy and home-like feeling.
-                            <h4 class="card-title" id="Price">$500 dls + Tax</h4>
-                            <a href="product.html" class="btn btn-outline-danger">Buy now</a>
+                        <h4 class="card-title" id="Title">OTRA NOTICIA</h4>
+                        <p class="card-text">NOTICIA NOTICIA NOTICIA
+                        </p>
+                        <a href="product.html" class="btn btn-outline-danger">Ver noticia</a>
                     </div>
                 </div>
-            </div>
-
-            <div class="col-md-3">
                 <div class="card">
-                    <img class="card-img-top" src="Imagenes/DisplayDGP1.png">
+                    <img class="card-img-top" src="Sources/DisplayDGP1.png" >
                     <div class="card-body">
-                        <h4 class="card-title" id="Title">Dark Oak (Swing) Driveway Gate</h4>
-                        <p class="card-text">A beautiful swinging driveway gate, constructed from the most beautiful
-                            dark oak and
-                            reinforced with stainless steel, giving a very conmfy and home-like feeling.
-                            <h4 class="card-title" id="Price">$500 dls + Tax</h4>
-                            <a href="product.html" class="btn btn-outline-danger">Buy now</a>
+                        <h4 class="card-title" id="Title">OTRA NOTICIA</h4>
+                        <p class="card-text">NOTICIA NOTICIA NOTICIA
+                        </p>
+                        <a href="product.html" class="btn btn-outline-danger">Ver noticia</a>
                     </div>
                 </div>
             </div>
-
-            <div class="col-md-3">
-                <div class="card">
-                    <img class="card-img-top" src="Imagenes/DisplayDGP1.png">
-                    <div class="card-body">
-                        <h4 class="card-title" id="Title">Dark Oak (Swing) Driveway Gate</h4>
-                        <p class="card-text">A beautiful swinging driveway gate, constructed from the most beautiful
-                            dark oak and
-                            reinforced with stainless steel, giving a very conmfy and home-like feeling.
-                            <h4 class="card-title" id="Price">$500 dls + Tax</h4>
-                            <a href="product.html" class="btn btn-outline-danger">Buy now</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3">
-                <div class="card">
-                    <img class="card-img-top" src="Imagenes/DisplayDGP1.png">
-                    <div class="card-body">
-                        <h4 class="card-title" id="Title">Dark Oak (Swing) Driveway Gate</h4>
-                        <p class="card-text">A beautiful swinging driveway gate, constructed from the most beautiful
-                            dark oak and
-                            reinforced with stainless steel, giving a very conmfy and home-like feeling.
-                            <h4 class="card-title" id="Price">$500 dls + Tax</h4>
-                            <a href="product.html" class="btn btn-outline-danger">Buy now</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!------ Body & Cards JUST FOR YOU------>
-    <div class="containder-fluid padding">
-        <div class="row welcome text-center">
-            <hr class="DarkT">
-            <div class="col-12">
-                <h1 class="display-4" id="Headers">Just for you...</h1>
-            </div>
-            <hr class="DarkB">
-        </div>
-    </div>
-
-    <div class="container-fluid padding">
-        <div class="row padding">
-            <div class="col-md-3">
-                <div class="card">
-                    <img class="card-img-top" src="Imagenes/DisplayDGP2.png">
-                    <div class="card-body">
-                        <h4 class="card-title" id="Title">Oak (Foldable) Driveway Gate</h4>
-                        <p class="card-text">A beautiful foldable driveway gate, constructed from the most beautiful oak
-                            and
-                            reinforced with stainless, black steel, giving a very conmfy and home-like feeling.
-                            <h4 class="card-title" id="Price">$400 dls + Tax</h4>
-                            <a href="product.html" class="btn btn-outline-danger">Buy now</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3">
-                <div class="card">
-                    <img class="card-img-top" src="Imagenes/DisplayDGP2.png">
-                    <div class="card-body">
-                        <h4 class="card-title" id="Title">Oak (Foldable) Driveway Gate</h4>
-                        <p class="card-text">A beautiful foldable driveway gate, constructed from the most beautiful oak
-                            and
-                            reinforced with stainless, black steel, giving a very conmfy and home-like feeling.
-                            <h4 class="card-title" id="Price">$400 dls + Tax</h4>
-                            <a href="product.html" class="btn btn-outline-danger">Buy now</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3">
-                <div class="card">
-                    <img class="card-img-top" src="Imagenes/DisplayDGP2.png">
-                    <div class="card-body">
-                        <h4 class="card-title" id="Title">Oak (Foldable) Driveway Gate</h4>
-                        <p class="card-text">A beautiful foldable driveway gate, constructed from the most beautiful oak
-                            and
-                            reinforced with stainless, black steel, giving a very conmfy and home-like feeling.
-                            <h4 class="card-title" id="Price">$400 dls + Tax</h4>
-                            <a href="product.html" class="btn btn-outline-danger">Buy now</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3">
-                <div class="card">
-                    <img class="card-img-top" src="Imagenes/DisplayDGP2.png">
-                    <div class="card-body">
-                        <h4 class="card-title" id="Title">Oak (Foldable) Driveway Gate</h4>
-                        <p class="card-text">A beautiful foldable driveway gate, constructed from the most beautiful oak
-                            and
-                            reinforced with stainless, black steel, giving a very conmfy and home-like feeling.
-                            <h4 class="card-title" id="Price">$400 dls + Tax</h4>
-                            <a href="product.html" class="btn btn-outline-danger">Buy now</a>
-                    </div>
-                </div>
-            </div>
-            <hr class="Invis">
         </div>
     </div>
 
@@ -346,8 +372,9 @@
     <footer>
         <div class="container-fluid padding">
             <div class="row text-center">
+                <!--
                 <div class="col-lg-4">
-                    <img src="Imagenes/LogoFoot.png">
+                    <img src="Sources/Header/LogoBar.png">
                     <hr class="Light">
                     <p>305-696-0419</p>
                     <p>LAOrnamental@Aol.com</p>
@@ -355,6 +382,7 @@
                     <p>Miami, Florida</p>
                 </div>
 
+                
                 <div class="col-lg-4">
                     <hr class="Light">
                     <h5>Our hours</h5>
@@ -372,11 +400,12 @@
                     <p>Laredo, Texas 78040</p>
                     <p>Chicago, Illinois 60007</p>
                     <p>Los Angeles, California 90001</p>
-                </div>
+                </div>-->
 
                 <div class="col-12">
+                    <img src="Sources/Header/LogoBar.png">
                     <hr class="Light-100" id="last">
-                    <h5>&copy; gatesnfences.com</h5>
+                    <h5>&copy; novanoticias.com</h5>
                 </div>
 
             </div>

@@ -4,7 +4,7 @@
 
 :root
 {
-    --Color-1: #0e0e0e;
+    --NavBar: #0e0e0e;
     --Color-2: #dc3545;
     --Color-3:#02111B;
     --Color-4:#ffb700;
@@ -14,13 +14,13 @@
 
 body{
     background-color: whitesmoke !important;
-    /*overflow-x: hidden;*/
+    overflow-x: hidden;
 }
 
 /* NAVBAR */
 
 nav.navbar#navBar{
-    background-color: var(--Color-1) !important;
+    background-color: var(--NavBar) !important;
 }
 
 .navbar .navbar-nav li a:hover{
@@ -89,10 +89,18 @@ div#noticiaHeader{
     margin-left: 1em;
 }
 
-div#noticiaBody{
-    margin-left: 3em;
+div#noticiaBG{
+    margin-left: 1em;
     margin-top: 1em;
-    height: 50em;
+    border-radius: 5px;
+    background-color: white;
+}
+
+div#commentsBG{
+    margin-left: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 5px;
     background-color: white;
 }
 
@@ -112,3 +120,260 @@ div#tituloNoticia{
     border-bottom-right-radius: 5px;
 }
 
+#nomReportero, #datePublicacion{
+    font-family: 'Roboto', sans-serif;   
+    font-size: 25% !important;
+    margin-bottom: 1rem;
+}
+
+#datosAcontecimiento{
+    font-family: 'Roboto', sans-serif;   
+    font-size: 100% !important;
+    margin-top: 1em;
+    font-weight: bold;
+    font-style: italic;
+    padding-left: 2em;
+}
+
+#noticiaBody{
+    font-family: 'Roboto', sans-serif;  
+    padding-top: 1em;  
+    padding-left: 2em;  
+    padding-right: 2em;
+}
+
+#descripcion{
+    font-style: italic;
+}
+
+#fullBody{
+    font-style: italic;
+    margin-top: 1em;
+}
+
+.carousel-inner img{
+    width: 100%;
+    height: 400px;
+}
+
+#fechaCreacion{
+    font-family: 'Roboto', sans-serif;  
+    font-size: 80% !important;
+    font-weight: bold;
+    font-style: italic;
+    text-align: right;  
+}
+
+i.fa{
+    margin-right: 8px;
+}
+
+.btn#BTLike{
+    margin-left: 1rem;
+    margin-bottom: 1rem;
+    font-family: 'Oswald', sans-serif !important;
+ }
+ 
+ .btn#BTLike:hover{
+    color: var(--TitleFont);
+    font-family: 'Oswald', sans-serif !important;
+ }
+
+ span#liked{
+    font-family: 'Roboto', sans-serif;
+    font-style: italic;
+    margin-left: 1rem;
+ }
+
+/* COMMENTS */
+
+#titleComms{
+    font-family: 'Oswald', sans-serif;  
+    margin-top: 1rem;
+    margin-left: 1rem;
+}
+
+/*.comments-details button.btn.dropdown-toggle,
+.comments-details,*/ .totalComments {
+    margin-left: 1rem;
+    font-family: 'Oswald', sans-serif;  
+    font-size: 18px;
+    font-weight: 500;
+    color: #5e5e5e;
+}
+
+.comments .add-comment input:focus {
+    border-color: var(--Color-2)    ;
+    border-width: 2px;
+}
+
+.comments .add-comment button[type=submit]{
+    font-family: 'Oswald', sans-serif !important;
+    margin-right: 1rem;
+ }
+
+.comments .add-comment button[type=cancel]{
+    font-family: 'Oswald', sans-serif !important;
+ }
+ 
+button.comment-reply{
+    font-family: 'Oswald', sans-serif !important;
+    margin-right: 1rem;
+ }
+
+.comments .add-comment button {
+    margin: 10px 5px;
+    font-size: 14px;
+    float: right;
+}
+
+.comments .commenter-pic-mine, .commenter-pic{
+    width: 50px;
+    height: 50px;
+    display: inline-block;
+    border-radius: 100%;
+    overflow: hidden;
+}
+
+.commenter-pic{
+    margin-top: 1rem;
+    margin-left: 1rem;
+}
+
+.comments .add-comment .commenter-name {
+    width: 100%;
+    padding-left: 75px;
+    position: absolute;
+    top: 20px;
+    left: 0px;
+}
+
+.comments .commenter-name {
+    font-family: 'Oswald', sans-serif;  
+    display: inline-block;
+    position: relative;
+    top: -20px;
+    left: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--Color-2);
+}
+
+.comments .commenter-name .comment-time {
+    font-family: 'Roboto', sans-serif;  
+    font-weight: normal;
+    margin-left: 8px;
+    font-size: 15px;
+    color: var(--NavBar);
+}
+
+.comments p.comment-txt {
+    font-family: 'Roboto', sans-serif;  
+    font-size: 15px;
+    border-bottom: 1px solid #ddd;
+    margin-top: 1rem;
+    margin-left: 3rem;
+    padding-bottom: 15px;
+}
+
+.comments .comment-box {
+    width: 100%;
+    float: left;
+    height: 100%;
+    background-color: #FAFAFA;
+    padding-left: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+.comments .add-comment{
+    background-color: transparent;
+    border: none;
+    position: relative;
+    margin-bottom: 2rem;
+}
+
+.comments .add-comment input {
+    font-family: 'Roboto', sans-serif;  
+    border-top: 0px;
+    border-bottom: 1px solid #ccc;
+    border-left: 0px;
+    border-right: 0px;
+    outline: 0px;
+    box-shadow: none;
+    width: 98%;
+    padding: 0;
+    font-weight: normal;
+}
+
+.comments .comment-meta {
+    font-family: 'Oswald', sans-serif;  
+    font-size: 14px;
+    color: #333;
+    padding: 2px 5px 0px;
+    line-height: 20px;
+    float: right;
+}
+
+.comments .replied {
+    background-color: #fff;
+    width: 95%;
+    float: right;
+    margin-top: 15px;
+} 
+
+.card{
+    margin-bottom: 1rem;
+}
+
+footer{
+    background-color: var(--NavBar);
+    color: var(--TitleFont);
+    padding-top: 2rem;
+    padding-bottom: 1rem;
+}
+
+hr.Light{
+    border-top: 1px solid var(--TitleFont);
+    width: 75%;
+}
+
+hr.Light-100{
+    border-top: 1px solid var(--TitleFont);
+    width: 100%;
+}
+
+
+
+
+
+
+.comments-details {
+    padding: 15px 15px;
+}
+
+.comments .comments .dropdown,
+.comments .dropup {
+    position: relative;
+}  
+
+/*======Responsive CSS=======*/
+@media (max-width: 767px){
+.comments .commenter-name {
+    font-size: 13px;
+    top: -5px;
+}
+.comments .commenter-pic {
+    width: 40px;
+    height: 40px;
+}
+.comments .commenter-name a{
+  display: block;
+}
+.comments .commenter-name .comment-time{
+  display: block;
+  margin-left: 0px;
+}
+}
