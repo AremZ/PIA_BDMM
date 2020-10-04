@@ -1,0 +1,114 @@
+@import url('https://fonts.googleapis.com/css?family=Oswald&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Anton&display=swap');
+
+:root
+{
+    --Color-1: #0e0e0e;
+    --Color-2: #dc3545;
+    --Color-3:#02111B;
+    --Color-4:#ffb700;
+    --TitleFont: whitesmoke;
+    --Color-6: rgb(124, 29, 20);
+}
+
+body{
+    background-color: whitesmoke !important;
+    /*overflow-x: hidden;*/
+}
+
+/* NAVBAR */
+
+nav.navbar#navBar{
+    background-color: var(--Color-1) !important;
+}
+
+.navbar .navbar-nav li a:hover{
+    color: var(--Color-2) !important;
+}
+
+.navbar .navbar-nav li a:active{
+    color: var(--Color-2) !important;
+}
+
+.navbar .navbar-nav li{
+    padding-right: 10px;
+}
+
+.navbar .navbar-nav li a{
+    color:var(--TitleFont) !important;
+    font-family: 'Oswald', sans-serif !important;
+}
+
+.navbar .nav-item .dropdown-menu .dropdown-item{
+    color: black !important;
+}
+
+.navbar .nav-item .dropdown-menu .dropdown-item:active{
+    background-color: gainsboro !important;
+}
+
+.navbar .nav-item .dropdown-menu .dropdown-item:hover{
+    color: var(--Color-2) !important ;
+}
+
+/* SEARCHBAR */
+
+.btn#BTSearch{
+   color: var(--TitleFont);
+   font-family: 'Oswald', sans-serif !important;
+}
+
+.btn#BTSearch:hover{
+   color: var(--TitleFont);
+   font-family: 'Oswald', sans-serif !important;
+}
+
+#BRSearch{
+    width:500px !important;
+    font-family: 'Roboto', sans-serif !important;
+}
+
+@media (max-width: 425px){
+    #BRSearch {
+    width:180px !important;
+    }
+
+    #BTSearch {        
+     margin-left: 15px;
+    }
+}
+
+/* BODY */
+
+#cuerpoNot{
+    margin-top: 2em;
+}
+
+div#noticiaHeader{
+    margin-left: 1em;
+}
+
+div#noticiaBody{
+    margin-left: 3em;
+    margin-top: 1em;
+    height: 50em;
+    background-color: white;
+}
+
+div#sectionHeader{
+    background-color: var(--Color-6);
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+div#tituloNoticia{
+    background-color: black;
+    font-family: 'Oswald', sans-serif;  
+    font-size: 370%;
+    color: var(--TitleFont);
+    text-align: left;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
