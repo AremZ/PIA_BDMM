@@ -1,0 +1,154 @@
+@import url('https://fonts.googleapis.com/css?family=Oswald&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Anton&display=swap');
+
+:root
+{
+    --NavBar: #000000;
+    --Color-2: #dc3545;
+    --Color-3:#02111B;
+    --Color-4:#ffb700;
+    --TitleFont: whitesmoke;
+    --Color-6: rgb(124, 29, 20);
+}
+
+body{
+    background-color: whitesmoke !important;
+    overflow-x: hidden;
+}
+
+/* NAVBAR */
+
+nav.navbar#navBar{
+    background-color: var(--NavBar) !important;
+}
+
+.navbar .navbar-nav li a:hover{
+    color: var(--Color-2) !important;
+}
+
+.navbar .navbar-nav li a:active{
+    color: var(--Color-2) !important;
+}
+
+.navbar .navbar-nav li{
+    padding-right: 10px;
+}
+
+.navbar .navbar-nav li a{
+    color:var(--TitleFont) !important;
+    font-family: 'Oswald', sans-serif !important;
+}
+
+.navbar .nav-item .dropdown-menu .dropdown-item{
+    color: black !important;
+}
+
+.navbar .nav-item .dropdown-menu .dropdown-item:active{
+    background-color: gainsboro !important;
+}
+
+.navbar .nav-item .dropdown-menu .dropdown-item:hover{
+    color: var(--Color-2) !important ;
+}
+
+/* SEARCHBAR */
+
+.btn#BTSearch{
+   color: var(--TitleFont);
+   font-family: 'Oswald', sans-serif !important;
+}
+
+.btn#BTSearch:hover{
+   color: var(--TitleFont);
+   font-family: 'Oswald', sans-serif !important;
+}
+
+#BRSearch{
+    width:500px !important;
+    font-family: 'Roboto', sans-serif !important;
+}
+
+@media (max-width: 425px){
+    #BRSearch {
+    width:180px !important;
+    }
+
+    #BTSearch {        
+     margin-left: 15px;
+    }
+}
+
+footer{
+    background-color: var(--NavBar);
+    color: var(--TitleFont);
+    padding-top: 2rem;
+    padding-bottom: 1rem;
+}
+
+
+hr.Light{
+    border-top: 1px solid var(--TitleFont);
+    width: 75%;
+}
+
+hr.Light-100{
+    border-top: 1px solid var(--TitleFont);
+    width: 100%;
+}
+
+/*--------------*/
+#cuerpoNot{
+    margin-top: 2em;
+    
+}
+
+
+
+div.tarjetaPrincAside{
+    
+    background-color: rgb(185, 185, 185);
+    
+    color: white;
+}
+.listaPopu{
+    padding: 1em;
+    color: black;
+}
+div#noticiaHeader{
+    margin-left: -4em;
+}
+
+div#tituloNoticia{
+    background-color: rgb(80, 12, 12);
+    font-family: 'Oswald', sans-serif;  
+    font-size: 250%;
+    color: var(--TitleFont);
+    text-align: left;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+div#noticiaBG{
+    margin-left: 5em;
+    margin-top: 1em;
+    border-radius: 5px;
+    background-color: white;
+    float: left;
+    width: 100%;
+}
+
+.tituloSeccion{
+    background-color: black;
+    font-family: 'Oswald', sans-serif;  
+    font-size: 200%;
+    color: var(--TitleFont);
+    text-align: left;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.tarjetaSecund{
+    margin-left: 1em;
+    margin-top: 1em;
+}
