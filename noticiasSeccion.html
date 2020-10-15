@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nova | Noticias</title>
+
+    <link rel="stylesheet" href="CSS/main.css">
+    <link rel="shortcut icon" type="image/x-icon" href="Sources/LogoPag.png" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+    integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+    <script>
+        $(document).ready(function(){
+          $(".reply-popup").click(function(){
+            $(".reply-box").toggle();
+          });
+        });
+        </script>
+
+</head>
+<body>
+    
+ <!------ Barra de Navegacion & Searchbar ------>
+ <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top" id="navBar">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="main.html"><img src="Sources/Header/LogoBar.png"></a>
+        <button class="navbar-toggler bg-dangerf" type="button" data-toggle="collapse" data-target="#navBarColl">
+            <span class="navbar-toggler-icon"></span>
+        </button>           
+        <div class="collapse navbar-collapse" id="navBarColl">
+            <ul class="navbar-nav ml-auto">
+                <li>
+                    <form class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Buscar usuario..." aria-label="Buscar"
+                            id="BRSearch">
+                        <button class="btn btn-outline-danger" type="submit" id="BTSearch">Buscar</button>
+                    </form>
+                </li>                  
+            </ul>
+
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="" data-toggle="modal" data-target="#modLogin">Iniciar Sesion</a>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMA" role="button"
+                        data-toggle="dropdown" >Mi Cuenta</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMA">
+                        <a class="dropdown-item" href="#">Perfil</a>
+                        <a class="dropdown-item" href="#">Mis Listas</a>
+                        <a class="dropdown-item" href="#">Mi cuenta</a>
+                        <a class="dropdown-item" href="#">Cerrar Sesion</a>
+                    </div>
+                </li>         
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!------ Login ------>
+<div id="modLogin" class="modal fade">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header" id="hLogin">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body" id="bLogin">
+
+                <ul class="nav nav-pills nav-justified" id="pills-tab" role="tablist">
+                    <li class="nav-item" id="pillLog">
+                        <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#login" role="tab"
+                            aria-controls="pills-home" aria-selected="true">Login</a>
+                    </li>
+                    <li class="nav-item" id="pillReg">
+                        <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#register" role="tab"
+                            aria-controls="pills-profile" aria-selected="false">Register</a>
+                    </li>
+                </ul>
+
+                <div class="tab-content" id="pills-tabContent">
+
+                    <div id="login" class="tab-pane fade show active">
+                        <form action="/action_page.php">
+                            <div class="form-group">
+                                <label for="email">Email address:</label>
+                                <input type="email" class="form-control" id="email">
+                            </div>
+                            <div class="form-group">
+                                <label for="pwd">Password:</label>
+                                <input type="password" class="form-control" id="pwd">
+                            </div>
+                        </form>
+                        <span>Forgot your password?</span>
+                        <span id="ClickH" onclick="window.location.href='#';">Click here.</span>
+                        <hr>
+                        <button type="button" class="btn btn-outline-danger" data-dismiss="modal"
+                            style="float:right">Login</button>
+                    </div>
+
+                    <div id="register" class="tab-pane fade">
+                        <form action="/action_page.php">
+                            <div class="form-group">
+                                <label for="fname">First Name:</label>
+                                <input type="text" class="form-control" id="fname">
+                            </div>
+                            <div class="form-group">
+                                <label for="sname">Second Name:</label>
+                                <input type="text" class="form-control" id="sname">
+                            </div>
+                            <div class="form-group">
+                                <label for="lname">Last Name:</label>
+                                <input type="text" class="form-control" id="lname">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email address:</label>
+                                <input type="email" class="form-control" id="email">
+                            </div>
+                            <div class="form-group">
+                                <label for="pwd">Password:</label>
+                                <input type="password" class="form-control" id="pwd">
+                            </div>
+                            <div class="form-group">
+                                <label for="rpwd">Repeat your password:</label>
+                                <input type="password" class="form-control" id="rpwd">
+                            </div>
+                        </form>
+                        <button type="button" class="btn btn-outline-danger" data-dismiss="modal"
+                            style="float:right">Register</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!--Cuerpo-->
+
+
+    <!------ Title ------>
+
+    <div class="container-fluid padding" id="cuerpoNot">          
+        <div class="row">
+            <div class="col-md-9">   
+                <div class="row" id="noticiaHeader">        
+                    <div class="col-md-1" id="sectionHeader"></div>        
+                    <div class="col-md-11" id="tituloNoticia">
+                        Noticias Nacionales
+                        
+                    </div>
+                </div>
+                <div class="row" id="noticiaBG">
+                    <div class="col-md-12" id="datosAcontecimiento">09 de Octubre del 2020 a las 19:00pm,
+                                                                    Guadalupe, Nuevo Leon
+                    </div>
+                    <div class="col-md-12" id="noticiaBody">
+                        <div class="row">
+                            
+                            <div class="col-md-12">
+                                <hr>
+                            </div>
+                                 <!-- TARJETA HORIZONTAL -->
+                                 <div class="card mb-6" style="max-width: 540px; margin: 2em; border-style: solid; border-color: black;">
+                                    <div class="row no-gutters">
+                                      <div class="col-md-4"><br>
+                                        <img src="http://via.placeholder.com/300x250" class="card-img" alt="...">
+                                      </div>
+                                      <div class="col-md-8">
+                                        <div class="card-body">
+                                          <h5 class="card-title">Card title</h5>
+                                          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                          <a href="product.html" class="btn btn-outline-danger" style="background-color: black;">Ver noticia</a>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  <div class="card mb-6" style="max-width: 540px; margin: 2em;">
+                                    <div class="row no-gutters">
+                                      <div class="col-md-4">
+                                        <img src="http://via.placeholder.com/300x250" class="card-img" alt="...">
+                                      </div>
+                                      <div class="col-md-8">
+                                        <div class="card-body">
+                                          <h5 class="card-title">Card title</h5>
+                                          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                          <a href="product.html" class="btn btn-outline-danger" style="background-color: black;">Ver noticia</a>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                      
+                        </div>
+
+                        <div class="row">
+                            
+                            <div class="col-md-12">
+                                <hr>
+                            </div>
+                                 <!-- TARJETA HORIZONTAL -->
+                                 <div class="card mb-6" style="max-width: 540px; margin: 2em;">
+                                    <div class="row no-gutters">
+                                      <div class="col-md-4">
+                                        <img src="http://via.placeholder.com/300x250" class="card-img" alt="...">
+                                      </div>
+                                      <div class="col-md-8">
+                                        <div class="card-body">
+                                          <h5 class="card-title">Card title</h5>
+                                          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                          <a href="product.html" class="btn btn-outline-danger" style="background-color: black;">Ver noticia</a>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  <div class="card mb-6" style="max-width: 540px; margin: 2em;">
+                                    <div class="row no-gutters">
+                                      <div class="col-md-4">
+                                        <img src="http://via.placeholder.com/300x250" class="card-img" alt="...">
+                                      </div>
+                                      <div class="col-md-8">
+                                        <div class="card-body">
+                                          <h5 class="card-title">Card title</h5>
+                                          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                          <a href="product.html" class="btn btn-outline-danger" style="background-color: black;">Ver noticia</a>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                      
+                        </div>
+
+                        <div class="row">
+                            
+                            <div class="col-md-12">
+                                <hr>
+                            </div>
+                                 <!-- TARJETA HORIZONTAL -->
+                                 <div class="card mb-6" style="max-width: 540px; margin: 2em;">
+                                    <div class="row no-gutters">
+                                      <div class="col-md-4">
+                                        <img src="http://via.placeholder.com/300x250" class="card-img" alt="...">
+                                      </div>
+                                      <div class="col-md-8">
+                                        <div class="card-body">
+                                          <h5 class="card-title">Card title</h5>
+                                          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                          <a href="product.html" class="btn btn-outline-danger" style="background-color: black;">Ver noticia</a>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  <div class="card mb-6" style="max-width: 540px; margin: 2em;">
+                                    <div class="row no-gutters">
+                                      <div class="col-md-4">
+                                        <img src="http://via.placeholder.com/300x250" class="card-img" alt="...">
+                                      </div>
+                                      <div class="col-md-8">
+                                        <div class="card-body">
+                                          <h5 class="card-title">Card title</h5>
+                                          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                          <a href="product.html" class="btn btn-outline-danger" style="background-color: black;">Ver noticia</a>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                      
+                        </div>
+
+                    </div>              
+                   
+                </div>
+                
+               
+            </div>
+            <!--Populares-->
+            <div class="col-md-3 tarjetaPrincAside">
+                <br>
+                <h3>Más populares</h3><br>
+                <!-- TARJETA HORIZONTAL -->
+                <div class="row listaPopu">   
+                <div class="card mb-3" style="max-width: 540px;">
+                    <div class="row no-gutters">
+                      <div class="col-md-4">
+                          <div class=" img-popular">
+                        <img src="http://via.placeholder.com/100x150" class="card-img" alt="...">
+                    </div>
+                      </div>
+                      <div class="col-md-8">
+                        <div class="card-body">
+                          <h6 class="card-title">NOTICIA</h6>
+                          <p class="card-text card-horizontalT">POPULAR POPULAR POPULAR POPULAR </p>
+                          <a href="product.html" class="btn btn-outline-danger ">Ver noticia</a>
+                          
+                        </div>
+                      </div>
+                    </div>
+                </div>
+
+              
+
+
+                  <div class="card mb-3" style="max-width: 540px;">
+                    <div class="row no-gutters">
+                      <div class="col-md-4">
+                          <div class=" img-popular">
+                        <img src="http://via.placeholder.com/100x150" class="card-img" alt="...">
+                    </div>
+                      </div>
+                      <div class="col-md-8">
+                        <div class="card-body">
+                          <h6 class="card-title">NOTICIA</h6>
+                          <p class="card-text card-horizontalT">POPULAR POPULAR POPULAR POPULAR </p>
+                          <a href="product.html" class="btn btn-outline-danger ">Ver noticia</a>
+                          
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="card mb-3" style="max-width: 540px;">
+                    <div class="row no-gutters">
+                      <div class="col-md-4">
+                          <div class=" img-popular">
+                        <img src="http://via.placeholder.com/100x150" class="card-img" alt="...">
+                    </div>
+                      </div>
+                      <div class="col-md-8">
+                        <div class="card-body">
+                          <h6 class="card-title">NOTICIA</h6>
+                          <p class="card-text card-horizontalT">POPULAR POPULAR POPULAR POPULAR </p>
+                          <a href="product.html" class="btn btn-outline-danger ">Ver noticia</a>
+                          
+                        </div>
+                      </div>
+                    </div>
+                  </div>    
+               
+
+                  <div class="card mb-3" style="max-width: 540px;">
+                    <div class="row no-gutters">
+                      <div class="col-md-4">
+                          <div class=" img-popular">
+                        <img src="http://via.placeholder.com/100x150" class="card-img" alt="...">
+                    </div>
+                      </div>
+                      <div class="col-md-8">
+                        <div class="card-body">
+                          <h6 class="card-title">NOTICIA</h6>
+                          <p class="card-text card-horizontalT">POPULAR POPULAR POPULAR POPULAR </p>
+                          <a href="product.html" class="btn btn-outline-danger ">Ver noticia</a>
+                          
+                        </div>
+                      </div>
+                    </div>
+                  </div>    
+               
+
+
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </div>
+
+
+
+
+
+     <!------ Footer ------>
+ <footer>
+    <div class="container-fluid padding">
+        <div class="row text-center">
+            <!--
+            <div class="col-lg-4">
+                <img src="Sources/Header/LogoBar.png">
+                <hr class="Light">
+                <p>305-696-0419</p>
+                <p>LAOrnamental@Aol.com</p>
+                <p>3708 NW 82nd Street</p>
+                <p>Miami, Florida</p>
+            </div>
+
+            
+            <div class="col-lg-4">
+                <hr class="Light">
+                <h5>Our hours</h5>
+                <hr class="Light">
+                <p>Monday to Friday: 10am to 7pm</p>
+                <p>Saturday: 10am to 9pm</p>
+                <p>Sunday: Closed</p>
+            </div>
+
+            <div class="col-md-4">
+                <hr class="Light">
+                <h5>Service Area</h5>
+                <hr class="Light">
+                <p>Miami, Florida 33147</p>
+                <p>Laredo, Texas 78040</p>
+                <p>Chicago, Illinois 60007</p>
+                <p>Los Angeles, California 90001</p>
+            </div>-->
+
+            <div class="col-12">
+                <img src="Sources/Header/LogoBar.png">
+                <hr class="Light-100" id="last">
+                <h5>&copy; novanoticias.com</h5>
+            </div>
+
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>
