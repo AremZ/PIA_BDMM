@@ -1,0 +1,13 @@
+@import url('https://fonts.googleapis.com/css?family=Oswald&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Anton&display=swap');
+
+:root
+{
+    --NavBar: #000000;
+    --Color-2: #dc3545;
+    --Color-3:#02111B;
+    --Color-4:#ffb700;
+    --TitleFont: whitesmoke;
+    --Color-6: rgb(124, 29, 20);
+}
