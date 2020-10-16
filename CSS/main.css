@@ -107,7 +107,7 @@ hr.Light-100{
 
 div.tarjetaPrincAside{
     
-    background-color: rgb(185, 185, 185);
+    background-color: rgb(221, 219, 219);
     
     color: white;
 }
@@ -115,6 +115,12 @@ div.tarjetaPrincAside{
     padding: 1em;
     color: black;
 }
+#tituloPopulares{
+    background-color: rgba(0, 0, 0, 0.753);
+    padding: 1em;
+    text-align: center;
+}
+
 div#noticiaHeader{
     margin-left: -4em;
 }
@@ -151,4 +157,12 @@ div#noticiaBG{
 .tarjetaSecund{
     margin-left: 1em;
     margin-top: 1em;
+}
+
+.tarjetaSeccion{
+    max-width: 540px; 
+    margin: 2em; 
+    border-style: solid; 
+    border-color: black;
+    border-width: 200px;
 }
