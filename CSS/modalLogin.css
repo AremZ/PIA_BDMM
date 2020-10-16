@@ -11,3 +11,78 @@
     --TitleFont: whitesmoke;
     --Color-6: rgb(124, 29, 20);
 }
+
+.modal-dialog#modLogIn {
+    max-width: 70% !important;
+}
+
+.modal-body#bLogin label{
+    font-family: 'Oswald', sans-serif;
+}
+
+.modal-body#bLogin div#login form{
+    font-family: 'Roboto', sans-serif;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.modal-body#bLogin div#register form{
+    font-family: 'Roboto', sans-serif;
+}
+
+.modal-body#bLogin div#login form input:focus, .modal-body#bLogin div#register form input:focus{
+    border: 1px solid var(--Color-2);
+    box-shadow: 0 0 4px var(--Color-2);
+}
+
+.nav-item#pillLog .nav-link:not(.active):hover, .nav-item#pillReg .nav-link:not(.active):hover{
+    color: var(--Color-2);
+    background-color: white;
+    font-family: 'Oswald', sans-serif;
+}
+
+.nav-item#pillLog .nav-link:not(.active), .nav-item#pillReg .nav-link:not(.active){
+    color: var(--Color-2);
+    background-color: white;
+    font-family: 'Oswald', sans-serif;
+}
+
+.nav-item#pillLog .nav-link, .nav-item#pillReg .nav-link{
+    background-color: var(--Color-2) ;
+    color: whitesmoke;
+    font-family: 'Oswald', sans-serif;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.custom-file-upload {
+    border: 1px solid var(--Color-2);
+    color: var(--Color-2);
+    border-radius: 5px;
+    padding: 6px 12px;
+    cursor: pointer;
+    float: left;
+    margin-top: 6rem;
+}
+
+.custom-file-upload:hover {
+    border: 1px solid var(--Color-2);
+    background-color: var(--Color-2);
+    color: var(--TitleFont);
+}
+
+div#displayImg img{
+    width: 200px;
+    height: 200px;
+    border: 1px solid black;
+    margin-top: 1em;
+    float: right;
+}
+
+.modal-body button{   
+    font-family: 'Oswald', sans-serif !important;
+    margin-right: .5em;
+}
