@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="CSS/fullpage.css">
     <link rel="stylesheet" href="CSS/generales.css">
     <link rel="shortcut icon" type="image/x-icon" href="Sources/LogoPag.png" />
+    <script src="JS/functions.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
@@ -97,19 +98,23 @@
                             <form action="/action_page.php">
                                 <div class="form-group">
                                     <label for="email">Correo Electronico:</label>
-                                    <input type="email" class="form-control" id="email">
+                                    <div id="mailContainer">
+                                    <input type="email" class="form-control" id="email" onfocus="limpiar(0)">
+                                  </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="pwd">Contraseña:</label>
-                                    <input type="password" class="form-control" id="pwd">
+                                    <div id="passContainer">
+                                    <input type="password" class="form-control" id="pwd" onfocus="limpiar(1)">
+                                  </div>
                                 </div>
                             </form>
                             <!--<span>Forgot your password?</span>-->
                             <hr>
-                            <button id="logMeIn" type="button" class="btn btn-outline-danger" data-dismiss="modal"
-                                style="float:right">Iniciar Sesion</button>
+                            <button id="logMeIn" type="button" class="btn btn-outline-danger" 
+                                style="float:right" onclick="validaciones(1)">Iniciar Sesion</button>
                         </div>
-
+      
                         <div id="register" class="tab-pane fade">
                             <form action="/action_page.php">
                                 <div class="row">
@@ -118,33 +123,47 @@
                                         <div class="row">
                                             <div class="col-md-4 form-group">
                                                 <label for="fname">Nombre(s):</label>
-                                                <input type="text" class="form-control" id="fname">
+                                                <div id="nameContainer">
+                                                  <input type="text" class="form-control" id="fname" onfocus="limpiar(2)">
+                                                </div>
                                             </div>
                                             <div class="col-md-4 form-group">
                                                 <label for="sname">Apellido Paterno:</label>
-                                                <input type="text" class="form-control" id="sname">
+                                                <div id="snameContainer">
+                                                  <input type="text" class="form-control" id="sname" onfocus="limpiar(3)">
+                                                </div>
                                             </div>
                                             <div class="col-md-4 form-group">
                                                 <label for="lname">Apellido Materno:</label>
-                                                <input type="text" class="form-control" id="lname">
+                                                <div id="lnameContainer">
+                                                  <input type="text" class="form-control" id="lname" onfocus="limpiar(4)">
+                                                </div>
                                             </div>
-
+      
                                             <div class="col-md-6 form-group">
                                                 <label for="email">Correo Electronico:</label>
-                                                <input type="email" class="form-control" id="email">
+                                                <div id="mailRContainer">
+                                                  <input type="email" class="form-control" id="emailR" onfocus="limpiar(5)">
+                                                </div>
                                             </div>
                                             <div class="col-md-6 form-group">
                                                 <label for="rpwd">Telefono:</label>
-                                                <input type="password" class="form-control" id="tel">
+                                                <div id="telContainer">
+                                                  <input type="text" class="form-control" id="tel" onfocus="limpiar(6)">
+                                                </div>
                                             </div>  
-
+      
                                             <div class="col-md-6 form-group">
                                                 <label for="pwd">Contraseña:</label>
-                                                <input type="password" class="form-control" id="pwd">
+                                                <div id="passRContainer">
+                                                  <input type="password" class="form-control" id="pwdR" onfocus="limpiar(7)">
+                                                </div>
                                             </div>
                                             <div class="col-md-6 form-group">
                                                 <label for="rpwd">Confirme su contraseña:</label>
-                                                <input type="password" class="form-control" id="rpwd">
+                                                <div id="rpassContainer">
+                                                  <input type="password" class="form-control" id="rpwd" onfocus="limpiar(8)">
+                                                </div>
                                             </div>
                                             <div class="col-md-6 form-group" id="displayImg">
                                                 <img src="sources/13.jpg">
@@ -159,8 +178,8 @@
                                 </div>
                             </form>
                             <hr>
-                            <button type="button" class="btn btn-outline-danger" data-dismiss="modal"
-                                style="float:right">Registrarme</button>
+                            <button type="button" class="btn btn-outline-danger" 
+                                style="float:right" onclick="validaciones(2)">Registrarme</button>
                         </div>
 
                     </div>

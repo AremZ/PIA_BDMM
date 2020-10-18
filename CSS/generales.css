@@ -8,6 +8,7 @@
     --Color-2: #dc3545;
     --Color-3:#02111B;
     --Color-4:#ffb700;
+    --Color-5: #6eb65f;
     --TitleFont: whitesmoke;
     --Color-6: rgb(124, 29, 20);
 }
@@ -106,8 +107,8 @@ nav.navbar#navBar{
 }
 
 .modal-body#bLogin div#login form input:focus, .modal-body#bLogin div#register form input:focus{
-    border: 1px solid var(--Color-2);
-    box-shadow: 0 0 4px var(--Color-2);
+    border: 1px solid var(--Color-5);
+    box-shadow: 0 0 4px var(--Color-5);
 }
 
 .nav-item#pillLog .nav-link:not(.active):hover, .nav-item#pillReg .nav-link:not(.active):hover{
@@ -160,6 +161,12 @@ div#displayImg img{
     font-family: 'Oswald', sans-serif !important;
     margin-right: .5em;
 }
+
+.error{
+    border: 2px solid var(--Color-2);
+    border-radius: 5px;
+}
+
 
 /* --------------- Footer --------------- */
 
