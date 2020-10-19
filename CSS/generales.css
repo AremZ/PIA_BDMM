@@ -134,6 +134,7 @@ input[type="file"] {
 }
 
 .custom-file-upload {
+    font-family: 'Oswald', sans-serif;
     border: 1px solid var(--Color-2);
     color: var(--Color-2);
     border-radius: 5px;
