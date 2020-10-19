@@ -1,0 +1,130 @@
+#cuerpoNot{
+    text-align:center;
+    padding-bottom:2em;
+}
+
+div#noticiaBG{
+    margin-left: 2em;
+    margin-right:2em;
+    padding-bottom:2em;
+    max-width:1250px;
+    padding-left:8em;
+}
+
+#tituloNoticia{
+    background-color:black !important;
+}
+
+.listaSeccion{
+    margin:3em;
+}
+
+[draggable] {
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    /* Required to make elements draggable in old WebKit */
+    -khtml-user-drag: element;
+    -webkit-user-drag: element;
+  }
+ 
+  #columns {
+    list-style-type: none;
+    margin:auto;
+    text-align:center;
+    max-width:800px;
+  }
+ 
+  
+  .column {
+    width: 162px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    text-align: center;
+    cursor: move;
+    margin:0px;
+  }
+  .column header {
+    height: 60px;
+    width: 800px;
+    color: black;
+    background-color: rgb(236, 234, 234);
+    padding: 5px;
+    border-bottom: 1px solid #ddd;
+    border-radius: 10px;
+    border: 2px solid #666666;
+    margin-top:0.5em;
+    
+  }
+  .column label{
+      font-weight: bolder;
+      width:8em;
+    }
+  
+  .column.dragElem {
+    opacity: 0.4;
+  }
+  .column.over {
+    border: 2px dashed #000;
+    border-top: 2px solid blue;
+  }
+  
+.colorSeccion{
+    width: 200px;
+    height:30px;
+    background-color:white;
+    margin-right:2em;
+    margin-top:0.5em;
+}
+#option-1 {
+    background-color: red !important;
+  }
+  #option-2 {
+    background-color: green !important;
+  }
+  
+  #option-3 {
+    background-color: yellow !important;
+  }
+  
+  #option-4 {
+    background-color: blue !important;
+  }
+
+  .btnEdit, .btnDel{
+    color: var(--TitleFont);
+    font-family: 'Oswald', sans-serif !important;
+    background-color:black !important;
+    margin-left:2em;
+ }
+ 
+ .btnEdit:hover, .btnDel:hover{
+    color: var(--TitleFont);
+    font-family: 'Oswald', sans-serif !important;
+ }
+
+ @media (max-width: 425px){
+ 
+    .btnEdit, .btnDel {        
+     margin-left: 15px;
+    }
+
+  
+}
+@media (max-width: 960px) and (min-width: 501px){
+    #cuerpoNot, #noticiaBG{
+        width:100%;
+        margin:0px;
+    }
+    #columns,.listaSeccion, .column header, select{
+        width:400%;
+        margin-left:-50px;
+    }
+}
+
+@media (max-width: 500px){
+    #columns, #cuerpoNot, .listaSeccion, .column header{
+        width:100%;
+    }
+}
