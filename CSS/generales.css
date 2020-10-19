@@ -163,8 +163,9 @@ div#displayImg img{
 }
 
 .error{
-    border: 2px solid var(--Color-2);
+    border: 1px solid var(--Color-2);
     border-radius: 5px;
+    box-shadow: 0 0 4px var(--Color-2);
 }
 
 
@@ -185,4 +186,34 @@ hr.Light{
 hr.Light-100{
     border-top: 1px solid var(--TitleFont);
     width: 100%;
+}
+
+
+/*------LISTA POPULARES-------*/
+
+
+
+div.tarjetaPrincAside{
+    
+    background-color: rgb(221, 219, 219);
+    color: white;
+    max-width: 540px;
+}
+.listaPopu{
+    padding: 1em;
+    color: black;
+}
+#tituloPopulares{
+    background-color: rgba(0, 0, 0, 0.753);
+    padding: 1em;
+    text-align: center;
+}
+
+.tarjetaSecund{
+    margin-left: 1em;
+    margin-top: 1em;
+    max-width: 200px;
+}
+.img-popular{
+    max-width: 150px;
 }

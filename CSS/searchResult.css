@@ -24,13 +24,12 @@ body{
     
 }
 
-
 div#noticiaHeader{
     margin-left: -4em;
 }
 
 div#tituloNoticia{
-    background-color: rgb(80, 12, 12);
+    background-color: black;
     font-family: 'Oswald', sans-serif;  
     font-size: 250%;
     color: var(--TitleFont);
@@ -48,6 +47,9 @@ div#noticiaBG{
     width: 100%;
 }
 
+
+
+/*------------TARJETAS RESULTADO-----------------*/
 .tituloSeccion{
     background-color: black;
     font-family: 'Oswald', sans-serif;  
@@ -58,18 +60,34 @@ div#noticiaBG{
     border-bottom-right-radius: 5px;
 }
 
-.tarjetaSeccion{
-    max-width: 540px; 
+.tarjetaResult{
     margin: 2em; 
-    border-style: solid; 
-    border-color: black;
-    border-width: 200px;
+    border-style: none;
+    margin: auto;
+    border-style: none !important;
+}
+
+.card-title a{
+    background-color: black;
+    color: var(--Color-2) !important ;
+    background-size: 500px;
+    font-family: 'Oswald', sans-serif;  
+    font-size: 150%;
+    padding-right: 50px;
+    padding-left: 10px;
+}
+
+.imgTarjeta{
+    padding-left: 1em !important;
+    padding-bottom: 2em;
+    max-width: 200px;
+    
 }
 
 
 
 @media (min-width: 40rem) {
-    .tarjetaSeccion{
+    .tarjetaResult{
       width: 50%;
       
       
@@ -77,13 +95,13 @@ div#noticiaBG{
   }
   
   @media (min-width: 56rem) {
-    .tarjetaSeccion{
+    .tarjetaResult{
       width: 60%;
     }
   }
 
   @media (min-width: 72rem) {
-    .tarjetaSeccion{
+    .tarjetaResult{
       width: 80%;
     }
 
