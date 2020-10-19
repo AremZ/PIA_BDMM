@@ -189,7 +189,7 @@
         </div>
     </div>
 
-
+    
     <!--Cuerpo-->
 
     <div class="container-fluid padding" id="cuerpoNot">          
@@ -217,9 +217,9 @@
                                         <option id="option-3">Amarillo</option>
                                         <option id="option-4">Azul</option>
                                       </select>
-                                    <label>Nacionales</label>
-                                    <button class="btn btn-outline-danger btnEdit">Editar</button>
-                                    <button class="btn btn-outline-danger btnDel">Eliminar</button>
+                                    <label id="nombreSec">Nacionales</label>
+                                    <button class="btn btn-outline-danger btnEdit" data-toggle="modal" data-target="#modChangeN">Cambiar nombre</button>
+                                    <button class="btn btn-outline-danger btnDel" onclick="deleteSec()">Eliminar</button>
                                 </header>
                             </li>
                             <li class="column" draggable="true">   
@@ -231,8 +231,8 @@
                                         <option id="option-4">Azul</option>
                                       </select>
                                     <label>Internacionales</label>
-                                    <button class="btn btn-outline-danger btnEdit">Editar</button>
-                                    <button class="btn btn-outline-danger btnDel">Eliminar</button>
+                                    <button class="btn btn-outline-danger btnEdit" data-toggle="modal" data-target="#modChangeN">Cambiar nombre</button>
+                                    <button class="btn btn-outline-danger btnDel" onclick="deleteSec()">Eliminar</button>
                                 </header>
                             </li>
                             <li class="column" draggable="true">   
@@ -244,8 +244,8 @@
                                         <option id="option-4">Azul</option>
                                       </select>
                                     <label>Cultura</label>
-                                    <button class="btn btn-outline-danger btnEdit">Editar</button>
-                                    <button class="btn btn-outline-danger btnDel">Eliminar</button>
+                                    <button class="btn btn-outline-danger btnEdit" data-toggle="modal" data-target="#modChangeN">Cambiar nombre</button>
+                                    <button class="btn btn-outline-danger btnDel" onclick="deleteSec()">Eliminar</button>
                                 </header>
                             </li>
                             <li class="column" draggable="true">   
@@ -257,8 +257,8 @@
                                         <option id="option-4">Azul</option>
                                       </select>
                                     <label>Economía</label>
-                                    <button class="btn btn-outline-danger btnEdit">Editar</button>
-                                    <button class="btn btn-outline-danger btnDel">Eliminar</button>
+                                    <button class="btn btn-outline-danger btnEdit" data-toggle="modal" data-target="#modChangeN">Cambiar nombre</button>
+                                    <button class="btn btn-outline-danger btnDel" onclick="deleteSec()">Eliminar</button>
                                 </header>
                             </li>
                           </ul>
@@ -343,8 +343,99 @@ var cols = document.querySelectorAll('#columns .column');
 //# sourceURL=pen.js
     
                           </script>
-                <button class="btn btn-outline-danger btnAdd">Agregar Sección</button>    
-                </div>              
+
+                          <div id="modChangeN" class="modal fade">
+                    <div class="modal-dialog" id="modChangeN">
+            
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header" id="hLogin">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <div class="modal-body" id="bLogin">
+            
+                                <ul class="nav nav-pills nav-justified" id="pills-tab" role="tablist">
+                                    <li class="nav-item" id="pillLog">
+                                        <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#login" role="tab"
+                                            aria-controls="pills-home" aria-selected="true">Nuevo nombre</a>
+                                    </li>
+                                   
+                                </ul>
+                                <hr>
+            
+                                <div class="tab-content" id="pills-tabContent">
+            
+                                    <div id="login" class="tab-pane fade show active">
+                                        <form action="/action_page.php">
+                                            <div class="form-group">
+                                                <label for="nameNewSec">Nombre de sección:</label>
+                                                <div id="mailContainer">
+                                                <input type="text" class="form-control" id="nameNewSec">
+                                              </div>
+                                            </div>
+                                        </form>
+                                        <!--<span>Forgot your password?</span>-->
+                                        <hr>
+                                        <button id="logMeIn" type="button" class="btn btn-outline-danger" 
+                                            style="float:right">Aceptar</button>
+                                    </div>
+                  
+                                  
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>             
+
+
+
+                <button class="btn btn-outline-danger btnAdd" data-toggle="modal" data-target="#modAddS">Agregar Sección</button>    
+                <div id="modAddS" class="modal fade">
+                    <div class="modal-dialog" id="modAddS">
+            
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header" id="hLogin">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <div class="modal-body" id="bLogin">
+            
+                                <ul class="nav nav-pills nav-justified" id="pills-tab" role="tablist">
+                                    <li class="nav-item" id="pillLog">
+                                        <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#login" role="tab"
+                                            aria-controls="pills-home" aria-selected="true">Añadir nueva sección</a>
+                                    </li>
+                                   
+                                </ul>
+                                <hr>
+            
+                                <div class="tab-content" id="pills-tabContent">
+            
+                                    <div id="login" class="tab-pane fade show active">
+                                        <form action="/action_page.php">
+                                            <div class="form-group">
+                                                <label for="nameNewSec">Nombre de sección:</label>
+                                                <div id="mailContainer">
+                                                <input type="text" class="form-control" id="nameNewSec">
+                                              </div>
+                                            </div>
+                                        </form>
+                                        <!--<span>Forgot your password?</span>-->
+                                        <hr>
+                                        <button id="logMeIn" type="button" class="btn btn-outline-danger" 
+                                            style="float:right">Añadir</button>
+                                    </div>
+                  
+                                  
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+
+                <button class="btn btn-outline-danger btnAdd">Guardar</button>    
+                
                    
                 </div>
                 
