@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="CSS/fullpage.css">
     <link rel="stylesheet" href="CSS/generales.css">
     <link rel="shortcut icon" type="image/x-icon" href="Sources/LogoPag.png" />
+    <script src="JS/functions.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
@@ -19,11 +20,9 @@
 
     <script>
         $(document).ready(function(){
-          $(".reply-popup").click(function(){
-            $(".reply-box").toggle();
-          });
+            $("#btnProfile").toggle();
         });
-        </script>
+    </script>
 
 </head>
 
@@ -49,17 +48,17 @@
                 </ul>
 
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="" data-toggle="modal" data-target="#modLogin">Iniciar Sesion</a>
+                    <li class="nav-item" id="btnLogin">
+                        <a class="nav-link" href="" data-toggle="modal" data-target="#modLogin" onclick="cleanInput('emailLog'), cleanInput('pwdLog')">Iniciar Sesion</a>
                     </li>
 
-                    <li class="nav-item dropdown">
+                    <li class="nav-item dropdown" id="btnProfile">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMA" role="button"
-                            data-toggle="dropdown" >Mi Cuenta</a>
+                            data-toggle="dropdown">Mi Cuenta</a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMA">
-                            <a class="dropdown-item" href="#">Perfil</a>
-                            <a class="dropdown-item" href="#">Mis Listas</a>
-                            <a class="dropdown-item" href="#">Mi cuenta</a>
+                            <a class="dropdown-item" href="profile.html">Mi Perfil</a>
+                            <a class="dropdown-item" href="#">Escritorio</a>
+                            <a class="dropdown-item" href="#">Gestionar Seccion</a>
                             <a class="dropdown-item" href="#">Cerrar Sesion</a>
                         </div>
                     </li>         
@@ -82,11 +81,13 @@
                     <ul class="nav nav-pills nav-justified" id="pills-tab" role="tablist">
                         <li class="nav-item" id="pillLog">
                             <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#login" role="tab"
-                                aria-controls="pills-home" aria-selected="true">Inicio de Sesion</a>
+                                aria-controls="pills-home" aria-selected="true" onclick="cleanInput('emailLog'), cleanInput('pwdLog')">Inicio de Sesion</a>
                         </li>
                         <li class="nav-item" id="pillReg">
                             <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#register" role="tab"
-                                aria-controls="pills-profile" aria-selected="false">Registrarse</a>
+                                aria-controls="pills-profile" aria-selected="false"onclick="cleanInput('fnameLog'),
+                                cleanInput('snameLog'), cleanInput('lnameLog'), cleanInput('emailRLog'),
+                                cleanInput('telLog'), cleanInput('pwdRLog'), cleanInput('rpwdLog')">Registrarse</a>
                         </li>
                     </ul>
                     <hr>
@@ -97,19 +98,23 @@
                             <form action="/action_page.php">
                                 <div class="form-group">
                                     <label for="email">Correo Electronico:</label>
-                                    <input type="email" class="form-control" id="email">
+                                    <div id="mailContainer">
+                                    <input type="email" class="form-control" id="emailLog" onfocus="limpiar(0)">
+                                  </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="pwd">Contraseña:</label>
-                                    <input type="password" class="form-control" id="pwd">
+                                    <div id="passContainer">
+                                    <input type="password" class="form-control" id="pwdLog" onfocus="limpiar(1)">
+                                  </div>
                                 </div>
                             </form>
                             <!--<span>Forgot your password?</span>-->
                             <hr>
-                            <button id="logMeIn" type="button" class="btn btn-outline-danger" data-dismiss="modal"
-                                style="float:right">Iniciar Sesion</button>
+                            <button id="logMeIn" type="button" class="btn btn-outline-danger" 
+                                style="float:right" onclick="validaciones(1)">Iniciar Sesion</button>
                         </div>
-
+      
                         <div id="register" class="tab-pane fade">
                             <form action="/action_page.php">
                                 <div class="row">
@@ -118,33 +123,47 @@
                                         <div class="row">
                                             <div class="col-md-4 form-group">
                                                 <label for="fname">Nombre(s):</label>
-                                                <input type="text" class="form-control" id="fname">
+                                                <div id="nameContainer">
+                                                  <input type="text" class="form-control" id="fnameLog" onfocus="limpiar(2)">
+                                                </div>
                                             </div>
                                             <div class="col-md-4 form-group">
                                                 <label for="sname">Apellido Paterno:</label>
-                                                <input type="text" class="form-control" id="sname">
+                                                <div id="snameContainer">
+                                                  <input type="text" class="form-control" id="snameLog" onfocus="limpiar(3)">
+                                                </div>
                                             </div>
                                             <div class="col-md-4 form-group">
                                                 <label for="lname">Apellido Materno:</label>
-                                                <input type="text" class="form-control" id="lname">
+                                                <div id="lnameContainer">
+                                                  <input type="text" class="form-control" id="lnameLog" onfocus="limpiar(4)">
+                                                </div>
                                             </div>
-
+      
                                             <div class="col-md-6 form-group">
                                                 <label for="email">Correo Electronico:</label>
-                                                <input type="email" class="form-control" id="email">
+                                                <div id="mailRContainer">
+                                                  <input type="email" class="form-control" id="emailRLog" onfocus="limpiar(5)">
+                                                </div>
                                             </div>
                                             <div class="col-md-6 form-group">
                                                 <label for="rpwd">Telefono:</label>
-                                                <input type="password" class="form-control" id="tel">
+                                                <div id="telContainer">
+                                                  <input type="number" class="form-control" id="telLog" onfocus="limpiar(6)">
+                                                </div>
                                             </div>  
-
+      
                                             <div class="col-md-6 form-group">
                                                 <label for="pwd">Contraseña:</label>
-                                                <input type="password" class="form-control" id="pwd">
+                                                <div id="passRContainer">
+                                                  <input type="password" class="form-control" id="pwdRLog" onfocus="limpiar(7)">
+                                                </div>
                                             </div>
                                             <div class="col-md-6 form-group">
                                                 <label for="rpwd">Confirme su contraseña:</label>
-                                                <input type="password" class="form-control" id="rpwd">
+                                                <div id="rpassContainer">
+                                                  <input type="password" class="form-control" id="rpwdLog" onfocus="limpiar(8)">
+                                                </div>
                                             </div>
                                             <div class="col-md-6 form-group" id="displayImg">
                                                 <img src="sources/13.jpg">
@@ -159,8 +178,8 @@
                                 </div>
                             </form>
                             <hr>
-                            <button type="button" class="btn btn-outline-danger" data-dismiss="modal"
-                                style="float:right">Registrarme</button>
+                            <button type="button" class="btn btn-outline-danger" 
+                                style="float:right" onclick="validaciones(2)">Registrarme</button>
                         </div>
 
                     </div>
@@ -189,11 +208,11 @@
                         <h4 class="card-title" id="Reportero">Reportero: Abraham Reyes</h4>
                         <h4 class="card-title" id="Publicacion">Enviado el: 9 de Octubre del 2020</h4>
                         <div class="row">
-                            <div class="col-lg-5">
-                                <button class="btn btn-outline-danger editorVisual" data-toggle="modal" data-target="#seeNoticia">Ver noticia</button>   
+                            <div class="col-lg-12">
+                                <button class="btn btn-outline-danger editorVisual" data-toggle="modal" data-target="#seeNoticia" onclick="cleanInput('eComments')"><i class="fa fa-newspaper-o"></i>Ver noticia</button>   
                             </div>
-                            <div class="col-lg-7">
-                                <button class="btn btn-outline-danger editorVisual" data-toggle="modal" data-target="#sendComments">Enviar comentarios</button>
+                            <div class="col-lg-12">
+                                <button class="btn btn-outline-danger editorVisual" data-toggle="modal" data-target="#sendComments" onclick="cleanInput('eComments')"><i class="fa fa-comment-o"></i>Dar comentarios</button>
                             </div>
                         </div>
                     </div>
@@ -210,11 +229,11 @@
                         <h4 class="card-title" id="Reportero">Reportero: Abraham Reyes</h4>
                         <h4 class="card-title" id="Publicacion">Enviado el: 9 de Octubre del 2020</h4>
                         <div class="row">
-                            <div class="col-lg-5">
-                                <button class="btn btn-outline-danger editorVisual" data-toggle="modal" data-target="#seeNoticia">Ver noticia</button>   
+                            <div class="col-lg-12">
+                                <button class="btn btn-outline-danger editorVisual" data-toggle="modal" data-target="#seeNoticia" onclick="cleanInput('eComments')"><i class="fa fa-newspaper-o"></i>Ver noticia</button>   
                             </div>
-                            <div class="col-lg-7">
-                                <button class="btn btn-outline-danger editorVisual" data-toggle="modal" data-target="#sendComments">Enviar comentarios</button>
+                            <div class="col-lg-12">
+                                <button class="btn btn-outline-danger editorVisual" data-toggle="modal" data-target="#sendComments" onclick="cleanInput('eComments')"><i class="fa fa-comment-o"></i>Dar comentarios</button>
                             </div>
                         </div>
                     </div>
@@ -231,11 +250,11 @@
                         <h4 class="card-title" id="Reportero">Reportero: Abraham Reyes</h4>
                         <h4 class="card-title" id="Publicacion">Enviado el: 9 de Octubre del 2020</h4>
                         <div class="row">
-                            <div class="col-lg-5">
-                                <button class="btn btn-outline-danger editorVisual" data-toggle="modal" data-target="#seeNoticia">Ver noticia</button>   
+                            <div class="col-lg-12">
+                                <button class="btn btn-outline-danger editorVisual" data-toggle="modal" data-target="#seeNoticia" onclick="cleanInput('eComments')"><i class="fa fa-newspaper-o"></i>Ver noticia</button>   
                             </div>
-                            <div class="col-lg-7">
-                                <button class="btn btn-outline-danger editorVisual" data-toggle="modal" data-target="#sendComments">Enviar comentarios</button>
+                            <div class="col-lg-12">
+                                <button class="btn btn-outline-danger editorVisual" data-toggle="modal" data-target="#sendComments" onclick="cleanInput('eComments')"><i class="fa fa-comment-o"></i>Dar comentarios</button>
                             </div>
                         </div>
                     </div>
@@ -252,11 +271,11 @@
                         <h4 class="card-title" id="Reportero">Reportero: Abraham Reyes</h4>
                         <h4 class="card-title" id="Publicacion">Enviado el: 9 de Octubre del 2020</h4>
                         <div class="row">
-                            <div class="col-lg-5">
-                                <button class="btn btn-outline-danger editorVisual" data-toggle="modal" data-target="#seeNoticia">Ver noticia</button>   
+                            <div class="col-lg-12">
+                                <button class="btn btn-outline-danger editorVisual" data-toggle="modal" data-target="#seeNoticia" onclick="cleanInput('eComments')"><i class="fa fa-newspaper-o"></i>Ver noticia</button>   
                             </div>
-                            <div class="col-lg-7">
-                                <button class="btn btn-outline-danger editorVisual" data-toggle="modal" data-target="#sendComments">Enviar comentarios</button>
+                            <div class="col-lg-12">
+                                <button class="btn btn-outline-danger editorVisual" data-toggle="modal" data-target="#sendComments" onclick="cleanInput('eComments')"><i class="fa fa-comment-o"></i>Dar comentarios</button>
                             </div>
                         </div>
                     </div>
@@ -291,12 +310,12 @@
                                         Realice sus comentarios al reportero de la noticia en la siguiente seccion:
                                     </div>
                                     <div class="col-md-12" id="inputComments">
-                                        <textarea name="editorComments" id="eComments" placeholder="Ingrese sus comentarios..." rows="10"></textarea>
+                                        <textarea name="editorComments" id="eComments" placeholder="Ingrese sus comentarios..." rows="10" onfocus="cleanTextarea('eComments')"></textarea>
                                     </div>      
                                             <div class="col-md-12">
                                                 <hr>
-                                                <button class="btn btn-outline-danger" data-toggle="modal" data-target="#sendComments">Enviar</button>
-                                                <button class="btn btn-outline-danger" data-toggle="modal" data-target="#sendComments">Volver a Noticia</button>
+                                                <button class="btn btn-outline-danger" onclick="checkTextarea('eComments', '#sendComments')"><i class="fa fa-paper-plane-o"></i>Enviar</button>
+                                                <button class="btn btn-outline-danger" onclick="switchModals('#sendComments', '#seeNoticia')"><i class="fa fa-newspaper-o"></i>Volver a Noticia</button>
                                             </div>
                                         </div>
                                     </div>   
@@ -391,8 +410,8 @@
                                             </div>                 
                                             <div class="col-md-12">
                                                 <hr>
-                                                <button class="btn btn-outline-danger" data-toggle="modal" data-target="#seeNoticia">Aprobar</button>
-                                                <button class="btn btn-outline-danger" data-toggle="modal" data-target="#seeNoticia">Enviar comentarios</button>
+                                                <button class="btn btn-outline-danger" data-toggle="modal" data-target="#seeNoticia"><i class="fa fa-check"></i>Aprobar</button>
+                                                <button class="btn btn-outline-danger"  onclick="switchModals('#seeNoticia', '#sendComments')"><i class="fa fa-comment-o"></i>Enviar comentarios</button>
                                             </div>
                                         </div>
                                     </div>   

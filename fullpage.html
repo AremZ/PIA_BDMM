@@ -20,11 +20,10 @@
 
     <script>
         $(document).ready(function(){
-          $(".reply-popup").click(function(){
+            $("#btnProfile").toggle();
             $(".reply-box").toggle();
-          });
         });
-        </script>
+    </script>
 
 </head>
 
@@ -50,17 +49,17 @@
                 </ul>
 
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="" data-toggle="modal" data-target="#modLogin">Iniciar Sesion</a>
+                    <li class="nav-item" id="btnLogin">
+                        <a class="nav-link" href="" data-toggle="modal" data-target="#modLogin" onclick="cleanInput('emailLog'), cleanInput('pwdLog')">Iniciar Sesion</a>
                     </li>
 
-                    <li class="nav-item dropdown">
+                    <li class="nav-item dropdown" id="btnProfile">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMA" role="button"
-                            data-toggle="dropdown" >Mi Cuenta</a>
+                            data-toggle="dropdown">Mi Cuenta</a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMA">
-                            <a class="dropdown-item" href="#">Perfil</a>
-                            <a class="dropdown-item" href="#">Mis Listas</a>
-                            <a class="dropdown-item" href="#">Mi cuenta</a>
+                            <a class="dropdown-item" href="profile.html">Mi Perfil</a>
+                            <a class="dropdown-item" href="#">Escritorio</a>
+                            <a class="dropdown-item" href="#">Gestionar Seccion</a>
                             <a class="dropdown-item" href="#">Cerrar Sesion</a>
                         </div>
                     </li>         
@@ -83,11 +82,13 @@
                     <ul class="nav nav-pills nav-justified" id="pills-tab" role="tablist">
                         <li class="nav-item" id="pillLog">
                             <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#login" role="tab"
-                                aria-controls="pills-home" aria-selected="true">Inicio de Sesion</a>
+                                aria-controls="pills-home" aria-selected="true" onclick="cleanInput('emailLog'), cleanInput('pwdLog')">Inicio de Sesion</a>
                         </li>
                         <li class="nav-item" id="pillReg">
                             <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#register" role="tab"
-                                aria-controls="pills-profile" aria-selected="false">Registrarse</a>
+                                aria-controls="pills-profile" aria-selected="false"onclick="cleanInput('fnameLog'),
+                                cleanInput('snameLog'), cleanInput('lnameLog'), cleanInput('emailRLog'),
+                                cleanInput('telLog'), cleanInput('pwdRLog'), cleanInput('rpwdLog')">Registrarse</a>
                         </li>
                     </ul>
                     <hr>
@@ -99,13 +100,13 @@
                                 <div class="form-group">
                                     <label for="email">Correo Electronico:</label>
                                     <div id="mailContainer">
-                                    <input type="email" class="form-control" id="email" onfocus="limpiar(0)">
+                                    <input type="email" class="form-control" id="emailLog" onfocus="limpiar(0)">
                                   </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="pwd">Contraseña:</label>
                                     <div id="passContainer">
-                                    <input type="password" class="form-control" id="pwd" onfocus="limpiar(1)">
+                                    <input type="password" class="form-control" id="pwdLog" onfocus="limpiar(1)">
                                   </div>
                                 </div>
                             </form>
@@ -124,45 +125,45 @@
                                             <div class="col-md-4 form-group">
                                                 <label for="fname">Nombre(s):</label>
                                                 <div id="nameContainer">
-                                                  <input type="text" class="form-control" id="fname" onfocus="limpiar(2)">
+                                                  <input type="text" class="form-control" id="fnameLog" onfocus="limpiar(2)">
                                                 </div>
                                             </div>
                                             <div class="col-md-4 form-group">
                                                 <label for="sname">Apellido Paterno:</label>
                                                 <div id="snameContainer">
-                                                  <input type="text" class="form-control" id="sname" onfocus="limpiar(3)">
+                                                  <input type="text" class="form-control" id="snameLog" onfocus="limpiar(3)">
                                                 </div>
                                             </div>
                                             <div class="col-md-4 form-group">
                                                 <label for="lname">Apellido Materno:</label>
                                                 <div id="lnameContainer">
-                                                  <input type="text" class="form-control" id="lname" onfocus="limpiar(4)">
+                                                  <input type="text" class="form-control" id="lnameLog" onfocus="limpiar(4)">
                                                 </div>
                                             </div>
       
                                             <div class="col-md-6 form-group">
                                                 <label for="email">Correo Electronico:</label>
                                                 <div id="mailRContainer">
-                                                  <input type="email" class="form-control" id="emailR" onfocus="limpiar(5)">
+                                                  <input type="email" class="form-control" id="emailRLog" onfocus="limpiar(5)">
                                                 </div>
                                             </div>
                                             <div class="col-md-6 form-group">
                                                 <label for="rpwd">Telefono:</label>
                                                 <div id="telContainer">
-                                                  <input type="text" class="form-control" id="tel" onfocus="limpiar(6)">
+                                                  <input type="number" class="form-control" id="telLog" onfocus="limpiar(6)">
                                                 </div>
                                             </div>  
       
                                             <div class="col-md-6 form-group">
                                                 <label for="pwd">Contraseña:</label>
                                                 <div id="passRContainer">
-                                                  <input type="password" class="form-control" id="pwdR" onfocus="limpiar(7)">
+                                                  <input type="password" class="form-control" id="pwdRLog" onfocus="limpiar(7)">
                                                 </div>
                                             </div>
                                             <div class="col-md-6 form-group">
                                                 <label for="rpwd">Confirme su contraseña:</label>
                                                 <div id="rpassContainer">
-                                                  <input type="password" class="form-control" id="rpwd" onfocus="limpiar(8)">
+                                                  <input type="password" class="form-control" id="rpwdLog" onfocus="limpiar(8)">
                                                 </div>
                                             </div>
                                             <div class="col-md-6 form-group" id="displayImg">
@@ -299,15 +300,6 @@
                             <div class="row">
                               <div class="col-lg-12">
                                 <div class="comments">
-                                  <!--<div class="comments-details">
-                                    <span class="dropdown">
-                                        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">Sort By <span class="caret"></span></button>
-                                        <div class="dropdown-menu">
-                                          <a href="#" class="dropdown-item">Top Comments</a>
-                                        <a href="#" class="dropdown-item">Newest First</a>
-                                        </div>
-                                    </span>
-                                  </div>-->
                                   <div class="comment-box add-comment">
                                     <span class="commenter-pic-mine">
                                       <img src="Sources/11.jpg" class="img-fluid">
@@ -329,8 +321,9 @@
                                         Muy padre muy bueno
                                     </p>
                                     <div class="comment-meta">
-                                      <button class="comment-reply btn btn-outline-danger reply-popup"><i class="fa fa-reply-all" aria-hidden="true"></i> Responder</button>                                          
+                                      <button class="comment-reply btn btn-outline-danger reply-popup" onclick="popUpComm()"><i class="fa fa-reply-all" aria-hidden="true"></i> Responder</button>                                          
                                     </div>
+                                    
                                     <div class="comment-box add-comment reply-box">
                                         <span class="commenter-pic-mine">
                                           <img src="Sources/11.jpg" class="img-fluid">
@@ -338,7 +331,7 @@
                                         <span class="commenter-name">
                                           <input type="text" placeholder="Responder a comentario..." name="Add Comment">
                                           <button type="submit" class="btn btn-outline-danger">Responder</button>
-                                          <button type="cancel" class="btn btn-outline-danger reply-popup">Cancelar</button>
+                                          <button type="cancel" class="btn btn-outline-danger" onclick="popUpComm()">Cancelar</button>
                                         </span>
                                     </div>
                                     
@@ -352,33 +345,53 @@
                                           <p class="comment-txt">
                                               Muy padre muy bueno
                                           </p>
-                                          <div class="comment-meta">
-                                            <button class="comment-reply btn btn-outline-danger reply-popup"><i class="fa fa-reply-all" aria-hidden="true"></i> Responder</button>                                          
-                                            </div>
-
-                                        <div class="comment-box replied">
-                                            <span class="commenter-pic">
-                                                <img src="Sources/13.jpg" class="img-fluid">
-                                              </span>
-                                              <span class="commenter-name">
-                                                <a>Fernanda Gomez</a> <span class="comment-time">Octubre 9, 2020 a las 17:51</span>
-                                              </span>       
-                                              <p class="comment-txt">
-                                                  Muy padre muy bueno
-                                              </p>
-                                              <div class="comment-meta">
-                                                <button class="comment-reply btn btn-outline-danger reply-popup"><i class="fa fa-reply-all" aria-hidden="true"></i> Responder</button>                                          
-                                              </div>
-                                        </div>
                                     </div>
                                   </div>
+                                <div class="comment-box">
+                                    <span class="commenter-pic">
+                                      <img src="Sources/14.jpg" class="img-fluid">
+                                    </span>
+                                    <span class="commenter-name">
+                                      <a>Alejandra Ramirez</a> <span class="comment-time">Octubre 9, 2020 a las 17:51</span>
+                                    </span>       
+                                    <p class="comment-txt">
+                                        Muy padre muy bueno
+                                    </p>
+                                    <div class="comment-meta">
+                                      <button class="comment-reply btn btn-outline-danger reply-popup" onclick="popUpComm()"><i class="fa fa-reply-all" aria-hidden="true"></i> Responder</button>                                          
+                                    </div>
+                                    
+                                    <div class="comment-box add-comment reply-box">
+                                        <span class="commenter-pic-mine">
+                                          <img src="Sources/11.jpg" class="img-fluid">
+                                        </span>
+                                        <span class="commenter-name">
+                                          <input type="text" placeholder="Responder a comentario..." name="Add Comment">
+                                          <button type="submit" class="btn btn-outline-danger">Responder</button>
+                                          <button type="cancel" class="btn btn-outline-danger" onclick="popUpComm()">Cancelar</button>
+                                        </span>
+                                    </div>
+                                    
+                                    <div class="comment-box replied">
+                                        <span class="commenter-pic">
+                                            <img src="Sources/12.jpg" class="img-fluid">
+                                          </span>
+                                          <span class="commenter-name">
+                                            <a>Maria Castañeda</a> <span class="comment-time">Octubre 9, 2020 a las 17:51</span>
+                                          </span>       
+                                          <p class="comment-txt">
+                                              Muy padre muy bueno
+                                          </p>
+                                    </div>
                                 </div>
-                              </div>
+                                </div>
+                                </div>
                             </div>
-                          </div>
-                    </div>
-                </div>  
+                            </div>
+                    </div>  
+                </div>
             </div>
+            
             <div class="col-md-3">
                 <div class="card recomendado">
                     <img class="card-img-top" src="Sources/Note1.jpg" >

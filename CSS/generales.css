@@ -153,8 +153,13 @@ input[type="file"] {
 div#displayImg img{
     width: 200px;
     height: 200px;
-    border: 1px solid black;
-    margin-top: 1em;
+    border: 2px solid var(--Color-2);
+    box-shadow: 0 0 10px var(--Color-2);
+    border-radius: 100%;
+    object-fit: cover;
+    overflow: hidden;
+    margin-top: 1rem;
+    margin-left: 3rem;
     float: right;
 }
 
@@ -166,7 +171,7 @@ div#displayImg img{
 .error{
     border: 1px solid var(--Color-2);
     border-radius: 5px;
-    box-shadow: 0 0 4px var(--Color-2);
+    box-shadow: 0 0 10px var(--Color-2);
 }
 
 

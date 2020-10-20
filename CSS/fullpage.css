@@ -263,7 +263,7 @@ button.comment-reply{
 }
 
 .revisionNoticias{
-    height: 33rem;
+    height: auto;
 }
 
 .titleNotRev, .titleEnvRev, .titleEnRed, .titleNotPub{
@@ -276,6 +276,7 @@ button.comment-reply{
 
 .card button.editorVisual{
     margin-top: 1em;
+    width: 100%;
 }
 
 .card h4#Publicacion, .card h4#Reportero, .card #pubNotPub{
@@ -685,6 +686,11 @@ button.btnBarData{
 button.btnBarData#btnModDat{
     float: left;
     margin-left: 0;
+}
+
+#confirmDelete h5{
+    font-family: 'Oswald', sans-serif;
+    text-align: center;
 }
 
 
