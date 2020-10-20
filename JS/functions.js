@@ -1,7 +1,7 @@
 function validaciones(mod){
     
     if (mod==1){
-    var campo = document.getElementById("email");
+    var campo = document.getElementById("emailLog");
     if(campo.value=="")
         document.getElementById("mailContainer").className=document.getElementById("mailContainer").className+" error";
     
@@ -16,45 +16,40 @@ function validaciones(mod){
             }
         }
         campo = document.getElementById("pwdLog");
-        if(campo.value==""){
-            document.getElementById("passContainer").className=document.getElementById("passContainer").className+" error";
-        }
-        else if(campo.value == "123454321"){
-            alert("Contraseña correcta!");
-            $('#modLogin').modal('hide');
-            $("#btnLogin").toggle();
-            $("#btnProfile").toggle();
-        }
-        else{
-            document.getElementById("passContainer").className=document.getElementById("passContainer").className+" error";
-        }
     }
     
-    campo = document.getElementById("pwd");
-    if(campo.value=="")
+    if(campo.value==""){
         document.getElementById("passContainer").className=document.getElementById("passContainer").className+" error";
-    campo.value="";
-    alert("¡Bienvenido!");
+    }
+    else if(campo.value == "123454321"){
+        alert("Contraseña correcta!");
+        $('#modLogin').modal('toggle');
+        $("#btnLogin").toggle();
+        $("#btnProfile").toggle();
+    }
+    else{
+        document.getElementById("passContainer").className=document.getElementById("passContainer").className+" error";
+    }
     }
 
     else{
         var datosCorrec=true;
-        campo = document.getElementById("fname");
+        campo = document.getElementById("fnameLog");
         if(campo.value==""){
             document.getElementById("nameContainer").className=document.getElementById("nameContainer").className+" error";
             datosCorrec=false;
         }
-        campo = document.getElementById("sname");
+        campo = document.getElementById("snameLog");
         if(campo.value==""){
             document.getElementById("snameContainer").className=document.getElementById("snameContainer").className+" error";
             datosCorrec=false;
         }
-        campo = document.getElementById("lname");
+        campo = document.getElementById("lnameLog");
         if(campo.value==""){
             document.getElementById("lnameContainer").className=document.getElementById("lnameContainer").className+" error";
             datosCorrec=false;
         }
-        campo = document.getElementById("emailR");
+        campo = document.getElementById("emailRLog");
         if(campo.value==""){
             document.getElementById("mailRContainer").className=document.getElementById("mailRContainer").className+" error";
             datosCorrec=false;
@@ -65,7 +60,7 @@ function validaciones(mod){
                     alert("Dirección de correo inválida.")
             }
         }
-        campo = document.getElementById("tel");
+        campo = document.getElementById("telLog");
         if(campo.value==""){
             document.getElementById("telContainer").className=document.getElementById("telContainer").className+" error";
             datosCorrec=false;
@@ -77,25 +72,28 @@ function validaciones(mod){
             }
 
         }
-        campo = document.getElementById("pwdR");
+        campo = document.getElementById("pwdRLog");
         if(campo.value==""){
             document.getElementById("passRContainer").className=document.getElementById("passRContainer").className+" error";   
             datosCorrec=false;
         }
-        var campo2 = document.getElementById("rpwd");
+        var campo2 = document.getElementById("rpwdLog");
         if((campo2.value=="") || (campo2.value!=campo.value)){
             document.getElementById("rpassContainer").className=document.getElementById("rpassContainer").className+" error";   
             datosCorrec=false;
         }
         if(datosCorrec){
-            document.getElementById("fname").value="";
-            document.getElementById("sname").value="";
-            document.getElementById("lname").value="";
-            document.getElementById("emailR").value="";
-            document.getElementById("tel").value="";
-            document.getElementById("pwdR").value="";
-            document.getElementById("rpwd").value="";
+            document.getElementById("fnameLog").value="";
+            document.getElementById("snameLog").value="";
+            document.getElementById("lnameLog").value="";
+            document.getElementById("emailRLog").value="";
+            document.getElementById("telLog").value="";
+            document.getElementById("pwdRLog").value="";
+            document.getElementById("rpwdLog").value="";
             alert("Registro exitoso.");
+            $('#modLogin').modal('toggle');
+            $("#btnLogin").toggle();
+            $("#btnProfile").toggle();
         }
     }
 }
