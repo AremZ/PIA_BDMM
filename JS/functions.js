@@ -105,6 +105,11 @@ function validaciones(mod){
     }
 }
 
+function cerrarSesion(){
+    $("#btnLogin").toggle();
+    $("#btnProfile").toggle();
+}
+
 function limpiar(mod){
     if(mod==0)
         document.getElementById("mailContainer").className=document.getElementById("mailContainer").className.replace(" error","");
