@@ -1,9 +1,14 @@
 function validaciones(mod){
     
     if (mod==1){
-        var campo = document.getElementById("emailLog");
-        if(campo.value=="")
+    var campo = document.getElementById("email");
+    if(campo.value=="")
+        document.getElementById("mailContainer").className=document.getElementById("mailContainer").className+" error";
+    
+    else{
+        if (!(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(campo.value))){
             document.getElementById("mailContainer").className=document.getElementById("mailContainer").className+" error";
+        }
         else{
             if (!(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(campo.value))){
                 document.getElementById("mailContainer").className=document.getElementById("mailContainer").className+" error";
@@ -24,47 +29,74 @@ function validaciones(mod){
             document.getElementById("passContainer").className=document.getElementById("passContainer").className+" error";
         }
     }
+    
+    campo = document.getElementById("pwd");
+    if(campo.value=="")
+        document.getElementById("passContainer").className=document.getElementById("passContainer").className+" error";
+    campo.value="";
+    alert("¡Bienvenido!");
+    }
 
     else{
-        campo = document.getElementById("fnameLog");
-        if(campo.value=="")
+        var datosCorrec=true;
+        campo = document.getElementById("fname");
+        if(campo.value==""){
             document.getElementById("nameContainer").className=document.getElementById("nameContainer").className+" error";
-        
-        campo = document.getElementById("snameLog");
-        if(campo.value=="")
+            datosCorrec=false;
+        }
+        campo = document.getElementById("sname");
+        if(campo.value==""){
             document.getElementById("snameContainer").className=document.getElementById("snameContainer").className+" error";
-        
-        campo = document.getElementById("lnameLog");
-        if(campo.value=="")
+            datosCorrec=false;
+        }
+        campo = document.getElementById("lname");
+        if(campo.value==""){
             document.getElementById("lnameContainer").className=document.getElementById("lnameContainer").className+" error";
-        
-        campo = document.getElementById("emailRLog");
-        if(campo.value=="")
+            datosCorrec=false;
+        }
+        campo = document.getElementById("emailR");
+        if(campo.value==""){
             document.getElementById("mailRContainer").className=document.getElementById("mailRContainer").className+" error";
-        else{
-            if (!(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(campo.value))){
-                document.getElementById("mailRContainer").className=document.getElementById("mailRContainer").className+" error";
-                alert("Dirección de correo inválida.")
+            datosCorrec=false;
+            }
+            else{
+                if (!(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(campo.value))){
+                    document.getElementById("mailRContainer").className=document.getElementById("mailRContainer").className+" error";
+                    alert("Dirección de correo inválida.")
             }
         }
-        campo = document.getElementById("telLog");
-        if(campo.value=="")
+        campo = document.getElementById("tel");
+        if(campo.value==""){
             document.getElementById("telContainer").className=document.getElementById("telContainer").className+" error";
-        else{
-            if(isNaN(campo.value)||campo.value.length<8||campo.value.length>10){
-                alert("Número telefónico inválido.")
-                document.getElementById("telContainer").className=document.getElementById("telContainer").className+" error";
+            datosCorrec=false;
+        }
+            else{
+                if(isNaN(campo.value)||campo.value.length<8||campo.value.length>10){
+                    alert("Número telefónico inválido.")
+                    document.getElementById("telContainer").className=document.getElementById("telContainer").className+" error";
             }
 
         }
-        campo = document.getElementById("pwdRLog");
-        if(campo.value=="")
+        campo = document.getElementById("pwdR");
+        if(campo.value==""){
             document.getElementById("passRContainer").className=document.getElementById("passRContainer").className+" error";   
-            
-        var campo2 = document.getElementById("rpwdLog");
-        if((campo2.value=="") || (campo2.value!=campo.value))
+            datosCorrec=false;
+        }
+        var campo2 = document.getElementById("rpwd");
+        if((campo2.value=="") || (campo2.value!=campo.value)){
             document.getElementById("rpassContainer").className=document.getElementById("rpassContainer").className+" error";   
-        
+            datosCorrec=false;
+        }
+        if(datosCorrec){
+            document.getElementById("fname").value="";
+            document.getElementById("sname").value="";
+            document.getElementById("lname").value="";
+            document.getElementById("emailR").value="";
+            document.getElementById("tel").value="";
+            document.getElementById("pwdR").value="";
+            document.getElementById("rpwd").value="";
+            alert("Registro exitoso.");
+        }
     }
 }
 
