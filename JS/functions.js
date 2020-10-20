@@ -82,6 +82,13 @@ function validaciones(mod){
             document.getElementById("rpassContainer").className=document.getElementById("rpassContainer").className+" error";   
             datosCorrec=false;
         }
+        
+        campo = document.getElementById('agregarFoto').value;
+        if (campo == ""){
+            alert("Seleccione una imagen por favor.")   
+            datosCorrec=false;
+        }
+
         if(datosCorrec){
             document.getElementById("fnameLog").value="";
             document.getElementById("snameLog").value="";
@@ -141,7 +148,59 @@ function checkTextarea(idTxt, toggleWindow){
     var campo = document.getElementById(idTxt);
     if (campo.value == "")
         document.getElementById(idTxt).className=document.getElementById(idTxt).className+" error";
-    else
+    else if (toggleWindow != "")
+        $(toggleWindow).modal('toggle');
+}
+
+function checkNoticia(id, toggleWindow){
+    var campo;
+    var error = 0;
+    
+    campo = document.getElementById('headerNot');
+    if (campo.value == ""){
+        document.getElementById('headerNot').className=document.getElementById('headerNot').className+" error";
+        error = 1;
+    }
+    
+    campo = document.getElementById('infoNotfeho');
+    if (campo.value == ""){
+        document.getElementById('infoNotfeho').className=document.getElementById('infoNotfeho').className+" error";
+        error = 1;
+    }
+    
+    campo = document.getElementById('infoNotlug');
+    if (campo.value == ""){
+        document.getElementById('infoNotlug').className=document.getElementById('infoNotlug').className+" error";
+        error = 1;
+    }
+    
+    campo = document.getElementById('descNoticia');
+    if (campo.value == ""){
+        document.getElementById('descNoticia').className=document.getElementById('descNoticia').className+" error";
+        error = 1;
+    }
+    
+    campo = document.getElementById('bodyNoticia');
+    if (campo.value == ""){
+        document.getElementById('bodyNoticia').className=document.getElementById('bodyNoticia').className+" error";
+        error = 1;
+    }
+
+    campo = document.getElementById('archivosNoticia').value;
+    if (campo != ""){
+        var startIndex = (campo.indexOf('\\') >= 0 ? campo.lastIndexOf('\\') : campo.lastIndexOf('/'));
+        var filename = campo.substring(startIndex);
+        if (filename.indexOf('\\') === 0 || filename.indexOf('/') === 0) {
+            filename = filename.substring(1);
+        }
+        alert(filename);
+    }
+    else{
+        alert("Seleccione una imagen por favor.")
+        error = 1;
+    }
+
+    if (error == 0)
         $(toggleWindow).modal('toggle');
 }
 
@@ -264,4 +323,22 @@ function verificarDatos(){
         document.getElementById("telPerfil").disabled=true;
         document.getElementById("pwdPerfil").disabled=true;
     }
+}
+
+function nuevaNoticia(){
+    document.getElementById("notEdiNoticia").hidden=true;
+    document.getElementById("sepNotes").hidden=true;
+    document.getElementById("btnDeleteinNot").hidden=true;
+}
+
+function verRetro(){
+    document.getElementById("notEdiNoticia").hidden=false;
+    document.getElementById("sepNotes").hidden=false;
+    document.getElementById("btnDeleteinNot").hidden=false;
+}
+
+function editarNoticia(){
+    document.getElementById("notEdiNoticia").hidden=true;
+    document.getElementById("sepNotes").hidden=true;
+    document.getElementById("btnDeleteinNot").hidden=false;
 }

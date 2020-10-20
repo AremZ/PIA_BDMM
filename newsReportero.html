@@ -169,7 +169,7 @@
                                         </div>
                                         <div class="col-md-6 form-group">
                                             <label for="agregarFoto" class="custom-file-upload">Agregar una foto de perfil...</label>                                
-                                            <input type="file" id="agregarFoto">
+                                            <input type="file" id="agregarFoto" multiple>
                                         </div>
                                     </div>
                                 </div>
@@ -190,7 +190,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <button class="btn btn-outline-danger topBarNew" data-toggle="modal" data-target="#editorNoticia"><i class="fa fa-plus-circle"></i>Nueva noticia</button>
+                <button class="btn btn-outline-danger topBarNew" data-toggle="modal" data-target="#editorNoticia" onclick="nuevaNoticia()"><i class="fa fa-plus-circle"></i>Nueva noticia</button>
             </div>
         </div>
     </div>
@@ -220,7 +220,7 @@
                                     <div class="row">
                                         <h4 class="card-title col-md-6" id="PublicRev">Devuelto el: 9 de Octubre del 2020</h4>
                                         <button class="btn btn-outline-danger col-md-4 verCom" data-toggle="modal" data-target="#editorNoticia"
-                                        type="submit"><i class="fa fa-eye"></i>Ver retroalimentacion</button>
+                                        type="submit" onclick="verRetro()"><i class="fa fa-eye"></i>Ver retroalimentacion</button>
                                     </div>
                                 </div>
                             </div>
@@ -245,7 +245,7 @@
                                     <div class="row">
                                         <h4 class="card-title col-md-6" id="PublicRev">Devuelto el: 9 de Octubre del 2020</h4>
                                         <button class="btn btn-outline-danger col-md-4 verCom" data-toggle="modal" data-target="#editorNoticia"
-                                        type="submit"><i class="fa fa-eye"></i>Ver retroalimentacion</button>
+                                        type="submit" onclick="verRetro()"><i class="fa fa-eye"></i>Ver retroalimentacion</button>
                                     </div>
                                 </div>
                             </div>
@@ -270,7 +270,7 @@
                                     <div class="row">
                                         <h4 class="card-title col-md-6" id="PublicRev">Devuelto el: 9 de Octubre del 2020</h4>
                                         <button class="btn btn-outline-danger col-md-4 verCom" data-toggle="modal" data-target="#editorNoticia"
-                                        type="submit"><i class="fa fa-eye"></i>Ver retroalimentacion</button>
+                                        type="submit" onclick="verRetro()"><i class="fa fa-eye"></i>Ver retroalimentacion</button>
                                     </div>
                                 </div>
                             </div>
@@ -346,7 +346,7 @@
                                         <div class="row buttons">
                                             <button class="btn btn-outline-danger barBut" type="submit" id="btnSend"><i class="fa fa-paper-plane"></i>Enviar a revision</button>
                                             <button class="btn btn-outline-danger barBut"  data-toggle="modal" data-target="#editorNoticia"
-                                            type="submit" id="btnEdit"><i class="fa fa-pencil"></i>Editar</button>
+                                            type="submit" id="btnEdit" onclick="editarNoticia()"><i class="fa fa-pencil"></i>Editar</button>
                                             <button class="btn btn-outline-danger barBut" type="submit" id="btnDelete"><i class="fa fa-trash"></i>Eliminar</button>
                                         </div>
                                     </div>
@@ -372,7 +372,7 @@
                                         <div class="row buttons">
                                             <button class="btn btn-outline-danger barBut" type="submit" id="btnSend"><i class="fa fa-paper-plane"></i>Enviar a revision</button>
                                             <button class="btn btn-outline-danger barBut"  data-toggle="modal" data-target="#editorNoticia"
-                                            type="submit" id="btnEdit"><i class="fa fa-pencil"></i>Editar</button>
+                                            type="submit" id="btnEdit" onclick="editarNoticia()"><i class="fa fa-pencil"></i>Editar</button>
                                             <button class="btn btn-outline-danger barBut" type="submit" id="btnDelete"><i class="fa fa-trash"></i>Eliminar</button>
                                         </div>
                                     </div>
@@ -499,28 +499,28 @@
                                 <div class="row" id="noticiaBGVista">
      
                                     <div class="col-md-12" id="inputNoticia">
-                                        <textarea name="notasNoticia" id="notEdiNoticia"rows="3" readonly>Notas del Editor</textarea>
+                                        <textarea name="notasNoticia" id="notEdiNoticia" rows="3" readonly>Notas del Editor</textarea>
                                     </div>
                                     <div class="col-md-12">
-                                        <hr>
+                                        <hr id="sepNotes">
                                     </div>
                                     <div class="col-md-12" id="inputNoticia">
-                                        <textarea name="header" id="headerNot" placeholder="Escriba el titulo..." rows="1"></textarea>
+                                        <textarea name="header" id="headerNot" placeholder="Escriba el titulo..." rows="1" onfocus="cleanTextarea('headerNot')"></textarea>
                                     </div>
                                     <div class="col-md-6" id="inputNoticia">
-                                        <textarea name="fechhorNoticia" id="infoNotfeho" placeholder="Escriba la fecha y hora del acontecimiento..." rows="1"></textarea>
+                                        <textarea name="fechhorNoticia" id="infoNotfeho" placeholder="Escriba la fecha y hora del acontecimiento..." rows="1" onfocus="cleanTextarea('infoNotfeho')"></textarea>
                                     </div>    
                                     <div class="col-md-6" id="inputNoticia">
-                                        <textarea name="lugNoticia" id="infoNotlug" placeholder="Escriba el lugar del acontecimiento..." rows="1"></textarea>
+                                        <textarea name="lugNoticia" id="infoNotlug" placeholder="Escriba el lugar del acontecimiento..." rows="1" onfocus="cleanTextarea('infoNotlug')"></textarea>
                                     </div>     
                                     <div class="col-md-12" id="inputNoticia">
-                                        <textarea name="descCortNoticia" id="descNoticia" placeholder="Escriba una descripcion corta..." rows="3"></textarea>
+                                        <textarea name="descCortNoticia" id="descNoticia" placeholder="Escriba una descripcion corta..." rows="3" onfocus="cleanTextarea('descNoticia')"></textarea>
                                     </div>
                                     <div class="col-md-12">
                                         <hr>
                                     </div>
                                     <div class="col-md-12" id="inputNoticia">
-                                        <textarea name="compNoticia" id="bodyNoticia" placeholder="Escriba la noticia completa..." rows="8"></textarea>
+                                        <textarea name="compNoticia" id="bodyNoticia" placeholder="Escriba la noticia completa..." rows="8" onfocus="cleanTextarea('bodyNoticia')"></textarea>
                                     </div>
                                     <div class="col-md-9">
                                         <!--Slider -->
@@ -568,8 +568,8 @@
 
                                     <div class="col-md-12">
                                         <hr>
-                                        <button class="btn btn-outline-danger buttEditor" type="submit" data-toggle="modal" data-target="#editorNoticia" id="btnSendinNot"><i class="fa fa-paper-plane"></i>Enviar a revision</button>
-                                        <button class="btn btn-outline-danger buttEditor" type="submit" data-toggle="modal" data-target="#editorNoticia" id="btnSaveinNot"><i class="fa fa-floppy-o"></i>Guardar</button>
+                                        <button class="btn btn-outline-danger buttEditor" type="submit" id="btnSendinNot" onclick="checkNoticia('#editorNoticia')"><i class="fa fa-paper-plane"></i>Enviar a revision</button>
+                                        <button class="btn btn-outline-danger buttEditor" type="submit" id="btnSaveinNot" onclick="checkNoticia('#editorNoticia')"><i class="fa fa-floppy-o"></i>Guardar</button>
                                         <button class="btn btn-outline-danger buttEditor" type="submit" data-toggle="modal" data-target="#editorNoticia" id="btnDeleteinNot"><i class="fa fa-trash"></i>Eliminar</button>
                                         <button class="btn btn-outline-danger buttEditor" type="submit" data-toggle="modal" data-target="#editorNoticia" id="btnCancelinNot"><i class="fa fa-times"></i>Cancelar</button>
                                     </div>
