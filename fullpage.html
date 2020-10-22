@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nova | Inicio</title>
+    <title>Nova | Noticia</title>
 
     <link rel="stylesheet" href="CSS/fullpage.css">
     <link rel="stylesheet" href="CSS/generales.css">
@@ -31,7 +31,7 @@
 
     <!------ Barra de Navegacion & Searchbar ------>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top" id="navBar">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" id="navBar">
         <div class="container-fluid">
             <a class="navbar-brand" href="main.html"><img src="Sources/Header/LogoBar.png"></a>
             <button class="navbar-toggler bg-dangerf" type="button" data-toggle="collapse" data-target="#navBarColl">
@@ -63,6 +63,30 @@
                             <a class="dropdown-item" onclick="cerrarSesion()">Cerrar Sesion</a>
                         </div>
                     </li>         
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top" id="navBarSecciones">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav mr-auto ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="main.html">Seccion 1</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Seccion 2</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Seccion 3</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Seccion 4</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Seccion 5</a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -228,6 +252,7 @@
                                         <li data-target="#slides" data-slide-to="0" class="active"></li>
                                         <li data-target="#slides" data-slide-to="1"></li>
                                         <li data-target="#slides" data-slide-to="2"></li>
+                                        <li data-target="#slides" data-slide-to="3"></li>
                                     </ul>
                                     <div class="carousel-inner">
                                         <div class="carousel-item active">
@@ -238,6 +263,11 @@
                                         </div>
                                         <div class="carousel-item">
                                             <img src="Sources/Note3.jpg">
+                                        </div>
+                                        <div class="carousel-item">
+                                            <video controls autoplay loop>
+                                              <source src="Sources/VPW.mp4" type="video/mp4">
+                                            </video>
                                         </div>
                                         <a class="carousel-control-prev" href="#slides" role="button" data-slide="prev">
                                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -306,7 +336,7 @@
                                     </span>
                                     <span class="commenter-name">
                                       <input type="text" placeholder="Agregar un comentario..." name="Agregar Comentario">
-                                      <button type="submit" class="btn btn-outline-danger">Publicar</button>
+                                      <button type="submit" class="btn btn-outline-danger"><i class="fa fa-comments"></i>Publicar</button>
                                     </span>
                                   </div>
 
@@ -400,7 +430,7 @@
                         <p class="card-text descrNoticiaRec">
                             NOTICIA NOTICIA NOTICIA
                         </p>
-                        <button class="btn btn-outline-danger">Ver noticia</button>   
+                        <button class="btn btn-outline-danger"><i class="fa fa-newspaper-o"></i>Ver noticia</button>   
                     </div>
                 </div>
             
@@ -411,7 +441,7 @@
                         <p class="card-text descrNoticiaRec">
                             NOTICIA NOTICIA NOTICIA
                         </p>
-                        <button class="btn btn-outline-danger">Ver noticia</button>   
+                        <button class="btn btn-outline-danger"><i class="fa fa-newspaper-o"></i>Ver noticia</button>   
                     </div>
                 </div>
             
@@ -422,7 +452,7 @@
                         <p class="card-text descrNoticiaRec">
                             NOTICIA NOTICIA NOTICIA
                         </p>
-                        <button class="btn btn-outline-danger">Ver noticia</button>   
+                        <button class="btn btn-outline-danger"><i class="fa fa-newspaper-o"></i>Ver noticia</button>   
                     </div>
                 </div>    
             </div>

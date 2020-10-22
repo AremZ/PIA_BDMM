@@ -20,8 +20,12 @@ body{
 
 /* --------------- Header --------------- */
 
-nav.navbar#navBar{
+nav.navbar#navBar, nav.navbar#navBarSecciones{
     background-color: var(--NavBar) !important;
+}
+
+nav.navbar#navBarSecciones{
+    height: 40px;
 }
 
 .navbar .navbar-nav li a:hover{
