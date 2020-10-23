@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nova | Mi Perfil</title>
+    <title>Nova | Escritorio de Administrador</title>
 
     <link rel="stylesheet" href="CSS/fullpage.css">
     <link rel="stylesheet" href="CSS/generales.css">
@@ -21,12 +21,6 @@
     <script>
         $(document).ready(function(){
             $("#btnProfile").toggle();
-            $("#btnSaveDat").toggle();
-            $("#btnCancelDat").toggle();
-            $("#btnCambiarFoto").toggle();
-            $("#rpwdPerfil").toggle();
-            $("#lblrpwdPerfil").toggle();
-            
         });
     </script>
 </head>
@@ -218,74 +212,204 @@
 
     <div class="container-fluid padding">
         <div class="row">
-            <div class="col-lg-12">
-                <h1 id="datosPerfil">Datos del Perfil</h1>
+            <div class="col-lg-10">
+                <h1 id="escrAdmin">Escritorio de Administrador</h1>
+            </div>
+            <div class="col-lg-2">
+                <button class="btn btn-outline-danger newUser" data-toggle="modal" data-target="#modRegister"
+                onclick="cleanInput('fnameAdmin'), cleanInput('snameAdmin'), cleanInput('lnameAdmin'), cleanInput('emailRAdmin'),
+                cleanInput('telAdmin'), cleanInput('pwdAdmin'), cleanInput('rpwdAdmin'), createUsuario()"><i class="fa fa-plus-circle"></i>Crear usuario</button>
             </div>
         </div>
     </div>
-    <hr class="topProfile">
+    <hr class="topAdmin">
 
     <div class="container-fluid padding">
         <div class="row">
-            <div class="col-lg-3" id="displaypfp">
-                <img src="sources/11.jpg">
-                <hr class="imgProfile">
-                <div class="col-md-12 form-group">
-                    <div class="row">   
-                        <div class="col-md-12">
-                            <button class="btn btn-outline-danger btnBarProfile" data-toggle="modal" data-target="#confirmDelete" id="btnDelAcc"><i class="fa fa-fire"></i>Dar cuenta de baja</button>
-                        </div>   
-                        <div class="col-md-12">
-                            <label for="cambiarFoto" class="custom-file-upload-pfp" id="btnCambiarFoto"><i class="fa fa-upload"></i>Cambiar foto de perfil</label>                                
-                            <input type="file" id="cambiarFoto"> 
+            <div class="col-lg-1"></div>
+            <div class="col-lg-10">
+                <ul class="list-group allUsers">
+                    <li class="list-group-item active">
+                        <div class="row">
+                            <span class="col-lg-4">
+                                Nombre del usuario
+                            </span>
+                            <span class="col-lg-4">
+                                Tipo de Usuario
+                            </span>
+                            <span class="col-lg-4">
+                                Acciones
+                            </span>
                         </div>
-                    </div>
-                </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="row">
+                            <span class="col-lg-4 displayName">
+                                <i class="fa fa-user-circle"></i>
+                                <span>Abraham Reyes Muñiz</span>
+                            </span>
+                            <span class="col-lg-4 displayType">
+                                <i class="fa fa-clipboard"></i>
+                                Editor
+                            </span>
+                            <span class="col-lg-4 displayActions">
+                                <button class="btn btn-outline-danger col-lg-5 actionsAdmin" data-toggle="modal" data-target="#modRegister" onclick="editUsuario()"><i class="fa fa-pencil"></i>Editar</button>
+                                <button class="btn btn-outline-danger col-lg-5 actionsAdmin" data-toggle="modal" data-target="#confirmDeleteAdmin" onclick=""><i class="fa fa-times"></i>Eliminar</button>
+                            </span>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="row">
+                            <span class="col-lg-4 displayName">
+                                <i class="fa fa-user-circle"></i>
+                                <span>Yareli Guevara Villalpando</span>
+                            </span>
+                            <span class="col-lg-4 displayType">
+                                <i class="fa fa-clipboard"></i>
+                                Editor
+                            </span>
+                            <span class="col-lg-4 displayActions">
+                                <button class="btn btn-outline-danger col-lg-5 actionsAdmin" data-toggle="modal" data-target="#modRegister" onclick="editUsuario()"><i class="fa fa-pencil"></i>Editar</button>
+                                <button class="btn btn-outline-danger col-lg-5 actionsAdmin" data-toggle="modal" data-target="#confirmDeleteAdmin" onclick=""><i class="fa fa-times"></i>Eliminar</button>
+                            </span>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="row">
+                            <span class="col-lg-4 displayName">
+                                <i class="fa fa-user-circle"></i>
+                                <span>Andrea Cecilia Aguayo Millan</span>
+                            </span>
+                            <span class="col-lg-4 displayType">
+                                <i class="fa fa-file-text-o"></i>
+                                Reportero
+                            </span>
+                            <span class="col-lg-4 displayActions">
+                                <button class="btn btn-outline-danger col-lg-5 actionsAdmin" data-toggle="modal" data-target="#modRegister" onclick="editUsuario()"><i class="fa fa-pencil"></i>Editar</button>
+                                <button class="btn btn-outline-danger col-lg-5 actionsAdmin" data-toggle="modal" data-target="#confirmDeleteAdmin" onclick=""><i class="fa fa-times"></i>Eliminar</button>
+                            </span>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="row">
+                            <span class="col-lg-4 displayName">
+                                <i class="fa fa-user-circle"></i>
+                                <span>Edgar Eleazar Mejia Zuñiga</span>
+                            </span>
+                            <span class="col-lg-4 displayType">
+                                <i class="fa fa-file-text-o"></i>
+                                Reportero
+                            </span>
+                            <span class="col-lg-4 displayActions">
+                                <button class="btn btn-outline-danger col-lg-5 actionsAdmin" data-toggle="modal" data-target="#modRegister" onclick="editUsuario()"><i class="fa fa-pencil"></i>Editar</button>
+                                <button class="btn btn-outline-danger col-lg-5 actionsAdmin" data-toggle="modal" data-target="#confirmDeleteAdmin" onclick=""><i class="fa fa-times"></i>Eliminar</button>
+                            </span>
+                        </div>
+                    </li>
+                </ul>
             </div>
-
-            <div class="col-lg-8 container-datos">
-                <div class="row">
-                    <div class="col-md-4 form-group">
-                        <label for="fname">Nombre(s):</label>
-                        <input type="text" class="form-control" id="fnamePerfil" onfocus="cleanTextarea('fnamePerfil')" disabled>
-                    </div>
-                    <div class="col-md-4 form-group">
-                        <label for="sname">Apellido Paterno:</label>
-                        <input type="text" class="form-control" id="snamePerfil" onfocus="cleanTextarea('snamePerfil')" disabled>
-                    </div>
-                    <div class="col-md-4 form-group">
-                        <label for="lname">Apellido Materno:</label>
-                        <input type="text" class="form-control" id="lnamePerfil" onfocus="cleanTextarea('lnamePerfil')" disabled>
-                    </div>
-                    <div class="col-md-6 form-group">
-                        <label for="email">Correo Electronico:</label>
-                        <input type="email" class="form-control" id="emailPerfil" onfocus="cleanTextarea('emailPerfil')" disabled>
-                    </div>
-                    <div class="col-md-6 form-group">
-                        <label for="rpwd">Telefono:</label>
-                        <input type="number" class="form-control" id="telPerfil" onfocus="cleanTextarea('telPerfil')" disabled>
-                    </div>  
-
-                    <div class="col-md-12 form-group">
-                        <label for="pwd">Contraseña:</label>
-                        <input type="password" class="form-control" id="pwdPerfil" onfocus="cleanTextarea('pwdPerfil')" disabled>
-                    </div>
-                    <div class="col-md-12 form-group">
-                        <label for="rpwd" id="lblrpwdPerfil">Confirme su contraseña:</label>
-                        <input type="password" class="form-control" id="rpwdPerfil" onfocus="cleanTextarea('rpwdPerfil')">
-                    </div>
-                    <div class="col-md-12">
-                        <button class="btn btn-outline-danger btnBarData" id="btnModDat" onclick="modificarDatos()"><i class="fa fa-pencil"></i>Modificar Datos</button>
-                        <button class="btn btn-outline-danger btnBarData" onclick="verificarDatos()" id="btnSaveDat"><i class="fa fa-floppy-o"></i>Guardar</button> 
-                        <button class="btn btn-outline-danger btnBarData" onclick="cancelarDatos()" id="btnCancelDat"><i class="fa fa-times"></i>Cancelar</button> 
-                    </div>
-                </div>
-            </div> 
-
-        </div> 
+        </div>
     </div>
 
-    <div id="confirmDelete" class="modal fade">
+    <!------ Registro de Usuarios ------>
+    <div id="modRegister" class="modal fade">
+        <div class="modal-dialog" id="registroUsuarios">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header" id="hLogin">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div id="registerAdmin" class="modal-body">
+                    <div>
+                        <h1 id="titleAdmin">Crear un usuario</h1>
+                        <hr>
+                    </div>
+                   <form action="/action_page.php">
+                       <div class="row">
+                           <div class="col-md-1"></div>
+                           <div class="col-md-10">
+                               <div class="row">
+                                   <div class="col-md-4 form-group">
+                                       <label for="fname">Nombre(s):</label>
+                                       <div id="nameContainerAdmin">
+                                         <input type="text" class="form-control" id="fnameAdmin" onfocus="cleanInputClass('fnameAdmin')">
+                                       </div>
+                                   </div>
+                                   <div class="col-md-4 form-group">
+                                       <label for="sname">Apellido Paterno:</label>
+                                       <div id="snameContainerAdmin">
+                                         <input type="text" class="form-control" id="snameAdmin" onfocus="cleanInputClass('snameAdmin')">
+                                       </div>
+                                   </div>
+                                   <div class="col-md-4 form-group">
+                                       <label for="lname">Apellido Materno:</label>
+                                       <div id="lnameContainerAdmin">
+                                         <input type="text" class="form-control" id="lnameAdmin" onfocus="cleanInputClass('lnameAdmin')">
+                                       </div>
+                                   </div>
+      
+                                   <div class="col-md-6 form-group">
+                                       <label for="email">Correo Electronico:</label>
+                                       <div id="mailRContainerAdmin">
+                                         <input type="email" class="form-control" id="emailRAdmin" onfocus="cleanInputClass('emailRAdmin')">
+                                       </div>
+                                   </div>
+                                   <div class="col-md-6 form-group">
+                                       <label for="rpwd">Telefono:</label>
+                                       <div id="telContainerAdmin">
+                                         <input type="number" class="form-control" id="telAdmin" onfocus="cleanInputClass('telAdmin')">
+                                       </div>
+                                   </div>  
+      
+                                   <div class="col-md-6 form-group">
+                                       <label for="pwd">Contraseña:</label>
+                                       <div id="passRContainerAdmin">
+                                         <input type="password" class="form-control" id="pwdAdmin" onfocus="cleanInputClass('pwdAdmin')">
+                                       </div>
+                                   </div>
+                                   <div class="col-md-6 form-group">
+                                       <label for="rpwd">Confirme su contraseña:</label>
+                                       <div id="rpassContainerAdmin">
+                                         <input type="password" class="form-control" id="rpwdAdmin" onfocus="cleanInputClass('rpwdAdmin')">
+                                       </div>
+                                   </div>
+                                   <div class="col-md-4 form-group" id="displayImgAdmin">
+                                       <img src="sources/13.jpg">
+                                   </div>
+                                   <div class="col-md-4 form-group">
+                                       <label for="agregarFotoAdmin" class="custom-file-upload">Agregar una foto de perfil...</label>                                
+                                       <input type="file" id="agregarFotoAdmin">
+                                   </div>
+                                   <div class="col-md-4 form-group" id="UsuarioSel">
+                                    <label for="selectUsuario">Elija el tipo de cuenta</label>                                
+                                    <select class="form-control" id="selectUsuario">
+                                        <option>Usuario</option>
+                                        <option>Reportero</option>
+                                        <option>Editor</option>
+                                    </select>
+                                   </div>
+                               </div>
+                           </div>
+                           <div class="col-md-1"></div>
+                       </div>
+                   </form>
+                   <hr>
+                   <button type="button" class="btn btn-outline-danger" 
+                       style="float:right" onclick="validaciones(3)" id="registerUserAdmin"><i class="fa fa-check"></i>Registrarme
+                   </button>
+                   <button type="button" class="btn btn-outline-danger" 
+                       style="float:right" id="cancelUserAdmin" data-toggle="modal" data-target="#modRegister"><i class="fa fa-times"></i>Cancelar
+                   </button>
+                   <button type="button" class="btn btn-outline-danger" 
+                       style="float:right" onclick="validaciones(3)" id="saveUserAdmin"><i class="fa fa-floppy-o"></i>Guardar cambios
+                   </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="confirmDeleteAdmin" class="modal fade">
         <div class="modal-dialog">
 
             <!-- Modal content-->
@@ -295,15 +419,15 @@
                 </div>
                 <div class="modal-body">
 
-                    <h5>¿Está seguro que desea eliminar su cuenta?</h5>
+                    <h5>¿Está seguro que desea eliminar esta cuenta?</h5>
                 
                     <hr>
-                    <button type="button" class="btn btn-outline-danger" style="float:left" id="btnConfirmDel"
-                    data-toggle="modal" data-target="#confirmDelete" onclick="javascript:window.location.href='main.html';"></a><i class="fa fa-fire">                        
+                    <button type="button" class="btn btn-outline-danger" style="float:left" id="btnConfirmDelAdmin"
+                    data-toggle="modal" data-target="#confirmDelete"></a><i class="fa fa-fire">                        
                     </i>Dar cuenta de baja</button>
 
                     <button type="button" class="btn btn-outline-danger" 
-                        style="float:right" id="btnCancelDel" data-toggle="modal" data-target="#confirmDelete"><i class="fa fa-times"></i>Cancelar</button>
+                        style="float:right" id="btnCancelDel" data-toggle="modal" data-target="#confirmDeleteAdmin"><i class="fa fa-times"></i>Cancelar</button>
                 
                 </div>
             </div>

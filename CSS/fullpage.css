@@ -698,12 +698,64 @@ video {
     height:"100px";
 }
 
+/* ----------- Escritorio de Admin ----------- */
 
-
-
-.comments-details {
-    padding: 15px 15px;
+.newUser{
+    font-family: 'Oswald', sans-serif !important;
+    margin-top: 2em;
+    margin-right: 3em;
+    margin-bottom: 0.5em;
+    float: right;
 }
+
+#escrAdmin{
+    font-family: 'Oswald', sans-serif;
+    text-align: left;
+    color: var(--NavBar);
+    margin-top: 1rem;
+}
+
+hr.topAdmin{
+    border: 1px solid black;
+    width: 95%;
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+ul.allUsers li.active{
+    font-family: 'Oswald', sans-serif;
+    background-color: var(--Color-2);
+    border: 1px solid var(--Color-2);
+}
+
+ul.allUsers li span{
+    margin-top: auto;
+    margin-bottom: auto;
+    text-align: center;
+}
+
+ul.allUsers li span.displayName, ul.allUsers li span.displayType{
+    font-family: 'Oswald', sans-serif;
+}
+
+button.actionsAdmin{
+    height: 30px;
+    line-height: 15px;
+    font-family: 'Oswald', sans-serif;
+}
+
+ul.allUsers:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+ul.allUsers{
+    margin-bottom: 1em;
+}
+
+
+
+
+
 
 .comments .comments .dropdown,
 .comments .dropup {

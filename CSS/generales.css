@@ -91,11 +91,11 @@ nav.navbar#navBarSecciones{
 
 /* --------------- Modal Login --------------- */
 
-.modal-dialog#modLogIn {
+.modal-dialog#modLogIn, .modal-dialog#registroUsuarios {
     max-width: 70% !important;
 }
 
-.modal-body#bLogin label{
+.modal-body#bLogin label, .modal-body#registerAdmin label, .modal-body#registerAdmin h1{
     font-family: 'Oswald', sans-serif;
 }
 
@@ -106,11 +106,11 @@ nav.navbar#navBarSecciones{
     margin-right: auto;
 }
 
-.modal-body#bLogin div#register form{
+.modal-body#bLogin div#register form, .modal-body#registerAdmin form{
     font-family: 'Roboto', sans-serif;
 }
 
-.modal-body#bLogin div#login form input:focus, .modal-body#bLogin div#register form input:focus{
+.modal-body#bLogin div#login form input:focus, .modal-body#bLogin div#register form input:focus, .modal-body#registerAdmin form input:focus{
     border: 1px solid var(--Color-2);
     box-shadow: 0 0 4px var(--Color-2);
 }
@@ -154,7 +154,22 @@ input[type="file"] {
     color: var(--TitleFont);
 }
 
-div#displayImg img{
+div#UsuarioSel{
+    font-family: 'Oswald', sans-serif !important;
+    margin-top: 4em;
+}
+
+select#selectUsuario{
+    font-family: 'Oswald', sans-serif !important;
+    color: var(--Color-2);
+    border: 1px solid var(--Color-2);
+}
+
+select#selectUsuario:focus{
+    box-shadow: 0 0 4px var(--Color-2);
+}
+
+div#displayImg img, div#displayImgAdmin img{
     width: 200px;
     height: 200px;
     border: 2px solid var(--Color-2);
