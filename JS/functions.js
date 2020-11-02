@@ -242,9 +242,15 @@ function checkNoticia(id, toggleWindow){
         error = 1;
     }
     
-    campo = document.getElementById('infoNotfeho');
+    campo = document.getElementById('infoNotFe');
     if (campo.value == ""){
-        document.getElementById('infoNotfeho').className=document.getElementById('infoNotfeho').className+" error";
+        document.getElementById('infoNotFe').className=document.getElementById('infoNotFe').className+" error";
+        error = 1;
+    }
+    
+    campo = document.getElementById('infoNotHo');
+    if (campo.value == ""){
+        document.getElementById('infoNotHo').className=document.getElementById('infoNotHo').className+" error";
         error = 1;
     }
     
@@ -263,6 +269,12 @@ function checkNoticia(id, toggleWindow){
     campo = document.getElementById('bodyNoticia');
     if (campo.value == ""){
         document.getElementById('bodyNoticia').className=document.getElementById('bodyNoticia').className+" error";
+        error = 1;
+    }
+    
+    campo = document.getElementById('infoNotpalClav');
+    if (campo.value == ""){
+        document.getElementById('infoNotpalClav').className=document.getElementById('infoNotpalClav').className+" error";
         error = 1;
     }
 

@@ -531,7 +531,8 @@
                                         <textarea name="header" id="headerNot" placeholder="Escriba el titulo..." rows="1" onfocus="cleanTextarea('headerNot')"></textarea>
                                     </div>
                                     <div class="col-md-6" id="inputNoticia">
-                                        <textarea name="fechhorNoticia" id="infoNotfeho" placeholder="Escriba la fecha y hora del acontecimiento..." rows="1" onfocus="cleanTextarea('infoNotfeho')"></textarea>
+                                        <input type="date" name="" id="infoNotFe" class="col-md-6" onfocus="cleanTextarea('infoNotFe')">
+                                        <input type="time" name="" id="infoNotHo" class="col-md-5" onfocus="cleanTextarea('infoNotHo')">
                                     </div>    
                                     <div class="col-md-6" id="inputNoticia">
                                         <textarea name="lugNoticia" id="infoNotlug" placeholder="Escriba el lugar del acontecimiento..." rows="1" onfocus="cleanTextarea('infoNotlug')"></textarea>
@@ -588,7 +589,9 @@
                                             </select>
                                         </div>
                                     </div>
-
+                                    <div class="col-md-12" id="inputNoticia">
+                                        <textarea name="palClavNoticia" id="infoNotpalClav" placeholder="Palabras clave. Ejemplo: noticia,popular,asalto,famosos,etc..." rows="1" onfocus="cleanTextarea('infoNotpalClav')"></textarea>
+                                    </div>  
                                     <div class="col-md-12">
                                         <hr>
                                         <button class="btn btn-outline-danger buttEditor" type="submit" id="btnSendinNot" onclick="checkNoticia('#editorNoticia')"><i class="fa fa-paper-plane"></i>Enviar a revision</button>

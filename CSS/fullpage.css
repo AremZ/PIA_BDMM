@@ -507,6 +507,21 @@ div#EditNot{
     margin-top: 1rem;
 }
 
+input#infoNotHo, input#infoNotFe{
+    border: 1px solid var(--NavBar);    
+    border-radius: 5px;
+}
+
+input#infoNotHo:focus, input#infoNotFe:focus{
+    border: 2px solid var(--Color-2);
+    outline: none;
+    background-color: #f5f5f5;
+}
+
+input#infoNotHo{
+    margin-left: 2rem;
+}
+
 textarea#headerNot{
     font-family: 'Oswald', sans-serif !important;
     outline: none;
@@ -524,7 +539,7 @@ textarea#headerNot:focus{
     outline: none;
 }
 
-textarea#infoNotfeho, textarea#infoNotlug, textarea#descNoticia{
+textarea#infoNotfeho, textarea#infoNotlug, textarea#descNoticia, textarea#infoNotpalClav{
     font-family: 'Roboto', sans-serif !important;
     outline: none;
     border: 1px solid var(--NavBar);
@@ -548,7 +563,7 @@ textarea#notEdiNoticia{
     box-shadow: 0 0 8px var(--Color-2);
 }
 
-textarea#infoNotfeho:focus, textarea#infoNotlug:focus, textarea#descNoticia:focus{
+textarea#infoNotfeho:focus, textarea#infoNotlug:focus, textarea#descNoticia:focus, textarea#infoNotpalClav:focus{
     border: 2px solid var(--Color-2);
     background-color: #f5f5f5;
     outline: none;
