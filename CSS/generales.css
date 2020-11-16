@@ -26,6 +26,7 @@ nav.navbar#navBar, nav.navbar#navBarSecciones{
 
 nav.navbar#navBarSecciones{
     height: 40px;
+    z-index: -1;
 }
 
 .navbar .navbar-nav li a:hover{
