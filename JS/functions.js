@@ -1,38 +1,67 @@
 function validaciones(mod){
     
     if (mod==1){
-        var campo = document.getElementById("emailLog");
-        if(campo.value=="")
+        var campoEmail = document.getElementById("emailLog");
+        var inputEmail = false;
+        var inputPass = false;
+        
+        if(campoEmail.value==""){
             document.getElementById("mailContainer").className=document.getElementById("mailContainer").className+" error";
+            inputEmail = false;
+        }
         
         else{
-            if (!(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(campo.value))){
+            if (!(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(campoEmail.value))){
                 document.getElementById("mailContainer").className=document.getElementById("mailContainer").className+" error";
+                alert("Dirección de correo inválida.")
+                inputEmail = false;
             }
             else{
-                if (!(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(campo.value))){
-                    document.getElementById("mailContainer").className=document.getElementById("mailContainer").className+" error";
-                    alert("Dirección de correo inválida.")
-                }
+                inputEmail = true;
             }
-            campo = document.getElementById("pwdLog");
         }
         
-        if(campo.value==""){
+        var campoPass = document.getElementById("pwdLog");
+        if(campoPass.value==""){
             document.getElementById("passContainer").className=document.getElementById("passContainer").className+" error";
+            inputPass = false;
         }
-        else if(campo.value == "123454321"){
+        else{
+            inputPass = true;
+        }
+            
+        
+        if (inputEmail && inputPass) {
+            jQuery.ajax({
+                type: "POST",
+                url: 'functions.php',
+                dataType: 'json',
+                data: {functionname: 'add', arguments: [1, 2]},
+
+                success: function (obj, textstatus) {
+                    if (!('error' in obj)) {
+                        yourVariable = obj.result;
+                    } else {
+                        console.log(obj.error);
+                    }
+                }
+            });
+
             alert("Contraseña correcta!");
+
             $('#modLogin').modal('toggle');
             $("#btnLogin").toggle();
             $("#btnProfile").toggle();
+
         }
         else{
+            document.getElementById("mailContainer").className=document.getElementById("mailContainer").className+" error";
             document.getElementById("passContainer").className=document.getElementById("passContainer").className+" error";
         }
     }
 
     else if (mod==2){
+        var campo;
         var datosCorrec=true;
         campo = document.getElementById("fnameLog");
         if(campo.value==""){
