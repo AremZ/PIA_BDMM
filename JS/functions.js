@@ -32,27 +32,27 @@ function validaciones(mod){
             
         
         if (inputEmail && inputPass) {
-            jQuery.ajax({
-                type: "POST",
-                url: 'functions.php',
-                dataType: 'json',
-                data: {functionname: 'add', arguments: [1, 2]},
-
-                success: function (obj, textstatus) {
-                    if (!('error' in obj)) {
-                        yourVariable = obj.result;
-                    } else {
-                        console.log(obj.error);
+            
+            var emailString = JSON.stringify(campoEmail.value);
+            var passString = JSON.stringify(campoPass.value);
+            
+            $.ajax({
+                url: "functions.php",
+                type: "post",
+                dataType: "json",
+                data: {method: 'userLogin', email: campoEmail.value, pass: campoPass.value},
+                success: function (result) {
+                    if(result.msg){
+                        alert("Sesion iniciada exitosamente!");                        
+                        $('#modLogin').modal('toggle');
+                        $("#btnLogin").toggle();
+                        $("#btnProfile").toggle()
                     }
+                    else
+                        alert("Verifique sus datos.");
                 }
+
             });
-
-            alert("Contraseña correcta!");
-
-            $('#modLogin').modal('toggle');
-            $("#btnLogin").toggle();
-            $("#btnProfile").toggle();
-
         }
         else{
             document.getElementById("mailContainer").className=document.getElementById("mailContainer").className+" error";

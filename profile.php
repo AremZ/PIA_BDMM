@@ -34,11 +34,13 @@
 <body>
 
     <!------ Barra de Navegacion & Searchbar ------>
-    
-    <?php include 'functions.php';
-        userLogin('rm.abraham08@gmail.com', 'AbrahamRM_72');
-    ?>
 
+
+    <?php
+    //include 'functions.php';
+    //userLogin('rm.abraham08@gmail.com', 'AbrahamRM_72');
+    ?>
+    
     <nav class="navbar navbar-expand-lg navbar-light bg-light" id="navBar">
         <div class="container-fluid">
             <a class="navbar-brand" href="main.html"><img src="Sources/Header/LogoBar.png"></a>
@@ -132,13 +134,13 @@
                                 <div class="form-group">
                                     <label for="email">Correo Electronico:</label>
                                     <div id="mailContainer">
-                                    <input type="email" class="form-control" id="emailLog" onfocus="limpiar(0)">
+                                    <input type="email" class="form-control" id="emailLog" name="email" onfocus="limpiar(0)">
                                   </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="pwd">Contraseña:</label>
                                     <div id="passContainer">
-                                    <input type="password" class="form-control" id="pwdLog" onfocus="limpiar(1)">
+                                    <input type="password" class="form-control" id="pwdLog" name="pwd" onfocus="limpiar(1)">
                                   </div>
                                 </div>
                             </form>
