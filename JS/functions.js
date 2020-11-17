@@ -31,8 +31,7 @@ function validaciones(mod){
         }
             
         
-        if (inputEmail && inputPass) {
-            
+        if (inputEmail && inputPass) {            
             $.ajax({
                 url: "functions.php",
                 type: "post",
@@ -48,7 +47,6 @@ function validaciones(mod){
                     else
                         alert("Verifique sus datos.");
                 }
-
             });
         }
         else{
@@ -116,17 +114,37 @@ function validaciones(mod){
         }
 
         if(datosCorrec){
-            document.getElementById("fnameLog").value="";
-            document.getElementById("snameLog").value="";
-            document.getElementById("lnameLog").value="";
-            document.getElementById("emailRLog").value="";
-            document.getElementById("telLog").value="";
-            document.getElementById("pwdRLog").value="";
-            document.getElementById("rpwdLog").value="";
-            alert("Registro exitoso.");
-            $('#modLogin').modal('toggle');
-            $("#btnLogin").toggle();
-            $("#btnProfile").toggle();
+            var campoName = document.getElementById("fnameLog");
+            var campoLN = document.getElementById("snameLog");
+            var campoLN2 = document.getElementById("lnameLog");
+            var campoEmail = document.getElementById("emailRLog");
+            var campoTel = document.getElementById("telLog");
+            var campoPass = document.getElementById("pwdRLog");
+            $.ajax({
+                url: "functions.php",
+                type: "post",
+                dataType: "json",
+                data: {method: 'userSignUp', name: campoName.value,lastName:campoLN.value,lastName2:campoLN2.value,email: campoEmail.value,numTel:campoTel.value, pass: campoPass.value},
+                success: function (result) {
+                    if(result.msg){
+                        alert("¡Registro exitoso!");    
+                        document.getElementById("fnameLog").value="";
+                        document.getElementById("snameLog").value="";
+                        document.getElementById("lnameLog").value="";
+                        document.getElementById("emailRLog").value="";
+                        document.getElementById("telLog").value="";
+                        document.getElementById("pwdRLog").value="";
+                        document.getElementById("rpwdLog").value="";                    
+                        $('#modLogin').modal('toggle');
+                        $("#btnLogin").toggle();
+                        $("#btnProfile").toggle()
+                    }
+                    else
+                        alert("Correo ya registrado.");
+                }
+
+            });  
+   
         }
     }
 
