@@ -22,7 +22,7 @@ if ($method == "userLogin"){
         }
         closeDB($conn);
     }
-}  
+}   
 
 if ($method == "userSignUp"){
     //Creamos la conexion
@@ -36,8 +36,8 @@ if ($method == "userSignUp"){
         $email= $_POST['email'];
         $tel=$_POST['numTel'];
         $pass= $_POST['pass'];
-        
-        $query  = "CALL sp_userSignUp('$userType','$name', '$lastN','$lastN2','$email', ' $tel','$pass');";
+
+        $query  = "CALL sp_userSignUp('$userType','$name','$lastN','$lastN2','$email','$tel','$pass');";
         mysqli_query($conn, $query);
         $fila=mysqli_affected_rows($conn);
         if($fila!=0){
@@ -48,12 +48,12 @@ if ($method == "userSignUp"){
         }
         closeDB($conn);
     }
-} 
+}  
 
 function connectDB(){
     $servername = "localhost";
-    $username = "root";
-    $password = "";
+    $username = "PruebaDB3";
+    $password = "password";
     $dbname = "novadb";  
     
     $conn = mysqli_connect($servername, $username, $password, $dbname);
@@ -69,8 +69,6 @@ function connectDB(){
 function closeDB($connection){
     mysqli_close($connection);   
 }
-
-
 
 ?>
 

@@ -354,7 +354,7 @@
                 </div>
                 <div id="registerAdmin" class="modal-body">
                     <div>
-                        <h1 id="titleAdmin">Crear reportero</h1>
+                        <h1 id="titleAdmin">Crear un usuario</h1>
                         <hr>
                     </div>
                    <form action="/action_page.php">
@@ -413,14 +413,14 @@
                                        <label for="agregarFotoAdmin" class="custom-file-upload">Agregar una foto de perfil...</label>                                
                                        <input type="file" id="agregarFotoAdmin">
                                    </div>
-                                   <!--<div class="col-md-4 form-group" id="UsuarioSel">
+                                   <div class="col-md-4 form-group" id="UsuarioSel">
                                     <label for="selectUsuario">Elija el tipo de cuenta</label>                                
                                     <select class="form-control" id="selectUsuario">
                                         <option>Usuario</option>
                                         <option>Reportero</option>
                                         <option>Editor</option>
                                     </select>
-                                   </div>-->
+                                   </div>
                                </div>
                            </div>
                            <div class="col-md-1"></div>

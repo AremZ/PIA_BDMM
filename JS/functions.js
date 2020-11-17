@@ -29,9 +29,9 @@ function validaciones(mod){
         else{
             inputPass = true;
         }
+                    
+        if (inputEmail && inputPass) {
             
-        
-        if (inputEmail && inputPass) {            
             $.ajax({
                 url: "functions.php",
                 type: "post",
@@ -124,7 +124,7 @@ function validaciones(mod){
                 url: "functions.php",
                 type: "post",
                 dataType: "json",
-                data: {method: 'userSignUp', name: campoName.value,lastName:campoLN.value,lastName2:campoLN2.value,email: campoEmail.value,numTel:campoTel.value, pass: campoPass.value},
+                data: {method: 'userSignUp', userType: 'usuario',name: campoName.value,lastName:campoLN.value,lastName2:campoLN2.value,email: campoEmail.value,numTel:campoTel.value, pass: campoPass.value},
                 success: function (result) {
                     if(result.msg){
                         alert("¡Registro exitoso!");    
@@ -143,8 +143,7 @@ function validaciones(mod){
                         alert("Correo ya registrado.");
                 }
 
-            });  
-   
+            });    
         }
     }
 
@@ -205,16 +204,82 @@ function validaciones(mod){
             datosCorrec=false;
         }
 
-        if(datosCorrec){
-            document.getElementById("fnameAdmin").value="";
-            document.getElementById("snameAdmin").value="";
-            document.getElementById("lnameAdmin").value="";
-            document.getElementById("emailRAdmin").value="";
-            document.getElementById("telAdmin").value="";
-            document.getElementById("pwdAdmin").value="";
-            document.getElementById("rpwdAdmin").value="";
-            alert("Registro exitoso.");
-            $('#modRegister').modal('toggle');
+        if(datosCorrec){         
+            var campoName = document.getElementById("fnameAdmin");
+            var campoLN = document.getElementById("snameAdmin");
+            var campoLN2 = document.getElementById("lnameAdmin");
+            var campoEmail = document.getElementById("emailRAdmin");
+            var campoTel = document.getElementById("telAdmin");
+            var campoPass = document.getElementById("pwdAdmin");
+            
+            var indexUser = document.getElementById("selectUsuario").selectedIndex;
+            
+            if(indexUser == 0){
+                $.ajax({
+                    url: "functions.php",
+                    type: "post",
+                    dataType: "json",
+                    data: {method: 'userSignUp', userType: 'usuario', name: campoName.value, lastName: campoLN.value, lastName2: campoLN2.value, email: campoEmail.value, numTel: campoTel.value, pass: campoPass.value},
+                    success: function (result) {
+                        if (result.msg) {
+                            alert("¡Registro exitoso!");
+                            document.getElementById("fnameAdmin").value = "";
+                            document.getElementById("snameAdmin").value = "";
+                            document.getElementById("lnameAdmin").value = "";
+                            document.getElementById("emailRAdmin").value = "";
+                            document.getElementById("telAdmin").value = "";
+                            document.getElementById("pwdAdmin").value = "";
+                            document.getElementById("rpwdAdmin").value = "";
+                            $('#modRegister').modal('toggle');
+                        } else
+                            alert("Correo ya registrado.");
+                    }
+                });               
+            }
+            else if (indexUser == 1){
+                $.ajax({
+                    url: "functions.php",
+                    type: "post",
+                    dataType: "json",
+                    data: {method: 'userSignUp', userType: 'reportero', name: campoName.value, lastName: campoLN.value, lastName2: campoLN2.value, email: campoEmail.value, numTel: campoTel.value, pass: campoPass.value},
+                    success: function (result) {
+                        if (result.msg) {
+                            alert("¡Registro exitoso!");
+                            document.getElementById("fnameAdmin").value = "";
+                            document.getElementById("snameAdmin").value = "";
+                            document.getElementById("lnameAdmin").value = "";
+                            document.getElementById("emailRAdmin").value = "";
+                            document.getElementById("telAdmin").value = "";
+                            document.getElementById("pwdAdmin").value = "";
+                            document.getElementById("rpwdAdmin").value = "";
+                            $('#modRegister').modal('toggle');
+                        } else
+                            alert("Correo ya registrado.");
+                    }
+                });                
+            }
+            else if (indexUser == 2){
+                $.ajax({
+                    url: "functions.php",
+                    type: "post",
+                    dataType: "json",
+                    data: {method: 'userSignUp', userType: 'editor', name: campoName.value, lastName: campoLN.value, lastName2: campoLN2.value, email: campoEmail.value, numTel: campoTel.value, pass: campoPass.value},
+                    success: function (result) {
+                        if (result.msg) {
+                            alert("¡Registro exitoso!");
+                            document.getElementById("fnameAdmin").value = "";
+                            document.getElementById("snameAdmin").value = "";
+                            document.getElementById("lnameAdmin").value = "";
+                            document.getElementById("emailRAdmin").value = "";
+                            document.getElementById("telAdmin").value = "";
+                            document.getElementById("pwdAdmin").value = "";
+                            document.getElementById("rpwdAdmin").value = "";
+                            $('#modRegister').modal('toggle');
+                        } else
+                            alert("Correo ya registrado.");
+                    }
+                });                
+            }
         }
     }
 }
