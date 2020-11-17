@@ -33,9 +33,6 @@ function validaciones(mod){
         
         if (inputEmail && inputPass) {
             
-            var emailString = JSON.stringify(campoEmail.value);
-            var passString = JSON.stringify(campoPass.value);
-            
             $.ajax({
                 url: "functions.php",
                 type: "post",

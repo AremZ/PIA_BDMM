@@ -34,12 +34,6 @@
 <body>
 
     <!------ Barra de Navegacion & Searchbar ------>
-
-
-    <?php
-    //include 'functions.php';
-    //userLogin('rm.abraham08@gmail.com', 'AbrahamRM_72');
-    ?>
     
     <nav class="navbar navbar-expand-lg navbar-light bg-light" id="navBar">
         <div class="container-fluid">
