@@ -21,6 +21,7 @@
     <script>
         $(document).ready(function(){
             $("#btnProfile").toggle();
+            getAllReporteros();
         });
     </script>
 </head>
@@ -213,7 +214,7 @@
     <div class="container-fluid padding">
         <div class="row">
             <div class="col-lg-10">
-                <h1 id="escrEditor">Escritorio de Administrador</h1>
+                <h1 id="escrEditor">Escritorio del Editor</h1>
             </div>
             <div class="col-lg-2">
                 <button class="btn btn-outline-danger newUser" data-toggle="modal" data-target="#modRegister"
@@ -228,7 +229,7 @@
         <div class="row">
             <div class="col-lg-1"></div>
             <div class="col-lg-10">
-                <ul class="list-group allUsers">
+                <ul class="list-group allReporteros">
                     <li class="list-group-item active">
                         <div class="row">
                             <span class="col-lg-4">
@@ -239,38 +240,6 @@
                             </span>
                             <span class="col-lg-4">
                                 Acciones
-                            </span>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        <div class="row">
-                            <span class="col-lg-4 displayName">
-                                <i class="fa fa-user-circle"></i>
-                                <span>Andrea Cecilia Aguayo Millan</span>
-                            </span>
-                            <span class="col-lg-4 displayType">
-                                <i class="fa fa-file-text-o"></i>
-                                Reportero
-                            </span>
-                            <span class="col-lg-4 displayActions">
-                                <button class="btn btn-outline-danger col-lg-5 actionsEditor" data-toggle="modal" data-target="#modRegister" onclick="editReportero()"><i class="fa fa-pencil"></i>Editar</button>
-                                <button class="btn btn-outline-danger col-lg-5 actionsEditor" data-toggle="modal" data-target="#confirmDeleteAdmin" onclick=""><i class="fa fa-times"></i>Eliminar</button>
-                            </span>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        <div class="row">
-                            <span class="col-lg-4 displayName">
-                                <i class="fa fa-user-circle"></i>
-                                <span>Edgar Eleazar Mejia Zuñiga</span>
-                            </span>
-                            <span class="col-lg-4 displayType">
-                                <i class="fa fa-file-text-o"></i>
-                                Reportero
-                            </span>
-                            <span class="col-lg-4 displayActions">
-                                <button class="btn btn-outline-danger col-lg-5 actionsEditor" data-toggle="modal" data-target="#modRegister" onclick="editReportero()"><i class="fa fa-pencil"></i>Editar</button>
-                                <button class="btn btn-outline-danger col-lg-5 actionsEditor" data-toggle="modal" data-target="#confirmDeleteAdmin" onclick=""><i class="fa fa-times"></i>Eliminar</button>
                             </span>
                         </div>
                     </li>

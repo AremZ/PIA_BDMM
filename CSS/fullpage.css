@@ -737,19 +737,19 @@ hr.topAdmin{
     margin-bottom: 1rem;
 }
 
-ul.allUsers li.active{
+ul.allUsers li.active, ul.allReporteros li.active{
     font-family: 'Oswald', sans-serif;
     background-color: var(--Color-2);
     border: 1px solid var(--Color-2);
 }
 
-ul.allUsers li span{
+ul.allUsers li span, ul.allReporteros li span{
     margin-top: auto;
     margin-bottom: auto;
     text-align: center;
 }
 
-ul.allUsers li span.displayName, ul.allUsers li span.displayType{
+ul.allUsers li span.displayName, ul.allUsers li span.displayType, ul.allReporteros li span.displayName, ul.allReporteros li span.displayType{
     font-family: 'Oswald', sans-serif;
 }
 
@@ -759,11 +759,11 @@ button.actionsAdmin, button.actionsEditor{
     font-family: 'Oswald', sans-serif;
 }
 
-ul.allUsers:nth-child(even) {
+ul.allUsers:nth-child(even), ul.allReporteros:nth-child(even) {
     background-color: #f2f2f2;
 }
 
-ul.allUsers{
+ul.allUsers, ul.allReporteros{
     margin-bottom: 1em;
 }
 

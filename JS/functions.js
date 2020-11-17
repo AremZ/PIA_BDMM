@@ -642,12 +642,26 @@ function createUsuario(){
     document.getElementById("cancelUserAdmin").hidden=true;
 }
 
-function getUsuarios(){
+function editReportero(){
+    document.getElementById("registerUserEditor").hidden=true;
+    document.getElementById("saveUserEditor").hidden=false;
+    document.getElementById("cancelUserEditor").hidden=false;
+}
+
+function createReportero(){
+    document.getElementById("registerUserEditor").hidden=false;
+    document.getElementById("saveUserEditor").hidden=true;
+    document.getElementById("cancelUserEditor").hidden=true;
+}
+
+function getAllUsers(){
+    var userLogo;
+    var upperFirst;
     $.ajax({
         url: "functions.php",
         type: "post",
         dataType: "json",
-        data: {method: 'getUsuarios'},
+        data: {method: 'getAllUsers'},
         success: function (usuarios) {
             $.each(usuarios, function(idx, usser){
                 // picture.pic_location
@@ -655,14 +669,69 @@ function getUsuarios(){
                 // picture.age
                 // picture.gender
                 //alert(usuarios[idx].name);
-                console.log(usuarios[idx].name+" "+usuarios[idx].apellidoP+" "+usuarios[idx].apellidoM);
+                //console.log(usuarios[idx].name+" "+usuarios[idx].apellidoP+" "+usuarios[idx].apellidoM);
 
+                if (usuarios[idx].tipoUsuario == "usuario"){
+                    userLogo = "<i class='fa fa-user'></i>";        
+                } 
+                else if (usuarios[idx].tipoUsuario == "reportero"){
+                    userLogo = "<i class='fa fa-file-text-o'></i>";       
+                }
+                else if (usuarios[idx].tipoUsuario == "editor"){
+                    userLogo = "<i class='fa fa-clipboard'></i>";       
+                }
 
-                $( ".allUsers" ).append("<li class='list-group-item'> <div class='row'><span class='col-lg-4 displayName'><i class='fa fa-user-circle'></i><span>"+usuarios[idx].name+" "+usuarios[idx].apellidoP+" "+usuarios[idx].apellidoM+"</span> </span><span class='col-lg-4 displayType'><i class='fa fa-clipboard'></i>"+ usuarios[idx].tipoUsuario+ "</span><span class='col-lg-4 displayActions'><button class='btn btn-outline-danger col-lg-5 actionsAdmin' data-toggle='modal' data-target='#modRegister' onclick='editUsuario()'><i class='fa fa-pencil'></i>Editar</button><button class='btn btn-outline-danger col-lg-5 actionsAdmin' data-toggle='modal' data-target='#confirmDeleteAdmin' onclick=''><i class='fa fa-times'></i>Eliminar</button></span></div> </li>" );
+                upperFirst = usuarios[idx].tipoUsuario;
+                upperFirst = upperFirst.charAt(0).toUpperCase() + upperFirst.slice(1)
+
+                $( ".allUsers" ).append("<li class='list-group-item'>" + 
+                "<div class='row'><span class='col-lg-4 displayName'><i class='fa fa-user-circle'></i><span>"
+                + usuarios[idx].name + " " + usuarios[idx].apellidoP + " " + usuarios[idx].apellidoM +
+                "</span> </span><span class='col-lg-4 displayType'>" + userLogo +
+                upperFirst + "</span><span class='col-lg-4 displayActions'><button class=" +
+                "'btn btn-outline-danger col-lg-5 actionsAdmin' data-toggle='modal' data-target='#modRegister'" +
+                " onclick='editUsuario()'><i class='fa fa-pencil'></i>Editar</button><button" +
+                " class='btn btn-outline-danger col-lg-5 actionsAdmin' data-toggle='modal' data-target=" + 
+                "'#confirmDeleteAdmin'><i class='fa fa-times'></i>Eliminar</button></span></div> </li>" );
               });
         }
 
     }); 
 }
 
+function getAllReporteros(){
+    var userLogo;
+    var upperFirst;
+    $.ajax({
+        url: "functions.php",
+        type: "post",
+        dataType: "json",
+        data: {method: 'getAllReporteros'},
+        success: function (usuarios) {
+            $.each(usuarios, function(idx, usser){
+                // picture.pic_location
+                // picture.name
+                // picture.age
+                // picture.gender
+                //alert(usuarios[idx].name);
+                //console.log(usuarios[idx].name+" "+usuarios[idx].apellidoP+" "+usuarios[idx].apellidoM);
+                
+                userLogo = "<i class='fa fa-file-text-o'></i>";
 
+                upperFirst = usuarios[idx].tipoUsuario;
+                upperFirst = upperFirst.charAt(0).toUpperCase() + upperFirst.slice(1)
+
+                $( ".allReporteros" ).append("<li class='list-group-item'>" + 
+                "<div class='row'><span class='col-lg-4 displayName'><i class='fa fa-user-circle'></i><span>"
+                + usuarios[idx].name + " " + usuarios[idx].apellidoP + " " + usuarios[idx].apellidoM +
+                "</span> </span><span class='col-lg-4 displayType'>" + userLogo +
+                upperFirst + "</span><span class='col-lg-4 displayActions'><button class=" +
+                "'btn btn-outline-danger col-lg-5 actionsAdmin' data-toggle='modal' data-target='#modRegister'" +
+                " onclick='editReportero()'><i class='fa fa-pencil'></i>Editar</button><button" +
+                " class='btn btn-outline-danger col-lg-5 actionsAdmin' data-toggle='modal' data-target=" + 
+                "'#confirmDeleteAdmin'><i class='fa fa-times'></i>Eliminar</button></span></div> </li>" );
+              });
+        }
+
+    }); 
+}

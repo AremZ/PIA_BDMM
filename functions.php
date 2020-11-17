@@ -51,13 +51,14 @@ if ($method == "userSignUp"){
 }  
 
 
-if ($method == "getUsuarios"){
+if ($method == "getAllUsers"){
     //Creamos la conexion
     $conn = connectDB();
 
     if($conn){
       
-        $query  = "select * from usuario;";
+        $query  = "select nombres, apellido_P, apellido_M, tipo_Usuario from usuario where tipo_Usuario != ".
+         "'administrador' ORDER BY tipo_Usuario;";
         $resultado = mysqli_query($conn, $query);
         //$row = mysqli_fetch_assoc($resultado);
 
@@ -76,17 +77,48 @@ if ($method == "getUsuarios"){
               }
               
              echo json_encode($usuarios);
-        }
-       
+        }       
         closeDB($conn);
     }
-}  
+}
 
+if ($method == "getAllReporteros"){
+    //Creamos la conexion
+    $conn = connectDB();
+
+    if($conn){
+      
+        $query  = "select nombres, apellido_P, apellido_M, tipo_Usuario from usuario where tipo_Usuario = ".
+         "'reportero' ORDER BY tipo_Usuario;";
+        $resultado = mysqli_query($conn, $query);
+        //$row = mysqli_fetch_assoc($resultado);
+
+        
+        $usuarios = array();
+        
+        if($resultado){
+            while ($row = mysqli_fetch_assoc($resultado)) {
+                $usser = array(
+                  "name" => $row['nombres'],
+                  "apellidoP" => $row['apellido_P'],
+                  "apellidoM" => $row['apellido_M'],
+                  "tipoUsuario" => $row['tipo_Usuario']
+                );
+                $usuarios[] = $usser;
+              }
+              
+             echo json_encode($usuarios);
+        }       
+        closeDB($conn);
+    }
+} 
 
 function connectDB(){
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
+    $servername = "localhost"; 
+    //$username = "root";
+    $username = "PruebaDB3";
+    //$password = "";
+    $password = "password";
     $dbname = "novadb";  
     
     $conn = mysqli_connect($servername, $username, $password, $dbname);

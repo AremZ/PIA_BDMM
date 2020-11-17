@@ -21,7 +21,7 @@
     <script>
         $(document).ready(function(){
             $("#btnProfile").toggle();
-            getUsuarios();
+            getAllUsers();
         });
     </script>
 </head>
@@ -242,103 +242,7 @@
                                 Acciones
                             </span>
                         </div>
-                    </li>
-                    <li class="list-group-item">
-                        <div class="row">
-                            <span class="col-lg-4 displayName">
-                                <i class="fa fa-user-circle"></i>
-                                <span>Abraham Reyes Muñiz</span>
-                            </span>
-                            <span class="col-lg-4 displayType">
-                                <i class="fa fa-clipboard"></i>
-                                Editor
-                            </span>
-                            <span class="col-lg-4 displayActions">
-                                <button class="btn btn-outline-danger col-lg-5 actionsAdmin" data-toggle="modal" data-target="#modRegister" onclick="editUsuario()"><i class="fa fa-pencil"></i>Editar</button>
-                                <button class="btn btn-outline-danger col-lg-5 actionsAdmin" data-toggle="modal" data-target="#confirmDeleteAdmin" onclick=""><i class="fa fa-times"></i>Eliminar</button>
-                            </span>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        <div class="row">
-                            <span class="col-lg-4 displayName">
-                                <i class="fa fa-user-circle"></i>
-                                <span>Yareli Guevara Villalpando</span>
-                            </span>
-                            <span class="col-lg-4 displayType">
-                                <i class="fa fa-clipboard"></i>
-                                Editor
-                            </span>
-                            <span class="col-lg-4 displayActions">
-                                <button class="btn btn-outline-danger col-lg-5 actionsAdmin" data-toggle="modal" data-target="#modRegister" onclick="editUsuario()"><i class="fa fa-pencil"></i>Editar</button>
-                                <button class="btn btn-outline-danger col-lg-5 actionsAdmin" data-toggle="modal" data-target="#confirmDeleteAdmin" onclick=""><i class="fa fa-times"></i>Eliminar</button>
-                            </span>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        <div class="row">
-                            <span class="col-lg-4 displayName">
-                                <i class="fa fa-user-circle"></i>
-                                <span>Andrea Cecilia Aguayo Millan</span>
-                            </span>
-                            <span class="col-lg-4 displayType">
-                                <i class="fa fa-file-text-o"></i>
-                                Reportero
-                            </span>
-                            <span class="col-lg-4 displayActions">
-                                <button class="btn btn-outline-danger col-lg-5 actionsAdmin" data-toggle="modal" data-target="#modRegister" onclick="editUsuario()"><i class="fa fa-pencil"></i>Editar</button>
-                                <button class="btn btn-outline-danger col-lg-5 actionsAdmin" data-toggle="modal" data-target="#confirmDeleteAdmin" onclick=""><i class="fa fa-times"></i>Eliminar</button>
-                            </span>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        <div class="row">
-                            <span class="col-lg-4 displayName">
-                                <i class="fa fa-user-circle"></i>
-                                <span>Edgar Eleazar Mejia Zuñiga</span>
-                            </span>
-                            <span class="col-lg-4 displayType">
-                                <i class="fa fa-file-text-o"></i>
-                                Reportero
-                            </span>
-                            <span class="col-lg-4 displayActions">
-                                <button class="btn btn-outline-danger col-lg-5 actionsAdmin" data-toggle="modal" data-target="#modRegister" onclick="editUsuario()"><i class="fa fa-pencil"></i>Editar</button>
-                                <button class="btn btn-outline-danger col-lg-5 actionsAdmin" data-toggle="modal" data-target="#confirmDeleteAdmin" onclick=""><i class="fa fa-times"></i>Eliminar</button>
-                            </span>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        <div class="row">
-                            <span class="col-lg-4 displayName">
-                                <i class="fa fa-user-circle"></i>
-                                <span>Jose Carlos Torres Coronado</span>
-                            </span>
-                            <span class="col-lg-4 displayType">
-                                <i class="fa fa-user"></i>
-                                Usuario
-                            </span>
-                            <span class="col-lg-4 displayActions">
-                                <button class="btn btn-outline-danger col-lg-5 actionsAdmin" data-toggle="modal" data-target="#modRegister" onclick="editUsuario()"><i class="fa fa-pencil"></i>Editar</button>
-                                <button class="btn btn-outline-danger col-lg-5 actionsAdmin" data-toggle="modal" data-target="#confirmDeleteAdmin" onclick=""><i class="fa fa-times"></i>Eliminar</button>
-                            </span>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        <div class="row">
-                            <span class="col-lg-4 displayName">
-                                <i class="fa fa-user-circle"></i>
-                                <span>Iran Salazar Rangel</span>
-                            </span>
-                            <span class="col-lg-4 displayType">
-                                <i class="fa fa-user"></i>
-                                Usuario
-                            </span>
-                            <span class="col-lg-4 displayActions">
-                                <button class="btn btn-outline-danger col-lg-5 actionsAdmin" data-toggle="modal" data-target="#modRegister" onclick="editUsuario()"><i class="fa fa-pencil"></i>Editar</button>
-                                <button class="btn btn-outline-danger col-lg-5 actionsAdmin" data-toggle="modal" data-target="#confirmDeleteAdmin" onclick=""><i class="fa fa-times"></i>Eliminar</button>
-                            </span>
-                        </div>
-                    </li>
+                    </li>                    
                 </ul>
             </div>
         </div>
