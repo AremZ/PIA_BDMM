@@ -280,6 +280,92 @@ function validaciones(mod){
                     }
                 });                
             }
+        }     
+    }
+    
+    else if (mod == 4) {
+        var datosCorrec = true;
+        campo = document.getElementById("fnameEditor");
+        if (campo.value == "") {
+            document.getElementById("nameContainerEditor").className = document.getElementById("nameContainerEditor").className + " error";
+            datosCorrec = false;
+        }
+        campo = document.getElementById("snameEditor");
+        if (campo.value == "") {
+            document.getElementById("snameContainerEditor").className = document.getElementById("snameContainerEditor").className + " error";
+            datosCorrec = false;
+        }
+        campo = document.getElementById("lnameEditor");
+        if (campo.value == "") {
+            document.getElementById("lnameContainerEditor").className = document.getElementById("lnameContainerEditor").className + " error";
+            datosCorrec = false;
+        }
+        campo = document.getElementById("emailREditor");
+        if (campo.value == "") {
+            document.getElementById("mailRContainerEditor").className = document.getElementById("mailRContainerEditor").className + " error";
+            datosCorrec = false;
+        } else {
+            if (!(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(campo.value))) {
+                document.getElementById("mailRContainerEditor").className = document.getElementById("mailRContainerEditor").className + " error";
+                alert("Dirección de correo inválida.")
+            }
+        }
+        campo = document.getElementById("telEditor");
+        if (campo.value == "") {
+            document.getElementById("telContainerEditor").className = document.getElementById("telContainerEditor").className + " error";
+            datosCorrec = false;
+        } else {
+            if (isNaN(campo.value) || campo.value.length < 8 || campo.value.length > 10) {
+                alert("Número telefónico inválido.")
+                document.getElementById("telContainerEditor").className = document.getElementById("telContainerEditor").className + " error";
+            }
+
+        }
+        campo = document.getElementById("pwdEditor");
+        if (campo.value == "") {
+            document.getElementById("passRContainerEditor").className = document.getElementById("passRContainerEditor").className + " error";
+            datosCorrec = false;
+        }
+        var campo2 = document.getElementById("rpwdEditor");
+        if ((campo2.value == "") || (campo2.value != campo.value)) {
+            document.getElementById("rpassContainerEditor").className = document.getElementById("rpassContainerEditor").className + " error";
+            datosCorrec = false;
+        }
+
+        campo = document.getElementById('agregarFotoEditor').value;
+        if (campo == "") {
+            alert("Seleccione una imagen por favor.")
+            datosCorrec = false;
+        }
+
+        if (datosCorrec) {
+            var campoName = document.getElementById("fnameEditor");
+            var campoLN = document.getElementById("snameEditor");
+            var campoLN2 = document.getElementById("lnameEditor");
+            var campoEmail = document.getElementById("emailREditor");
+            var campoTel = document.getElementById("telEditor");
+            var campoPass = document.getElementById("pwdEditor");
+
+            $.ajax({
+                url: "functions.php",
+                type: "post",
+                dataType: "json",
+                data: {method: 'userSignUp', userType: 'reportero', name: campoName.value, lastName: campoLN.value, lastName2: campoLN2.value, email: campoEmail.value, numTel: campoTel.value, pass: campoPass.value},
+                success: function (result) {
+                    if (result.msg) {
+                        alert("¡Registro exitoso!");
+                        document.getElementById("fnameEditor").value = "";
+                        document.getElementById("snameEditor").value = "";
+                        document.getElementById("lnameEditor").value = "";
+                        document.getElementById("emailREditor").value = "";
+                        document.getElementById("telEditor").value = "";
+                        document.getElementById("pwdEditor").value = "";
+                        document.getElementById("rpwdEditor").value = "";
+                        $('#modRegister').modal('toggle');
+                    } else
+                        alert("Correo ya registrado.");
+                }
+            });
         }
     }
 }
@@ -554,4 +640,16 @@ function createUsuario(){
     document.getElementById("registerUserAdmin").hidden=false;
     document.getElementById("saveUserAdmin").hidden=true;
     document.getElementById("cancelUserAdmin").hidden=true;
+}
+
+function editReportero(){
+    document.getElementById("registerUserEditor").hidden=true;
+    document.getElementById("saveUserEditor").hidden=false;
+    document.getElementById("cancelUserEditor").hidden=false;
+}
+
+function createReportero(){
+    document.getElementById("registerUserEditor").hidden=false;
+    document.getElementById("saveUserEditor").hidden=true;
+    document.getElementById("cancelUserEditor").hidden=true;
 }
