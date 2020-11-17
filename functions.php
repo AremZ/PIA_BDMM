@@ -81,6 +81,8 @@ if ($method == "getUsuarios"){
         closeDB($conn);
     }
 }  
+
+
 function connectDB(){
     $servername = "localhost";
     $username = "root";
