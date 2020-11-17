@@ -139,7 +139,7 @@
                     </div>
   
                     <div id="register" class="tab-pane fade">
-                        <form action="/action_page.php">
+                        <form>
                             <div class="row">
                                 <div class="col-md-1"></div>
                                 <div class="col-md-10">
