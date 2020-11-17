@@ -555,3 +555,28 @@ function createUsuario(){
     document.getElementById("saveUserAdmin").hidden=true;
     document.getElementById("cancelUserAdmin").hidden=true;
 }
+
+function getUsuarios(){
+    $.ajax({
+        url: "functions.php",
+        type: "post",
+        dataType: "json",
+        data: {method: 'getUsuarios'},
+        success: function (usuarios) {
+            $.each(usuarios, function(idx, usser){
+                // picture.pic_location
+                // picture.name
+                // picture.age
+                // picture.gender
+                //alert(usuarios[idx].name);
+                console.log(usuarios[idx].name+" "+usuarios[idx].apellidoP+" "+usuarios[idx].apellidoM);
+
+
+                $( ".allUsers" ).append("<li class='list-group-item'> <div class='row'><span class='col-lg-4 displayName'><i class='fa fa-user-circle'></i><span>"+usuarios[idx].name+" "+usuarios[idx].apellidoP+" "+usuarios[idx].apellidoM+"</span> </span><span class='col-lg-4 displayType'><i class='fa fa-clipboard'></i>"+ usuarios[idx].tipoUsuario+ "</span><span class='col-lg-4 displayActions'><button class='btn btn-outline-danger col-lg-5 actionsAdmin' data-toggle='modal' data-target='#modRegister' onclick='editUsuario()'><i class='fa fa-pencil'></i>Editar</button><button class='btn btn-outline-danger col-lg-5 actionsAdmin' data-toggle='modal' data-target='#confirmDeleteAdmin' onclick=''><i class='fa fa-times'></i>Eliminar</button></span></div> </li>" );
+              });
+        }
+
+    }); 
+}
+
+

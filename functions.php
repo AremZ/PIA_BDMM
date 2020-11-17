@@ -50,10 +50,41 @@ if ($method == "userSignUp"){
     }
 }  
 
+
+if ($method == "getUsuarios"){
+    //Creamos la conexion
+    $conn = connectDB();
+
+    if($conn){
+      
+        $query  = "select * from usuario;";
+        $resultado = mysqli_query($conn, $query);
+        //$row = mysqli_fetch_assoc($resultado);
+
+        
+        $usuarios = array();
+        
+        if($resultado){
+            while ($row = mysqli_fetch_assoc($resultado)) {
+                $usser = array(
+                  "name" => $row['nombres'],
+                  "apellidoP" => $row['apellido_P'],
+                  "apellidoM" => $row['apellido_M'],
+                  "tipoUsuario" => $row['tipo_Usuario']
+                );
+                $usuarios[] = $usser;
+              }
+              
+             echo json_encode($usuarios);
+        }
+       
+        closeDB($conn);
+    }
+}  
 function connectDB(){
     $servername = "localhost";
-    $username = "PruebaDB3";
-    $password = "password";
+    $username = "root";
+    $password = "";
     $dbname = "novadb";  
     
     $conn = mysqli_connect($servername, $username, $password, $dbname);

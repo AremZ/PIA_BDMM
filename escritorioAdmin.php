@@ -21,6 +21,7 @@
     <script>
         $(document).ready(function(){
             $("#btnProfile").toggle();
+            getUsuarios();
         });
     </script>
 </head>
