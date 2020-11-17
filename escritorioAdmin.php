@@ -354,7 +354,7 @@
                 </div>
                 <div id="registerAdmin" class="modal-body">
                     <div>
-                        <h1 id="titleAdmin">Crear un usuario</h1>
+                        <h1 id="titleAdmin">Crear reportero</h1>
                         <hr>
                     </div>
                    <form action="/action_page.php">
@@ -413,14 +413,14 @@
                                        <label for="agregarFotoAdmin" class="custom-file-upload">Agregar una foto de perfil...</label>                                
                                        <input type="file" id="agregarFotoAdmin">
                                    </div>
-                                   <div class="col-md-4 form-group" id="UsuarioSel">
+                                   <!--<div class="col-md-4 form-group" id="UsuarioSel">
                                     <label for="selectUsuario">Elija el tipo de cuenta</label>                                
                                     <select class="form-control" id="selectUsuario">
                                         <option>Usuario</option>
                                         <option>Reportero</option>
                                         <option>Editor</option>
                                     </select>
-                                   </div>
+                                   </div>-->
                                </div>
                            </div>
                            <div class="col-md-1"></div>
@@ -428,7 +428,7 @@
                    </form>
                    <hr>
                    <button type="button" class="btn btn-outline-danger" 
-                       style="float:right" onclick="validaciones(3)" id="registerUserAdmin"><i class="fa fa-check"></i>Registrarme
+                       style="float:right" onclick="validaciones(3)" id="registerUserAdmin"><i class="fa fa-check"></i>Registrar
                    </button>
                    <button type="button" class="btn btn-outline-danger" 
                        style="float:right" id="cancelUserAdmin" data-toggle="modal" data-target="#modRegister"><i class="fa fa-times"></i>Cancelar

@@ -29,6 +29,7 @@ if ($method == "userSignUp"){
     $conn = connectDB();
 
     if($conn){
+        $userType=$_POST['userType'];
         $name=$_POST['name'];
         $lastN=$_POST['lastName'];
         $lastN2=$_POST['lastName2'];
@@ -36,7 +37,7 @@ if ($method == "userSignUp"){
         $tel=$_POST['numTel'];
         $pass= $_POST['pass'];
         
-        $query  = "CALL sp_userSignUp('$name', '$lastN','$lastN2','$email', ' $tel','$pass');";
+        $query  = "CALL sp_userSignUp('$userType','$name', '$lastN','$lastN2','$email', ' $tel','$pass');";
         mysqli_query($conn, $query);
         $fila=mysqli_affected_rows($conn);
         if($fila!=0){
@@ -69,4 +70,7 @@ function closeDB($connection){
     mysqli_close($connection);   
 }
 
+
+
 ?>
+
