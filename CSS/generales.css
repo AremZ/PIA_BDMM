@@ -101,7 +101,8 @@ nav.navbar#navBarSecciones{
     max-width: 70% !important;
 }
 
-.modal-body#bLogin label, .modal-body#registerAdmin label, .modal-body#registerAdmin h1{
+.modal-body#bLogin label, .modal-body#registerAdmin label, .modal-body#registerAdmin h1,
+.modal-body#registerEditor label, .modal-body#registerEditor h1{
     font-family: 'Oswald', sans-serif;
 }
 
@@ -175,7 +176,7 @@ select#selectUsuario:focus{
     box-shadow: 0 0 4px var(--Color-2);
 }
 
-div#displayImg img, div#displayImgAdmin img{
+div#displayImg img, div#displayImgAdmin img, div#displayImgEditor img{
     width: 200px;
     height: 200px;
     border: 2px solid var(--Color-2);

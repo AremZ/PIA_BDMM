@@ -723,7 +723,7 @@ video {
     float: right;
 }
 
-#escrAdmin{
+#escrAdmin, #escrEditor{
     font-family: 'Oswald', sans-serif;
     text-align: left;
     color: var(--NavBar);
@@ -753,7 +753,7 @@ ul.allUsers li span.displayName, ul.allUsers li span.displayType{
     font-family: 'Oswald', sans-serif;
 }
 
-button.actionsAdmin{
+button.actionsAdmin, button.actionsEditor{
     height: 30px;
     line-height: 15px;
     font-family: 'Oswald', sans-serif;
