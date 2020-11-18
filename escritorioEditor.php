@@ -229,7 +229,7 @@
         <div class="row">
             <div class="col-lg-1"></div>
             <div class="col-lg-10">
-                <ul class="list-group allReporteros">
+                <ul class="list-group allReporteros" id="reportList">
                     <li class="list-group-item active">
                         <div class="row">
                             <span class="col-lg-4">
@@ -320,7 +320,9 @@
                                    </div>
                                </div>
                            </div>
-                           <div class="col-md-1"></div>
+                           <div class="col-md-1">
+                                   <input type="text" name="" id="idReportero" style="display: none">
+                            </div>
                        </div>
                    </form>
                    <hr>
@@ -331,7 +333,7 @@
                        style="float:right" id="cancelUserEditor" data-toggle="modal" data-target="#modRegister"><i class="fa fa-times"></i>Cancelar
                    </button>
                    <button type="button" class="btn btn-outline-danger" 
-                       style="float:right" onclick="validaciones(4)" id="saveUserEditor"><i class="fa fa-floppy-o"></i>Guardar cambios
+                       style="float:right" onclick="validaciones(6)" id="saveUserEditor"><i class="fa fa-floppy-o"></i>Guardar cambios
                    </button>
                 </div>
             </div>
@@ -352,8 +354,9 @@
                 
                     <hr>
                     <button type="button" class="btn btn-outline-danger" style="float:left" id="btnConfirmDelAdmin"
-                    data-toggle="modal" data-target="#confirmDelete"></a><i class="fa fa-fire">                        
-                    </i>Dar cuenta de baja</button>
+                    onclick="confirmDeleteReportero();"></a><i class="fa fa-fire"> </i>Dar cuenta de baja</button>
+
+                    <input type="text" name="" id="idReporteroDelete" style="display: none">
 
                     <button type="button" class="btn btn-outline-danger" 
                         style="float:right" id="btnCancelDel" data-toggle="modal" data-target="#confirmDeleteAdmin"><i class="fa fa-times"></i>Cancelar</button>

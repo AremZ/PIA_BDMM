@@ -230,6 +230,8 @@ function validaciones(mod){
                             document.getElementById("telAdmin").value = "";
                             document.getElementById("pwdAdmin").value = "";
                             document.getElementById("rpwdAdmin").value = "";
+                            emptyList('usersList');
+                            getAllUsers();
                             $('#modRegister').modal('toggle');
                         } else
                             alert("Correo ya registrado.");
@@ -252,6 +254,8 @@ function validaciones(mod){
                             document.getElementById("telAdmin").value = "";
                             document.getElementById("pwdAdmin").value = "";
                             document.getElementById("rpwdAdmin").value = "";
+                            emptyList('usersList');
+                            getAllUsers();
                             $('#modRegister').modal('toggle');
                         } else
                             alert("Correo ya registrado.");
@@ -274,6 +278,8 @@ function validaciones(mod){
                             document.getElementById("telAdmin").value = "";
                             document.getElementById("pwdAdmin").value = "";
                             document.getElementById("rpwdAdmin").value = "";
+                            emptyList('usersList');
+                            getAllUsers();
                             $('#modRegister').modal('toggle');
                         } else
                             alert("Correo ya registrado.");
@@ -361,6 +367,245 @@ function validaciones(mod){
                         document.getElementById("telEditor").value = "";
                         document.getElementById("pwdEditor").value = "";
                         document.getElementById("rpwdEditor").value = "";
+                        emptyList('reportList');
+                        getAllReporteros();
+                        $('#modRegister').modal('toggle');
+                    } else
+                        alert("Correo ya registrado.");
+                }
+            });
+        }
+    }
+
+    else if (mod==5){
+        var datosCorrec=true;
+        campo = document.getElementById("fnameAdmin");
+        if(campo.value==""){
+            document.getElementById("nameContainerAdmin").className=document.getElementById("nameContainerAdmin").className+" error";
+            datosCorrec=false;
+        }
+        campo = document.getElementById("snameAdmin");
+        if(campo.value==""){
+            document.getElementById("snameContainerAdmin").className=document.getElementById("snameContainerAdmin").className+" error";
+            datosCorrec=false;
+        }
+        campo = document.getElementById("lnameAdmin");
+        if(campo.value==""){
+            document.getElementById("lnameContainerAdmin").className=document.getElementById("lnameContainerAdmin").className+" error";
+            datosCorrec=false;
+        }
+        campo = document.getElementById("emailRAdmin");
+        if(campo.value==""){
+            document.getElementById("mailRContainerAdmin").className=document.getElementById("mailRContainerAdmin").className+" error";
+            datosCorrec=false;
+            }
+            else{
+                if (!(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(campo.value))){
+                    document.getElementById("mailRContainerAdmin").className=document.getElementById("mailRContainerAdmin").className+" error";
+                    alert("Dirección de correo inválida.")
+            }
+        }
+        campo = document.getElementById("telAdmin");
+        if(campo.value==""){
+            document.getElementById("telContainerAdmin").className=document.getElementById("telContainerAdmin").className+" error";
+            datosCorrec=false;
+        }
+            else{
+                if(isNaN(campo.value)||campo.value.length<8||campo.value.length>10){
+                    alert("Número telefónico inválido.")
+                    document.getElementById("telContainerAdmin").className=document.getElementById("telContainerAdmin").className+" error";
+            }
+
+        }
+        campo = document.getElementById("pwdAdmin");
+        if(campo.value==""){
+            document.getElementById("passRContainerAdmin").className=document.getElementById("passRContainerAdmin").className+" error";   
+            datosCorrec=false;
+        }
+        var campo2 = document.getElementById("rpwdAdmin");
+        if((campo2.value=="") || (campo2.value!=campo.value)){
+            document.getElementById("rpassContainerAdmin").className=document.getElementById("rpassContainerAdmin").className+" error";   
+            datosCorrec=false;
+        }
+        
+        campo = document.getElementById('agregarFotoAdmin').value;
+        if (campo == ""){
+            alert("Seleccione una imagen por favor.")   
+            datosCorrec=false;
+        }
+
+        if(datosCorrec){         
+            var campoName = document.getElementById("fnameAdmin");
+            var campoLN = document.getElementById("snameAdmin");
+            var campoLN2 = document.getElementById("lnameAdmin");
+            var campoEmail = document.getElementById("emailRAdmin");
+            var campoTel = document.getElementById("telAdmin");
+            var campoPass = document.getElementById("pwdAdmin");
+
+            var usuarioID = document.getElementById("idUser");
+            
+            var indexUser = document.getElementById("selectUsuario").selectedIndex;
+            
+            if(indexUser == 0){
+                $.ajax({
+                    url: "functions.php",
+                    type: "post",
+                    dataType: "json",
+                    data: {method: 'editUsers', userType: 'usuario', id: usuarioID.value, name: campoName.value, lastName: campoLN.value, lastName2: campoLN2.value, email: campoEmail.value, numTel: campoTel.value, pass: campoPass.value},
+                    success: function (result) {
+                        if (result.msg) {
+                            alert("Cambios hechos exitosamente!");
+                            document.getElementById("fnameAdmin").value = "";
+                            document.getElementById("snameAdmin").value = "";
+                            document.getElementById("lnameAdmin").value = "";
+                            document.getElementById("emailRAdmin").value = "";
+                            document.getElementById("telAdmin").value = "";
+                            document.getElementById("pwdAdmin").value = "";
+                            document.getElementById("rpwdAdmin").value = "";
+                            document.getElementById("idUser").value = "";
+                            emptyList('usersList');
+                            getAllUsers();
+                            $('#modRegister').modal('toggle');
+                        } else
+                            alert("Correo ya registrado.");
+                    }
+                });               
+            }
+            if(indexUser == 1){
+                $.ajax({
+                    url: "functions.php",
+                    type: "post",
+                    dataType: "json",
+                    data: {method: 'editUsers', userType: 'reportero', id: usuarioID.value, name: campoName.value, lastName: campoLN.value, lastName2: campoLN2.value, email: campoEmail.value, numTel: campoTel.value, pass: campoPass.value},
+                    success: function (result) {
+                        if (result.msg) {
+                            alert("Cambios hechos exitosamente!");
+                            document.getElementById("fnameAdmin").value = "";
+                            document.getElementById("snameAdmin").value = "";
+                            document.getElementById("lnameAdmin").value = "";
+                            document.getElementById("emailRAdmin").value = "";
+                            document.getElementById("telAdmin").value = "";
+                            document.getElementById("pwdAdmin").value = "";
+                            document.getElementById("rpwdAdmin").value = "";
+                            document.getElementById("idUser").value = "";
+                            emptyList('usersList');
+                            getAllUsers();
+                            $('#modRegister').modal('toggle');
+                        } else
+                            alert("Correo ya registrado.");
+                    }
+                });               
+            }
+            if(indexUser == 2){
+                $.ajax({
+                    url: "functions.php",
+                    type: "post",
+                    dataType: "json",
+                    data: {method: 'editUsers', userType: 'editor', id: usuarioID.value, name: campoName.value, lastName: campoLN.value, lastName2: campoLN2.value, email: campoEmail.value, numTel: campoTel.value, pass: campoPass.value},
+                    success: function (result) {
+                        if (result.msg) {
+                            alert("Cambios hechos exitosamente!");
+                            document.getElementById("fnameAdmin").value = "";
+                            document.getElementById("snameAdmin").value = "";
+                            document.getElementById("lnameAdmin").value = "";
+                            document.getElementById("emailRAdmin").value = "";
+                            document.getElementById("telAdmin").value = "";
+                            document.getElementById("pwdAdmin").value = "";
+                            document.getElementById("rpwdAdmin").value = "";
+                            document.getElementById("idUser").value = "";
+                            emptyList('usersList');
+                            getAllUsers();
+                            $('#modRegister').modal('toggle');
+                        } else
+                            alert("Correo ya registrado.");
+                    }
+                });               
+            }
+        }     
+    }
+
+    else if (mod == 6) {
+        var datosCorrec = true;
+        campo = document.getElementById("fnameEditor");
+        if (campo.value == "") {
+            document.getElementById("nameContainerEditor").className = document.getElementById("nameContainerEditor").className + " error";
+            datosCorrec = false;
+        }
+        campo = document.getElementById("snameEditor");
+        if (campo.value == "") {
+            document.getElementById("snameContainerEditor").className = document.getElementById("snameContainerEditor").className + " error";
+            datosCorrec = false;
+        }
+        campo = document.getElementById("lnameEditor");
+        if (campo.value == "") {
+            document.getElementById("lnameContainerEditor").className = document.getElementById("lnameContainerEditor").className + " error";
+            datosCorrec = false;
+        }
+        campo = document.getElementById("emailREditor");
+        if (campo.value == "") {
+            document.getElementById("mailRContainerEditor").className = document.getElementById("mailRContainerEditor").className + " error";
+            datosCorrec = false;
+        } else {
+            if (!(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(campo.value))) {
+                document.getElementById("mailRContainerEditor").className = document.getElementById("mailRContainerEditor").className + " error";
+                alert("Dirección de correo inválida.")
+            }
+        }
+        campo = document.getElementById("telEditor");
+        if (campo.value == "") {
+            document.getElementById("telContainerEditor").className = document.getElementById("telContainerEditor").className + " error";
+            datosCorrec = false;
+        } else {
+            if (isNaN(campo.value) || campo.value.length < 8 || campo.value.length > 10) {
+                alert("Número telefónico inválido.")
+                document.getElementById("telContainerEditor").className = document.getElementById("telContainerEditor").className + " error";
+            }
+
+        }
+        campo = document.getElementById("pwdEditor");
+        if (campo.value == "") {
+            document.getElementById("passRContainerEditor").className = document.getElementById("passRContainerEditor").className + " error";
+            datosCorrec = false;
+        }
+        var campo2 = document.getElementById("rpwdEditor");
+        if ((campo2.value == "") || (campo2.value != campo.value)) {
+            document.getElementById("rpassContainerEditor").className = document.getElementById("rpassContainerEditor").className + " error";
+            datosCorrec = false;
+        }
+
+        campo = document.getElementById('agregarFotoEditor').value;
+        if (campo == "") {
+            alert("Seleccione una imagen por favor.")
+            datosCorrec = false;
+        }
+
+        if (datosCorrec) {
+            var campoName = document.getElementById("fnameEditor");
+            var campoLN = document.getElementById("snameEditor");
+            var campoLN2 = document.getElementById("lnameEditor");
+            var campoEmail = document.getElementById("emailREditor");
+            var campoTel = document.getElementById("telEditor");
+            var campoPass = document.getElementById("pwdEditor");
+
+            var usuarioID = document.getElementById("idReportero");
+
+            $.ajax({
+                url: "functions.php",
+                type: "post",
+                dataType: "json",
+                data: {method: 'editUsers', userType: 'reportero', id: usuarioID.value, name: campoName.value, lastName: campoLN.value, lastName2: campoLN2.value, email: campoEmail.value, numTel: campoTel.value, pass: campoPass.value},
+                success: function (result) {
+                    if (result.msg) {
+                        alert("Cambios hechos exitosamente!");
+                        document.getElementById("fnameEditor").value = "";
+                        document.getElementById("snameEditor").value = "";
+                        document.getElementById("lnameEditor").value = "";
+                        document.getElementById("emailREditor").value = "";
+                        document.getElementById("telEditor").value = "";
+                        document.getElementById("pwdEditor").value = "";
+                        document.getElementById("rpwdEditor").value = "";
+                        emptyList('reportList');
+                        getAllReporteros();
                         $('#modRegister').modal('toggle');
                     } else
                         alert("Correo ya registrado.");
@@ -630,28 +875,102 @@ function editarNoticia(){
     document.getElementById("btnDeleteinNot").hidden=false;
 }
 
-function editUsuario(){
+function editUsuario(idUser, userType, name, apePat, apeMat, tel, email, pass){
     document.getElementById("registerUserAdmin").hidden=true;
     document.getElementById("saveUserAdmin").hidden=false;
     document.getElementById("cancelUserAdmin").hidden=false;
+
+    if (userType == "usuario")
+        document.getElementById("selectUsuario").selectedIndex = "0";
+    else if (userType == "reportero")
+        document.getElementById("selectUsuario").selectedIndex = "1";
+    else if (userType == "editor")
+        document.getElementById("selectUsuario").selectedIndex = "2";
+
+    document.getElementById("idUser").value=idUser;
+    document.getElementById("fnameAdmin").value=name;
+    document.getElementById("snameAdmin").value=apePat;
+    document.getElementById("lnameAdmin").value=apeMat;
+    document.getElementById("telAdmin").value=tel;
+    document.getElementById("emailRAdmin").value=email;
+    document.getElementById("pwdAdmin").value=pass;
 }
 
 function createUsuario(){
     document.getElementById("registerUserAdmin").hidden=false;
     document.getElementById("saveUserAdmin").hidden=true;
-    document.getElementById("cancelUserAdmin").hidden=true;
+    document.getElementById("cancelUserAdmin").hidden=true; 
+    document.getElementById("selectUsuario").selectedIndex = "0";   
 }
 
-function editReportero(){
+function deleteUsuario(idUser){                      
+    $('#confirmDeleteAdmin').modal('toggle');
+    document.getElementById("idUserDelete").value=idUser;
+}
+
+function confirmDeleteUsuario(){
+    var userDelete = document.getElementById("idUserDelete").value;
+
+    $.ajax({
+        url: "functions.php",
+        type: "post",
+        dataType: "json",
+        data: {method: 'deleteUser', id: userDelete},
+        success: function (result) {
+            if (result.msg) {
+                alert("Usuario eliminado exitosamente!");
+                document.getElementById("idUserDelete").value = "";
+                emptyList('usersList');
+                getAllUsers();
+                $('#confirmDeleteAdmin').modal('toggle');
+            }
+        }
+    });  
+}
+
+function editReportero(idUser, name, apePat, apeMat, tel, email, pass){
     document.getElementById("registerUserEditor").hidden=true;
     document.getElementById("saveUserEditor").hidden=false;
     document.getElementById("cancelUserEditor").hidden=false;
+
+    document.getElementById("idReportero").value=idUser;
+    document.getElementById("fnameEditor").value=name;
+    document.getElementById("snameEditor").value=apePat;
+    document.getElementById("lnameEditor").value=apeMat;
+    document.getElementById("telEditor").value=tel;
+    document.getElementById("emailREditor").value=email;
+    document.getElementById("pwdEditor").value=pass;
 }
 
 function createReportero(){
     document.getElementById("registerUserEditor").hidden=false;
     document.getElementById("saveUserEditor").hidden=true;
     document.getElementById("cancelUserEditor").hidden=true;
+}
+
+function deleteReportero(idReportero){                      
+    $('#confirmDeleteAdmin').modal('toggle');
+    document.getElementById("idReporteroDelete").value=idReportero;
+}
+
+function confirmDeleteReportero(){
+    var userDelete = document.getElementById("idReporteroDelete").value;
+
+    $.ajax({
+        url: "functions.php",
+        type: "post",
+        dataType: "json",
+        data: {method: 'deleteUser', id: userDelete},
+        success: function (result) {
+            if (result.msg) {
+                alert("Usuario eliminado exitosamente!");
+                document.getElementById("idUserDelete").value = "";
+                emptyList('reportList');
+                getAllReporteros();
+                $('#confirmDeleteAdmin').modal('toggle');
+            }
+        }
+    });  
 }
 
 function getAllUsers(){
@@ -690,9 +1009,12 @@ function getAllUsers(){
                 "</span> </span><span class='col-lg-4 displayType'>" + userLogo +
                 upperFirst + "</span><span class='col-lg-4 displayActions'><button class=" +
                 "'btn btn-outline-danger col-lg-5 actionsAdmin' data-toggle='modal' data-target='#modRegister'" +
-                " onclick='editUsuario()'><i class='fa fa-pencil'></i>Editar</button><button" +
-                " class='btn btn-outline-danger col-lg-5 actionsAdmin' data-toggle='modal' data-target=" + 
-                "'#confirmDeleteAdmin'><i class='fa fa-times'></i>Eliminar</button></span></div> </li>" );
+                ' onclick="editUsuario(' + usuarios[idx].id + ",'" + usuarios[idx].tipoUsuario + "','" + 
+                usuarios[idx].name + "','" + usuarios[idx].apellidoP + "','" +  usuarios[idx].apellidoM + "','" +
+                usuarios[idx].tel + "','" + usuarios[idx].email + "','" +  usuarios[idx].password +
+                "'" + ')">' + "<i class='fa fa-pencil'></i>Editar</button><button" +
+                " class='btn btn-outline-danger col-lg-5 actionsAdmin' onclick='deleteUsuario(" + usuarios[idx].id + ")'" + 
+                "><i class='fa fa-times'></i>Eliminar</button></span></div> </li>" );
               });
         }
 
@@ -715,8 +1037,16 @@ function getAllReporteros(){
                 // picture.gender
                 //alert(usuarios[idx].name);
                 //console.log(usuarios[idx].name+" "+usuarios[idx].apellidoP+" "+usuarios[idx].apellidoM);
-                
-                userLogo = "<i class='fa fa-file-text-o'></i>";
+
+                if (usuarios[idx].tipoUsuario == "usuario"){
+                    userLogo = "<i class='fa fa-user'></i>";        
+                } 
+                else if (usuarios[idx].tipoUsuario == "reportero"){
+                    userLogo = "<i class='fa fa-file-text-o'></i>";       
+                }
+                else if (usuarios[idx].tipoUsuario == "editor"){
+                    userLogo = "<i class='fa fa-clipboard'></i>";       
+                }
 
                 upperFirst = usuarios[idx].tipoUsuario;
                 upperFirst = upperFirst.charAt(0).toUpperCase() + upperFirst.slice(1)
@@ -727,11 +1057,20 @@ function getAllReporteros(){
                 "</span> </span><span class='col-lg-4 displayType'>" + userLogo +
                 upperFirst + "</span><span class='col-lg-4 displayActions'><button class=" +
                 "'btn btn-outline-danger col-lg-5 actionsAdmin' data-toggle='modal' data-target='#modRegister'" +
-                " onclick='editReportero()'><i class='fa fa-pencil'></i>Editar</button><button" +
-                " class='btn btn-outline-danger col-lg-5 actionsAdmin' data-toggle='modal' data-target=" + 
-                "'#confirmDeleteAdmin'><i class='fa fa-times'></i>Eliminar</button></span></div> </li>" );
+                ' onclick="editReportero(' + usuarios[idx].id + ",'" + 
+                usuarios[idx].name + "','" + usuarios[idx].apellidoP + "','" +  usuarios[idx].apellidoM + "','" +
+                usuarios[idx].tel + "','" + usuarios[idx].email + "','" +  usuarios[idx].password +
+                "'" + ')">' + "<i class='fa fa-pencil'></i>Editar</button><button" +
+                " class='btn btn-outline-danger col-lg-5 actionsAdmin' onclick='deleteReportero(" + usuarios[idx].id + ")'" + 
+                "><i class='fa fa-times'></i>Eliminar</button></span></div> </li>" );
               });
         }
 
     }); 
+}
+
+function emptyList(idList){
+    document.getElementById(idList).innerHTML = "<li class='list-group-item active'><div class='row'>" +
+        '<span class="col-lg-4"> Nombre del usuario </span><span class="col-lg-4"> Tipo de Usuario </span>' +
+        '<span class="col-lg-4"> Acciones </span> </div> </li>';
 }

@@ -229,7 +229,7 @@
         <div class="row">
             <div class="col-lg-1"></div>
             <div class="col-lg-10">
-                <ul class="list-group allUsers">
+                <ul class="list-group allUsers" id="usersList">
                     <li class="list-group-item active">
                         <div class="row">
                             <span class="col-lg-4">
@@ -326,6 +326,7 @@
                                         <option>Editor</option>
                                     </select>
                                    </div>
+                                   <input type="text" name="" id="idUser" style="display: none">
                                </div>
                            </div>
                            <div class="col-md-1"></div>
@@ -339,7 +340,7 @@
                        style="float:right" id="cancelUserAdmin" data-toggle="modal" data-target="#modRegister"><i class="fa fa-times"></i>Cancelar
                    </button>
                    <button type="button" class="btn btn-outline-danger" 
-                       style="float:right" onclick="validaciones(3)" id="saveUserAdmin"><i class="fa fa-floppy-o"></i>Guardar cambios
+                       style="float:right" onclick="validaciones(5)" id="saveUserAdmin"><i class="fa fa-floppy-o"></i>Guardar cambios
                    </button>
                 </div>
             </div>
@@ -360,8 +361,9 @@
                 
                     <hr>
                     <button type="button" class="btn btn-outline-danger" style="float:left" id="btnConfirmDelAdmin"
-                    data-toggle="modal" data-target="#confirmDelete"></a><i class="fa fa-fire">                        
-                    </i>Dar cuenta de baja</button>
+                    onclick="confirmDeleteUsuario();"></a><i class="fa fa-fire"> </i>Dar cuenta de baja</button>
+
+                    <input type="text" name="" id="idUserDelete" style="display: none">
 
                     <button type="button" class="btn btn-outline-danger" 
                         style="float:right" id="btnCancelDel" data-toggle="modal" data-target="#confirmDeleteAdmin"><i class="fa fa-times"></i>Cancelar</button>

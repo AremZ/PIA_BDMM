@@ -52,26 +52,25 @@ if ($method == "userSignUp"){
 
 
 if ($method == "getAllUsers"){
-    //Creamos la conexion
     $conn = connectDB();
 
     if($conn){
       
-        $query  = "select nombres, apellido_P, apellido_M, tipo_Usuario from usuario where tipo_Usuario != ".
-         "'administrador' ORDER BY tipo_Usuario;";
-        $resultado = mysqli_query($conn, $query);
-        //$row = mysqli_fetch_assoc($resultado);
-
-        
+        $query  = "CALL sp_getAllUsers(0);";
+        $resultado = mysqli_query($conn, $query);        
         $usuarios = array();
         
         if($resultado){
             while ($row = mysqli_fetch_assoc($resultado)) {
                 $usser = array(
-                  "name" => $row['nombres'],
-                  "apellidoP" => $row['apellido_P'],
-                  "apellidoM" => $row['apellido_M'],
-                  "tipoUsuario" => $row['tipo_Usuario']
+                    "id" => $row['id_Usuario'],
+                    "tipoUsuario" => $row['tipo_Usuario'],
+                    "name" => $row['nombres'],
+                    "apellidoP" => $row['apellido_P'],
+                    "apellidoM" => $row['apellido_M'],
+                    "tel" => $row['telefono'],
+                    "email" => $row['email'],
+                    "password" => $row['contrasena']
                 );
                 $usuarios[] = $usser;
               }
@@ -83,32 +82,78 @@ if ($method == "getAllUsers"){
 }
 
 if ($method == "getAllReporteros"){
-    //Creamos la conexion
     $conn = connectDB();
 
     if($conn){
       
-        $query  = "select nombres, apellido_P, apellido_M, tipo_Usuario from usuario where tipo_Usuario = ".
-         "'reportero' ORDER BY tipo_Usuario;";
-        $resultado = mysqli_query($conn, $query);
-        //$row = mysqli_fetch_assoc($resultado);
-
-        
+        $query  = "CALL sp_getAllUsers(1);";      
+        $resultado = mysqli_query($conn, $query);        
         $usuarios = array();
         
         if($resultado){
             while ($row = mysqli_fetch_assoc($resultado)) {
                 $usser = array(
-                  "name" => $row['nombres'],
-                  "apellidoP" => $row['apellido_P'],
-                  "apellidoM" => $row['apellido_M'],
-                  "tipoUsuario" => $row['tipo_Usuario']
+                    "id" => $row['id_Usuario'],
+                    "tipoUsuario" => $row['tipo_Usuario'],
+                    "name" => $row['nombres'],
+                    "apellidoP" => $row['apellido_P'],
+                    "apellidoM" => $row['apellido_M'],
+                    "tel" => $row['telefono'],
+                    "email" => $row['email'],
+                    "password" => $row['contrasena']
                 );
                 $usuarios[] = $usser;
               }
               
              echo json_encode($usuarios);
         }       
+        closeDB($conn);
+    }
+}
+
+if ($method == "editUsers"){
+    $conn = connectDB();
+
+    if($conn){
+        $id=$_POST['id'];
+        $userType=$_POST['userType'];
+        $name=$_POST['name'];
+        $lastN=$_POST['lastName'];
+        $lastN2=$_POST['lastName2'];
+        $email= $_POST['email'];
+        $tel=$_POST['numTel'];
+        $pass= $_POST['pass'];
+
+        $query = "CALL sp_editUser($id, '$userType', '$name', '$lastN', '$lastN2', '$email', '$tel', '$pass')";
+
+        mysqli_query($conn, $query);
+        $row = mysqli_affected_rows($conn);
+        if($row!=0){
+            echo json_encode(array("msg"=>true));       
+        }
+        else{
+            echo json_encode(array("msg"=>false));
+        }
+        closeDB($conn);
+    }
+} 
+
+if ($method == "deleteUser"){
+    $conn = connectDB();
+
+    if($conn){
+        $id=$_POST['id'];
+
+        $query = "CALL sp_bajaUser($id)";
+
+        mysqli_query($conn, $query);
+        $row = mysqli_affected_rows($conn);
+        if($row!=0){
+            echo json_encode(array("msg"=>true));       
+        }
+        else{
+            echo json_encode(array("msg"=>false));
+        }
         closeDB($conn);
     }
 } 
