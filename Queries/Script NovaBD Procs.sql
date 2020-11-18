@@ -66,6 +66,29 @@ CREATE PROCEDURE sp_editUser(
 DELIMITER ;
 
 
+DELIMITER //
+CREATE PROCEDURE sp_addSection(
+	IN in_sectName varchar(30),
+    IN in_color varchar(6),
+    IN in_order tinyint
+    )
+    BEGIN
+		INSERT INTO seccion (nombre_Seccion, color_Seccion, num_Prioridad)
+SELECT in_sectName,in_color,in_order
+FROM dual
+WHERE NOT EXISTS (SELECT nombre_Seccion FROM seccion WHERE nombre_Seccion =in_sectName );
+    END //
+DELIMITER ;
+
+
+
+DELIMITER //
+CREATE PROCEDURE sp_getSections()
+    BEGIN
+		SELECT nombre_Seccion FROM seccion
+        ORDER BY num_Prioridad;
+    END //
+DELIMITER ;
 
 
 

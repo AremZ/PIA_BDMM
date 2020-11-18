@@ -1074,3 +1074,77 @@ function emptyList(idList){
         '<span class="col-lg-4"> Nombre del usuario </span><span class="col-lg-4"> Tipo de Usuario </span>' +
         '<span class="col-lg-4"> Acciones </span> </div> </li>';
 }
+
+/*////////////////////////////////////////*/
+
+function addSection(){
+    var name=document.getElementById("sect");
+
+    var e = document.getElementById("colorSeccionR");
+    var colorS;
+    if(e.value==1)
+        colorS="rojo";
+    if(e.value==2)
+        colorS="verde";
+    if(e.value==3)
+        colorS="amari";
+    if(e.value==4)
+        colorS="azul";
+    if(e.value==5)
+        colorS="rosa";
+ 
+
+    var nuevoUltimo=document.getElementById("columns").getElementsByTagName("li").length;
+    nuevoUltimo+=1;
+    
+    if(name.value.length>0){
+    $.ajax({
+        url: "functions.php",
+        type: "post",
+        dataType: "json",
+        data: {method: 'addSection',nameS: name.value,color:colorS, order:nuevoUltimo},
+        success: function (result) {
+            if(result.msg){
+                alert("¡Sección añadida!");    
+                $('#modAddS').modal('toggle');
+
+            }
+            else
+                alert("No se puede repetir sección.");
+        }
+
+    });  
+}
+else
+alert("Campo vacío.")  
+}
+
+
+function getSecciones(){
+    $.ajax({
+        url: "functions.php",
+        type: "post",
+        dataType: "json",
+        data: {method: 'getSecciones'},
+        success: function (secciones) {
+            $.each(secciones, function(idx, sect){
+   
+
+               /* upperFirst = secciones[idx].name;
+                upperFirst = upperFirst.charAt(0).toUpperCase() + upperFirst.slice(1)*/
+
+                $( ".allSections" ).append(
+                    "<li class='column' draggable='true'>" +
+                    "<header>" +
+                        "<label id='nombreSec'>"+secciones[idx].name+"</label>"+
+                        "<button class='btn btn-outline-danger btnEdit' data-toggle='modal' data-target='#modChangeN'>Editar</button>"+
+                        "<button class='btn btn-outline-danger btnDel' onclick='deleteSec()'>Eliminar</button>"+
+                    "</header>"+
+                    "</li>");
+              });
+        }
+
+    }); 
+}
+
+

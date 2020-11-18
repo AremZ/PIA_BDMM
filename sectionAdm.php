@@ -23,6 +23,13 @@
     <script>
         $(document).ready(function(){
             $("#btnProfile").toggle();
+
+            getSecciones();
+            $("body").on("click", ".column",function(){
+                alert("¡Todo funciona!");
+                var index = ($( "li" ).index( this ))-9;
+               alert("order is: "+index);
+			});
         });
         </script>
 
@@ -232,15 +239,9 @@
                     </div>-->
                     <div class="col-md-10" id="noticiaBody">
                         <div class="listaSeccion">
-                        <ul id="columns">
+                        <ul id="columns" class="allSections" >
                             <li class="column" draggable="true">   
                                 <header>
-                                    <select class="colorSeccion">
-                                        <option id="option-1">Rojo</option>
-                                        <option id="option-2">Verde</option>
-                                        <option id="option-3">Amarillo</option>
-                                        <option id="option-4">Azul</option>
-                                      </select>
                                     <label id="nombreSec">Nacionales</label>
                                     <button class="btn btn-outline-danger btnEdit" data-toggle="modal" data-target="#modChangeN">Cambiar nombre</button>
                                     <button class="btn btn-outline-danger btnDel" onclick="deleteSec()">Eliminar</button>
@@ -248,12 +249,6 @@
                             </li>
                             <li class="column" draggable="true">   
                                 <header>
-                                    <select class="colorSeccion">
-                                        <option id="option-1">Rojo</option>
-                                        <option id="option-2">Verde</option>
-                                        <option id="option-3">Amarillo</option>
-                                        <option id="option-4">Azul</option>
-                                      </select>
                                     <label>Internacionales</label>
                                     <button class="btn btn-outline-danger btnEdit" data-toggle="modal" data-target="#modChangeN">Cambiar nombre</button>
                                     <button class="btn btn-outline-danger btnDel" onclick="deleteSec()">Eliminar</button>
@@ -261,12 +256,6 @@
                             </li>
                             <li class="column" draggable="true">   
                                 <header>
-                                    <select class="colorSeccion">
-                                        <option id="option-1">Rojo</option>
-                                        <option id="option-2">Verde</option>
-                                        <option id="option-3">Amarillo</option>
-                                        <option id="option-4">Azul</option>
-                                      </select>
                                     <label>Cultura</label>
                                     <button class="btn btn-outline-danger btnEdit" data-toggle="modal" data-target="#modChangeN">Cambiar nombre</button>
                                     <button class="btn btn-outline-danger btnDel" onclick="deleteSec()">Eliminar</button>
@@ -274,12 +263,6 @@
                             </li>
                             <li class="column" draggable="true">   
                                 <header>
-                                    <select class="colorSeccion">
-                                        <option id="option-1">Rojo</option>
-                                        <option id="option-2">Verde</option>
-                                        <option id="option-3">Amarillo</option>
-                                        <option id="option-4">Azul</option>
-                                      </select>
                                     <label>Economía</label>
                                     <button class="btn btn-outline-danger btnEdit" data-toggle="modal" data-target="#modChangeN">Cambiar nombre</button>
                                     <button class="btn btn-outline-danger btnDel" onclick="deleteSec()">Eliminar</button>
@@ -396,6 +379,13 @@ var cols = document.querySelectorAll('#columns .column');
                                                 <div id="mailContainer">
                                                 <input type="text" class="form-control" id="nameNewSec">
                                               </div>
+                                              <select id="colorSeccionM">
+                                        <option id="option-1" value="1">Rojo</option>
+                                        <option id="option-2" value="2">Verde</option>
+                                        <option id="option-3" value="3">Amarillo</option>
+                                        <option id="option-4" value="4">Azul</option>
+                                        <option id="option-5" value="5">Rosa</option>
+                                      </select>
                                             </div>
                                         </form>
                                         <!--<span>Forgot your password?</span>-->
@@ -437,17 +427,24 @@ var cols = document.querySelectorAll('#columns .column');
             
                                     <div id="login" class="tab-pane fade show active">
                                         <form action="/action_page.php">
-                                            <div class="form-group">
+                                        <div class="form-group">
                                                 <label for="nameNewSec">Nombre de sección:</label>
                                                 <div id="mailContainer">
-                                                <input type="text" class="form-control" id="nameNewSec">
+                                                <input type="text"  id="sect" class="form-control">
                                               </div>
+                                              <select id="colorSeccionR">
+                                        <option id="option-1" value="1">Rojo</option>
+                                        <option id="option-2" value="2">Verde</option>
+                                        <option id="option-3" value="3">Amarillo</option>
+                                        <option id="option-4" value="4">Azul</option>
+                                        <option id="option-5" value="5">Rosa</option>
+                                      </select>
                                             </div>
                                         </form>
                                         <!--<span>Forgot your password?</span>-->
                                         <hr>
-                                        <button id="logMeIn" type="button" class="btn btn-outline-danger" 
-                                            style="float:right">Añadir</button>
+                                        <button id="addSectionBtn" type="button" class="btn btn-outline-danger" 
+                                            style="float:right" onclick="addSection()">Añadir</button>
                                     </div>
                   
                                   
@@ -458,7 +455,8 @@ var cols = document.querySelectorAll('#columns .column');
                 </div>
             
 
-                <button class="btn btn-outline-danger btnAdd">Guardar</button>    
+                <button id="addSectionBtn" type="button" class="btn btn-outline-danger" 
+                                            style="float:right" >Guardar orden</button>
                 
                    
                 </div>
