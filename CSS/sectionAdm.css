@@ -34,7 +34,7 @@ div#noticiaBG.row{
     -webkit-user-drag: element;
   }
  
-  #columns {
+  #sortable {
     list-style-type: none;
     margin:auto;
     text-align:center;
@@ -42,7 +42,7 @@ div#noticiaBG.row{
   }
  
   
-  .column {
+  .column, .sect {
     width: 162px;
     padding-bottom: 5px;
     padding-top: 5px;
@@ -50,7 +50,7 @@ div#noticiaBG.row{
     cursor: move;
     margin:0px;
   }
-  .column header {
+  .column header, .sect header {
     height: 60px;
     width: 800px;
     color: black;
@@ -62,12 +62,12 @@ div#noticiaBG.row{
     margin-top:0.5em;
     
   }
-  .column label{
+  .column label,.sect label{
       font-weight: bolder;
       width:8em;
     }
   
-  .column.dragElem {
+  .column.dragElem,.sect.dragElem {
     opacity: 0.4;
   }
   .column.over {
@@ -122,14 +122,14 @@ div#noticiaBG.row{
         width:100%;
         margin:0px;
     }
-    #columns,.listaSeccion, .column header, select{
+    #columns,#sortableList,.listaSeccion, .column header, select{
         width:400%;
         margin-left:-50px;
     }
 }
 
 @media (max-width: 500px){
-    #columns, #cuerpoNot, .listaSeccion, .column header{
+    #columns,#sortableList, #cuerpoNot, .listaSeccion, .column header{
         width:100%;
     }
 }
@@ -172,3 +172,24 @@ div#noticiaBG.row{
   text-decoration: none;
   cursor: pointer;
 } 
+
+
+
+body.dragging, body.dragging * {
+  cursor: move !important;
+}
+
+.dragged {
+  position: absolute;
+  opacity: 0.5;
+  z-index: 2000;
+}
+
+ol.example li.placeholder {
+  position: relative;
+  /** More li styles **/
+}
+ol.example li.placeholder:before {
+  position: absolute;
+  /** Define arrowhead **/
+}

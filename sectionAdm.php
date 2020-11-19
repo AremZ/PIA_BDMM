@@ -15,6 +15,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js" type="text/javascript"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
@@ -23,13 +24,15 @@
     <script>
         $(document).ready(function(){
             $("#btnProfile").toggle();
-
+            $(function  () {
+        $("ol.example").sortable();
+        });
             getSecciones();
-            $("body").on("click", ".column",function(){
+            /*$("body").on("click", ".column",function(){
                 alert("¡Todo funciona!");
                 var index = ($( "li" ).index( this ))-9;
                alert("order is: "+index);
-			});
+			});*/
         });
         </script>
 
@@ -238,118 +241,23 @@
                                                                     Guadalupe, Nuevo Leon
                     </div>-->
                     <div class="col-md-10" id="noticiaBody">
-                        <div class="listaSeccion">
-                        <ul id="columns" class="allSections" >
-                            <li class="column" draggable="true">   
-                                <header>
-                                    <label id="nombreSec">Nacionales</label>
-                                    <button class="btn btn-outline-danger btnEdit" data-toggle="modal" data-target="#modChangeN">Cambiar nombre</button>
-                                    <button class="btn btn-outline-danger btnDel" onclick="deleteSec()">Eliminar</button>
-                                </header>
-                            </li>
-                            <li class="column" draggable="true">   
-                                <header>
-                                    <label>Internacionales</label>
-                                    <button class="btn btn-outline-danger btnEdit" data-toggle="modal" data-target="#modChangeN">Cambiar nombre</button>
-                                    <button class="btn btn-outline-danger btnDel" onclick="deleteSec()">Eliminar</button>
-                                </header>
-                            </li>
-                            <li class="column" draggable="true">   
-                                <header>
-                                    <label>Cultura</label>
-                                    <button class="btn btn-outline-danger btnEdit" data-toggle="modal" data-target="#modChangeN">Cambiar nombre</button>
-                                    <button class="btn btn-outline-danger btnDel" onclick="deleteSec()">Eliminar</button>
-                                </header>
-                            </li>
-                            <li class="column" draggable="true">   
-                                <header>
-                                    <label>Economía</label>
-                                    <button class="btn btn-outline-danger btnEdit" data-toggle="modal" data-target="#modChangeN">Cambiar nombre</button>
-                                    <button class="btn btn-outline-danger btnDel" onclick="deleteSec()">Eliminar</button>
-                                </header>
-                            </li>
-                          </ul>
-                        </div>
-                          <script id="rendered-js">
-                              
-var dragSrcEl = null;
+                     
+                    
 
-function handleDragStart(e) {
-  // Target (this) element is the source node.
-  dragSrcEl = this;
+                <div class="listaSeccion">
+                    <span>
+                        Arrastre para ordenar   
+                        <hr>
+                    </span>
+                    <ol id="sortableList"class='example allSections '>
+                        <!--<li>First</li>
+                        <li>Second</li>
+                        <li>Third</li>-->
+                    </ol>
+                </div>
 
-  e.dataTransfer.effectAllowed = 'move';
-  e.dataTransfer.setData('text/html', this.outerHTML);
+                <script src='JS/jquery-sortable.js'></script>
 
-  this.classList.add('dragElem');
-}
-function handleDragOver(e) {
-  if (e.preventDefault) {
-    e.preventDefault(); // Necessary. Allows us to drop.
-  }
-  this.classList.add('over');
-
-  e.dataTransfer.dropEffect = 'move'; // See the section on the DataTransfer object.
-
-  return false;
-}
-
-function handleDragEnter(e) {
-  // this / e.target is the current hover target.
-}
-
-function handleDragLeave(e) {
-  this.classList.remove('over'); // this / e.target is previous target element.
-}
-
-function handleDrop(e) {
-  // this/e.target is current target element.
-
-  if (e.stopPropagation) {
-    e.stopPropagation(); // Stops some browsers from redirecting.
-  }
-
-  // Don't do anything if dropping the same column we're dragging.
-  if (dragSrcEl != this) {
-    // Set the source column's HTML to the HTML of the column we dropped on.
-    //alert(this.outerHTML);
-    //dragSrcEl.innerHTML = this.innerHTML;
-    //this.innerHTML = e.dataTransfer.getData('text/html');
-    this.parentNode.removeChild(dragSrcEl);
-    var dropHTML = e.dataTransfer.getData('text/html');
-    this.insertAdjacentHTML('beforebegin', dropHTML);
-    var dropElem = this.previousSibling;
-    addDnDHandlers(dropElem);
-
-  }
-  this.classList.remove('over');
-  return false;
-}
-
-function handleDragEnd(e) {
-  // this/e.target is the source node.
-  this.classList.remove('over');
-
-  /*[].forEach.call(cols, function (col) {
-                                   col.classList.remove('over');
-                                 });*/
-}
-
-function addDnDHandlers(elem) {
-  elem.addEventListener('dragstart', handleDragStart, false);
-  elem.addEventListener('dragenter', handleDragEnter, false);
-  elem.addEventListener('dragover', handleDragOver, false);
-  elem.addEventListener('dragleave', handleDragLeave, false);
-  elem.addEventListener('drop', handleDrop, false);
-  elem.addEventListener('dragend', handleDragEnd, false);
-
-}
-
-var cols = document.querySelectorAll('#columns .column');
-[].forEach.call(cols, addDnDHandlers);
-//# sourceURL=pen.js
-    
-                          </script>
 
                           <div id="modChangeN" class="modal fade">
                     <div class="modal-dialog" id="modChangeN">
@@ -403,7 +311,8 @@ var cols = document.querySelectorAll('#columns .column');
 
 
 
-                <button class="btn btn-outline-danger btnAdd" data-toggle="modal" data-target="#modAddS">Agregar Sección</button>    
+                <button class="btn btn-outline-danger btnAdd" data-toggle="modal" data-target="#modAddS">Agregar Sección</button>
+                <button id="saveOrderBtn" type="button" class="btn btn-outline-danger" style="margin-left:2em;" onclick="setOrden()">Guardar orden</button>    
                 <div id="modAddS" class="modal fade">
                     <div class="modal-dialog" id="modAddS">
             
@@ -453,10 +362,9 @@ var cols = document.querySelectorAll('#columns .column');
                         </div>
                     </div>
                 </div>
-            
+                
 
-                <button id="addSectionBtn" type="button" class="btn btn-outline-danger" 
-                                            style="float:right" >Guardar orden</button>
+
                 
                    
                 </div>
@@ -470,7 +378,7 @@ var cols = document.querySelectorAll('#columns .column');
 
 
     </div>
-
+</div>
 
     <!--FOOTER-->
     <footer>
