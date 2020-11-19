@@ -90,7 +90,7 @@ DELIMITER ;
 DELIMITER //
 CREATE PROCEDURE sp_noticiaRegister(
 	IN in_secNot int,
-    IN in_titulo varchar(50),
+    IN in_titulo varchar(100),
     IN in_reportero int,
     IN in_feAcont datetime,
     IN in_lugAcont varchar(100),

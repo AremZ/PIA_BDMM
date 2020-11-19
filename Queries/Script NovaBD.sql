@@ -28,7 +28,7 @@ primary key(id_Seccion)
 CREATE TABLE noticia(
 id_Noticia int NOT NULL AUTO_INCREMENT,
 seccion_Noticia int NOT NULL,
-titulo_Noticia varchar(50) NOT NULL,
+titulo_Noticia varchar(100) NOT NULL,
 reportero_Autor int NOT NULL,
 fecha_Creacion DATE NOT NULL,
 fecha_Publicacion DATETIME,

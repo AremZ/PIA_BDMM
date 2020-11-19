@@ -220,13 +220,14 @@ if ($method == "noticiaReg"){
     $conn = connectDB();
 
     if($conn){
+        $idNot=$_POST['idNot'];
         $titleNot=$_POST['title'];
         $dateAcont=$_POST['dateAcont'];
         $lugAcont=$_POST['lugAcont'];
         $descrSh=$_POST['descrSh'];
         $descrLg= $_POST['descrLg'];
 
-        $query  = "CALL sp_noticiaRegister(1,'$titleNot', 3, '$dateAcont', '$lugAcont', '$descrSh', '$descrLg', 'redaccion')";
+        $query  = "CALL sp_noticiaRegister($idNot,'$titleNot', 3, '$dateAcont', '$lugAcont', '$descrSh', '$descrLg', 'redaccion')";
         mysqli_query($conn, $query);
         $fila=mysqli_affected_rows($conn);
         if($fila!=0){

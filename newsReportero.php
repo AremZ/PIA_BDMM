@@ -584,9 +584,6 @@
                                         <div class="col-md-12" id="SeccionSel">
                                             <label for="selectSeccion">Elija la seccion de la noticia</label>                                
                                             <select class="form-control" id="selectSeccion">
-                                                <option>Seccion 1</option>
-                                                <option>Seccion 2</option>
-                                                <option>Seccion 3</option>
                                             </select>
                                         </div>
                                     </div>
