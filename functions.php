@@ -239,8 +239,6 @@ if ($method == "noticiaReg"){
     }
 } 
 
-
-
 if ($method == "setOrden"){
     //Creamos la conexion
     $conn = connectDB();

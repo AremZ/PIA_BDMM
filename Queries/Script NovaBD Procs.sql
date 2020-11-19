@@ -82,7 +82,7 @@ DELIMITER ;
 DELIMITER //
 CREATE PROCEDURE sp_getSections()
     BEGIN
-		SELECT nombre_Seccion FROM seccion
+		SELECT nombre_Seccion, id_Seccion FROM seccion
         ORDER BY num_Prioridad;
     END //
 DELIMITER ;

@@ -1127,7 +1127,7 @@ function addSection(){
         colorS="rosa";
  
 
-    var nuevoUltimo=document.getElementById("columns").getElementsByTagName("li").length;
+    var nuevoUltimo=document.getElementById("sortableList").getElementsByTagName("li").length;
     nuevoUltimo+=1;
     
     if(name.value.length>0){
@@ -1169,7 +1169,7 @@ function getSecciones(){
                 $( ".allSections" ).append(
                     "<li class='column' draggable='true'>" +
                     "<header>" +
-                    "<label class='ordenSec'>"+secciones[idx].id+"</label>"+
+                    "<label class='ordenSec' style='display: none'>"+secciones[idx].id+"</label>"+
                     "<label id='nombreSec'>"+secciones[idx].name+"</label>"+
                         "<button class='btn btn-outline-danger btnEdit' data-toggle='modal' data-target='#modChangeN'>Editar</button>"+
                         "<button class='btn btn-outline-danger btnDel' onclick='deleteSec()'>Eliminar</button>"+
