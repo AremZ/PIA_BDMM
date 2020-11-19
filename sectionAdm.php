@@ -311,7 +311,7 @@
 
 
 
-                <button class="btn btn-outline-danger btnAdd" data-toggle="modal" data-target="#modAddS">Agregar Sección</button>
+                <button class="btn btn-outline-danger btnAdd" onclick='nuevaSeccion()'>Agregar Sección</button>
                 <button id="saveOrderBtn" type="button" class="btn btn-outline-danger" style="margin-left:2em;" onclick="setOrden()">Guardar orden</button>    
                 <div id="modAddS" class="modal fade">
                     <div class="modal-dialog" id="modAddS">
@@ -353,7 +353,7 @@
                                         <!--<span>Forgot your password?</span>-->
                                         <hr>
                                         <button id="addSectionBtn" type="button" class="btn btn-outline-danger" 
-                                            style="float:right" onclick="addSection(),emptyListSeccion()">Añadir</button>
+                                            style="float:right" onclick="addSection()">Añadir</button>
                                     </div>
                   
                                   

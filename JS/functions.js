@@ -1150,7 +1150,8 @@ function addSection(){
         data: {method: 'addSection',nameS: name.value,color:colorS, order:nuevoUltimo},
         success: function (result) {
             if(result.msg){
-                alert("¡Sección añadida!");    
+                alert("¡Sección añadida!");
+                emptyListSeccion();    
                 $('#modAddS').modal('toggle');
 
             }
@@ -1244,4 +1245,11 @@ function getSeccionesNoti(){
         }
 
     }); 
+}
+
+function nuevaSeccion(){
+    $('#modAddS').modal('toggle');
+    document.getElementById("sect").value = "";
+    document.getElementById("colorSeccionR").selectedIndex = "0";
+
 }
