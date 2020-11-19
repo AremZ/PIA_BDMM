@@ -353,7 +353,7 @@
                                         <!--<span>Forgot your password?</span>-->
                                         <hr>
                                         <button id="addSectionBtn" type="button" class="btn btn-outline-danger" 
-                                            style="float:right" onclick="addSection()">Añadir</button>
+                                            style="float:right" onclick="addSection(),emptyListSeccion()">Añadir</button>
                                     </div>
                   
                                   
