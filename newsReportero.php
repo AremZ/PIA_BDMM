@@ -21,6 +21,7 @@
     <script>
         $(document).ready(function(){
             $("#btnProfile").toggle();
+            getSeccionesNoti();
         });
     </script>
 </head>

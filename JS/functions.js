@@ -734,14 +734,15 @@ function checkNoticia(id, toggleWindow){
 
     if (error == 0){        
         var titNot = document.getElementById("headerNot").value;
-        var feNot = document.getElementById("infoNotFe").value;
-        var hoNot = document.getElementById("infoNotHo").value;
+        var feInput = document.getElementById("infoNotFe").value;
+        var hoInput = document.getElementById("infoNotHo").value;
         var lugNot = document.getElementById("infoNotlug").value;
         var shNot = document.getElementById("descNoticia").value;
         var lgNot = document.getElementById("bodyNoticia").value;
-        var clvNot = document.getElementById("infoNotpalClav").value;
+        var clvInput = document.getElementById("infoNotpalClav").value;
 
-        var feAcont = feNot + " " + hoNot + ":00";
+        var feAcont = feInput + " " + hoInput + ":00";
+        var clvNot = clvInput.split(",");
 
         var select = document.getElementById("selectSeccion");
         var textSelect = select.options[select.selectedIndex].text; 
@@ -751,7 +752,7 @@ function checkNoticia(id, toggleWindow){
             url: "functions.php",
             type: "post",
             dataType: "json",
-            data: {method: 'noticiaReg', idNot: idSection[0], title: titNot, dateAcont: feAcont, lugAcont: lugNot, descrSh: shNot, descrLg: lgNot},
+            data: {method: 'noticiaReg', idSec: idSection[0], title: titNot, dateAcont: feAcont, lugAcont: lugNot, descrSh: shNot, descrLg: lgNot, arrayClv: clvNot},
             success: function (result) {
                 if (result.msg) {
                     alert("Noticia creada exitosamente!");
@@ -899,7 +900,7 @@ function nuevaNoticia(){
     document.getElementById("bodyNoticia").value="";
     document.getElementById("infoNotpalClav").value="";
 
-    getSeccionesNoti();
+    document.getElementById("selectSeccion").selectedIndex=0;
 }
 
 function verRetro(){

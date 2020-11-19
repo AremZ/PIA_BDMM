@@ -220,22 +220,43 @@ if ($method == "noticiaReg"){
     $conn = connectDB();
 
     if($conn){
-        $idNot=$_POST['idNot'];
+        $idSec=$_POST['idSec'];
         $titleNot=$_POST['title'];
         $dateAcont=$_POST['dateAcont'];
         $lugAcont=$_POST['lugAcont'];
         $descrSh=$_POST['descrSh'];
         $descrLg= $_POST['descrLg'];
 
-        $query  = "CALL sp_noticiaRegister($idNot,'$titleNot', 3, '$dateAcont', '$lugAcont', '$descrSh', '$descrLg', 'redaccion')";
+        $palClavArray=$_POST['arrayClv'];
+
+        $query  = "CALL sp_noticiaRegister($idSec,'$titleNot', 3, '$dateAcont', '$lugAcont', '$descrSh', '$descrLg', 'redaccion')";
         mysqli_query($conn, $query);
-        $fila=mysqli_affected_rows($conn);
+        $fila = mysqli_affected_rows($conn);
         if($fila!=0){
-            echo json_encode(array("msg"=>true));       
+            
+            $querylastID = "select LAST_INSERT_ID() AS 'LastID';";
+            //$querylastID = "CALL sp_lastInsertedID()";
+            $resultado = mysqli_query($conn, $querylastID);
+            $rowID = mysqli_fetch_assoc($resultado);
+            $IDNot = $rowID['LastID'];
+
+            foreach($palClavArray as $palClav)
+            {
+                $queryClav  = "CALL sp_insertPalClav('$palClav', $IDNot)";
+                mysqli_query($conn, $queryClav);
+                $row = mysqli_affected_rows($conn);
+                if($row!=0){ 
+                }
+                else{
+                    echo json_encode(array("msg"=>false));
+                }
+            }     
+            echo json_encode(array("msg"=>true));  
         }
         else{
             echo json_encode(array("msg"=>false));
         }
+
         closeDB($conn);
     }
 } 

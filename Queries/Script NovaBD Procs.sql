@@ -105,8 +105,6 @@ CREATE PROCEDURE sp_noticiaRegister(
     END //
 DELIMITER ;
 
-
-
 DELIMITER //
 CREATE PROCEDURE sp_setOrdenSeccion(
 	IN in_orden tinyint,
@@ -117,3 +115,19 @@ CREATE PROCEDURE sp_setOrdenSeccion(
     END //
 DELIMITER ;
 
+DELIMITER //
+CREATE PROCEDURE sp_lastInsertedID()
+    BEGIN
+		SELECT LAST_INSERT_ID() AS 'LastID';
+    END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE sp_insertPalClav(
+	IN in_pal_Clave varchar(20),
+    IN id_NoticiaProp int
+)
+    BEGIN
+		Insert into palabra_clave(pal_Clave, id_NoticiaProp) values (in_pal_Clave, id_NoticiaProp);
+    END //
+DELIMITER ;
