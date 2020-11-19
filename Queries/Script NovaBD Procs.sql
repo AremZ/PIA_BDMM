@@ -92,3 +92,13 @@ DELIMITER ;
 
 
 
+DELIMITER //
+CREATE PROCEDURE sp_setOrdenSeccion(
+	IN in_orden tinyint,
+    IN in_id tinyint
+)
+    BEGIN
+		UPDATE seccion SET num_Prioridad=in_orden WHERE id_Seccion=in_id;
+    END //
+DELIMITER ;
+
