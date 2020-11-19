@@ -1114,6 +1114,12 @@ function emptyList(idList){
         '<span class="col-lg-4"> Acciones </span> </div> </li>';
 }
 
+
+function emptyListSeccion(){
+    document.getElementById("sortableList").innerHTML = "";
+    getSecciones();
+}
+
 /*////////////////////////////////////////*/
 
 function addSection(){
