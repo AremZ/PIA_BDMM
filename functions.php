@@ -199,6 +199,7 @@ if ($method == "getSecciones"){
         if($resultado){
             while ($row = mysqli_fetch_assoc($resultado)) {
                 $sect = array(
+                  "id" => $row['id_Seccion'],
                   "name" => $row['nombre_Seccion']
                   /*,
                   "apellidoP" => $row['apellido_P'],
@@ -216,6 +217,28 @@ if ($method == "getSecciones"){
 
 
 
+if ($method == "setOrden"){
+    //Creamos la conexion
+    $conn = connectDB();
+
+    if($conn){
+        
+         
+        $newOrden=$_POST['newOrden'];
+        $idSeccion=$_POST['idSeccion'];
+
+        $query  = "CALL sp_setOrdenSeccion('$newOrden','$idSeccion');";
+        mysqli_query($conn, $query);
+        $fila=mysqli_affected_rows($conn);
+        if($fila==1){
+            echo json_encode(array("msg"=>true));       
+        }
+        else{
+            echo json_encode(array("msg"=>false));
+        }
+        closeDB($conn);
+    }
+} 
 
 function connectDB(){
     $servername = "localhost"; 

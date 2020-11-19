@@ -1136,15 +1136,49 @@ function getSecciones(){
                 $( ".allSections" ).append(
                     "<li class='column' draggable='true'>" +
                     "<header>" +
-                        "<label id='nombreSec'>"+secciones[idx].name+"</label>"+
+                    "<label class='ordenSec'>"+secciones[idx].id+"</label>"+
+                    "<label id='nombreSec'>"+secciones[idx].name+"</label>"+
                         "<button class='btn btn-outline-danger btnEdit' data-toggle='modal' data-target='#modChangeN'>Editar</button>"+
                         "<button class='btn btn-outline-danger btnDel' onclick='deleteSec()'>Eliminar</button>"+
-                    "</header>"+
+                        "</header>"+
                     "</li>");
+                    
+              //$(".draggable").draggable();
               });
+             
         }
 
     }); 
+}
+
+
+
+function setOrden(){
+    $("ol.allSections li").each(function() {
+       
+        //alert("Orden: "+index+"idSeccion: "+id );
+        var index = ($( "li" ).index( this ))-9;
+        var id = $(this).find(".ordenSec").text();
+        $.ajax({
+          
+            url: "functions.php",
+            type: "post",
+            dataType: "json",
+            data: {method: 'setOrden',newOrden: index,idSeccion:id},
+            success: function (result) {
+                if(result.msg){
+                    //alert("Cambios guardados");    
+    
+                }
+                else
+                    alert("Error en la actualización.");
+            }
+    
+        });  
+
+        alert("Cambios guardados");    
+    });
+    
 }
 
 
