@@ -65,7 +65,6 @@ CREATE PROCEDURE sp_editUser(
     END //
 DELIMITER ;
 
-
 DELIMITER //
 CREATE PROCEDURE sp_addSection(
 	IN in_sectName varchar(30),
@@ -80,13 +79,29 @@ WHERE NOT EXISTS (SELECT nombre_Seccion FROM seccion WHERE nombre_Seccion =in_se
     END //
 DELIMITER ;
 
-
-
 DELIMITER //
 CREATE PROCEDURE sp_getSections()
     BEGIN
 		SELECT nombre_Seccion FROM seccion
         ORDER BY num_Prioridad;
+    END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE sp_noticiaRegister(
+	IN in_secNot int,
+    IN in_titulo varchar(50),
+    IN in_reportero int,
+    IN in_feAcont datetime,
+    IN in_lugAcont varchar(100),
+    IN in_descSh varchar(200),
+    IN in_descLg TEXT,
+    IN in_estado varchar(15)
+    )
+    BEGIN
+	INSERT INTO noticia(seccion_Noticia , titulo_Noticia , reportero_Autor, fecha_Creacion, fecha_Acontecimiento,
+    lugar_Acontecimiento, descripcion_Corta , descripcion_Larga, estado)
+	VALUES (in_secNot, in_titulo, in_reportero, NOW(), in_feAcont, in_lugAcont, in_descSh, in_descLg, in_estado);
     END //
 DELIMITER ;
 

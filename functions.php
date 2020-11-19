@@ -214,15 +214,39 @@ if ($method == "getSecciones"){
     }
 } 
 
+if ($method == "noticiaReg"){
+    //Creamos la conexion
+    $conn = connectDB();
+
+    if($conn){
+        $titleNot=$_POST['title'];
+        $dateAcont=$_POST['dateAcont'];
+        $lugAcont=$_POST['lugAcont'];
+        $descrSh=$_POST['descrSh'];
+        $descrLg= $_POST['descrLg'];
+
+        $query  = "CALL sp_noticiaRegister(1,'$titleNot', 3, '$dateAcont', '$lugAcont', '$descrSh', '$descrLg', 'redaccion')";
+        mysqli_query($conn, $query);
+        $fila=mysqli_affected_rows($conn);
+        if($fila!=0){
+            echo json_encode(array("msg"=>true));       
+        }
+        else{
+            echo json_encode(array("msg"=>false));
+        }
+        closeDB($conn);
+    }
+} 
+
 
 
 
 function connectDB(){
     $servername = "localhost"; 
-    $username = "root";
-    //$username = "PruebaDB3";
-    $password = "";
-    //$password = "password";
+    //$username = "root";
+    $username = "PruebaDB3";
+    //$password = "";
+    $password = "password";
     $dbname = "novadb";  
     
     $conn = mysqli_connect($servername, $username, $password, $dbname);

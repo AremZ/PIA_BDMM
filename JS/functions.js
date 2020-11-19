@@ -732,8 +732,32 @@ function checkNoticia(id, toggleWindow){
         error = 1;
     }
 
-    if (error == 0)
-        $(toggleWindow).modal('toggle');
+    if (error == 0){        
+        var titNot = document.getElementById("headerNot").value;
+        var feNot = document.getElementById("infoNotFe").value;
+        var hoNot = document.getElementById("infoNotHo").value;
+        var lugNot = document.getElementById("infoNotlug").value;
+        var shNot = document.getElementById("descNoticia").value;
+        var lgNot = document.getElementById("bodyNoticia").value;
+        var clvNot = document.getElementById("infoNotpalClav").value;
+
+        var feAcont = feNot + " " + hoNot + ":00";
+
+        $.ajax({
+            url: "functions.php",
+            type: "post",
+            dataType: "json",
+            data: {method: 'noticiaReg', title: titNot, dateAcont: feAcont, lugAcont: lugNot, descrSh: shNot, descrLg: lgNot},
+            success: function (result) {
+                if (result.msg) {
+                    alert("Noticia creada exitosamente!");
+                    $(toggleWindow).modal('toggle');
+                } else
+                    alert("Correo ya registrado.");
+            }
+        }); 
+
+    }
 }
 
 function cleanTextarea(idTxt){
@@ -861,6 +885,15 @@ function nuevaNoticia(){
     document.getElementById("notEdiNoticia").hidden=true;
     document.getElementById("sepNotes").hidden=true;
     document.getElementById("btnDeleteinNot").hidden=true;
+
+    document.getElementById("notEdiNoticia").value="";
+    document.getElementById("headerNot").value="";
+    document.getElementById("infoNotFe").value="";
+    document.getElementById("infoNotHo").value="";
+    document.getElementById("infoNotlug").value="";
+    document.getElementById("descNoticia").value="";
+    document.getElementById("bodyNoticia").value="";
+    document.getElementById("infoNotpalClav").value="";
 }
 
 function verRetro(){

@@ -213,7 +213,8 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <button class="btn btn-outline-danger topBarNew" data-toggle="modal" data-target="#editorNoticia" onclick="nuevaNoticia()"><i class="fa fa-plus-circle"></i>Nueva noticia</button>
+                <button class="btn btn-outline-danger topBarNew" data-toggle="modal" data-target="#editorNoticia"
+                onclick="nuevaNoticia()"><i class="fa fa-plus-circle"></i>Nueva noticia</button>
             </div>
         </div>
     </div>
@@ -594,8 +595,8 @@
                                     </div>  
                                     <div class="col-md-12">
                                         <hr>
-                                        <button class="btn btn-outline-danger buttEditor" type="submit" id="btnSendinNot" onclick="checkNoticia('#editorNoticia')"><i class="fa fa-paper-plane"></i>Enviar a revision</button>
-                                        <button class="btn btn-outline-danger buttEditor" type="submit" id="btnSaveinNot" onclick="checkNoticia('#editorNoticia')"><i class="fa fa-floppy-o"></i>Guardar</button>
+                                        <button class="btn btn-outline-danger buttEditor" type="submit" id="btnSendinNot" onclick="checkNoticia(0, '#editorNoticia')"><i class="fa fa-paper-plane"></i>Enviar a revision</button>
+                                        <button class="btn btn-outline-danger buttEditor" type="submit" id="btnSaveinNot" onclick="checkNoticia(0, '#editorNoticia')"><i class="fa fa-floppy-o"></i>Guardar</button>
                                         <button class="btn btn-outline-danger buttEditor" type="submit" data-toggle="modal" data-target="#editorNoticia" id="btnDeleteinNot"><i class="fa fa-trash"></i>Eliminar</button>
                                         <button class="btn btn-outline-danger buttEditor" type="submit" data-toggle="modal" data-target="#editorNoticia" id="btnCancelinNot"><i class="fa fa-times"></i>Cancelar</button>
                                     </div>
