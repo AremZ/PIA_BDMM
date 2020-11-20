@@ -270,6 +270,10 @@ button.comment-reply{
     font-family: 'Oswald', sans-serif;
 }
 
+.titleEnRed, .titleNotRev{
+    margin-left: -15px;
+}
+
 .card button{   
     font-family: 'Oswald', sans-serif !important;
 }
@@ -334,12 +338,17 @@ div#hTitle{
     object-fit: cover;
 }
 
+.enRed .card-img{
+    height: 190px;
+    object-fit: cover;
+}
+
 .enRed{
     margin-left: 1rem;
 }
 
 .enRed .buttons{
-    margin-top: 4.2em;
+    margin-top: 38px;
     margin-left: 29em;
 }
 

@@ -131,3 +131,24 @@ CREATE PROCEDURE sp_insertPalClav(
 		Insert into palabra_clave(pal_Clave, id_NoticiaProp) values (in_pal_Clave, id_NoticiaProp);
     END //
 DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE sp_getNotiRedaccion(
+	IN in_ReporteroID int,
+    IN in_estado varchar(15)
+)
+    BEGIN
+		SELECT id_Noticia, seccion_Noticia , titulo_Noticia , reportero_Autor, fecha_Creacion, fecha_Publicacion, fecha_Acontecimiento,
+			   lugar_Acontecimiento, descripcion_Corta , descripcion_Larga, estado FROM noticia WHERE reportero_Autor = in_ReporteroID
+               AND estado = in_estado ORDER BY fecha_Creacion DESC;
+    END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE sp_getKeywordsByNewsID(
+	IN in_NoticiaID int
+)
+    BEGIN
+		SELECT id_PalabraClv, pal_Clave , id_NoticiaProp FROM palabra_clave WHERE id_NoticiaProp = in_NoticiaID ORDER BY id_PalabraClv ASC;
+    END //
+DELIMITER ;

@@ -22,6 +22,8 @@
         $(document).ready(function(){
             $("#btnProfile").toggle();
             getSeccionesNoti();
+            
+            getNoticiasRed();
         });
     </script>
 </head>
@@ -353,62 +355,9 @@
                 <h1>Notas en redaccion</h1>
             </div>
             <div class="col-lg-12">
-                <div class="row">
-
-                    <div class="col-md-12">
-                        <div class="card enRed">
-                            <div class="row no-gutters">
-        
-                                <div class="col-md-4">
-                                    <img class="card-img" src="Sources/Note3.jpg">
-                                </div>
-            
-                                <div class="col-md-8">
-                                    <div class="card-body">
-                                        <h2 class="col-md-12 card-title titleEnRed">AQUI VA EL HEADER DE LA NOTICIA</h2>
-                                        <p class="card-text bodyEnRed">DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA 
-                                            DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA...</p>
-                                        <div class="row buttons">
-                                            <button class="btn btn-outline-danger barBut" type="submit" id="btnSend"><i class="fa fa-paper-plane"></i>Enviar a revision</button>
-                                            <button class="btn btn-outline-danger barBut"  data-toggle="modal" data-target="#editorNoticia"
-                                            type="submit" id="btnEdit" onclick="editarNoticia()"><i class="fa fa-pencil"></i>Editar</button>
-                                            <button class="btn btn-outline-danger barBut" type="submit" id="btnDelete"><i class="fa fa-trash"></i>Eliminar</button>
-                                        </div>
-                                    </div>
-                                </div>
-    
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-12">
-                        <div class="card enRed">
-                            <div class="row no-gutters">
-        
-                                <div class="col-md-4">
-                                    <img class="card-img" src="Sources/Note2.jpg">
-                                </div>
-            
-                                <div class="col-md-8">
-                                    <div class="card-body">
-                                        <h2 class="col-md-12 card-title titleEnRed">AQUI VA EL HEADER DE LA NOTICIA</h2>
-                                        <p class="card-text bodyEnRed">DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA 
-                                            DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA...</p>
-                                        <div class="row buttons">
-                                            <button class="btn btn-outline-danger barBut" type="submit" id="btnSend"><i class="fa fa-paper-plane"></i>Enviar a revision</button>
-                                            <button class="btn btn-outline-danger barBut"  data-toggle="modal" data-target="#editorNoticia"
-                                            type="submit" id="btnEdit" onclick="editarNoticia()"><i class="fa fa-pencil"></i>Editar</button>
-                                            <button class="btn btn-outline-danger barBut" type="submit" id="btnDelete"><i class="fa fa-trash"></i>Eliminar</button>
-                                        </div>
-                                    </div>
-                                </div>
-    
-                            </div>
-                        </div>
-                    </div>
+                <div class="row" id="notiRedaccion">
 
                 </div>  
-
             </div>
         </div>
     </div>
@@ -548,6 +497,7 @@
                                     <div class="col-md-12" id="inputNoticia">
                                         <textarea name="compNoticia" id="bodyNoticia" placeholder="Escriba la noticia completa..." rows="8" onfocus="cleanTextarea('bodyNoticia')"></textarea>
                                     </div>
+                                    <input type="text" name="" id="idNoti" style="display: none">
                                     <div class="col-md-9">
                                         <!--Slider -->
                                         <div id="carruselEdit" class="carousel slide carousel-fade" data-ride="carousel">
@@ -593,9 +543,10 @@
                                     </div>  
                                     <div class="col-md-12">
                                         <hr>
-                                        <button class="btn btn-outline-danger buttEditor" type="submit" id="btnSendinNot" onclick="checkNoticia(0, '#editorNoticia')"><i class="fa fa-paper-plane"></i>Enviar a revision</button>
-                                        <button class="btn btn-outline-danger buttEditor" type="submit" id="btnSaveinNot" onclick="checkNoticia(0, '#editorNoticia')"><i class="fa fa-floppy-o"></i>Guardar</button>
-                                        <button class="btn btn-outline-danger buttEditor" type="submit" data-toggle="modal" data-target="#editorNoticia" id="btnDeleteinNot"><i class="fa fa-trash"></i>Eliminar</button>
+                                        <button class="btn btn-outline-danger buttEditor" type="submit" id="btnSendinNot" onclick="checkNoticia('#editorNoticia'. 1)"><i class="fa fa-paper-plane"></i>Enviar a revision</button>
+                                        <button class="btn btn-outline-danger buttEditor" type="submit" id="btnSaveinNot" onclick="checkNoticia('#editorNoticia', 0)"><i class="fa fa-floppy-o"></i>Guardar</button>
+                                        <button class="btn btn-outline-danger buttEditor" type="submit" id="btnSaveChangNot" onclick="checkNoticia('#editorNoticia', 2)"><i class="fa fa-floppy-o"></i>Guardar cambios</button>
+                                        <button class="btn btn-outline-danger buttEditor" type="submit" data-toggle="modal" data-target="#editorNoticia" id="btnDeleteNot"><i class="fa fa-trash"></i>Eliminar noticia</button>
                                         <button class="btn btn-outline-danger buttEditor" type="submit" data-toggle="modal" data-target="#editorNoticia" id="btnCancelinNot"><i class="fa fa-times"></i>Cancelar</button>
                                     </div>
 

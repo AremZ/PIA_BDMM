@@ -284,6 +284,67 @@ if ($method == "setOrden"){
     }
 } 
 
+if ($method == "getNoticiasRed"){
+    //Creamos la conexion
+    $conn = connectDB();
+
+    if($conn){
+      
+        $query  = "CALL sp_getNotiRedaccion(3,'redaccion');";
+        $resultado = mysqli_query($conn, $query);
+    
+        $noticias = array();
+        
+        if($resultado){
+            while ($row = mysqli_fetch_assoc($resultado)) {
+                $notiRed = array(
+                  "id" => $row['id_Noticia'],
+                  "idSecc" => $row['seccion_Noticia'],
+                  "title" => $row['titulo_Noticia'],
+                  "idAutor" => $row['reportero_Autor'],
+                  "feCreacion" => $row['fecha_Creacion'],
+                  "feAcont" => $row['fecha_Acontecimiento'],
+                  "lugAcont" => $row['lugar_Acontecimiento'],
+                  "descrSh" => $row['descripcion_Corta'],
+                  "descrLg" => $row['descripcion_Larga'],
+                  "status" => $row['estado']
+                );
+                $noticias[] = $notiRed;
+              }             
+             echo json_encode($noticias);
+        }       
+        closeDB($conn);
+    }
+} 
+
+if ($method == "getKeyNotID"){
+    //Creamos la conexion
+    $conn = connectDB();
+
+    if($conn){
+      
+        $idNot=$_POST['idNot'];
+
+        $query  = "CALL sp_getKeywordsByNewsID($idNot);";
+        $resultado = mysqli_query($conn, $query);
+    
+        $allKeywords = array();
+        
+        if($resultado){
+            while ($row = mysqli_fetch_assoc($resultado)) {
+                $keywords = array(
+                  "idClv" => $row['id_PalabraClv'],
+                  "content" => $row['pal_Clave'],
+                  "idNot" => $row['id_NoticiaProp']
+                );
+                $allKeywords[] = $keywords;
+              }             
+             echo json_encode($allKeywords);
+        }       
+        closeDB($conn);
+    }
+} 
+
 function connectDB(){
     $servername = "localhost"; 
     //$username = "root";
