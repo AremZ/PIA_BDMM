@@ -543,10 +543,11 @@
                                     </div>  
                                     <div class="col-md-12">
                                         <hr>
-                                        <button class="btn btn-outline-danger buttEditor" type="submit" id="btnSendinNot" onclick="checkNoticia('#editorNoticia'. 1)"><i class="fa fa-paper-plane"></i>Enviar a revision</button>
+                                        <button class="btn btn-outline-danger buttEditor" type="submit" id="btnSendinNot" onclick="checkNoticia('#editorNoticia', 1)"><i class="fa fa-paper-plane"></i>Enviar a revision</button>
                                         <button class="btn btn-outline-danger buttEditor" type="submit" id="btnSaveinNot" onclick="checkNoticia('#editorNoticia', 0)"><i class="fa fa-floppy-o"></i>Guardar</button>
+                                        <button class="btn btn-outline-danger buttEditor" type="submit" id="btnSendSavedNot" onclick="checkNoticia('#editorNoticia', 3)"><i class="fa fa-paper-plane"></i>Enviar a revision</button>
                                         <button class="btn btn-outline-danger buttEditor" type="submit" id="btnSaveChangNot" onclick="checkNoticia('#editorNoticia', 2)"><i class="fa fa-floppy-o"></i>Guardar cambios</button>
-                                        <button class="btn btn-outline-danger buttEditor" type="submit" data-toggle="modal" data-target="#editorNoticia" id="btnDeleteNot"><i class="fa fa-trash"></i>Eliminar noticia</button>
+                                        <button class="btn btn-outline-danger buttEditor" type="submit" id="btnDeleteNot" onclick="deleteNoticiaIn()"><i class="fa fa-trash"></i>Eliminar noticia</button>
                                         <button class="btn btn-outline-danger buttEditor" type="submit" data-toggle="modal" data-target="#editorNoticia" id="btnCancelinNot"><i class="fa fa-times"></i>Cancelar</button>
                                     </div>
 
@@ -554,6 +555,32 @@
                             </div>   
                         </div>      
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="confirmDeleteNoticia" class="modal fade">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+
+                    <h5>¿Está seguro que desea eliminar esta noticia?</h5>
+                
+                    <hr>
+                    <button type="button" class="btn btn-outline-danger" style="float:left" id="btnConfirmDelNot"
+                    onclick="confirmDeleteNoticia();"></a><i class="fa fa-fire"> </i>Eliminar Noticia</button>
+
+                    <input type="text" name="" id="idNoticiaDelete" style="display: none">
+
+                    <button type="button" class="btn btn-outline-danger" 
+                        style="float:right" id="btnCancelDel" data-toggle="modal" data-target="#confirmDeleteNoticia"><i class="fa fa-times"></i>Cancelar</button>
+                
                 </div>
             </div>
         </div>

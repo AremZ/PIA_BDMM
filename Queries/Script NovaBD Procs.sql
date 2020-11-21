@@ -106,6 +106,25 @@ CREATE PROCEDURE sp_noticiaRegister(
 DELIMITER ;
 
 DELIMITER //
+CREATE PROCEDURE sp_noticiaUpdate(
+	IN in_notID int,
+	IN in_secNot int,
+    IN in_titulo varchar(100),
+    IN in_feAcont datetime,
+    IN in_lugAcont varchar(100),
+    IN in_descSh varchar(200),
+    IN in_descLg TEXT,
+    IN in_estado varchar(15)
+    )
+    BEGIN
+    DELETE FROM palabra_clave where id_NoticiaProp = in_notID;
+    UPDATE noticia SET seccion_Noticia = in_secNot, titulo_Noticia = in_titulo,
+		   fecha_Acontecimiento = in_feAcont, lugar_Acontecimiento = in_lugAcont, descripcion_Corta = in_descSh,
+           descripcion_Larga = in_descLg, estado = in_estado WHERE id_Noticia = in_notID;
+    END //
+DELIMITER ;
+
+DELIMITER //
 CREATE PROCEDURE sp_setOrdenSeccion(
 	IN in_orden tinyint,
     IN in_id tinyint
@@ -150,5 +169,14 @@ CREATE PROCEDURE sp_getKeywordsByNewsID(
 )
     BEGIN
 		SELECT id_PalabraClv, pal_Clave , id_NoticiaProp FROM palabra_clave WHERE id_NoticiaProp = in_NoticiaID ORDER BY id_PalabraClv ASC;
+    END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE sp_deleteNoticia(
+	IN in_NoticiaID int
+)
+    BEGIN
+		delete from noticia where id_Noticia = in_NoticiaID;
     END //
 DELIMITER ;

@@ -733,6 +733,7 @@ function checkNoticia(toggleWindow, action){
     }
 
     if (error == 0){        
+        var idNot = document.getElementById("idNoti").value;
         var titNot = document.getElementById("headerNot").value;
         var feInput = document.getElementById("infoNotFe").value;
         var hoInput = document.getElementById("infoNotHo").value;
@@ -740,8 +741,7 @@ function checkNoticia(toggleWindow, action){
         var shNot = document.getElementById("descNoticia").value;
         var lgNot = document.getElementById("bodyNoticia").value;
         var clvInput = document.getElementById("infoNotpalClav").value;
-
-        var feAcont = feInput + " " + hoInput + ":00";
+       
         var clvNot = clvInput.split(",");
 
         var select = document.getElementById("selectSeccion");
@@ -749,14 +749,82 @@ function checkNoticia(toggleWindow, action){
         var idSection = textSelect.split(" ");
 
         if (action == 0){
+            var feAcont = feInput + " " + hoInput + ":00";
+            var newEstado = 'redaccion';
             $.ajax({
                 url: "functions.php",
                 type: "post",
                 dataType: "json",
-                data: {method: 'noticiaReg', idSec: idSection[0], title: titNot, dateAcont: feAcont, lugAcont: lugNot, descrSh: shNot, descrLg: lgNot, arrayClv: clvNot},
+                data: {method: 'noticiaReg', idSec: idSection[0], title: titNot, dateAcont: feAcont, lugAcont: lugNot, descrSh: shNot,
+                        descrLg: lgNot, arrayClv: clvNot, status: newEstado},
                 success: function (result) {
                     if (result.msg) {
                         alert("Noticia creada exitosamente!");
+                        emptyBlock('notiRedaccion');
+                        getNoticiasRed();
+                        $(toggleWindow).modal('toggle');
+                    } else
+                        alert("Ocurrio un error durante la ejecucion.");
+                }
+            }); 
+        }
+
+        if (action == 1){
+            var feAcont = feInput + " " + hoInput + ":00";
+            var newEstado = 'terminada';
+            $.ajax({
+                url: "functions.php",
+                type: "post",
+                dataType: "json",
+                data: {method: 'noticiaReg', idSec: idSection[0], title: titNot, dateAcont: feAcont, lugAcont: lugNot, descrSh: shNot,
+                        descrLg: lgNot, arrayClv: clvNot, status: newEstado},
+                success: function (result) {
+                    if (result.msg) {
+                        alert("Noticia enviada exitosamente!");
+                        //emptyBlock('notiRedaccion');
+                        //getNoticiasRed();
+                        $(toggleWindow).modal('toggle');
+                    } else
+                        alert("Ocurrio un error durante la ejecucion.");
+                }
+            }); 
+        }
+
+        if (action == 2){
+            var feAcont = feInput + " " + hoInput;
+            var newEstado = 'redaccion';
+            $.ajax({
+                url: "functions.php",
+                type: "post",
+                dataType: "json",
+                data: {method: 'noticiaUpd', idNot: idNot,idSec: idSection[0], title: titNot, dateAcont: feAcont, lugAcont: lugNot, descrSh: shNot,
+                        descrLg: lgNot, arrayClv: clvNot, status: newEstado},
+                success: function (result) {
+                    if (result.msg) {
+                        alert("Noticia editada exitosamente!");
+                        emptyBlock('notiRedaccion');
+                        getNoticiasRed();
+                        $(toggleWindow).modal('toggle');
+                    } else
+                        alert("Ocurrio un error durante la ejecucion.");
+                }
+            }); 
+        }
+
+        if (action == 3){
+            var feAcont = feInput + " " + hoInput;
+            var newEstado = 'terminada';
+            $.ajax({
+                url: "functions.php",
+                type: "post",
+                dataType: "json",
+                data: {method: 'noticiaUpd', idNot: idNot,idSec: idSection[0], title: titNot, dateAcont: feAcont, lugAcont: lugNot, descrSh: shNot,
+                        descrLg: lgNot, arrayClv: clvNot, status: newEstado},
+                success: function (result) {
+                    if (result.msg) {
+                        alert("Noticia enviada exitosamente!");
+                        emptyBlock('notiRedaccion');
+                        getNoticiasRed();
                         $(toggleWindow).modal('toggle');
                     } else
                         alert("Ocurrio un error durante la ejecucion.");
@@ -902,6 +970,7 @@ function nuevaNoticia(){
     document.getElementById("infoNotpalClav").value="";
 
     document.getElementById("btnSendinNot").hidden=false;
+    document.getElementById("btnSendSavedNot").hidden=true;
     document.getElementById("btnSaveinNot").hidden=false;
     document.getElementById("btnSaveChangNot").hidden=true;
     document.getElementById("btnDeleteNot").hidden=true;
@@ -960,7 +1029,8 @@ function editarNoticia(idNot, title, feAcont, luAcont, descrSh, descrLg, idSecc)
     document.getElementById("descNoticia").value=descrSh;
     document.getElementById("bodyNoticia").value=descrLg;
 
-    document.getElementById("btnSendinNot").hidden=false;
+    document.getElementById("btnSendinNot").hidden=true;
+    document.getElementById("btnSendSavedNot").hidden=false;
     document.getElementById("btnSaveinNot").hidden=true;
     document.getElementById("btnSaveChangNot").hidden=false;
     document.getElementById("btnDeleteNot").hidden=false;
@@ -968,6 +1038,39 @@ function editarNoticia(idNot, title, feAcont, luAcont, descrSh, descrLg, idSecc)
 
     document.getElementById("notEdiNoticia").hidden=true;
     document.getElementById("sepNotes").hidden=true;
+}
+
+function deleteNoticia(idNoticia){                      
+    $('#confirmDeleteNoticia').modal('toggle');
+    document.getElementById("idNoticiaDelete").value=idNoticia;
+}
+
+function deleteNoticiaIn(){                     
+    document.getElementById("idNoticiaDelete").value = document.getElementById("idNoti").value;    
+    $('#editorNoticia').modal('toggle');
+    setTimeout(function () {         
+        $('#confirmDeleteNoticia').modal('toggle');
+    }, 400);
+}
+
+function confirmDeleteNoticia(){
+    var noticiaDelete = document.getElementById("idNoticiaDelete").value;
+
+    $.ajax({
+        url: "functions.php",
+        type: "post",
+        dataType: "json",
+        data: {method: 'deleteNoti', id: noticiaDelete},
+        success: function (result) {
+            if (result.msg) {
+                alert("Noticia eliminada exitosamente!");
+                document.getElementById("idNoticiaDelete").value = "";
+                emptyBlock('notiRedaccion');
+                getNoticiasRed();
+                $('#confirmDeleteNoticia').modal('toggle');
+            }
+        }
+    });  
 }
 
 function editUsuario(idUser, userType, name, apePat, apeMat, tel, email, pass){
@@ -1050,7 +1153,7 @@ function deleteReportero(idReportero){
 
 function confirmDeleteReportero(){
     var userDelete = document.getElementById("idReporteroDelete").value;
-
+``
     $.ajax({
         url: "functions.php",
         type: "post",
@@ -1175,6 +1278,11 @@ function emptyListSeccion(){
     document.getElementById("sortableList").innerHTML = "";
     getSecciones();
 }
+
+function emptyBlock(idBlock){
+    document.getElementById(idBlock).innerHTML = "";
+}
+
 
 /*////////////////////////////////////////*/
 
@@ -1308,7 +1416,6 @@ function nuevaSeccion(){
 
 }
 
-
 function getNoticiasRed(){
     $.ajax({
         url: "functions.php",
@@ -1318,15 +1425,13 @@ function getNoticiasRed(){
         success: function (noticias) {
             $.each(noticias, function(idx, notiRed){
                 $( "#notiRedaccion" ).append(
-                    //editarNoticia(idNot, title, feAcont, luAcont, descrSh, descrLg, idSecc, arrayClave)
                     '<div class="col-md-12"><div class="card enRed"><div class="row no-gutters"><div class="col-md-4"><img class="card-img" src="Sources/Note3.jpg"></div>' +
                     '<div class="col-md-8"><div class="card-body"><h2 class="col-md-12 card-title titleEnRed">' + noticias[idx].title + '</h2>' +
-                    '<p class="card-text bodyEnRed">' + noticias[idx].descrSh + '</p><div class="row buttons"><button class="btn btn-outline-danger barBut" type="submit"' +
-                    'id="btnSend"><i class="fa fa-paper-plane"></i>Enviar a revision</button><button class="btn btn-outline-danger barBut" type="submit" id="btnEdit" ' +
+                    '<p class="card-text bodyEnRed">' + noticias[idx].descrSh + '</p><div class="row buttons"><button class="btn btn-outline-danger barBut" type="submit" id="btnEdit"' +
                     'onclick="editarNoticia('+ noticias[idx].id  + ",'" + noticias[idx].title  + "','" + noticias[idx].feAcont  + "','" +
                     noticias[idx].lugAcont + "','" + noticias[idx].descrSh + "','" + noticias[idx].descrLg + "'," + noticias[idx].idSecc
-                    + ')">' + '<i class="fa fa-pencil"></i>Editar</button><button class="btn btn-outline-danger barBut" type="submit" id="btnDelete">' +
-                    '<i class="fa fa-trash"></i>Eliminar</button></div></div></div></div></div></div>'
+                    + ')">' + '<i class="fa fa-pencil"></i>Editar</button><button class="btn btn-outline-danger barBut" type="submit" id="btnDelete"' +
+                    'onclick="deleteNoticia('+ noticias[idx].id  + ')">' + '<i class="fa fa-trash"></i>Eliminar</button></div></div></div></div></div></div>'
             )});     
         }
 

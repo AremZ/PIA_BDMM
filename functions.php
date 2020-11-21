@@ -158,6 +158,26 @@ if ($method == "deleteUser"){
     }
 } 
 
+if ($method == "deleteNoti"){
+    $conn = connectDB();
+
+    if($conn){
+        $id=$_POST['id'];
+
+        $query = "CALL sp_deleteNoticia($id)";
+
+        mysqli_query($conn, $query);
+        $row = mysqli_affected_rows($conn);
+        if($row!=0){
+            echo json_encode(array("msg"=>true));       
+        }
+        else{
+            echo json_encode(array("msg"=>false));
+        }
+        closeDB($conn);
+    }
+} 
+
 
 
 if ($method == "addSection"){
@@ -226,10 +246,11 @@ if ($method == "noticiaReg"){
         $lugAcont=$_POST['lugAcont'];
         $descrSh=$_POST['descrSh'];
         $descrLg= $_POST['descrLg'];
+        $status= $_POST['status'];
 
         $palClavArray=$_POST['arrayClv'];
 
-        $query  = "CALL sp_noticiaRegister($idSec,'$titleNot', 3, '$dateAcont', '$lugAcont', '$descrSh', '$descrLg', 'redaccion')";
+        $query  = "CALL sp_noticiaRegister($idSec,'$titleNot', 3, '$dateAcont', '$lugAcont', '$descrSh', '$descrLg', '$status')";
         mysqli_query($conn, $query);
         $fila = mysqli_affected_rows($conn);
         if($fila!=0){
@@ -256,6 +277,44 @@ if ($method == "noticiaReg"){
         else{
             echo json_encode(array("msg"=>false));
         }
+
+        closeDB($conn);
+    }
+} 
+
+if ($method == "noticiaUpd"){
+    //Creamos la conexion
+    $conn = connectDB();
+
+    if($conn){
+        $idNot=$_POST['idNot'];
+        $idSec=$_POST['idSec'];
+        $titleNot=$_POST['title'];
+        $dateAcont=$_POST['dateAcont'];
+        $lugAcont=$_POST['lugAcont'];
+        $descrSh=$_POST['descrSh'];
+        $descrLg= $_POST['descrLg'];
+
+        $palClavArray=$_POST['arrayClv'];
+
+        $newStatus= $_POST['status'];
+
+        $query  = "CALL sp_noticiaUpdate($idNot,$idSec,'$titleNot','$dateAcont','$lugAcont','$descrSh','$descrLg','$newStatus')";
+        mysqli_query($conn, $query);
+        $fila = mysqli_affected_rows($conn);
+
+        foreach($palClavArray as $palClav)
+        {
+            $queryClav  = "CALL sp_insertPalClav('$palClav', $idNot)";
+            mysqli_query($conn, $queryClav);
+            $row = mysqli_affected_rows($conn);
+            if($row!=0){ 
+            }
+            else{
+                echo json_encode(array("msg"=>false));
+            }
+        }     
+        echo json_encode(array("msg"=>true));
 
         closeDB($conn);
     }
