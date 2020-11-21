@@ -24,6 +24,7 @@
             getSeccionesNoti();
             
             getNoticiasRed();
+            getNoticiasPend();
         });
     </script>
 </head>
@@ -307,43 +308,11 @@
                 </div>
             </div>
             
-            <div class="col-lg-4">
+            <div class="col-lg-4" id="notiPendientes">
                 <div class="col-lg-12" id="EnvRev">
                     <h2>Notas enviadas a revision</h2>
                 </div>
-
-                <div class="col-lg-12">
-                    <div class="card EnvRev">
-                        <img class="card-img" src="Sources/Note2.jpg">
-        
-                        <div class="card-body">
-                            <h5 class="col-md-10 card-title titleEnvRev">AQUI VA EL HEADER DE LA NOTICIA</h5>
-                            <h5 class="card-title col-md-6" id="PublicEnv">Enviado el: 9 de Octubre del 2020</h5>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-12">
-                    <div class="card EnvRev">
-                        <img class="card-img" src="Sources/Note3.jpg">
-        
-                        <div class="card-body">
-                            <h5 class="col-md-10 card-title titleEnvRev">AQUI VA EL HEADER DE LA NOTICIA</h5>
-                            <h5 class="card-title col-md-6" id="PublicEnv">Enviado el: 9 de Octubre del 2020</h5>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-12">
-                    <div class="card EnvRev">
-                        <img class="card-img" src="Sources/Note1.jpg">
-        
-                        <div class="card-body">
-                            <h5 class="col-md-10 card-title titleEnvRev">AQUI VA EL HEADER DE LA NOTICIA</h5>
-                            <h5 class="card-title col-md-6" id="PublicEnv">Enviado el: 9 de Octubre del 2020</h5>
-                        </div>
-                    </div>
-                </div>
+                
 
             </div>
          </div>

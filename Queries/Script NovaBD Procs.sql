@@ -96,12 +96,20 @@ CREATE PROCEDURE sp_noticiaRegister(
     IN in_lugAcont varchar(100),
     IN in_descSh varchar(200),
     IN in_descLg TEXT,
-    IN in_estado varchar(15)
+    IN in_estado varchar(15),
+    IN in_sent int
     )
     BEGIN
-	INSERT INTO noticia(seccion_Noticia , titulo_Noticia , reportero_Autor, fecha_Creacion, fecha_Acontecimiento,
-    lugar_Acontecimiento, descripcion_Corta , descripcion_Larga, estado)
-	VALUES (in_secNot, in_titulo, in_reportero, NOW(), in_feAcont, in_lugAcont, in_descSh, in_descLg, in_estado);
+	IF in_sent = 0 THEN
+		INSERT INTO noticia(seccion_Noticia , titulo_Noticia , reportero_Autor, fecha_Creacion, fecha_Acontecimiento,
+		lugar_Acontecimiento, descripcion_Corta , descripcion_Larga, estado)
+		VALUES (in_secNot, in_titulo, in_reportero, NOW(), in_feAcont, in_lugAcont, in_descSh, in_descLg, in_estado);  
+    END IF;
+	IF in_sent = 1 THEN
+		INSERT INTO noticia(seccion_Noticia , titulo_Noticia , reportero_Autor, fecha_Creacion, fecha_Acontecimiento,
+		lugar_Acontecimiento, descripcion_Corta , descripcion_Larga, estado, fecha_Envio)
+		VALUES (in_secNot, in_titulo, in_reportero, NOW(), in_feAcont, in_lugAcont, in_descSh, in_descLg, in_estado, NOW());  
+    END IF;
     END //
 DELIMITER ;
 
@@ -114,13 +122,22 @@ CREATE PROCEDURE sp_noticiaUpdate(
     IN in_lugAcont varchar(100),
     IN in_descSh varchar(200),
     IN in_descLg TEXT,
-    IN in_estado varchar(15)
+    IN in_estado varchar(15),
+    IN in_sent int
     )
     BEGIN
     DELETE FROM palabra_clave where id_NoticiaProp = in_notID;
-    UPDATE noticia SET seccion_Noticia = in_secNot, titulo_Noticia = in_titulo,
-		   fecha_Acontecimiento = in_feAcont, lugar_Acontecimiento = in_lugAcont, descripcion_Corta = in_descSh,
-           descripcion_Larga = in_descLg, estado = in_estado WHERE id_Noticia = in_notID;
+    
+	IF in_sent = 0 THEN
+		UPDATE noticia SET seccion_Noticia = in_secNot, titulo_Noticia = in_titulo,
+			   fecha_Acontecimiento = in_feAcont, lugar_Acontecimiento = in_lugAcont, descripcion_Corta = in_descSh,
+			   descripcion_Larga = in_descLg, estado = in_estado WHERE id_Noticia = in_notID;    
+    END IF;
+    IF in_sent = 1 THEN
+		UPDATE noticia SET seccion_Noticia = in_secNot, titulo_Noticia = in_titulo,
+			   fecha_Acontecimiento = in_feAcont, lugar_Acontecimiento = in_lugAcont, descripcion_Corta = in_descSh,
+			   descripcion_Larga = in_descLg, estado = in_estado, fecha_Envio = NOW() WHERE id_Noticia = in_notID; 
+    END IF;
     END //
 DELIMITER ;
 
@@ -152,14 +169,14 @@ CREATE PROCEDURE sp_insertPalClav(
 DELIMITER ;
 
 DELIMITER //
-CREATE PROCEDURE sp_getNotiRedaccion(
+CREATE PROCEDURE sp_getNoti(
 	IN in_ReporteroID int,
     IN in_estado varchar(15)
 )
     BEGIN
-		SELECT id_Noticia, seccion_Noticia , titulo_Noticia , reportero_Autor, fecha_Creacion, fecha_Publicacion, fecha_Acontecimiento,
-			   lugar_Acontecimiento, descripcion_Corta , descripcion_Larga, estado FROM noticia WHERE reportero_Autor = in_ReporteroID
-               AND estado = in_estado ORDER BY fecha_Creacion DESC;
+		SELECT id_Noticia, seccion_Noticia , titulo_Noticia , reportero_Autor, fecha_Creacion, fecha_Publicacion, fecha_Envio,
+        fecha_Devo, fecha_Acontecimiento, lugar_Acontecimiento, descripcion_Corta , descripcion_Larga, estado
+        FROM noticia WHERE reportero_Autor = in_ReporteroID AND estado = in_estado ORDER BY fecha_Creacion DESC;
     END //
 DELIMITER ;
 

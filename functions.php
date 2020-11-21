@@ -249,8 +249,9 @@ if ($method == "noticiaReg"){
         $status= $_POST['status'];
 
         $palClavArray=$_POST['arrayClv'];
+        $sent= $_POST['sent'];
 
-        $query  = "CALL sp_noticiaRegister($idSec,'$titleNot', 3, '$dateAcont', '$lugAcont', '$descrSh', '$descrLg', '$status')";
+        $query  = "CALL sp_noticiaRegister($idSec,'$titleNot', 3, '$dateAcont', '$lugAcont', '$descrSh', '$descrLg', '$status', $sent)";
         mysqli_query($conn, $query);
         $fila = mysqli_affected_rows($conn);
         if($fila!=0){
@@ -298,8 +299,9 @@ if ($method == "noticiaUpd"){
         $palClavArray=$_POST['arrayClv'];
 
         $newStatus= $_POST['status'];
+        $sent= $_POST['sent'];
 
-        $query  = "CALL sp_noticiaUpdate($idNot,$idSec,'$titleNot','$dateAcont','$lugAcont','$descrSh','$descrLg','$newStatus')";
+        $query  = "CALL sp_noticiaUpdate($idNot,$idSec,'$titleNot','$dateAcont','$lugAcont','$descrSh','$descrLg','$newStatus', $sent)";
         mysqli_query($conn, $query);
         $fila = mysqli_affected_rows($conn);
 
@@ -349,7 +351,7 @@ if ($method == "getNoticiasRed"){
 
     if($conn){
       
-        $query  = "CALL sp_getNotiRedaccion(3,'redaccion');";
+        $query  = "CALL sp_getNoti(3,'redaccion');";
         $resultado = mysqli_query($conn, $query);
     
         $noticias = array();
@@ -363,6 +365,43 @@ if ($method == "getNoticiasRed"){
                   "idAutor" => $row['reportero_Autor'],
                   "feCreacion" => $row['fecha_Creacion'],
                   "feAcont" => $row['fecha_Acontecimiento'],
+                  "feEnvio" => $row['fecha_Envio'],
+                  "feDevo" => $row['fecha_Devo'],
+                  "lugAcont" => $row['lugar_Acontecimiento'],
+                  "descrSh" => $row['descripcion_Corta'],
+                  "descrLg" => $row['descripcion_Larga'],
+                  "status" => $row['estado']
+                );
+                $noticias[] = $notiRed;
+              }             
+             echo json_encode($noticias);
+        }       
+        closeDB($conn);
+    }
+}  
+
+if ($method == "getNoticiasPend"){
+    //Creamos la conexion
+    $conn = connectDB();
+
+    if($conn){
+      
+        $query  = "CALL sp_getNoti(3,'terminada');";
+        $resultado = mysqli_query($conn, $query);
+    
+        $noticias = array();
+        
+        if($resultado){
+            while ($row = mysqli_fetch_assoc($resultado)) {
+                $notiRed = array(
+                  "id" => $row['id_Noticia'],
+                  "idSecc" => $row['seccion_Noticia'],
+                  "title" => $row['titulo_Noticia'],
+                  "idAutor" => $row['reportero_Autor'],
+                  "feCreacion" => $row['fecha_Creacion'],
+                  "feAcont" => $row['fecha_Acontecimiento'],
+                  "feEnvio" => $row['fecha_Envio'],
+                  "feDevo" => $row['fecha_Devo'],
                   "lugAcont" => $row['lugar_Acontecimiento'],
                   "descrSh" => $row['descripcion_Corta'],
                   "descrLg" => $row['descripcion_Larga'],

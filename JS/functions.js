@@ -751,12 +751,13 @@ function checkNoticia(toggleWindow, action){
         if (action == 0){
             var feAcont = feInput + " " + hoInput + ":00";
             var newEstado = 'redaccion';
+            var isSent = 0;
             $.ajax({
                 url: "functions.php",
                 type: "post",
                 dataType: "json",
                 data: {method: 'noticiaReg', idSec: idSection[0], title: titNot, dateAcont: feAcont, lugAcont: lugNot, descrSh: shNot,
-                        descrLg: lgNot, arrayClv: clvNot, status: newEstado},
+                        descrLg: lgNot, arrayClv: clvNot, status: newEstado, sent: isSent},
                 success: function (result) {
                     if (result.msg) {
                         alert("Noticia creada exitosamente!");
@@ -772,17 +773,20 @@ function checkNoticia(toggleWindow, action){
         if (action == 1){
             var feAcont = feInput + " " + hoInput + ":00";
             var newEstado = 'terminada';
+            var isSent = 1;
             $.ajax({
                 url: "functions.php",
                 type: "post",
                 dataType: "json",
                 data: {method: 'noticiaReg', idSec: idSection[0], title: titNot, dateAcont: feAcont, lugAcont: lugNot, descrSh: shNot,
-                        descrLg: lgNot, arrayClv: clvNot, status: newEstado},
+                        descrLg: lgNot, arrayClv: clvNot, status: newEstado, sent: isSent},
                 success: function (result) {
                     if (result.msg) {
                         alert("Noticia enviada exitosamente!");
-                        //emptyBlock('notiRedaccion');
-                        //getNoticiasRed();
+                        emptyBlock('notiRedaccion');
+                        getNoticiasRed();
+                        emptyBlockEnRev('notiPendientes');
+                        getNoticiasPend();
                         $(toggleWindow).modal('toggle');
                     } else
                         alert("Ocurrio un error durante la ejecucion.");
@@ -793,12 +797,13 @@ function checkNoticia(toggleWindow, action){
         if (action == 2){
             var feAcont = feInput + " " + hoInput;
             var newEstado = 'redaccion';
+            var isSent = 0;
             $.ajax({
                 url: "functions.php",
                 type: "post",
                 dataType: "json",
                 data: {method: 'noticiaUpd', idNot: idNot,idSec: idSection[0], title: titNot, dateAcont: feAcont, lugAcont: lugNot, descrSh: shNot,
-                        descrLg: lgNot, arrayClv: clvNot, status: newEstado},
+                        descrLg: lgNot, arrayClv: clvNot, status: newEstado, sent: isSent},
                 success: function (result) {
                     if (result.msg) {
                         alert("Noticia editada exitosamente!");
@@ -814,17 +819,20 @@ function checkNoticia(toggleWindow, action){
         if (action == 3){
             var feAcont = feInput + " " + hoInput;
             var newEstado = 'terminada';
+            var isSent = 1;
             $.ajax({
                 url: "functions.php",
                 type: "post",
                 dataType: "json",
                 data: {method: 'noticiaUpd', idNot: idNot,idSec: idSection[0], title: titNot, dateAcont: feAcont, lugAcont: lugNot, descrSh: shNot,
-                        descrLg: lgNot, arrayClv: clvNot, status: newEstado},
+                        descrLg: lgNot, arrayClv: clvNot, status: newEstado, sent: isSent},
                 success: function (result) {
                     if (result.msg) {
                         alert("Noticia enviada exitosamente!");
                         emptyBlock('notiRedaccion');
                         getNoticiasRed();
+                        emptyBlockEnRev('notiPendientes');
+                        getNoticiasPend();
                         $(toggleWindow).modal('toggle');
                     } else
                         alert("Ocurrio un error durante la ejecucion.");
@@ -1283,6 +1291,10 @@ function emptyBlock(idBlock){
     document.getElementById(idBlock).innerHTML = "";
 }
 
+function emptyBlockEnRev(idBlock){
+    document.getElementById(idBlock).innerHTML = '<div class="col-lg-12" id="EnvRev"><h2>Notas enviadas a revision</h2></div>;'
+}
+
 
 /*////////////////////////////////////////*/
 
@@ -1436,4 +1448,64 @@ function getNoticiasRed(){
         }
 
     }); 
+}
+
+function getNoticiasPend(){
+    $.ajax({
+        url: "functions.php",
+        type: "post",
+        dataType: "json",
+        data: {method: 'getNoticiasPend'},
+        success: function (noticias) {
+            $.each(noticias, function(idx, notiRed){
+                noticias[idx].feEnvio.slice(0,4);
+                noticias[idx].feEnvio.slice(0,4);
+                noticias[idx].feEnvio.slice(0,4);
+                $( "#notiPendientes" ).append(
+                    '<div class="col-lg-12"><div class="card EnvRev"><img class="card-img" src="Sources/Note2.jpg"><div class="card-body">' +
+                    '<h5 class="col-md-10 card-title titleEnvRev">' + noticias[idx].title + '</h5><h5 class="card-title col-md-6" id="PublicEnv">' +
+                    'Enviado el: '+ noticias[idx].feEnvio.slice(8,10) + ' de ' + whichMonth(noticias[idx].feEnvio.slice(5,7)) + ' del ' +
+                    noticias[idx].feEnvio.slice(0,4) + '</h5></div></div></div>'         
+            )});     
+        }
+
+    }); 
+}
+
+function whichMonth(number){
+    if (number == 1)
+        return 'Enero'
+    
+    if (number == 2)
+        return 'Febrero'
+        
+    if (number == 3)
+        return 'Marzo'
+    
+    if (number == 4)
+        return 'Abril'
+        
+    if (number == 5)
+        return 'Mayo'
+    
+    if (number == 6)
+        return 'Junio'
+        
+    if (number == 7)
+        return 'Julio'
+    
+    if (number == 8)
+        return 'Agosto'
+        
+    if (number == 9)
+        return 'Septiembre'
+    
+    if (number == 10)
+        return 'Octubre'
+        
+    if (number == 11)
+        return 'Noviembre'
+    
+    if (number == 12)
+        return 'Diciembre' 
 }
