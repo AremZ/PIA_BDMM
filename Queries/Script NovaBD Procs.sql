@@ -1,5 +1,5 @@
 DELIMITER //
-CREATE PROCEDURE getUsersLogin(
+CREATE PROCEDURE sp_getUsersLogin(
     IN in_Email varchar(50),
     IN in_Password varchar(20)
     )
@@ -174,10 +174,40 @@ CREATE PROCEDURE sp_getNoti(
     IN in_estado varchar(15)
 )
     BEGIN
+    IF in_ReporteroID = -1 THEN
+		SELECT id_Noticia, seccion_Noticia , titulo_Noticia , reportero_Autor, fecha_Creacion, fecha_Publicacion, fecha_Envio,
+        fecha_Devo, fecha_Acontecimiento, lugar_Acontecimiento, descripcion_Corta , descripcion_Larga, estado
+        FROM noticia WHERE estado = in_estado ORDER BY fecha_Creacion DESC;
+	END IF;
+    IF in_ReporteroID != -1 THEN
 		SELECT id_Noticia, seccion_Noticia , titulo_Noticia , reportero_Autor, fecha_Creacion, fecha_Publicacion, fecha_Envio,
         fecha_Devo, fecha_Acontecimiento, lugar_Acontecimiento, descripcion_Corta , descripcion_Larga, estado
         FROM noticia WHERE reportero_Autor = in_ReporteroID AND estado = in_estado ORDER BY fecha_Creacion DESC;
+	END IF;
     END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE sp_getNotiDev(
+	IN in_ReporteroID int
+)
+    BEGIN
+		SELECT id_Noticia, seccion_Noticia , titulo_Noticia , reportero_Autor, fecha_Creacion, fecha_Publicacion, fecha_Envio,
+        fecha_Devo, fecha_Acontecimiento, lugar_Acontecimiento, descripcion_Corta , descripcion_Larga, estado, id_NotFeed, feedback
+        FROM fullNoticiaComments WHERE reportero_Autor = in_ReporteroID AND estado = 'devuelta' ORDER BY fecha_Devo DESC;
+    END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE sp_getSentNotis(
+    IN in_estado varchar(15)
+)
+    BEGIN
+		SELECT id_Noticia, seccion_Noticia , titulo_Noticia , reportero_Autor, fecha_Creacion, fecha_Publicacion, fecha_Envio, fecha_Devo,
+        fecha_Acontecimiento, lugar_Acontecimiento, descripcion_Corta , descripcion_Larga, estado, nombres, apellido_P, apellido_M,
+        nombre_Seccion, color_Seccion 
+        FROM fullNoticia WHERE estado = in_estado ORDER BY fecha_Envio DESC;
+	END //
 DELIMITER ;
 
 DELIMITER //
@@ -195,5 +225,40 @@ CREATE PROCEDURE sp_deleteNoticia(
 )
     BEGIN
 		delete from noticia where id_Noticia = in_NoticiaID;
+    END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE sp_updateNotStatus(
+	IN in_NoticiaID int,
+    IN in_estado varchar(15)
+)
+    BEGIN
+		IF in_estado = 'devuelta' THEN
+			UPDATE noticia SET estado = in_estado, fecha_Devo = NOW() WHERE id_Noticia = in_NoticiaID;        
+        END IF;
+		IF in_estado = 'publicada' THEN
+			UPDATE noticia SET estado = in_estado, fecha_Publicacion = NOW() WHERE id_Noticia = in_NoticiaID;        
+        END IF;
+    END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE sp_saveComment(
+	IN in_EditorID int,
+	IN in_NoticiaID int,
+    IN in_feed text
+)
+    BEGIN
+		INSERT INTO feedback_noticia(id_editorNoti, id_Noticia, feedback) VALUES (in_EditorID, in_NoticiaID, in_feed);
+    END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE sp_deleteOldFeed(
+	IN in_FeedID int
+)
+    BEGIN
+		delete from feedback_noticia where id_NotFeed = in_FeedID;
     END //
 DELIMITER ;

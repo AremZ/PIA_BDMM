@@ -21,6 +21,8 @@
     <script>
         $(document).ready(function(){
             $("#btnProfile").toggle();
+
+            getNoticiasEnv();
         });
     </script>
 
@@ -220,91 +222,10 @@
     </div>
 
     <div class="container-fluid padding">
-        <div class="row padding">
-            <div class="col-md-3">
-                <div class="card revisionNoticias">
-                    <img class="card-img-top" src="Sources/Note3.jpg">
-                    <div class="card-body">
-                        <h4 class="card-title" class="titleNoticia">AQUI VA EL HEADER DE LA NOTICIA</h4>
-                        <p class="card-text" class="bodyNoticia">DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA 
-                            DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA...</p>
-                        <h4 class="card-title" id="Reportero">Reportero: Abraham Reyes</h4>
-                        <h4 class="card-title" id="Publicacion">Enviado el: 9 de Octubre del 2020</h4>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <button class="btn btn-outline-danger editorVisual" data-toggle="modal" data-target="#seeNoticia" onclick="cleanInput('eComments')"><i class="fa fa-newspaper-o"></i>Ver noticia</button>   
-                            </div>
-                            <div class="col-lg-12">
-                                <button class="btn btn-outline-danger editorVisual" data-toggle="modal" data-target="#sendComments" onclick="cleanInput('eComments')"><i class="fa fa-comment-o"></i>Dar comentarios</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3">
-                <div class="card revisionNoticias">
-                    <img class="card-img-top" src="Sources/Note1.jpg">
-                    <div class="card-body">
-                        <h4 class="card-title" class="titleNoticia">AQUI VA EL HEADER DE LA NOTICIA</h4>
-                        <p class="card-text" class="bodyNoticia">DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA 
-                            DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA...</p>
-                        <h4 class="card-title" id="Reportero">Reportero: Abraham Reyes</h4>
-                        <h4 class="card-title" id="Publicacion">Enviado el: 9 de Octubre del 2020</h4>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <button class="btn btn-outline-danger editorVisual" data-toggle="modal" data-target="#seeNoticia" onclick="cleanInput('eComments')"><i class="fa fa-newspaper-o"></i>Ver noticia</button>   
-                            </div>
-                            <div class="col-lg-12">
-                                <button class="btn btn-outline-danger editorVisual" data-toggle="modal" data-target="#sendComments" onclick="cleanInput('eComments')"><i class="fa fa-comment-o"></i>Dar comentarios</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3">
-                <div class="card revisionNoticias">
-                    <img class="card-img-top" src="Sources/Note2.jpg">
-                    <div class="card-body">
-                        <h4 class="card-title" class="titleNoticia">AQUI VA EL HEADER DE LA NOTICIA</h4>
-                        <p class="card-text" class="bodyNoticia">DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA 
-                            DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA...</p>
-                        <h4 class="card-title" id="Reportero">Reportero: Abraham Reyes</h4>
-                        <h4 class="card-title" id="Publicacion">Enviado el: 9 de Octubre del 2020</h4>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <button class="btn btn-outline-danger editorVisual" data-toggle="modal" data-target="#seeNoticia" onclick="cleanInput('eComments')"><i class="fa fa-newspaper-o"></i>Ver noticia</button>   
-                            </div>
-                            <div class="col-lg-12">
-                                <button class="btn btn-outline-danger editorVisual" data-toggle="modal" data-target="#sendComments" onclick="cleanInput('eComments')"><i class="fa fa-comment-o"></i>Dar comentarios</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3">
-                <div class="card revisionNoticias">
-                    <img class="card-img-top" src="Sources/Note3.jpg">
-                    <div class="card-body">
-                        <h4 class="card-title" class="titleNoticia">AQUI VA EL HEADER DE LA NOTICIA</h4>
-                        <p class="card-text" class="bodyNoticia">DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA 
-                            DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA...</p>
-                        <h4 class="card-title" id="Reportero">Reportero: Abraham Reyes</h4>
-                        <h4 class="card-title" id="Publicacion">Enviado el: 9 de Octubre del 2020</h4>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <button class="btn btn-outline-danger editorVisual" data-toggle="modal" data-target="#seeNoticia" onclick="cleanInput('eComments')"><i class="fa fa-newspaper-o"></i>Ver noticia</button>   
-                            </div>
-                            <div class="col-lg-12">
-                                <button class="btn btn-outline-danger editorVisual" data-toggle="modal" data-target="#sendComments" onclick="cleanInput('eComments')"><i class="fa fa-comment-o"></i>Dar comentarios</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="row padding" id="notiEnviadas">
             
+
+                    
         </div>
     </div>
 
@@ -319,12 +240,12 @@
                     <div class="container-fluid padding">          
                         <div class="row">
                             <div class="col-md-12">   
-                                <div class="row">        
+                                <div class="row">       
+                                    <input type="text" name="" id="idNotiSentComm" style="display: none"> 
                                     <div class="col-md-1" id="sectionCommentVista"></div>        
                                     <div class="col-md-11" id="tituloCommentVista">
-                                        TITULO DE LA NOTICIA
                                         <div class="row">  
-                                            <div class="col-md-5" id="nomReporteroVistaComm">Nota por Abraham Reyes Muñiz</div>
+                                            <div class="col-md-5" id="nomReporteroVistaComm"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -337,7 +258,7 @@
                                     </div>      
                                             <div class="col-md-12">
                                                 <hr>
-                                                <button class="btn btn-outline-danger" onclick="checkTextarea('eComments', '#sendComments')"><i class="fa fa-paper-plane-o"></i>Enviar</button>
+                                                <button class="btn btn-outline-danger" onclick="devolverNoticia()"><i class="fa fa-paper-plane-o"></i>Enviar</button>
                                                 <button class="btn btn-outline-danger" onclick="switchModals('#sendComments', '#seeNoticia')"><i class="fa fa-newspaper-o"></i>Volver a Noticia</button>
                                             </div>
                                         </div>
@@ -361,29 +282,24 @@
                 <div class="modal-body">
                     <div class="container-fluid padding">          
                         <div class="row">
+                            <input type="text" name="" id="idNotiSent" style="display: none">
                             <div class="col-md-12">   
                                 <div class="row">        
                                     <div class="col-md-1" id="sectionHeaderVista"></div>        
                                     <div class="col-md-11" id="tituloNoticiaVista">
-                                        AQUI VA EL HEADER DE LA NOTICIA
+                                        
                                         <div class="row">  
-                                            <div class="col-md-5" id="nomReporteroVista">Nota por Abraham Reyes Muñiz</div>
+                                            <div class="col-md-5" id="nomReporteroVista"></div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row" id="noticiaBGVista">
-                                    <div class="col-md-12" id="datosAcontecimientoVista">09 de Octubre del 2020 a las 19:00pm,
-                                                                                    Guadalupe, Nuevo Leon
+                                    <div class="col-md-12" id="datosAcontecimientoVista">
                                     </div>
                                     <div class="col-md-12" id="noticiaBodyVista">
                                         <div class="row">
                                             <div class="col-md-12" id="descripcionVista">
-                                                DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA 
-                                                DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA 
-                                                DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA 
-                                                DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA 
-                                                DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA 
-                                                DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA 
+                                                 
                                             </div>
                                             <div class="col-md-12">
                                                 <hr>
@@ -419,21 +335,16 @@
                                                 
                                                 <div class="row">
                                                     <div class="col-md-12" id="fullBodyVista">
-                                                   CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO
-                                                   CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO
-                                                   CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO
-                                                   CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO
-                                                   CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO
-                                                   CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO
+                                                   
                                                     </div>
                                                 </div>                           
                                             </div>         
                                             <div class="col-md-12" id="fechaCreacionVista">
-                                                Nota creada el 08 de Octubre del 2020
+                                                
                                             </div>                 
                                             <div class="col-md-12">
                                                 <hr>
-                                                <button class="btn btn-outline-danger" data-toggle="modal" data-target="#seeNoticia"><i class="fa fa-check"></i>Aprobar</button>
+                                                <button class="btn btn-outline-danger" onclick="aprobarNoticia()"><i class="fa fa-check"></i>Aprobar</button>
                                                 <button class="btn btn-outline-danger"  onclick="switchModals('#seeNoticia', '#sendComments')"><i class="fa fa-comment-o"></i>Enviar comentarios</button>
                                             </div>
                                         </div>

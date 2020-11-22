@@ -310,13 +310,8 @@ div#hTitle{
 }
 
 .pendRev .card-img{
-    height: 197px;
+    height: 220px;
     object-fit: cover;
-}
-
-.pendRev .verCom{
-    padding-top: 1px;
-    padding-bottom: 1px;
 }
 
 .pendRev h4#PublicRev{
@@ -324,6 +319,15 @@ div#hTitle{
     font-size: 90%;
     font-weight: bold;
     margin-bottom: 0;
+    
+    position: relative;
+    margin-top: -5px;
+}
+
+.verCom{
+    position: relative;
+    margin-top: -10px;
+    margin-left: 60px;
 }
 
 .EnvRev #PublicEnv{
