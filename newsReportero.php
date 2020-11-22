@@ -26,6 +26,7 @@
             getNoticiasRed();
             getNoticiasPend();
             getNoticiasDev();
+            getNoticiasPub();
         });
     </script>
 </head>
@@ -264,82 +265,9 @@
             </div>
             
             <div class="container-fluid padding">
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="card notPub">
-                            <img class="card-img-top" src="Sources/Note3.jpg">
-                            <div class="card-body">
-                                <h4 class="card-title titleNotPub">AQUI VA EL HEADER DE LA NOTICIA</h4>
-                                <p class="card-text bodyNotPub">DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA 
-                                    DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA...</p>
-                                <h4 class="card-title" id="pubNotPub">Publicado el: 9 de Octubre del 2020</h4>
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <form action="fullpage.html">
-                                            <button class="btn btn-outline-danger barBut" type="submit" id="btnSeeNot"><i class="fa fa-newspaper-o"></i>Ver noticia</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="row" id="NotiPubli">
+                    
 
-                    <div class="col-md-3">
-                        <div class="card notPub">
-                            <img class="card-img-top" src="Sources/Note3.jpg">
-                            <div class="card-body">
-                                <h4 class="card-title titleNotPub">AQUI VA EL HEADER DE LA NOTICIA</h4>
-                                <p class="card-text bodyNotPub">DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA 
-                                    DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA...</p>
-                                <h4 class="card-title" id="pubNotPub">Publicado el: 9 de Octubre del 2020</h4>
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <form action="fullpage.html">
-                                            <button class="btn btn-outline-danger barBut" type="submit" id="btnSeeNot"><i class="fa fa-newspaper-o"></i>Ver noticia</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3">
-                        <div class="card notPub">
-                            <img class="card-img-top" src="Sources/Note3.jpg">
-                            <div class="card-body">
-                                <h4 class="card-title titleNotPub">AQUI VA EL HEADER DE LA NOTICIA</h4>
-                                <p class="card-text bodyNotPub">DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA 
-                                    DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA...</p>
-                                <h4 class="card-title" id="pubNotPub">Publicado el: 9 de Octubre del 2020</h4>
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <form action="fullpage.html">
-                                            <button class="btn btn-outline-danger barBut" type="submit" id="btnSeeNot"><i class="fa fa-newspaper-o"></i>Ver noticia</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3">
-                        <div class="card notPub">
-                            <img class="card-img-top" src="Sources/Note3.jpg">
-                            <div class="card-body">
-                                <h4 class="card-title titleNotPub">AQUI VA EL HEADER DE LA NOTICIA</h4>
-                                <p class="card-text bodyNotPub">DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA 
-                                    DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA...</p>
-                                <h4 class="card-title" id="pubNotPub">Publicado el: 9 de Octubre del 2020</h4>
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <form action="fullpage.html">
-                                            <button class="btn btn-outline-danger barBut" type="submit" id="btnSeeNot"><i class="fa fa-newspaper-o"></i>Ver noticia</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

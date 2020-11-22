@@ -1587,6 +1587,28 @@ function getNoticiasDev(){
     }); 
 }
 
+function getNoticiasPub(){
+    $.ajax({
+        url: "functions.php",
+        type: "post",
+        dataType: "json",
+        data: {method: 'getNoticiasPub'},
+        success: function (noticias) {
+            if (noticias != null){
+                $.each(noticias, function(idx, notiRed){
+                    $( "#NotiPubli" ).append(
+                        '<div class="col-md-3"><div class="card notPub"><img class="card-img-top" src="Sources/Note3.jpg"><div class="card-body">' +
+                        '<h4 class="card-title titleNotPub">' + noticias[idx].title + '</h4><p class="card-text bodyNotPub">' + noticias[idx].descrSh +
+                        '</p><h4 class="card-title" id="pubNotPub">Publicado el: ' + noticias[idx].fePub.slice(8,10) + ' de ' +
+                        whichMonth(noticias[idx].fePub.slice(5,7)) + ' del ' + noticias[idx].fePub.slice(0,4) + '</h4><div class="row"><div class="col-lg-12">' +
+                        '<form action="fullpage.php"><button class="btn btn-outline-danger barBut" type="submit" id="btnSeeNot"><i class="fa fa-newspaper-o"></i>Ver noticia</button>' +
+                        '</form></div></div></div></div></div>'  
+                )});       
+            }           
+        }
+    }); 
+}
+
 function seeNoticia(idNot, colorSection, titleNot, nameReportero, feAcont, lugAcont, descrSh, descrLg, feCreacion){
     $('#seeNoticia').modal('toggle');   
     cleanInput('eComments');

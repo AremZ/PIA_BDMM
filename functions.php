@@ -492,6 +492,42 @@ if ($method == "getNoticiasEnv"){
     }
 } 
 
+if ($method == "getNoticiasPub"){
+    //Creamos la conexion
+    $conn = connectDB();
+
+    if($conn){
+      
+        $query  = "CALL sp_getNoti(3,'publicada');";
+        $resultado = mysqli_query($conn, $query);
+    
+        $noticias = array();
+        
+        if($resultado){
+            while ($row = mysqli_fetch_assoc($resultado)) {
+                $notiRed = array(
+                  "id" => $row['id_Noticia'],
+                  "idSecc" => $row['seccion_Noticia'],
+                  "title" => $row['titulo_Noticia'],
+                  "idAutor" => $row['reportero_Autor'],
+                  "feCreacion" => $row['fecha_Creacion'],
+                  "feAcont" => $row['fecha_Acontecimiento'],
+                  "feEnvio" => $row['fecha_Envio'],
+                  "fePub" => $row['fecha_Publicacion'],
+                  "feDevo" => $row['fecha_Devo'],
+                  "lugAcont" => $row['lugar_Acontecimiento'],
+                  "descrSh" => $row['descripcion_Corta'],
+                  "descrLg" => $row['descripcion_Larga'],
+                  "status" => $row['estado']
+                );
+                $noticias[] = $notiRed;
+              }             
+             echo json_encode($noticias);
+        }       
+        closeDB($conn);
+    }
+}
+
 if ($method == "noticiaUpdStatus"){
     //Creamos la conexion
     $conn = connectDB();

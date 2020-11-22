@@ -180,9 +180,21 @@ CREATE PROCEDURE sp_getNoti(
         FROM noticia WHERE estado = in_estado ORDER BY fecha_Creacion DESC;
 	END IF;
     IF in_ReporteroID != -1 THEN
-		SELECT id_Noticia, seccion_Noticia , titulo_Noticia , reportero_Autor, fecha_Creacion, fecha_Publicacion, fecha_Envio,
-        fecha_Devo, fecha_Acontecimiento, lugar_Acontecimiento, descripcion_Corta , descripcion_Larga, estado
-        FROM noticia WHERE reportero_Autor = in_ReporteroID AND estado = in_estado ORDER BY fecha_Creacion DESC;
+		IF in_estado = 'redaccion' THEN
+			SELECT id_Noticia, seccion_Noticia , titulo_Noticia , reportero_Autor, fecha_Creacion, fecha_Publicacion, fecha_Envio,
+			fecha_Devo, fecha_Acontecimiento, lugar_Acontecimiento, descripcion_Corta , descripcion_Larga, estado
+			FROM noticia WHERE reportero_Autor = in_ReporteroID AND estado = in_estado ORDER BY fecha_Creacion DESC;
+        END IF ;
+		IF in_estado = 'terminada' THEN
+			SELECT id_Noticia, seccion_Noticia , titulo_Noticia , reportero_Autor, fecha_Creacion, fecha_Publicacion, fecha_Envio,
+			fecha_Devo, fecha_Acontecimiento, lugar_Acontecimiento, descripcion_Corta , descripcion_Larga, estado
+			FROM noticia WHERE reportero_Autor = in_ReporteroID AND estado = in_estado ORDER BY fecha_Envio DESC;
+        END IF ;
+		IF in_estado = 'publicada' THEN
+			SELECT id_Noticia, seccion_Noticia , titulo_Noticia , reportero_Autor, fecha_Creacion, fecha_Publicacion, fecha_Envio,
+			fecha_Devo, fecha_Acontecimiento, lugar_Acontecimiento, descripcion_Corta , descripcion_Larga, estado
+			FROM noticia WHERE reportero_Autor = in_ReporteroID AND estado = in_estado ORDER BY fecha_Publicacion DESC;
+        END IF ;
 	END IF;
     END //
 DELIMITER ;
