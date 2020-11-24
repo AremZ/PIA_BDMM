@@ -16,11 +16,13 @@ CREATE PROCEDURE sp_userSignUp(
     IN in_lastN2 varchar(30),
     IN in_Email varchar(50),
     IN in_tel varchar(10),
-    IN in_Password varchar(20)
+    IN in_Password varchar(20),
+    IN in_avatar blob,
+    IN in_avatarType varchar(5)
     )
     BEGIN
-	INSERT INTO usuario(tipo_Usuario,nombres, apellido_P, apellido_M, telefono, email, contrasena)
-SELECT in_userType,in_name,in_lastN,in_lastN2,in_tel,in_Email, in_Password
+	INSERT INTO usuario(tipo_Usuario,nombres, apellido_P, apellido_M, telefono, email, contrasena, foto_perfil, blob_type)
+SELECT in_userType,in_name,in_lastN,in_lastN2,in_tel,in_Email, in_Password, in_avatar, in_avatarType
 FROM dual
 WHERE NOT EXISTS (SELECT email FROM usuario WHERE email =in_Email );
     END //

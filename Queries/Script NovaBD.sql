@@ -12,6 +12,7 @@ telefono  varchar(10) NOT NULL,
 email varchar(50) NOT NULL,
 contrasena varchar(20) NOT NULL,
 foto_Perfil blob NOT NULL,
+blob_type varchar(5) NOT NULL,
 estado BIT default(1),
 primary key(id_Usuario)
 );

@@ -1,3 +1,24 @@
+function setup(){
+    const addPhoto = document.getElementById("agregarFoto");
+    const container =  document.getElementById("displayImg");
+    const previewImage = container.querySelector('.preview-image');
+
+    addPhoto.addEventListener("change", function(){
+        const file = this.files[0];
+        
+        if(file){
+            const reader = new FileReader();
+
+            reader.addEventListener("load", function(){
+                previewImage.setAttribute("src", this.result);
+            });
+
+            reader.readAsDataURL(file);
+            
+        }
+    });
+}
+
 function validaciones(mod){
     
     if (mod==1){
@@ -127,7 +148,7 @@ function validaciones(mod){
                 data: {method: 'userSignUp', userType: 'usuario',name: campoName.value,lastName:campoLN.value,lastName2:campoLN2.value,email: campoEmail.value,numTel:campoTel.value, pass: campoPass.value},
                 success: function (result) {
                     if(result.msg){
-                        alert("¡Registro exitoso!");    
+                        alert("¡Registro exitoso!");
                         document.getElementById("fnameLog").value="";
                         document.getElementById("snameLog").value="";
                         document.getElementById("lnameLog").value="";
@@ -219,7 +240,8 @@ function validaciones(mod){
                     url: "functions.php",
                     type: "post",
                     dataType: "json",
-                    data: {method: 'userSignUp', userType: 'usuario', name: campoName.value, lastName: campoLN.value, lastName2: campoLN2.value, email: campoEmail.value, numTel: campoTel.value, pass: campoPass.value},
+                    data: {method: 'userSignUp', userType: 'usuario', name: campoName.value, lastName: campoLN.value, lastName2: campoLN2.value,
+                    email: campoEmail.value, numTel: campoTel.value, pass: campoPass.value},
                     success: function (result) {
                         if (result.msg) {
                             alert("¡Registro exitoso!");
