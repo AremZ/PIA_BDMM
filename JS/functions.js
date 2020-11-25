@@ -1,28 +1,5 @@
-<<<<<<< HEAD
 var seccionPorEliminar="";
 var idSeccionPorEliminar=0;
-=======
-function setup(){
-    const addPhoto = document.getElementById("agregarFoto");
-    const container =  document.getElementById("displayImg");
-    const previewImage = container.querySelector('.preview-image');
-
-    addPhoto.addEventListener("change", function(){
-        const file = this.files[0];
-        
-        if(file){
-            const reader = new FileReader();
-
-            reader.addEventListener("load", function(){
-                previewImage.setAttribute("src", this.result);
-            });
-
-            reader.readAsDataURL(file);
-            
-        }
-    });
-}
->>>>>>> 62cd3edd9e936478e5f08d917faf701c465b3ee6
 
 function validaciones(mod){
     
