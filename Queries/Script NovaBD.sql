@@ -11,7 +11,8 @@ apellido_M varchar(30) NOT NULL,
 telefono  varchar(10) NOT NULL,
 email varchar(50) NOT NULL,
 contrasena varchar(20) NOT NULL,
-foto_Perfil blob NOT NULL,
+foto_Perfil longblob,
+blob_type varchar(15),
 estado BIT default(1),
 primary key(id_Usuario)
 );
