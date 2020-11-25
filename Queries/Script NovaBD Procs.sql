@@ -17,14 +17,12 @@ CREATE PROCEDURE sp_userSignUp(
     IN in_Email varchar(50),
     IN in_tel varchar(10),
     IN in_Password varchar(20),
-    IN in_avatar blob,
-    IN in_avatarType varchar(5)
+    IN in_avatar longblob,
+    IN in_avatarType varchar(15)
     )
     BEGIN
-	INSERT INTO usuario(tipo_Usuario,nombres, apellido_P, apellido_M, telefono, email, contrasena, foto_perfil, blob_type)
-SELECT in_userType,in_name,in_lastN,in_lastN2,in_tel,in_Email, in_Password, in_avatar, in_avatarType
-FROM dual
-WHERE NOT EXISTS (SELECT email FROM usuario WHERE email =in_Email );
+		INSERT INTO usuario(tipo_Usuario, nombres, apellido_P, apellido_M, telefono, email, contrasena, foto_Perfil, blob_type)
+		VALUES (in_userType,in_name,in_lastN,in_lastN2,in_tel,in_Email, in_Password, in_avatar, in_avatarType);			
     END //
 DELIMITER ;
 
@@ -38,6 +36,17 @@ CREATE PROCEDURE sp_getAllUsers(
     end if;
     if typeGet = 1 THEN
 		select id_Usuario, tipo_Usuario, nombres, apellido_P, apellido_M, telefono, email, contrasena from usuario where tipo_Usuario = 'reportero' AND estado = 1 ORDER BY tipo_Usuario;
+    end if;
+    END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE sp_getUserData(
+	IN in_userID int
+    )
+    BEGIN
+    if typeGet = 0 THEN
+		SELECT id_Usuario, tipo_Usuario, nombres, apellido_P, apellido_M, telefono, email, contrasena FROM usuario WHERE tipo_Usuario != 'administrador' AND estado = 1 ORDER BY tipo_Usuario;
     end if;
     END //
 DELIMITER ;

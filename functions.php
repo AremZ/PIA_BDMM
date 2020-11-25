@@ -25,50 +25,39 @@ if ($method == "userLogin"){
 }   
 
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST')
+if ($method == "userSignUp")
 { 
-    if ($method == "userSignUp"){
-        //Creamos la conexion
-        $conn = connectDB();
-        if($conn){
-            if (isset($_FILES['agregarFoto']))
-            {
-                //echo json_encode(array("msg"=>true)); 
-                @list(, , $imtype, ) = getimagesize($_FILES['agregarFoto']['tmp_name']);
+    //Creamos la conexion
+    $conn = connectDB();
+    if($conn){
+            $userType=$_POST['userType'];
+            $name=$_POST['name'];
+            $lastN=$_POST['lastName'];
+            $lastN2=$_POST['lastName2'];
+            $email= $_POST['email'];
+            $tel=$_POST['numTel'];
+            $pass= $_POST['pass'];
 
-                if ($imtype == 3)
-                    $ext="png";
-                elseif ($imtype == 2)
-                    $ext="jpeg";
-                else
-                    $msg = 'Error: unknown file format';
+            if (isset($_FILES['pfp'])){ 
+                $image = mysqli_real_escape_string($conn, file_get_contents($_FILES['pfp']['tmp_name']));
+                $imagetype = $_FILES['pfp']['type'];
 
-                if (!isset($msg)) {
-                    $image = file_get_contents($_FILES['agregarFoto']['tmp_name']);
-                    $image = mysqli_real_escape_string($conn, $image);
-                
-                    $userType=$_POST['userType'];
-                    $name=$_POST['name'];
-                    $lastN=$_POST['lastName'];
-                    $lastN2=$_POST['lastName2'];
-                    $email= $_POST['email'];
-                    $tel=$_POST['numTel'];
-                    $pass= $_POST['pass'];
-                
-                    $query  = "CALL sp_userSignUp('usuario','Blobby','Blobba','Blob','blob@gmail.com','123123123','password','$image','$ext');";
-                    //$query  = "CALL sp_userSignUp('$userType','$name','$lastN','$lastN2','$email','$tel','$pass','$image','$ext');";
-                    mysqli_query($conn, $query);
-                    $fila=mysqli_affected_rows($conn);
-                    if($fila!=0){
-                        echo json_encode(array("msg"=>true));       
-                    }
-                    else{
-                        echo json_encode(array("msg"=>false));
-                    }
-                }           
-            }           
-        closeDB($conn);
-        }
+                $ext = explode("/", $imagetype);
+
+                $query  = "CALL sp_userSignUp('$userType','$name','$lastN','$lastN2','$email','$tel','$pass','$image', '$ext[1]');";
+                mysqli_query($conn, $query);
+                $fila=mysqli_affected_rows($conn);
+                if($fila!=0){
+                    echo json_encode(array("msg"=>true));       
+                }
+                else{
+                    echo json_encode(array("msg"=>false));
+                }
+            }    
+            else{
+                echo json_encode(array("msg"=>false));
+            }                  
+    closeDB($conn);
     }
 }  
 

@@ -114,6 +114,7 @@ function validaciones(mod){
                 if(isNaN(campo.value)||campo.value.length<8||campo.value.length>10){
                     alert("Número telefónico inválido.")
                     document.getElementById("telContainer").className=document.getElementById("telContainer").className+" error";
+                    datosCorrec=false;
             }
 
         }
@@ -141,11 +142,26 @@ function validaciones(mod){
             var campoEmail = document.getElementById("emailRLog");
             var campoTel = document.getElementById("telLog");
             var campoPass = document.getElementById("pwdRLog");
+            var avatar = document.getElementById("agregarFoto").files[0];
+
+            var theForm = new FormData();
+            theForm.append("method", 'userSignUp');
+            theForm.append("userType", 'usuario');
+            theForm.append("name", campoName.value);
+            theForm.append("lastName", campoLN.value);
+            theForm.append("lastName2", campoLN2.value);
+            theForm.append("email", campoEmail.value);
+            theForm.append("numTel", campoTel.value);
+            theForm.append("pass", campoPass.value);
+            theForm.append("pfp", avatar);
+
             $.ajax({
                 url: "functions.php",
                 type: "post",
                 dataType: "json",
-                data: {method: 'userSignUp', userType: 'usuario',name: campoName.value,lastName:campoLN.value,lastName2:campoLN2.value,email: campoEmail.value,numTel:campoTel.value, pass: campoPass.value},
+                data: theForm,
+                contentType: false,
+                processData: false,
                 success: function (result) {
                     if(result.msg){
                         alert("¡Registro exitoso!");
@@ -163,8 +179,22 @@ function validaciones(mod){
                     else
                         alert("Correo ya registrado.");
                 }
+            });
 
-            });    
+            /*var formData = new FormData(document.getElementById("sentImg"));
+            formData.append("method", 'setImage')
+
+            $.ajax({
+                url: "functions.php",
+                type: "POST",
+                dataType: "HTML",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false
+            }).done(function(echo){
+                alert(echo);
+            });*/
         }
     }
 
@@ -1753,6 +1783,10 @@ function devolverNoticia(){
             }
         });
     }
+}
+
+function getUserData(userID){
+    idDisplayUser
 }
 
 function cleanOldFeedback(idFeed){

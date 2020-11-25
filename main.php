@@ -120,7 +120,7 @@
                 <div class="tab-content" id="pills-tabContent">
 
                     <div id="login" class="tab-pane fade show active">
-                        <form action="/action_page.php">
+                        <form action="">
                             <div class="form-group">
                                 <label for="email">Correo Electronico:</label>
                                 <div id="mailContainer">
@@ -193,10 +193,9 @@
                                             <img src="sources/default-image.png" class="preview-image">
                                         </div>
                                         <div class="col-md-6">
-                                            <form method="POST" enctype="multipart/form-data">  
-                                            <label for="agregarFoto" class="custom-file-upload">Agregar una foto de perfil...</label>                         
-                                            <input type="file" name="agregarFoto" id="agregarFoto" accept="image/jpeg, image/png">
-                                            <input type="submit" onclick="validaciones(2)" value="Enviar la imagen prueba">  
+                                            <form accept-charset="utf-8" method="POST"  id="sentImg" enctype="multipart/form-data">  
+                                                <label for="agregarFoto" class="custom-file-upload">Agregar una foto de perfil...</label>                         
+                                                <input type="file" name="agregarFoto" id="agregarFoto" accept="image/jpeg, image/png">
                                             </form>                                                                          
                                         </div>    
                                     </div>
@@ -204,8 +203,7 @@
                                 <div class="col-md-1"></div>
                             </div>
                             <hr>
-                            <button type="button" class="btn btn-outline-danger"
-                                style="float:right" onclick="validaciones(2)" type="submit"><i class="fa fa-check"></i>Registrarme</button>                       
+                            <button type="button" class="btn btn-outline-danger" style="float:right" onclick="validaciones(2)" type="submit"><i class="fa fa-check"></i>Registrarme</button>                       
                     </div>
                 </div>
             </div>
