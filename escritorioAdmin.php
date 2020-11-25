@@ -22,6 +22,7 @@
         $(document).ready(function(){
             $("#btnProfile").toggle();
             getAllUsers();
+            confirmarEliminarSeccion();
         });
     </script>
 </head>

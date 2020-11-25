@@ -27,12 +27,31 @@
             $(function  () {
         $("ol.example").sortable();
         });
-            getSecciones();
-            /*$("body").on("click", ".column",function(){
-                alert("¡Todo funciona!");
-                var index = ($( "li" ).index( this ))-9;
-               alert("order is: "+index);
-			});*/
+        getSecciones();
+
+
+            $("body").on("click", ".btnEdit",function(){
+                //alert("¡Todo funciona!");
+                //var index = ($( "li" ).index( this ))-9;
+                var parent=$(this).parent();
+                var id = $(parent).find(".ordenSec").text();
+                if(id!="")
+                    getSeccionEDT(id);
+                //alert("index is: "+id);
+            });
+
+            $("body").on("click", ".btnDel",function(){
+                //alert("¡Todo funciona!");
+                //var index = ($( "li" ).index( this ))-9;
+                var parent=$(this).parent();
+                var id = $(parent).find(".ordenSec").text();
+                if(id!="")
+                    pedirEliminarSeccion(id);
+                    //deleteSeccion(id);
+                //alert("index is: "+id);
+            });
+            
+
         });
         </script>
 
@@ -272,7 +291,7 @@
                                 <ul class="nav nav-pills nav-justified" id="pills-tab" role="tablist">
                                     <li class="nav-item" id="pillLog">
                                         <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#login" role="tab"
-                                            aria-controls="pills-home" aria-selected="true">Nuevo nombre</a>
+                                            aria-controls="pills-home" aria-selected="true">Editar sección</a>
                                     </li>
                                    
                                 </ul>
@@ -283,11 +302,11 @@
                                     <div id="login" class="tab-pane fade show active">
                                         <form action="/action_page.php">
                                             <div class="form-group">
-                                                <label for="nameNewSec">Nombre de sección:</label>
+                                                <label for="nameNewSec">Nuevo nombre:</label>
                                                 <div id="mailContainer">
-                                                <input type="text" class="form-control" id="nameNewSec">
+                                                <input type="text" id="sectM"class="form-control" >
                                               </div>
-                                              <select id="colorSeccionM">
+                                        <select id="colorSeccionM">
                                         <option id="option-1" value="1">Rojo</option>
                                         <option id="option-2" value="2">Verde</option>
                                         <option id="option-3" value="3">Amarillo</option>
@@ -299,7 +318,7 @@
                                         <!--<span>Forgot your password?</span>-->
                                         <hr>
                                         <button id="logMeIn" type="button" class="btn btn-outline-danger" 
-                                            style="float:right">Aceptar</button>
+                                            style="float:right" onclick="updateSeccion()">Aceptar</button>
                                     </div>
                   
                                   

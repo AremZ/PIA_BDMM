@@ -21,3 +21,7 @@ CREATE VIEW fullNoticiaComments
 		SELECT N.id_Noticia, N.seccion_Noticia , N.titulo_Noticia , N.reportero_Autor, N.fecha_Creacion, N.fecha_Publicacion, N.fecha_Envio,
         N.fecha_Devo, N.fecha_Acontecimiento, N.lugar_Acontecimiento, N.descripcion_Corta , N.descripcion_Larga, N.estado, FN.id_NotFeed, FN.feedback 
         FROM noticia N INNER JOIN feedback_noticia FN ON N.id_Noticia = FN.id_Noticia;
+        
+CREATE VIEW nombreSeccion_View
+	AS
+		SELECT id_Seccion,nombre_Seccion FROM seccion;

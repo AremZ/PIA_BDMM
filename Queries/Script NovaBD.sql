@@ -21,7 +21,7 @@ id_Seccion int NOT NULL AUTO_INCREMENT,
 nombre_Seccion varchar(30) NOT NULL,
 color_Seccion varchar(6) NOT NULL,
 num_Prioridad tinyint NOT NULL,
-estado bit NOT NULL default(1),
+estado tinyint NOT NULL default(1),
 primary key(id_Seccion)
 );
 

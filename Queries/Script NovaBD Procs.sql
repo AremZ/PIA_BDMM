@@ -75,14 +75,14 @@ CREATE PROCEDURE sp_addSection(
 		INSERT INTO seccion (nombre_Seccion, color_Seccion, num_Prioridad)
 SELECT in_sectName,in_color,in_order
 FROM dual
-WHERE NOT EXISTS (SELECT nombre_Seccion FROM seccion WHERE nombre_Seccion =in_sectName );
+WHERE NOT EXISTS (SELECT nombre_Seccion FROM seccion WHERE nombre_Seccion =in_sectName AND estado=1);
     END //
 DELIMITER ;
 
 DELIMITER //
 CREATE PROCEDURE sp_getSections()
     BEGIN
-		SELECT nombre_Seccion, id_Seccion FROM seccion
+		SELECT nombre_Seccion, id_Seccion FROM seccion WHERE estado=1 OR estado=2
         ORDER BY num_Prioridad;
     END //
 DELIMITER ;
@@ -272,5 +272,45 @@ CREATE PROCEDURE sp_deleteOldFeed(
 )
     BEGIN
 		delete from feedback_noticia where id_NotFeed = in_FeedID;
+    END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE sp_getSeccion(
+	IN in_idSec int
+)
+    BEGIN
+		select id_Seccion,nombre_Seccion from nombreSeccion_View WHERE id_Seccion=in_idSec;
+    END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE sp_updateSeccion(
+	IN in_idSec int,
+    IN in_sectName varchar(30),
+    IN in_color varchar(6)
+)
+    BEGIN
+		UPDATE seccion SET nombre_Seccion=in_sectName, color_Seccion=in_color WHERE id_Seccion=in_idSec;
+    END //
+DELIMITER ;
+
+
+DELIMITER //
+CREATE PROCEDURE sp_deleteSeccion(
+	IN in_idSec int
+)
+    BEGIN
+		UPDATE seccion SET estado=0 WHERE id_Seccion=in_idSec;
+    END //
+DELIMITER ;
+
+
+DELIMITER //
+CREATE PROCEDURE sp_askDeleteSeccion(
+	IN in_idSec int
+)
+    BEGIN
+		UPDATE seccion SET estado=2 WHERE id_Seccion=in_idSec;
     END //
 DELIMITER ;

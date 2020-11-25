@@ -1,3 +1,6 @@
+var seccionPorEliminar="";
+var idSeccionPorEliminar=0;
+
 function validaciones(mod){
     
     if (mod==1){
@@ -1418,8 +1421,8 @@ function getSecciones(){
                     "<header>" +
                     "<label class='ordenSec' style='display: none'>"+secciones[idx].id+"</label>"+
                     "<label id='nombreSec'>"+secciones[idx].name+"</label>"+
-                        "<button class='btn btn-outline-danger btnEdit' data-toggle='modal' data-target='#modChangeN'>Editar</button>"+
-                        "<button class='btn btn-outline-danger btnDel' onclick='deleteSec()'>Eliminar</button>"+
+                        "<button class='btn btn-outline-danger btnEdit' data-toggle='modal' data-target='#modChangeN' >Editar</button>"+
+                        "<button class='btn btn-outline-danger btnDel' >Eliminar</button>"+
                         "</header>"+
                     "</li>");
                     
@@ -1438,7 +1441,6 @@ function setOrden(){
         var index = ($( "li" ).index( this ))-9;
         var id = $(this).find(".ordenSec").text();
         $.ajax({
-          
             url: "functions.php",
             type: "post",
             dataType: "json",
@@ -1458,6 +1460,161 @@ function setOrden(){
     });
     
 }
+var secEditar;
+
+function getSeccionEDT(idSectionEditar){
+    secEditar=idSectionEditar;
+    var seccionName=document.getElementById("sectM");
+    $.ajax({
+        url: "functions.php",
+        type: "post",
+        dataType: "json",
+        data: {method: 'getSectionName', idSeccionE: idSectionEditar},
+        success: function (secciones) {
+            if (secciones != null){
+                    seccionName.value=secciones[0].nombreSection;
+                   
+            }    
+        }
+    }); 
+}
+
+function updateSeccion(){
+    var nameS=document.getElementById("sectM");
+    var es = document.getElementById("colorSeccionM");
+    var colorSe;
+
+    if(es.value==1)
+        colorSe="rojo";
+    if(es.value==2)
+        colorSe="verde";
+    if(es.value==3)
+        colorSe="amari";
+    if(es.value==4)
+        colorSe="azul";
+    if(es.value==5)
+        colorSe="rosa";
+
+    if(nameS.value.length>0){
+            $.ajax({
+                url: "functions.php",
+                type: "post",
+                dataType: "json",
+                data: {method: 'updateSeccion',idSeccionE:secEditar,nameS: nameS.value,color:colorSe},
+                success: function (result) {
+                    if(result.msg){
+                        alert("¡Sección actualizada!");
+                        //emptyListSeccion();    
+                        $('#modChangeN').modal('toggle');
+                        emptyListSeccion();    
+                    }
+                    else
+                        alert("No se puede repetir sección.");
+                }
+        
+            });  
+        }
+        else
+        alert("Campo vacío.")  
+
+}
+
+function confirmarEliminarSeccion(){
+    $.ajax({
+        url: "functions.php",
+        type: "post",
+        dataType: "json",
+        data: {method: 'getSeccionesEliminar'},
+        success: function (secciones) {
+            $.each(secciones, function(idx, sect){
+                var id=secciones[idx].id;
+                var name=secciones[idx].name;
+
+                var eliminar=confirm("Se quiere eliminar la sección: "+name+". ¿Proceder?");
+
+                if(eliminar)
+                    deleteSeccion(id);
+                else
+                    regresarSeccion(id);
+              });
+             
+        }
+
+    }); 
+}
+function regresarSeccion(id){
+    $.ajax({
+        url: "functions.php",
+       type: "post",
+        dataType: "json",
+        data: {method: 'regresarSeccion',idSeccionE:id},
+       success: function (result) {
+            if(result.msg){
+                alert("¡Sección restaurada!");
+                //emptyListSeccion();    
+                //$('#modChangeN').modal('toggle');
+                //emptyListSeccion();    
+            }
+            else
+                alert("Error en el proceso.");
+         }
+
+    });  
+}
+function deleteSeccion(idEliminar){
+    var confirmD=confirm("¿Eliminar sección?");
+    if(confirmD){
+        $.ajax({
+            url: "functions.php",
+           type: "post",
+            dataType: "json",
+            data: {method: 'deleteSeccion',idSeccionE:idEliminar},
+           success: function (result) {
+                if(result.msg){
+                    alert("¡Sección eliminada!");
+                    //emptyListSeccion();    
+                    $('#modChangeN').modal('toggle');
+                    //emptyListSeccion();    
+                }
+                else
+                    alert("Error en el proceso.");
+             }
+
+        });  
+    }
+}
+
+function getSeccionPendienteElim(id){
+    //var eliminar=false;
+    //var seccion;
+    if(id!=0){
+        //eliminar=confirm("Se quiere eliminar la sección: "+seccionPorEliminar);
+       // if(eliminar){
+
+            $.ajax({
+                url: "functions.php",
+                type: "post",
+                dataType: "json",
+                data: {method: 'getSectionName', idSeccionE: id},
+                success: function (secciones) {
+                    if (secciones != null){
+                        
+                        alert("Petición enviada. Se quiere eliminar: "+secciones[0].nombreSection);
+                        //return seccion;
+                    }    
+                }
+            }); 
+
+        //}
+            //deleteSeccion(idSeccionPorEliminar);
+    }
+}
+
+function pedirEliminarSeccion(idEliminar){
+   
+    getSeccionPendienteElim(idEliminar); 
+}
+
 
 function getSeccionesNoti(){
     var index = 0;
@@ -1783,3 +1940,4 @@ function whichMonth(number){
     if (number == 12)
         return 'Diciembre' 
 }
+

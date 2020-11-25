@@ -345,6 +345,136 @@ if ($method == "setOrden"){
     }
 } 
 
+if ($method == "getSectionName"){
+    //Creamos la conexion
+    $conn = connectDB();
+
+    if($conn){
+        
+         
+        $idSeccion=$_POST['idSeccionE'];
+        $query  = "UPDATE seccion SET estado=2 WHERE id_Seccion='$idSeccion';";
+        $resultado=mysqli_query($conn, $query);
+        $query  = "CALL sp_getSeccion('$idSeccion');";
+        $resultado=mysqli_query($conn, $query);
+
+        $secciones = array();
+        if($resultado){
+            while ($row = mysqli_fetch_assoc($resultado)) {
+                $sec = array(
+                   "id" => $row['id_Seccion'],
+                  "nombreSection" => $row['nombre_Seccion']
+                );
+                $secciones[] = $sec;
+              }             
+             echo json_encode($secciones);
+        }       
+        closeDB($conn);
+    }
+} 
+
+if ($method == "regresarSeccion"){
+    //Creamos la conexion
+    $conn = connectDB();
+
+    if($conn){
+        
+         
+        $idSeccion=$_POST['idSeccionE'];
+        $query  = "UPDATE seccion SET estado=1 WHERE id_Seccion='$idSeccion';";
+        $resultado=mysqli_query($conn, $query);
+       
+
+        $secciones = array();
+        if($resultado){
+            while ($row = mysqli_fetch_assoc($resultado)) {
+                $sec = array(
+                   "id" => $row['id_Seccion'],
+                  "nombreSection" => $row['nombre_Seccion']
+                );
+                $secciones[] = $sec;
+              }             
+             echo json_encode($secciones);
+        }       
+        closeDB($conn);
+    }
+} 
+
+if ($method == "updateSeccion"){
+    //Creamos la conexion
+       //Creamos la conexion
+       $conn = connectDB();
+
+       if($conn){
+            $idSeccion=$_POST['idSeccionE'];
+           $sectionName=$_POST['nameS'];
+           $sectionColor=$_POST['color'];
+           
+
+           $query  = "CALL sp_updateSeccion('$idSeccion','$sectionName','$sectionColor');";
+           mysqli_query($conn, $query);
+
+           $fila=mysqli_affected_rows($conn);
+           if($fila!=0){
+               echo json_encode(array("msg"=>true));       
+           }
+           else{
+               echo json_encode(array("msg"=>false));
+           }
+           closeDB($conn);
+    }
+}
+
+if ($method == "deleteSeccion"){
+    //Creamos la conexion
+       //Creamos la conexion
+       $conn = connectDB();
+
+       if($conn){
+            $idSeccion=$_POST['idSeccionE'];
+
+           $query  = "CALL sp_deleteSeccion('$idSeccion');";
+           mysqli_query($conn, $query);
+
+           $fila=mysqli_affected_rows($conn);
+           if($fila!=0){
+               echo json_encode(array("msg"=>true));       
+           }
+           else{
+               echo json_encode(array("msg"=>false));
+           }
+           closeDB($conn);
+    }
+}
+
+if ($method == "getSeccionesEliminar"){
+    //Creamos la conexion
+       //Creamos la conexion
+       $conn = connectDB();
+
+       if($conn){
+            //$idSeccion=$_POST['idSeccionE'];
+
+           $query  = "SELECT id_Seccion, nombre_Seccion FROM seccion WHERE estado=2;";
+           $resultado=mysqli_query($conn, $query);
+
+           $secciones = array();
+           if($resultado){
+            while ($row = mysqli_fetch_assoc($resultado)) {
+                $sect = array(
+                  "id" => $row['id_Seccion'],
+                  "name" => $row['nombre_Seccion']
+                );
+                $secciones[] = $sect;
+              }
+             echo json_encode($secciones);
+        }
+           closeDB($conn);
+    }
+}
+
+
+
 if ($method == "getNoticiasRed"){
     //Creamos la conexion
     $conn = connectDB();
@@ -630,10 +760,10 @@ if ($method == "getKeyNotID"){
 
 function connectDB(){
     $servername = "localhost"; 
-    //$username = "root";
-    $username = "PruebaDB3";
-    //$password = "";
-    $password = "password";
+    $username = "root";
+    //$username = "PruebaDB3";
+    $password = "";
+    //$password = "password";
     $dbname = "novadb";  
     
     $conn = mysqli_connect($servername, $username, $password, $dbname);
