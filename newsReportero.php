@@ -22,6 +22,7 @@
         $(document).ready(function(){
             $("#btnProfile").toggle();
             getSeccionesNoti();
+            setup();
             
             getNoticiasRed();
             getNoticiasPend();
@@ -33,9 +34,9 @@
 
 <body>
 
-   <!------ Barra de Navegacion & Searchbar ------>
+<!------ Barra de Navegacion & Searchbar ------>
 
-   <nav class="navbar navbar-expand-lg navbar-light bg-light" id="navBar">
+<nav class="navbar navbar-expand-lg navbar-light bg-light" id="navBar">
     <div class="container-fluid">
         <a class="navbar-brand" href="main.html"><img src="Sources/Header/LogoBar.png"></a>
         <button class="navbar-toggler bg-dangerf" type="button" data-toggle="collapse" data-target="#navBarColl">
@@ -124,7 +125,7 @@
                 <div class="tab-content" id="pills-tabContent">
 
                     <div id="login" class="tab-pane fade show active">
-                        <form action="/action_page.php">
+                        <form action="">
                             <div class="form-group">
                                 <label for="email">Correo Electronico:</label>
                                 <div id="mailContainer">
@@ -144,72 +145,71 @@
                     </div>
   
                     <div id="register" class="tab-pane fade">
-                        <form action="/action_page.php">
+                        
                             <div class="row">
                                 <div class="col-md-1"></div>
                                 <div class="col-md-10">
-                                    <div class="row">
-                                        <div class="col-md-4 form-group">
+                                    <div class="row">                                             
+                                        <div class="col-md-4">
                                             <label for="fname">Nombre(s):</label>
                                             <div id="nameContainer">
-                                              <input type="text" class="form-control" id="fnameLog" onfocus="limpiar(2)">
+                                            <input type="text" class="form-control" id="fnameLog" onfocus="limpiar(2)">
                                             </div>
                                         </div>
-                                        <div class="col-md-4 form-group">
+                                        <div class="col-md-4">
                                             <label for="sname">Apellido Paterno:</label>
                                             <div id="snameContainer">
-                                              <input type="text" class="form-control" id="snameLog" onfocus="limpiar(3)">
+                                            <input type="text" class="form-control" id="snameLog" onfocus="limpiar(3)">
                                             </div>
                                         </div>
-                                        <div class="col-md-4 form-group">
+                                        <div class="col-md-4">
                                             <label for="lname">Apellido Materno:</label>
                                             <div id="lnameContainer">
-                                              <input type="text" class="form-control" id="lnameLog" onfocus="limpiar(4)">
+                                            <input type="text" class="form-control" id="lnameLog" onfocus="limpiar(4)">
                                             </div>
                                         </div>
-  
-                                        <div class="col-md-6 form-group">
+    
+                                        <div class="col-md-6">
                                             <label for="email">Correo Electronico:</label>
                                             <div id="mailRContainer">
-                                              <input type="email" class="form-control" id="emailRLog" onfocus="limpiar(5)">
+                                            <input type="email" class="form-control" id="emailRLog" onfocus="limpiar(5)">
                                             </div>
                                         </div>
-                                        <div class="col-md-6 form-group">
+                                        <div class="col-md-6">
                                             <label for="rpwd">Telefono:</label>
                                             <div id="telContainer">
-                                              <input type="number" class="form-control" id="telLog" onfocus="limpiar(6)">
+                                            <input type="number" class="form-control" id="telLog" onfocus="limpiar(6)">
                                             </div>
                                         </div>  
-  
-                                        <div class="col-md-6 form-group">
+    
+                                        <div class="col-md-6">
                                             <label for="pwd">Contraseña:</label>
                                             <div id="passRContainer">
-                                              <input type="password" class="form-control" id="pwdRLog" onfocus="limpiar(7)">
+                                            <input type="password" class="form-control" id="pwdRLog" onfocus="limpiar(7)">
                                             </div>
                                         </div>
-                                        <div class="col-md-6 form-group">
+                                        <div class="col-md-6">
                                             <label for="rpwd">Confirme su contraseña:</label>
                                             <div id="rpassContainer">
-                                              <input type="password" class="form-control" id="rpwdLog" onfocus="limpiar(8)">
+                                            <input type="password" class="form-control" id="rpwdLog" onfocus="limpiar(8)">
                                             </div>
                                         </div>
-                                        <div class="col-md-6 form-group" id="displayImg">
-                                            <img src="sources/13.jpg">
+                                        <div class="col-md-6" id="displayImg">
+                                            <img src="sources/default-image.png" class="preview-image">
                                         </div>
-                                        <div class="col-md-6 form-group">
-                                            <label for="agregarFoto" class="custom-file-upload">Agregar una foto de perfil...</label>                                
-                                            <input type="file" id="agregarFoto">
-                                        </div>
+                                        <div class="col-md-6">
+                                            <form accept-charset="utf-8" method="POST"  id="sentImg" enctype="multipart/form-data">  
+                                                <label for="agregarFoto" class="custom-file-upload">Agregar una foto de perfil...</label>                         
+                                                <input type="file" name="agregarFoto" id="agregarFoto" accept="image/jpeg, image/png">
+                                            </form>                                                                          
+                                        </div>    
                                     </div>
                                 </div>
                                 <div class="col-md-1"></div>
                             </div>
-                        </form>
-                        <hr>
-                        <button type="button" class="btn btn-outline-danger" 
-                            style="float:right" onclick="validaciones(2)"><i class="fa fa-check"></i>Registrarme</button>
+                            <hr>
+                            <button type="button" class="btn btn-outline-danger" style="float:right" onclick="validaciones(2)" type="submit"><i class="fa fa-check"></i>Registrarme</button>                       
                     </div>
-
                 </div>
             </div>
         </div>

@@ -1,6 +1,27 @@
 var seccionPorEliminar="";
 var idSeccionPorEliminar=0;
 
+function setup(){
+    const addPhoto = document.getElementById("agregarFoto");
+    const container =  document.getElementById("displayImg");
+    const previewImage = container.querySelector('.preview-image');
+
+    addPhoto.addEventListener("change", function(){
+        const file = this.files[0];
+
+        if(file){
+            const reader = new FileReader();
+
+            reader.addEventListener("load", function(){
+                previewImage.setAttribute("src", this.result);
+            });
+
+            reader.readAsDataURL(file);
+
+        }
+    });
+}
+
 function validaciones(mod){
     
     if (mod==1){
@@ -1922,7 +1943,7 @@ function devolverNoticia(){
 }
 
 function getUserData(userID){
-    idDisplayUser
+    //idDisplayUser
 }
 
 function cleanOldFeedback(idFeed){
