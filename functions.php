@@ -149,6 +149,61 @@ if ($method == "editUsers"){
     }
 } 
 
+if ($method == "editUsersSelf"){
+    $conn = connectDB();
+
+    if($conn){
+        $id=$_POST['id'];
+        $name=$_POST['name'];
+        $lastN=$_POST['lastName'];
+        $lastN2=$_POST['lastName2'];
+        $email= $_POST['email'];
+        $tel=$_POST['numTel'];
+        $pass= $_POST['pass'];
+
+        $query = "CALL sp_editUserSelf($id, '$name', '$lastN', '$lastN2', '$email', '$tel', '$pass')";
+
+        mysqli_query($conn, $query);
+        $row = mysqli_affected_rows($conn);
+        if($row!=0){
+            echo json_encode(array("msg"=>true));       
+        }
+        else{
+            echo json_encode(array("msg"=>true));
+        }
+        closeDB($conn);
+    }
+} 
+
+if ($method == "updateImage"){
+    $conn = connectDB();
+
+    if($conn){
+        $userID=$_POST['id'];
+
+        if (isset($_FILES['pfp'])){ 
+            $image = mysqli_real_escape_string($conn, file_get_contents($_FILES['pfp']['tmp_name']));
+            $imagetype = $_FILES['pfp']['type'];
+
+            $ext = explode("/", $imagetype);
+
+            $query  = "CALL sp_updateImg('$userID','$image', '$ext[1]');";
+            mysqli_query($conn, $query);
+            $fila=mysqli_affected_rows($conn);
+            if($fila!=0){
+                echo json_encode(array("msg"=>true));       
+            }
+            else{
+                echo json_encode(array("msg"=>false));
+            }
+        }    
+        else{
+            echo json_encode(array("msg"=>false));
+        }
+        closeDB($conn);
+    }
+} 
+
 if ($method == "deleteUser"){
     $conn = connectDB();
 
@@ -769,12 +824,46 @@ if ($method == "getKeyNotID"){
     }
 } 
 
+if ($method == "getUserData"){
+    $conn = connectDB();
+
+    if($conn){
+      
+        $idUser=$_POST['idUser'];
+      
+        $query  = "CALL sp_getUserData($idUser);";
+        $resultado = mysqli_query($conn, $query);        
+        $usuario = array();
+        
+        if($resultado){
+            while ($row = mysqli_fetch_assoc($resultado)) {
+                $usser = array(
+                    "id" => $row['id_Usuario'],
+                    "tipoUsuario" => $row['tipo_Usuario'],
+                    "name" => $row['nombres'],
+                    "apellidoP" => $row['apellido_P'],
+                    "apellidoM" => $row['apellido_M'],
+                    "tel" => $row['telefono'],
+                    "email" => $row['email'],
+                    "password" => $row['contrasena'],
+                    "avatar" => base64_encode($row['foto_Perfil']),
+                    "imgType" => $row['blob_type']
+                );
+                $usuario[] = $usser;
+              }
+              
+             echo json_encode($usuario);
+        }       
+        closeDB($conn);
+    }
+}
+
 function connectDB(){
     $servername = "localhost"; 
-    $username = "root";
-    //$username = "PruebaDB3";
-    $password = "";
-    //$password = "password";
+    //$username = "root";
+    $username = "PruebaDB3";
+    //$password = "";
+    $password = "password";
     $dbname = "novadb";  
     
     $conn = mysqli_connect($servername, $username, $password, $dbname);

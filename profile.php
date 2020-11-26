@@ -21,14 +21,17 @@
     <script>
         $(document).ready(function(){
             setup();
+            setupProfile();
             $("#btnProfile").toggle();
             $("#btnSaveDat").toggle();
             $("#btnCancelDat").toggle();
             $("#btnCambiarFoto").toggle();
             $("#rpwdPerfil").toggle();
             $("#lblrpwdPerfil").toggle();
-            
-            getUserData(3);
+
+            document.getElementById("idDataUser").value = 2;
+            var aa = document.getElementById("idDataUser").value
+            getUserData(aa);
         });
     </script>
 </head>
@@ -229,16 +232,16 @@
     <div class="container-fluid padding">
         <div class="row">
             <div class="col-lg-3" id="displaypfp">
-                <img src="sources/11.jpg">
+                <img src="sources/default-image.png" id="dispImgProfile" class="preview-image">
                 <hr class="imgProfile">
                 <div class="col-md-12 form-group">
                     <div class="row">   
                         <div class="col-md-12">
-                            <button class="btn btn-outline-danger btnBarProfile" data-toggle="modal" data-target="#confirmDelete" id="btnDelAcc"><i class="fa fa-fire"></i>Dar cuenta de baja</button>
+                            <button class="btn btn-outline-danger btnBarProfile" id="btnDelAcc" onclick="deleteSelf();"><i class="fa fa-fire"></i>Dar cuenta de baja</button>
                         </div>   
                         <div class="col-md-12">
                             <label for="cambiarFoto" class="custom-file-upload-pfp" id="btnCambiarFoto"><i class="fa fa-upload"></i>Cambiar foto de perfil</label>                                
-                            <input type="file" id="cambiarFoto"> 
+                            <input type="file" id="cambiarFoto" accept="image/jpeg, image/png"> 
                         </div>
                     </div>
                 </div>
@@ -285,6 +288,8 @@
 
         </div> 
     </div>
+    
+    <input type="text" name="" id="idDataUser" style="display: none">
 
     <div id="confirmDelete" class="modal fade">
         <div class="modal-dialog">
@@ -299,8 +304,7 @@
                     <h5>¿Está seguro que desea eliminar su cuenta?</h5>
                 
                     <hr>
-                    <button type="button" class="btn btn-outline-danger" style="float:left" id="btnConfirmDel"
-                    data-toggle="modal" data-target="#confirmDelete" onclick="javascript:window.location.href='main.html';"></a><i class="fa fa-fire">                        
+                    <button type="button" class="btn btn-outline-danger" style="float:left" id="btnConfirmDel" onclick="confirmDeleteSelf();"></a><i class="fa fa-fire">                        
                     </i>Dar cuenta de baja</button>
 
                     <button type="button" class="btn btn-outline-danger" 

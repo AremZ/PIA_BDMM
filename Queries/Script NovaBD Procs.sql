@@ -45,9 +45,8 @@ CREATE PROCEDURE sp_getUserData(
 	IN in_userID int
     )
     BEGIN
-    if typeGet = 0 THEN
-		SELECT id_Usuario, tipo_Usuario, nombres, apellido_P, apellido_M, telefono, email, contrasena FROM usuario WHERE tipo_Usuario != 'administrador' AND estado = 1 ORDER BY tipo_Usuario;
-    end if;
+		SELECT id_Usuario, tipo_Usuario, nombres, apellido_P, apellido_M, telefono, email, contrasena, foto_Perfil, blob_type
+        FROM usuario WHERE id_Usuario = in_userID;
     END //
 DELIMITER ;
 
@@ -69,7 +68,9 @@ CREATE PROCEDURE sp_editUser(
     IN in_lastN2 varchar(30),
     IN in_Email varchar(50),
     IN in_tel varchar(10),
-    IN in_Password varchar(20)
+    IN in_Password varchar(20)/*,
+    IN in_avatar longblob,
+    IN in_avatarType varchar(15)*/
     )
     BEGIN
 		update Usuario set nombres = in_name, apellido_P = in_lastN, apellido_M = in_lastN2, telefono = in_tel, email = in_Email, contrasena = in_Password, tipo_Usuario = in_userType WHERE id_Usuario = in_userID;

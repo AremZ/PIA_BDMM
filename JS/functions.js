@@ -1,5 +1,6 @@
 var seccionPorEliminar="";
 var idSeccionPorEliminar=0;
+var changedPhoto = false;
 
 function setup(){
     const addPhoto = document.getElementById("agregarFoto");
@@ -11,6 +12,28 @@ function setup(){
 
         if(file){
             const reader = new FileReader();
+
+            reader.addEventListener("load", function(){
+                previewImage.setAttribute("src", this.result);
+            });
+
+            reader.readAsDataURL(file);
+
+        }
+    });
+}
+
+function setupProfile(){
+    const addPhoto = document.getElementById("cambiarFoto");
+    const container =  document.getElementById("displaypfp");
+    const previewImage = container.querySelector('.preview-image');
+
+    addPhoto.addEventListener("change", function(){
+        const file = this.files[0];
+
+        if(file){
+            const reader = new FileReader();
+            changedPhoto = true;
 
             reader.addEventListener("load", function(){
                 previewImage.setAttribute("src", this.result);
@@ -909,6 +932,8 @@ function cleanTextarea(idTxt){
 }
 
 function modificarDatos(){
+    changedPhoto = false;
+
     $("#btnModDat").toggle();
     $("#btnSaveDat").toggle();
     $("#btnCancelDat").toggle();
@@ -928,6 +953,9 @@ function modificarDatos(){
 }
 
 function cancelarDatos(){
+    var aa = document.getElementById("idDataUser").value
+    getUserData(aa);
+
     $("#btnModDat").toggle();
     $("#btnSaveDat").toggle();
     $("#btnCancelDat").toggle();
@@ -1005,24 +1033,87 @@ function verificarDatos(){
         error = 1;
     }
 
-    if (error == 0){
-        alert("Datos cambiados exitosamente.")
+    if (error == 0){        
+        var userID = document.getElementById("idDataUser").value;
+        var firstName = document.getElementById("fnamePerfil").value;
+        var secondName = document.getElementById("snamePerfil").value;
+        var lastName = document.getElementById("lnamePerfil").value;
+        var email = document.getElementById("emailPerfil").value;
+        var phone = document.getElementById("telPerfil").value;
+        var pwd = document.getElementById("pwdPerfil").value;
 
-        $("#btnModDat").toggle();
-        $("#btnSaveDat").toggle();
-        $("#btnCancelDat").toggle();
-        $("#btnDelAcc").toggle();
-        $("#btnCambiarFoto").toggle();
-        $("#rpwdPerfil").toggle();
-        $("#lblrpwdPerfil").toggle();
+        $.ajax({
+            url: "functions.php",
+            type: "post",
+            dataType: "json",
+            data: {method: 'editUsersSelf', id: userID, name: firstName, lastName: secondName,
+            lastName2: lastName, email: email, numTel: phone, pass: pwd},
+            success: function (result) {
+                if (result.msg) {
+                    if(changedPhoto){
+                        var avatar = document.getElementById("cambiarFoto").files[0];
+                        var theForm = new FormData();
+                        theForm.append("method", 'updateImage');
+                        theForm.append("id", userID);
+                        theForm.append("pfp", avatar);
+                              
+                        $.ajax({
+                            url: "functions.php",
+                            type: "post",
+                            dataType: "json",
+                            data: theForm,
+                            contentType: false,
+                            processData: false,
+                            success: function (result) {
+                                if (result.msg) {
+                                    alert("Cambios hechos exitosamente!");
+                                } else
+                                    alert("Ocurrio un error al guardar su imagen, los demas datos se actualizaron correctamente.");
+                            }
+                        });
+                    }
+                    else
+                        alert("Cambios hechos exitosamente!");
 
-        document.getElementById("fnamePerfil").disabled=true;
-        document.getElementById("snamePerfil").disabled=true;
-        document.getElementById("lnamePerfil").disabled=true;
-        document.getElementById("emailPerfil").disabled=true;
-        document.getElementById("telPerfil").disabled=true;
-        document.getElementById("pwdPerfil").disabled=true;
+                    $("#btnModDat").toggle();
+                    $("#btnSaveDat").toggle();
+                    $("#btnCancelDat").toggle();
+                    $("#btnDelAcc").toggle();
+                    $("#btnCambiarFoto").toggle();
+                    $("#rpwdPerfil").toggle();
+                    $("#lblrpwdPerfil").toggle();
+                    document.getElementById("fnamePerfil").disabled=true;
+                    document.getElementById("snamePerfil").disabled=true;
+                    document.getElementById("lnamePerfil").disabled=true;
+                    document.getElementById("emailPerfil").disabled=true;
+                    document.getElementById("telPerfil").disabled=true;
+                    document.getElementById("pwdPerfil").disabled=true;   
+                } else
+                    alert("Ocurrio un error actualizando los datos.");
+            }
+        });      
     }
+}
+
+function deleteSelf(){
+    $('#confirmDelete').modal('toggle');
+}
+function confirmDeleteSelf(){
+    var userID = document.getElementById("idDataUser").value;
+
+    $.ajax({
+        url: "functions.php",
+        type: "post",
+        dataType: "json",
+        data: {method: 'deleteUser', id: userID},
+        success: function (result) {
+            if (result.msg) {
+                alert("Su perfil ha sido eliminado exitosamente!");
+                $('#confirmDelete').modal('toggle');
+                window.location.href='main.php';
+            }
+        }
+    });
 }
 
 function nuevaNoticia(){
@@ -1943,7 +2034,27 @@ function devolverNoticia(){
 }
 
 function getUserData(userID){
-    //idDisplayUser
+    $.ajax({
+        url: "functions.php",
+        type: "post",
+        dataType: "json",
+        data: {method: 'getUserData', idUser: userID},
+        success: function (usuario, usser) {
+            if (usuario != null){
+                document.getElementById("fnamePerfil").value = usuario[0].name;
+                document.getElementById("snamePerfil").value = usuario[0].apellidoP;
+                document.getElementById("lnamePerfil").value = usuario[0].apellidoM;
+                document.getElementById("emailPerfil").value = usuario[0].email;
+                document.getElementById("telPerfil").value = usuario[0].tel;
+                document.getElementById("pwdPerfil").value = usuario[0].password;
+                $("#dispImgProfile").attr('src','data:image/' + usuario[0].imgType + ';base64,' + usuario[0].avatar);
+            }   
+        },
+        error: function (result) {
+            alert("Ocurrio un error durante la obtencion de datos.");
+        }
+
+    });
 }
 
 function cleanOldFeedback(idFeed){
