@@ -20,8 +20,8 @@
 
     <script>
         $(document).ready(function(){
-            setup();
-            setupProfile();
+            setupImage('agregarFoto', 'displayImg', '.preview-image');
+            setupImage('cambiarFoto', 'displaypfp', '.preview-image');
             $("#btnProfile").toggle();
             $("#btnSaveDat").toggle();
             $("#btnCancelDat").toggle();

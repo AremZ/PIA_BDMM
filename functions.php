@@ -81,7 +81,9 @@ if ($method == "getAllUsers"){
                     "apellidoM" => $row['apellido_M'],
                     "tel" => $row['telefono'],
                     "email" => $row['email'],
-                    "password" => $row['contrasena']
+                    "password" => $row['contrasena'],
+                    "avatar" => base64_encode($row['foto_Perfil']),
+                    "imgType" => $row['blob_type']
                 );
                 $usuarios[] = $usser;
               }
@@ -111,7 +113,9 @@ if ($method == "getAllReporteros"){
                     "apellidoM" => $row['apellido_M'],
                     "tel" => $row['telefono'],
                     "email" => $row['email'],
-                    "password" => $row['contrasena']
+                    "password" => $row['contrasena'],
+                    "avatar" => base64_encode($row['foto_Perfil']),
+                    "imgType" => $row['blob_type']
                 );
                 $usuarios[] = $usser;
               }
@@ -143,7 +147,7 @@ if ($method == "editUsers"){
             echo json_encode(array("msg"=>true));       
         }
         else{
-            echo json_encode(array("msg"=>false));
+            echo json_encode(array("msg"=>true));
         }
         closeDB($conn);
     }

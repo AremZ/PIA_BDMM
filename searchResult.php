@@ -22,7 +22,7 @@
     <script>
       $(document).ready(function(){
           $("#btnProfile").toggle();
-            setup();
+            setupImage('agregarFoto', 'displayImg', '.preview-image');
       });
     </script>
 

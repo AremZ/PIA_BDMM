@@ -22,7 +22,8 @@
         $(document).ready(function(){
             $("#btnProfile").toggle();
             getAllReporteros();
-            setup();
+            setupImage('agregarFoto', 'displayImg', '.preview-image');
+            setupImage('agregarFotoEditor', 'displayImgEditor', '.preview-image');
         });
     </script>
 </head>
@@ -312,11 +313,11 @@
                                        </div>
                                    </div>
                                    <div class="col-md-6 form-group" id="displayImgEditor">
-                                       <img src="sources/13.jpg">
+                                       <img src="sources/13.jpg" id="dispImg" class="preview-image">
                                    </div>
                                    <div class="col-md-6 form-group">
                                        <label for="agregarFotoEditor" class="custom-file-upload">Agregar una foto de perfil...</label>                                
-                                       <input type="file" id="agregarFotoEditor">
+                                       <input type="file" id="agregarFotoEditor" accept="image/jpeg, image/png">
                                    </div>
                                </div>
                            </div>

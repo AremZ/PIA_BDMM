@@ -22,7 +22,7 @@
         $(document).ready(function(){
             $("#btnProfile").toggle();
             getSeccionesNoti();
-            setup();
+            setupImage('agregarFoto', 'displayImg', '.preview-image');
             
             getNoticiasRed();
             getNoticiasPend();

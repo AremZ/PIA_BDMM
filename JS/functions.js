@@ -2,31 +2,10 @@ var seccionPorEliminar="";
 var idSeccionPorEliminar=0;
 var changedPhoto = false;
 
-function setup(){
-    const addPhoto = document.getElementById("agregarFoto");
-    const container =  document.getElementById("displayImg");
-    const previewImage = container.querySelector('.preview-image');
-
-    addPhoto.addEventListener("change", function(){
-        const file = this.files[0];
-
-        if(file){
-            const reader = new FileReader();
-
-            reader.addEventListener("load", function(){
-                previewImage.setAttribute("src", this.result);
-            });
-
-            reader.readAsDataURL(file);
-
-        }
-    });
-}
-
-function setupProfile(){
-    const addPhoto = document.getElementById("cambiarFoto");
-    const container =  document.getElementById("displaypfp");
-    const previewImage = container.querySelector('.preview-image');
+function setupImage(input, display, theClass){
+    const addPhoto = document.getElementById(input);
+    const container =  document.getElementById(display);
+    const previewImage = container.querySelector(theClass);
 
     addPhoto.addEventListener("change", function(){
         const file = this.files[0];
@@ -290,80 +269,52 @@ function validaciones(mod){
             var campoPass = document.getElementById("pwdAdmin");
             
             var indexUser = document.getElementById("selectUsuario").selectedIndex;
+            var type = 0;
+            if(indexUser == 0)
+                type = 'usuario';              
+            else if(indexUser == 1)
+                type = 'reportero';                        
+            else if(indexUser == 2)
+                type = 'editor';
+
+            var avatar = document.getElementById("agregarFotoAdmin").files[0]; 
+
+            var theForm = new FormData();
+            theForm.append("method", 'userSignUp');
+            theForm.append("userType", type);
+            theForm.append("name", campoName.value);
+            theForm.append("lastName", campoLN.value);
+            theForm.append("lastName2", campoLN2.value);
+            theForm.append("email", campoEmail.value);
+            theForm.append("numTel", campoTel.value);
+            theForm.append("pass", campoPass.value);
+            theForm.append("pfp", avatar);
             
-            if(indexUser == 0){
-                $.ajax({
-                    url: "functions.php",
-                    type: "post",
-                    dataType: "json",
-                    data: {method: 'userSignUp', userType: 'usuario', name: campoName.value, lastName: campoLN.value, lastName2: campoLN2.value,
-                    email: campoEmail.value, numTel: campoTel.value, pass: campoPass.value},
-                    success: function (result) {
-                        if (result.msg) {
-                            alert("¡Registro exitoso!");
-                            document.getElementById("fnameAdmin").value = "";
-                            document.getElementById("snameAdmin").value = "";
-                            document.getElementById("lnameAdmin").value = "";
-                            document.getElementById("emailRAdmin").value = "";
-                            document.getElementById("telAdmin").value = "";
-                            document.getElementById("pwdAdmin").value = "";
-                            document.getElementById("rpwdAdmin").value = "";
-                            emptyList('usersList');
-                            getAllUsers();
-                            $('#modRegister').modal('toggle');
-                        } else
-                            alert("Correo ya registrado.");
-                    }
-                });               
-            }
-            else if (indexUser == 1){
-                $.ajax({
-                    url: "functions.php",
-                    type: "post",
-                    dataType: "json",
-                    data: {method: 'userSignUp', userType: 'reportero', name: campoName.value, lastName: campoLN.value, lastName2: campoLN2.value, email: campoEmail.value, numTel: campoTel.value, pass: campoPass.value},
-                    success: function (result) {
-                        if (result.msg) {
-                            alert("¡Registro exitoso!");
-                            document.getElementById("fnameAdmin").value = "";
-                            document.getElementById("snameAdmin").value = "";
-                            document.getElementById("lnameAdmin").value = "";
-                            document.getElementById("emailRAdmin").value = "";
-                            document.getElementById("telAdmin").value = "";
-                            document.getElementById("pwdAdmin").value = "";
-                            document.getElementById("rpwdAdmin").value = "";
-                            emptyList('usersList');
-                            getAllUsers();
-                            $('#modRegister').modal('toggle');
-                        } else
-                            alert("Correo ya registrado.");
-                    }
-                });                
-            }
-            else if (indexUser == 2){
-                $.ajax({
-                    url: "functions.php",
-                    type: "post",
-                    dataType: "json",
-                    data: {method: 'userSignUp', userType: 'editor', name: campoName.value, lastName: campoLN.value, lastName2: campoLN2.value, email: campoEmail.value, numTel: campoTel.value, pass: campoPass.value},
-                    success: function (result) {
-                        if (result.msg) {
-                            alert("¡Registro exitoso!");
-                            document.getElementById("fnameAdmin").value = "";
-                            document.getElementById("snameAdmin").value = "";
-                            document.getElementById("lnameAdmin").value = "";
-                            document.getElementById("emailRAdmin").value = "";
-                            document.getElementById("telAdmin").value = "";
-                            document.getElementById("pwdAdmin").value = "";
-                            document.getElementById("rpwdAdmin").value = "";
-                            emptyList('usersList');
-                            getAllUsers();
-                            $('#modRegister').modal('toggle');
-                        } else
-                            alert("Correo ya registrado.");
-                    }
-                });                
-            }
+            $.ajax({
+                url: "functions.php",
+                type: "post",
+                dataType: "json",
+                data: theForm,
+                contentType: false,
+                processData: false,
+                success: function (result) {
+                    if (result.msg) {
+                        alert("¡Registro exitoso!");
+                        document.getElementById("fnameAdmin").value = "";
+                        document.getElementById("snameAdmin").value = "";
+                        document.getElementById("lnameAdmin").value = "";
+                        document.getElementById("emailRAdmin").value = "";
+                        document.getElementById("telAdmin").value = "";
+                        document.getElementById("pwdAdmin").value = "";
+                        document.getElementById("rpwdAdmin").value = "";
+                        emptyList('usersList');
+                        getAllUsers();
+                        $('#modRegister').modal('toggle');
+                    } else
+                        alert("Correo ya registrado.");
+                }
+            });
+            
         }     
     }
     
@@ -430,11 +381,26 @@ function validaciones(mod){
             var campoTel = document.getElementById("telEditor");
             var campoPass = document.getElementById("pwdEditor");
 
+            var avatar = document.getElementById("agregarFotoEditor").files[0]; 
+
+            var theForm = new FormData();
+            theForm.append("method", 'userSignUp');
+            theForm.append("userType", 'reportero');
+            theForm.append("name", campoName.value);
+            theForm.append("lastName", campoLN.value);
+            theForm.append("lastName2", campoLN2.value);
+            theForm.append("email", campoEmail.value);
+            theForm.append("numTel", campoTel.value);
+            theForm.append("pass", campoPass.value);
+            theForm.append("pfp", avatar);
+            
             $.ajax({
                 url: "functions.php",
                 type: "post",
                 dataType: "json",
-                data: {method: 'userSignUp', userType: 'reportero', name: campoName.value, lastName: campoLN.value, lastName2: campoLN2.value, email: campoEmail.value, numTel: campoTel.value, pass: campoPass.value},
+                data: theForm,
+                contentType: false,
+                processData: false,
                 success: function (result) {
                     if (result.msg) {
                         alert("¡Registro exitoso!");
@@ -505,12 +471,6 @@ function validaciones(mod){
             document.getElementById("rpassContainerAdmin").className=document.getElementById("rpassContainerAdmin").className+" error";   
             datosCorrec=false;
         }
-        
-        campo = document.getElementById('agregarFotoAdmin').value;
-        if (campo == ""){
-            alert("Seleccione una imagen por favor.")   
-            datosCorrec=false;
-        }
 
         if(datosCorrec){         
             var campoName = document.getElementById("fnameAdmin");
@@ -523,82 +483,63 @@ function validaciones(mod){
             var usuarioID = document.getElementById("idUser");
             
             var indexUser = document.getElementById("selectUsuario").selectedIndex;
-            
-            if(indexUser == 0){
-                $.ajax({
-                    url: "functions.php",
-                    type: "post",
-                    dataType: "json",
-                    data: {method: 'editUsers', userType: 'usuario', id: usuarioID.value, name: campoName.value, lastName: campoLN.value, lastName2: campoLN2.value, email: campoEmail.value, numTel: campoTel.value, pass: campoPass.value},
-                    success: function (result) {
-                        if (result.msg) {
+            var type = 0;
+            if(indexUser == 0)
+                type = 'usuario';              
+            else if(indexUser == 1)
+                type = 'reportero';                        
+            else if(indexUser == 2)
+                type = 'editor';                
+                
+            $.ajax({
+                url: "functions.php",
+                type: "post",
+                dataType: "json",
+                data: {method: 'editUsers', userType: type, id: usuarioID.value, name: campoName.value, lastName: campoLN.value, lastName2: campoLN2.value, email: campoEmail.value, numTel: campoTel.value, pass: campoPass.value},
+                success: function (result) {
+                    if (result.msg) {
+                        if(changedPhoto){
+                            var avatar = document.getElementById("agregarFotoAdmin").files[0];
+                            var theForm = new FormData();
+                            theForm.append("method", 'updateImage');
+                            theForm.append("id", usuarioID.value);
+                            theForm.append("pfp", avatar);
+                                  
+                            $.ajax({
+                                url: "functions.php",
+                                type: "post",
+                                dataType: "json",
+                                data: theForm,
+                                contentType: false,
+                                processData: false,
+                                success: function (result) {
+                                    if (result.msg) {
+                                        alert("Cambios hechos exitosamente!");
+                                    } else
+                                        alert("Ocurrio un error al guardar la imagen, los demas datos se actualizaron correctamente.");
+                                }
+                            });
+                        }
+                        else
                             alert("Cambios hechos exitosamente!");
-                            document.getElementById("fnameAdmin").value = "";
-                            document.getElementById("snameAdmin").value = "";
-                            document.getElementById("lnameAdmin").value = "";
-                            document.getElementById("emailRAdmin").value = "";
-                            document.getElementById("telAdmin").value = "";
-                            document.getElementById("pwdAdmin").value = "";
-                            document.getElementById("rpwdAdmin").value = "";
-                            document.getElementById("idUser").value = "";
-                            emptyList('usersList');
+
+                        document.getElementById("fnameAdmin").value = "";
+                        document.getElementById("snameAdmin").value = "";
+                        document.getElementById("lnameAdmin").value = "";
+                        document.getElementById("emailRAdmin").value = "";
+                        document.getElementById("telAdmin").value = "";
+                        document.getElementById("pwdAdmin").value = "";
+                        document.getElementById("rpwdAdmin").value = "";
+                        document.getElementById("idUser").value = "";
+                        emptyList('usersList');
+                        setTimeout(function () {
                             getAllUsers();
-                            $('#modRegister').modal('toggle');
-                        } else
-                            alert("Correo ya registrado.");
-                    }
-                });               
-            }
-            if(indexUser == 1){
-                $.ajax({
-                    url: "functions.php",
-                    type: "post",
-                    dataType: "json",
-                    data: {method: 'editUsers', userType: 'reportero', id: usuarioID.value, name: campoName.value, lastName: campoLN.value, lastName2: campoLN2.value, email: campoEmail.value, numTel: campoTel.value, pass: campoPass.value},
-                    success: function (result) {
-                        if (result.msg) {
-                            alert("Cambios hechos exitosamente!");
-                            document.getElementById("fnameAdmin").value = "";
-                            document.getElementById("snameAdmin").value = "";
-                            document.getElementById("lnameAdmin").value = "";
-                            document.getElementById("emailRAdmin").value = "";
-                            document.getElementById("telAdmin").value = "";
-                            document.getElementById("pwdAdmin").value = "";
-                            document.getElementById("rpwdAdmin").value = "";
-                            document.getElementById("idUser").value = "";
-                            emptyList('usersList');
-                            getAllUsers();
-                            $('#modRegister').modal('toggle');
-                        } else
-                            alert("Correo ya registrado.");
-                    }
-                });               
-            }
-            if(indexUser == 2){
-                $.ajax({
-                    url: "functions.php",
-                    type: "post",
-                    dataType: "json",
-                    data: {method: 'editUsers', userType: 'editor', id: usuarioID.value, name: campoName.value, lastName: campoLN.value, lastName2: campoLN2.value, email: campoEmail.value, numTel: campoTel.value, pass: campoPass.value},
-                    success: function (result) {
-                        if (result.msg) {
-                            alert("Cambios hechos exitosamente!");
-                            document.getElementById("fnameAdmin").value = "";
-                            document.getElementById("snameAdmin").value = "";
-                            document.getElementById("lnameAdmin").value = "";
-                            document.getElementById("emailRAdmin").value = "";
-                            document.getElementById("telAdmin").value = "";
-                            document.getElementById("pwdAdmin").value = "";
-                            document.getElementById("rpwdAdmin").value = "";
-                            document.getElementById("idUser").value = "";
-                            emptyList('usersList');
-                            getAllUsers();
-                            $('#modRegister').modal('toggle');
-                        } else
-                            alert("Correo ya registrado.");
-                    }
-                });               
-            }
+                        }, 200);
+                        $('#modRegister').modal('toggle');
+                    } else
+                        alert("Ocurrio un error actualizando los datos.");
+                }
+            });
         }     
     }
 
@@ -651,12 +592,6 @@ function validaciones(mod){
             datosCorrec = false;
         }
 
-        campo = document.getElementById('agregarFotoEditor').value;
-        if (campo == "") {
-            alert("Seleccione una imagen por favor.")
-            datosCorrec = false;
-        }
-
         if (datosCorrec) {
             var campoName = document.getElementById("fnameEditor");
             var campoLN = document.getElementById("snameEditor");
@@ -671,10 +606,35 @@ function validaciones(mod){
                 url: "functions.php",
                 type: "post",
                 dataType: "json",
-                data: {method: 'editUsers', userType: 'reportero', id: usuarioID.value, name: campoName.value, lastName: campoLN.value, lastName2: campoLN2.value, email: campoEmail.value, numTel: campoTel.value, pass: campoPass.value},
+                data: {method: 'editUsers', userType: 'reportero', id: usuarioID.value, name: campoName.value, lastName: campoLN.value,
+                lastName2: campoLN2.value, email: campoEmail.value, numTel: campoTel.value, pass: campoPass.value},
                 success: function (result) {
                     if (result.msg) {
-                        alert("Cambios hechos exitosamente!");
+                        if(changedPhoto){
+                            var avatar = document.getElementById("agregarFotoEditor").files[0];
+                            var theForm = new FormData();
+                            theForm.append("method", 'updateImage');
+                            theForm.append("id", usuarioID.value);
+                            theForm.append("pfp", avatar);
+                                  
+                            $.ajax({
+                                url: "functions.php",
+                                type: "post",
+                                dataType: "json",
+                                data: theForm,
+                                contentType: false,
+                                processData: false,
+                                success: function (result) {
+                                    if (result.msg) {
+                                        alert("Cambios hechos exitosamente!");
+                                    } else
+                                        alert("Ocurrio un error al guardar la imagen, los demas datos se actualizaron correctamente.");
+                                }
+                            });
+                        }
+                        else
+                            alert("Cambios hechos exitosamente!");
+
                         document.getElementById("fnameEditor").value = "";
                         document.getElementById("snameEditor").value = "";
                         document.getElementById("lnameEditor").value = "";
@@ -683,7 +643,9 @@ function validaciones(mod){
                         document.getElementById("pwdEditor").value = "";
                         document.getElementById("rpwdEditor").value = "";
                         emptyList('reportList');
-                        getAllReporteros();
+                        setTimeout(function () {
+                            getAllReporteros();
+                        }, 200);
                         $('#modRegister').modal('toggle');
                     } else
                         alert("Correo ya registrado.");
@@ -1281,10 +1243,12 @@ function confirmDeleteNoticia(){
     });  
 }
 
-function editUsuario(idUser, userType, name, apePat, apeMat, tel, email, pass){
+function editUsuario(idUser, userType, name, apePat, apeMat, tel, email, pass, avatar, imagetype){
     document.getElementById("registerUserAdmin").hidden=true;
     document.getElementById("saveUserAdmin").hidden=false;
     document.getElementById("cancelUserAdmin").hidden=false;
+
+    changedPhoto = false;
 
     if (userType == "usuario")
         document.getElementById("selectUsuario").selectedIndex = "0";
@@ -1300,6 +1264,8 @@ function editUsuario(idUser, userType, name, apePat, apeMat, tel, email, pass){
     document.getElementById("telAdmin").value=tel;
     document.getElementById("emailRAdmin").value=email;
     document.getElementById("pwdAdmin").value=pass;
+    
+    $("#dispImg").attr('src','data:image/' + imagetype + ';base64,' + avatar);
 }
 
 function createUsuario(){
@@ -1307,6 +1273,7 @@ function createUsuario(){
     document.getElementById("saveUserAdmin").hidden=true;
     document.getElementById("cancelUserAdmin").hidden=true; 
     document.getElementById("selectUsuario").selectedIndex = "0";   
+    $("#dispImg").attr('src','sources/default-image.png');
 }
 
 function deleteUsuario(idUser){                      
@@ -1334,7 +1301,9 @@ function confirmDeleteUsuario(){
     });  
 }
 
-function editReportero(idUser, name, apePat, apeMat, tel, email, pass){
+function editReportero(idUser, name, apePat, apeMat, tel, email, pass, avatar, imagetype){
+    changedPhoto = false;
+
     document.getElementById("registerUserEditor").hidden=true;
     document.getElementById("saveUserEditor").hidden=false;
     document.getElementById("cancelUserEditor").hidden=false;
@@ -1346,12 +1315,15 @@ function editReportero(idUser, name, apePat, apeMat, tel, email, pass){
     document.getElementById("telEditor").value=tel;
     document.getElementById("emailREditor").value=email;
     document.getElementById("pwdEditor").value=pass;
+
+    $("#dispImg").attr('src','data:image/' + imagetype + ';base64,' + avatar);
 }
 
 function createReportero(){
     document.getElementById("registerUserEditor").hidden=false;
     document.getElementById("saveUserEditor").hidden=true;
-    document.getElementById("cancelUserEditor").hidden=true;
+    document.getElementById("cancelUserEditor").hidden=true;   
+    $("#dispImg").attr('src','sources/default-image.png');
 }
 
 function deleteReportero(idReportero){                      
@@ -1417,7 +1389,8 @@ function getAllUsers(){
                 "'btn btn-outline-danger col-lg-5 actionsAdmin' data-toggle='modal' data-target='#modRegister'" +
                 ' onclick="editUsuario(' + usuarios[idx].id + ",'" + usuarios[idx].tipoUsuario + "','" + 
                 usuarios[idx].name + "','" + usuarios[idx].apellidoP + "','" +  usuarios[idx].apellidoM + "','" +
-                usuarios[idx].tel + "','" + usuarios[idx].email + "','" +  usuarios[idx].password +
+                usuarios[idx].tel + "','" + usuarios[idx].email + "','" +  usuarios[idx].password + "','" +
+                usuarios[idx].avatar + "','" +  usuarios[idx].imgType +
                 "'" + ')">' + "<i class='fa fa-pencil'></i>Editar</button><button" +
                 " class='btn btn-outline-danger col-lg-5 actionsAdmin' onclick='deleteUsuario(" + usuarios[idx].id + ")'" + 
                 "><i class='fa fa-times'></i>Eliminar</button></span></div> </li>" );
@@ -1437,12 +1410,6 @@ function getAllReporteros(){
         data: {method: 'getAllReporteros'},
         success: function (usuarios) {
             $.each(usuarios, function(idx, usser){
-                // picture.pic_location
-                // picture.name
-                // picture.age
-                // picture.gender
-                //alert(usuarios[idx].name);
-                //console.log(usuarios[idx].name+" "+usuarios[idx].apellidoP+" "+usuarios[idx].apellidoM);
 
                 if (usuarios[idx].tipoUsuario == "usuario"){
                     userLogo = "<i class='fa fa-user'></i>";        
@@ -1465,8 +1432,9 @@ function getAllReporteros(){
                 "'btn btn-outline-danger col-lg-5 actionsAdmin' data-toggle='modal' data-target='#modRegister'" +
                 ' onclick="editReportero(' + usuarios[idx].id + ",'" + 
                 usuarios[idx].name + "','" + usuarios[idx].apellidoP + "','" +  usuarios[idx].apellidoM + "','" +
-                usuarios[idx].tel + "','" + usuarios[idx].email + "','" +  usuarios[idx].password +
-                "'" + ')">' + "<i class='fa fa-pencil'></i>Editar</button><button" +
+                usuarios[idx].tel + "','" + usuarios[idx].email + "','" +  usuarios[idx].password + "','" +
+                usuarios[idx].avatar + "','" +  usuarios[idx].imgType + "'" +
+                ')">' + "<i class='fa fa-pencil'></i>Editar</button><button" +
                 " class='btn btn-outline-danger col-lg-5 actionsAdmin' onclick='deleteReportero(" + usuarios[idx].id + ")'" + 
                 "><i class='fa fa-times'></i>Eliminar</button></span></div> </li>" );
               });

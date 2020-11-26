@@ -32,10 +32,10 @@ CREATE PROCEDURE sp_getAllUsers(
     )
     BEGIN
     if typeGet = 0 THEN
-		SELECT id_Usuario, tipo_Usuario, nombres, apellido_P, apellido_M, telefono, email, contrasena FROM usuario WHERE tipo_Usuario != 'administrador' AND estado = 1 ORDER BY tipo_Usuario;
+		SELECT id_Usuario, tipo_Usuario, nombres, apellido_P, apellido_M, telefono, email, contrasena, foto_Perfil, blob_type FROM usuario WHERE tipo_Usuario != 'administrador' AND estado = 1 ORDER BY tipo_Usuario;
     end if;
     if typeGet = 1 THEN
-		select id_Usuario, tipo_Usuario, nombres, apellido_P, apellido_M, telefono, email, contrasena from usuario where tipo_Usuario = 'reportero' AND estado = 1 ORDER BY tipo_Usuario;
+		select id_Usuario, tipo_Usuario, nombres, apellido_P, apellido_M, telefono, email, contrasena, foto_Perfil, blob_type from usuario where tipo_Usuario = 'reportero' AND estado = 1 ORDER BY tipo_Usuario;
     end if;
     END //
 DELIMITER ;

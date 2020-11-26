@@ -23,7 +23,7 @@
             $("#btnProfile").toggle();
 
             getNoticiasEnv();
-            setup();
+            setupImage('agregarFoto', 'displayImg', '.preview-image');
         });
     </script>
 
