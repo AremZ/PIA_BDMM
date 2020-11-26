@@ -78,6 +78,32 @@ CREATE PROCEDURE sp_editUser(
 DELIMITER ;
 
 DELIMITER //
+CREATE PROCEDURE sp_editUserSelf(
+	IN in_userID int,
+    IN in_name varchar(50),
+    IN in_lastN varchar(30),
+    IN in_lastN2 varchar(30),
+    IN in_Email varchar(50),
+    IN in_tel varchar(10),
+    IN in_Password varchar(20)
+    )
+    BEGIN
+		update Usuario set nombres = in_name, apellido_P = in_lastN, apellido_M = in_lastN2, telefono = in_tel, email = in_Email, contrasena = in_Password WHERE id_Usuario = in_userID;
+    END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE sp_updateImg(
+	IN in_userID int,
+    IN in_avatar longblob,
+    IN in_avatarType varchar(15)
+)
+    BEGIN
+		update Usuario set foto_Perfil = in_avatar, blob_type = in_avatarType WHERE id_Usuario = in_userID;
+    END //
+DELIMITER ;
+
+DELIMITER //
 CREATE PROCEDURE sp_addSection(
 	IN in_sectName varchar(30),
     IN in_color varchar(6),
