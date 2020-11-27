@@ -32,10 +32,10 @@ CREATE PROCEDURE sp_getAllUsers(
     )
     BEGIN
     if typeGet = 0 THEN
-		SELECT id_Usuario, tipo_Usuario, nombres, apellido_P, apellido_M, telefono, email, contrasena FROM usuario WHERE tipo_Usuario != 'administrador' AND estado = 1 ORDER BY tipo_Usuario;
+		SELECT id_Usuario, tipo_Usuario, nombres, apellido_P, apellido_M, telefono, email, contrasena, foto_Perfil, blob_type FROM usuario WHERE tipo_Usuario != 'administrador' AND estado = 1 ORDER BY tipo_Usuario;
     end if;
     if typeGet = 1 THEN
-		select id_Usuario, tipo_Usuario, nombres, apellido_P, apellido_M, telefono, email, contrasena from usuario where tipo_Usuario = 'reportero' AND estado = 1 ORDER BY tipo_Usuario;
+		select id_Usuario, tipo_Usuario, nombres, apellido_P, apellido_M, telefono, email, contrasena, foto_Perfil, blob_type from usuario where tipo_Usuario = 'reportero' AND estado = 1 ORDER BY tipo_Usuario;
     end if;
     END //
 DELIMITER ;
@@ -68,10 +68,38 @@ CREATE PROCEDURE sp_editUser(
     IN in_lastN2 varchar(30),
     IN in_Email varchar(50),
     IN in_tel varchar(10),
-    IN in_Password varchar(20)
+    IN in_Password varchar(20)/*,
+    IN in_avatar longblob,
+    IN in_avatarType varchar(15)*/
     )
     BEGIN
 		update Usuario set nombres = in_name, apellido_P = in_lastN, apellido_M = in_lastN2, telefono = in_tel, email = in_Email, contrasena = in_Password, tipo_Usuario = in_userType WHERE id_Usuario = in_userID;
+    END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE sp_editUserSelf(
+	IN in_userID int,
+    IN in_name varchar(50),
+    IN in_lastN varchar(30),
+    IN in_lastN2 varchar(30),
+    IN in_Email varchar(50),
+    IN in_tel varchar(10),
+    IN in_Password varchar(20)
+    )
+    BEGIN
+		update Usuario set nombres = in_name, apellido_P = in_lastN, apellido_M = in_lastN2, telefono = in_tel, email = in_Email, contrasena = in_Password WHERE id_Usuario = in_userID;
+    END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE sp_updateImg(
+	IN in_userID int,
+    IN in_avatar longblob,
+    IN in_avatarType varchar(15)
+)
+    BEGIN
+		update Usuario set foto_Perfil = in_avatar, blob_type = in_avatarType WHERE id_Usuario = in_userID;
     END //
 DELIMITER ;
 

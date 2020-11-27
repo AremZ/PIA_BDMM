@@ -21,8 +21,8 @@
     <script>
         $(document).ready(function(){
             $("#btnProfile").toggle();
-            $(".reply-box").toggle();
-            setup();
+            $(".reply-box").toggle();      
+            setupImage('agregarFoto', 'displayImg', '.preview-image');
         });
     </script>
 

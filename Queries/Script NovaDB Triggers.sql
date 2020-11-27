@@ -8,6 +8,8 @@ BEGIN
 END //
 DELIMITER ;
 
+/* ---------------------------------------------------     VIEWS      -------------------------------------------------------------------- */
+
 CREATE VIEW fullNoticia
 	AS
 		SELECT N.id_Noticia, N.seccion_Noticia , N.titulo_Noticia , N.reportero_Autor, N.fecha_Creacion, N.fecha_Publicacion, N.fecha_Envio,

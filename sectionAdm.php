@@ -23,7 +23,7 @@
 
     <script>
         $(document).ready(function(){
-            setup();
+            setupImage('agregarFoto', 'displayImg', '.preview-image');
             $("#btnProfile").toggle();
             $(function  () {
         $("ol.example").sortable();

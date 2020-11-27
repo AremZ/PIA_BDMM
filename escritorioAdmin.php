@@ -23,7 +23,8 @@
             $("#btnProfile").toggle();
             getAllUsers();
             confirmarEliminarSeccion();
-            setup();
+            setupImage('agregarFoto', 'displayImg', '.preview-image');
+            setupImage('agregarFotoAdmin', 'displayImgAdmin', '.preview-image');
         });
     </script>
 </head>
@@ -260,7 +261,7 @@
                 </div>
                 <div id="registerAdmin" class="modal-body">
                     <div>
-                        <h1 id="titleAdmin">Crear un usuario</h1>
+                        <h1 id="titleAdmin">Panel de usuario</h1>
                         <hr>
                     </div>
                    <form action="/action_page.php">
@@ -313,11 +314,11 @@
                                        </div>
                                    </div>
                                    <div class="col-md-4 form-group" id="displayImgAdmin">
-                                       <img src="sources/13.jpg">
+                                       <img src="sources/13.jpg" id="dispImg" class="preview-image">
                                    </div>
                                    <div class="col-md-4 form-group">
                                        <label for="agregarFotoAdmin" class="custom-file-upload">Agregar una foto de perfil...</label>                                
-                                       <input type="file" id="agregarFotoAdmin">
+                                       <input type="file" id="agregarFotoAdmin" accept="image/jpeg, image/png">
                                    </div>
                                    <div class="col-md-4 form-group" id="UsuarioSel">
                                     <label for="selectUsuario">Elija el tipo de cuenta</label>                                
