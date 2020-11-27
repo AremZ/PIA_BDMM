@@ -231,7 +231,8 @@ if ($method == "getSecciones"){
             while ($row = mysqli_fetch_assoc($resultado)) {
                 $sect = array(
                   "id" => $row['id_Seccion'],
-                  "name" => $row['nombre_Seccion']
+                  "name" => $row['nombre_Seccion'],
+                  "color" => $row['color_Seccion']
                   /*,
                   "apellidoP" => $row['apellido_P'],
                   "apellidoM" => $row['apellido_M'],
@@ -364,7 +365,7 @@ if ($method == "getSectionName"){
         
          
         $idSeccion=$_POST['idSeccionE'];
-        $query  = "UPDATE seccion SET estado=2 WHERE id_Seccion='$idSeccion';";
+        $query  = "CALL sp_askDeleteSeccion('$idSeccion');";
         $resultado=mysqli_query($conn, $query);
         $query  = "CALL sp_getSeccion('$idSeccion');";
         $resultado=mysqli_query($conn, $query);
@@ -392,7 +393,7 @@ if ($method == "regresarSeccion"){
         
          
         $idSeccion=$_POST['idSeccionE'];
-        $query  = "UPDATE seccion SET estado=1 WHERE id_Seccion='$idSeccion';";
+        $query  = "CALL sp_sectionTo1('$idSeccion');";
         $resultado=mysqli_query($conn, $query);
        
 
@@ -466,7 +467,7 @@ if ($method == "getSeccionesEliminar"){
        if($conn){
             //$idSeccion=$_POST['idSeccionE'];
 
-           $query  = "SELECT id_Seccion, nombre_Seccion FROM seccion WHERE estado=2;";
+           $query  = "CALL sp_getSectionsEliminarPend();";
            $resultado=mysqli_query($conn, $query);
 
            $secciones = array();

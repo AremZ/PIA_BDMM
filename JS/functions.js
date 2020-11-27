@@ -1393,7 +1393,9 @@ function emptyList(idList){
 
 function emptyListSeccion(){
     document.getElementById("sortableList").innerHTML = "";
+    document.getElementById("seccionesNavB").innerHTML = "";
     getSecciones();
+    getSeccionesToNavbar();
 }
 
 function emptyBlock(idBlock){
@@ -1478,6 +1480,47 @@ function getSecciones(){
                         "</header>"+
                     "</li>");
                     
+              //$(".draggable").draggable();
+              });
+             
+        }
+
+    }); 
+}
+
+function getSeccionesToNavbar(){
+    $.ajax({
+        url: "functions.php",
+        type: "post",
+        dataType: "json",
+        data: {method: 'getSecciones'},
+        success: function (secciones) {
+            $.each(secciones, function(idx, sect){
+                //alert(secciones[idx].color);
+                var colorSeccion;
+                switch(secciones[idx].color){
+                    case 'rojo':
+                        colorSeccion="#7c1d14";
+                        break;
+                    case 'verde':
+                        colorSeccion="#147c17";
+                        break;
+                    case 'amari':
+                        colorSeccion="#FADA5E";
+                        break;
+                    case 'azul':
+                        colorSeccion="#0b81d6";
+                        break;
+                    case 'rosa':
+                        colorSeccion="#ff70d7";
+                        break;
+                }
+               
+
+                $( ".seccionesNav" ).append(
+                    "<li id='"+secciones[idx].id+"' class='nav-item active'><a class='nav-link seccionNav' style='color:"+colorSeccion +"!important;' href='main.html'>"+secciones[idx].name+"</a></li>");
+
+
               //$(".draggable").draggable();
               });
              

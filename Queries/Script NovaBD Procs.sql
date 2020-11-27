@@ -45,9 +45,8 @@ CREATE PROCEDURE sp_getUserData(
 	IN in_userID int
     )
     BEGIN
-    if typeGet = 0 THEN
-		SELECT id_Usuario, tipo_Usuario, nombres, apellido_P, apellido_M, telefono, email, contrasena FROM usuario WHERE tipo_Usuario != 'administrador' AND estado = 1 ORDER BY tipo_Usuario;
-    end if;
+		SELECT id_Usuario, tipo_Usuario, nombres, apellido_P, apellido_M, telefono, email, contrasena, foto_Perfil, blob_type
+        FROM usuario WHERE id_Usuario = in_userID;
     END //
 DELIMITER ;
 
@@ -93,10 +92,19 @@ DELIMITER ;
 DELIMITER //
 CREATE PROCEDURE sp_getSections()
     BEGIN
-		SELECT nombre_Seccion, id_Seccion FROM seccion WHERE estado=1 OR estado=2
+		SELECT nombre_Seccion, id_Seccion,color_Seccion FROM getSeccion_View WHERE estado=1 OR estado=2
         ORDER BY num_Prioridad;
     END //
 DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE sp_getSectionsEliminarPend()
+    BEGIN
+		select id_Seccion,nombre_Seccion from getSeccion_View WHERE estado=2;
+    END //
+DELIMITER ;
+
+
 
 DELIMITER //
 CREATE PROCEDURE sp_noticiaRegister(
@@ -325,3 +333,13 @@ CREATE PROCEDURE sp_askDeleteSeccion(
 		UPDATE seccion SET estado=2 WHERE id_Seccion=in_idSec;
     END //
 DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE sp_sectionTo1(
+	IN in_idSec int
+)
+    BEGIN
+		UPDATE seccion SET estado=1 WHERE id_Seccion=in_idSec;
+    END //
+DELIMITER ;
+

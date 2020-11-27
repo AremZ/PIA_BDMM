@@ -28,6 +28,7 @@
             $(function  () {
         $("ol.example").sortable();
         });
+        getSeccionesToNavbar();
         getSecciones();
 
 
@@ -51,6 +52,16 @@
                     //deleteSeccion(id);
                 //alert("index is: "+id);
             });
+
+            $("body").on("click", ".seccionNav",function(){
+                //alert("¡Todo funciona!");
+                //var index = ($( "li" ).index( this ))-9;
+                var idSecClick=parseFloat($(this).parent().attr('id'));
+                alert(idSecClick);
+                    //deleteSeccion(id);
+                //alert("index is: "+id);
+            });
+            
             
 
         });
@@ -102,8 +113,8 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top" id="navBarSecciones">
     <div class="container-fluid">
         <div class="collapse navbar-collapse">
-            <ul class="navbar-nav mr-auto ml-auto">
-                <li class="nav-item active">
+            <ul id="seccionesNavB"class="navbar-nav mr-auto ml-auto seccionesNav">
+                <!--<li class="nav-item active">
                     <a class="nav-link" href="main.html">Seccion 1</a>
                 </li>
                 <li class="nav-item">
@@ -117,7 +128,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Seccion 5</a>
-                </li>
+                </li>-->
             </ul>
         </div>
     </div>
