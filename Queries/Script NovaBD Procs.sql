@@ -68,9 +68,7 @@ CREATE PROCEDURE sp_editUser(
     IN in_lastN2 varchar(30),
     IN in_Email varchar(50),
     IN in_tel varchar(10),
-    IN in_Password varchar(20)/*,
-    IN in_avatar longblob,
-    IN in_avatarType varchar(15)*/
+    IN in_Password varchar(20)
     )
     BEGIN
 		update Usuario set nombres = in_name, apellido_P = in_lastN, apellido_M = in_lastN2, telefono = in_tel, email = in_Email, contrasena = in_Password, tipo_Usuario = in_userType WHERE id_Usuario = in_userID;
@@ -152,6 +150,18 @@ CREATE PROCEDURE sp_noticiaRegister(
 DELIMITER ;
 
 DELIMITER //
+CREATE PROCEDURE sp_insertMedia(
+	IN in_media longblob,
+    IN in_type varchar(15),
+    IN in_noticia int
+    )
+    BEGIN
+		INSERT INTO media(contenido_media , blob_type , noticia_Duena)
+		VALUES (in_media, in_type, in_noticia);
+    END //
+DELIMITER ;
+
+DELIMITER //
 CREATE PROCEDURE sp_noticiaUpdate(
 	IN in_notID int,
 	IN in_secNot int,
@@ -165,6 +175,7 @@ CREATE PROCEDURE sp_noticiaUpdate(
     )
     BEGIN
     DELETE FROM palabra_clave where id_NoticiaProp = in_notID;
+    DELETE FROM media where noticia_Duena = in_notID;
     
 	IF in_sent = 0 THEN
 		UPDATE noticia SET seccion_Noticia = in_secNot, titulo_Noticia = in_titulo,
@@ -192,7 +203,7 @@ DELIMITER ;
 DELIMITER //
 CREATE PROCEDURE sp_lastInsertedID()
     BEGIN
-		SELECT LAST_INSERT_ID() AS 'LastID';
+		SELECT lastID() AS 'LastID';
     END //
 DELIMITER ;
 
@@ -220,18 +231,18 @@ CREATE PROCEDURE sp_getNoti(
     IF in_ReporteroID != -1 THEN
 		IF in_estado = 'redaccion' THEN
 			SELECT id_Noticia, seccion_Noticia , titulo_Noticia , reportero_Autor, fecha_Creacion, fecha_Publicacion, fecha_Envio,
-			fecha_Devo, fecha_Acontecimiento, lugar_Acontecimiento, descripcion_Corta , descripcion_Larga, estado
-			FROM noticia WHERE reportero_Autor = in_ReporteroID AND estado = in_estado ORDER BY fecha_Creacion DESC;
+			fecha_Devo, fecha_Acontecimiento, lugar_Acontecimiento, descripcion_Corta , descripcion_Larga, estado, contenido_media, blob_type
+			FROM noticiaEssayMedia WHERE reportero_Autor = in_ReporteroID AND estado = in_estado ORDER BY fecha_Creacion DESC;
         END IF ;
 		IF in_estado = 'terminada' THEN
 			SELECT id_Noticia, seccion_Noticia , titulo_Noticia , reportero_Autor, fecha_Creacion, fecha_Publicacion, fecha_Envio,
-			fecha_Devo, fecha_Acontecimiento, lugar_Acontecimiento, descripcion_Corta , descripcion_Larga, estado
-			FROM noticia WHERE reportero_Autor = in_ReporteroID AND estado = in_estado ORDER BY fecha_Envio DESC;
+			fecha_Devo, fecha_Acontecimiento, lugar_Acontecimiento, descripcion_Corta , descripcion_Larga, estado, contenido_media, blob_type
+			FROM noticiaEssayMedia WHERE reportero_Autor = in_ReporteroID AND estado = in_estado ORDER BY fecha_Envio DESC;
         END IF ;
 		IF in_estado = 'publicada' THEN
 			SELECT id_Noticia, seccion_Noticia , titulo_Noticia , reportero_Autor, fecha_Creacion, fecha_Publicacion, fecha_Envio,
-			fecha_Devo, fecha_Acontecimiento, lugar_Acontecimiento, descripcion_Corta , descripcion_Larga, estado
-			FROM noticia WHERE reportero_Autor = in_ReporteroID AND estado = in_estado ORDER BY fecha_Publicacion DESC;
+			fecha_Devo, fecha_Acontecimiento, lugar_Acontecimiento, descripcion_Corta , descripcion_Larga, estado, contenido_media, blob_type
+			FROM noticiaEssayMedia WHERE reportero_Autor = in_ReporteroID AND estado = in_estado ORDER BY fecha_Publicacion DESC;
         END IF ;
 	END IF;
     END //
@@ -243,7 +254,8 @@ CREATE PROCEDURE sp_getNotiDev(
 )
     BEGIN
 		SELECT id_Noticia, seccion_Noticia , titulo_Noticia , reportero_Autor, fecha_Creacion, fecha_Publicacion, fecha_Envio,
-        fecha_Devo, fecha_Acontecimiento, lugar_Acontecimiento, descripcion_Corta , descripcion_Larga, estado, id_NotFeed, feedback
+        fecha_Devo, fecha_Acontecimiento, lugar_Acontecimiento, descripcion_Corta , descripcion_Larga, estado, id_NotFeed, feedback,
+        contenido_media, blob_type
         FROM fullNoticiaComments WHERE reportero_Autor = in_ReporteroID AND estado = 'devuelta' ORDER BY fecha_Devo DESC;
     END //
 DELIMITER ;
@@ -255,7 +267,7 @@ CREATE PROCEDURE sp_getSentNotis(
     BEGIN
 		SELECT id_Noticia, seccion_Noticia , titulo_Noticia , reportero_Autor, fecha_Creacion, fecha_Publicacion, fecha_Envio, fecha_Devo,
         fecha_Acontecimiento, lugar_Acontecimiento, descripcion_Corta , descripcion_Larga, estado, nombres, apellido_P, apellido_M,
-        nombre_Seccion, color_Seccion 
+        nombre_Seccion, color_Seccion, contenido_media, blob_type
         FROM fullNoticia WHERE estado = in_estado ORDER BY fecha_Envio DESC;
 	END //
 DELIMITER ;
@@ -343,12 +355,27 @@ CREATE PROCEDURE sp_deleteSeccion(
     END //
 DELIMITER ;
 
-
 DELIMITER //
 CREATE PROCEDURE sp_askDeleteSeccion(
 	IN in_idSec int
 )
     BEGIN
 		UPDATE seccion SET estado=2 WHERE id_Seccion=in_idSec;
+    END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE sp_getMedia(
+	IN in_NoticiaID int,
+    IN whatMedia varchar(3)
+)
+    BEGIN
+		IF whatMedia = 'img' THEN
+			SELECT id_Media, contenido_media, blob_type , noticia_Duena FROM media WHERE noticia_Duena = in_NoticiaID AND 
+            (blob_type = 'jpeg' OR blob_type = 'png');
+		END IF;
+		IF whatMedia = 'vid' THEN
+			SELECT id_Media, contenido_media, blob_type , noticia_Duena FROM media WHERE noticia_Duena = in_NoticiaID AND blob_type = 'mp4';
+		END IF;
     END //
 DELIMITER ;

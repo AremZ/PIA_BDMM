@@ -49,7 +49,8 @@ constraint FK_Autor_Not foreign key(reportero_Autor) references usuario(id_Usuar
 
 CREATE TABLE media(
 id_Media INT NOT NULL AUTO_INCREMENT,
-contenido_Media BLOB,
+contenido_media longblob,
+blob_type varchar(15),
 noticia_Duena INT NOT NULL,
 PRIMARY KEY(id_Media),
 constraint FK_Noticia_Media foreign key(noticia_Duena) references noticia(id_Noticia)

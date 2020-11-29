@@ -23,6 +23,8 @@
             $("#btnProfile").toggle();
             getSeccionesNoti();
             setupImage('agregarFoto', 'displayImg', '.preview-image');
+            setupNewsImage('imagesNoticia', 'carousel-images', 'imgIndi');
+            setupNewsVideo('videosNoticia', 'carousel-videos', 'vidIndi');
             
             getNoticiasRed();
             getNoticiasPend();
@@ -322,29 +324,22 @@
                                     </div>
                                     <input type="text" name="" id="idNoti" style="display: none">
                                     <input type="text" name="" id="idFeed" style="display: none">
+
+
+
                                     <div class="col-md-9">
-                                        <!--Slider -->
-                                        <div id="carruselEdit" class="carousel slide carousel-fade" data-ride="carousel">
-                                            <ul class="carousel-indicators">
-                                                <li data-target="#carruselEdit" data-slide-to="0" class="active"></li>
-                                                <li data-target="#carruselEdit" data-slide-to="1"></li>
-                                                <li data-target="#carruselEdit" data-slide-to="2"></li>
+                                        <!--Slider img-->
+                                        <div id="carruselImg" class="carousel slide carousel-fade" data-ride="carousel">
+                                            <ul class="carousel-indicators" id="imgIndi">
                                             </ul>
                                             <div class="carousel-inner">
-                                                <div class="carousel-item active">
-                                                    <img src="Sources/Note1.jpg">
+                                                <div id="carousel-images">
                                                 </div>
-                                                <div class="carousel-item">
-                                                    <img src="Sources/Note2.jpg">
-                                                </div>
-                                                <div class="carousel-item">
-                                                    <img src="Sources/Note3.jpg">
-                                                </div>
-                                                <a class="carousel-control-prev" href="#carruselEdit" role="button" data-slide="prev">
+                                                <a class="carousel-control-prev" href="#carruselImg" role="button" data-slide="prev">
                                                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                                     <span class="sr-only">Anterior</span>
                                                 </a>
-                                                <a class="carousel-control-next" href="#carruselEdit" role="button" data-slide="next">
+                                                <a class="carousel-control-next" href="#carruselImg" role="button" data-slide="next">
                                                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                                     <span class="sr-only">Siguiente</span>
                                                 </a>
@@ -352,9 +347,37 @@
                                          </div>
                                     </div>
                                     <div class="col-md-3">
-                                        <label for="archivosNoticia" class="custom-file-upload" id="archivosNoticiaLbl"><i class="fa fa-upload"></i>Agregar fotos/videos a la noticia</label>                                
-                                        <input type="file" id="archivosNoticia">
-                                        <button class="btn btn-outline-danger buttEditor" type="submit" id="btnDeleteSlide"><i class="fa fa-window-close"></i>Eliminar slide actual</button>
+                                        <label for="imagesNoticia" class="custom-file-upload" id="imagesNoticiaLbl"><i class="fa fa-upload"></i>Agregar fotos a la noticia</label>                                
+                                        <input type="file" id="imagesNoticia" accept="image/jpeg, image/png">
+                                        <button class="btn btn-outline-danger buttEditor btnDeleteSlide" id="neededBtn"
+                                        onclick="deleteActualSlide('#carousel-images', '#imgIndi','img');"><i class="fa fa-window-close">
+                                        </i>Eliminar slide actual</button>
+                                    </div>
+
+
+                                    <div class="col-md-9">
+                                        <!--Slider vid-->
+                                        <div id="carruselVid" class="carousel slide carousel-fade" data-ride="carousel">
+                                            <ul class="carousel-indicators" id="vidIndi">
+                                            </ul>
+                                            <div class="carousel-inner">
+                                                <div id="carousel-videos">
+                                                </div>
+                                                <!--<a class="carousel-control-prev" href="#carruselVid" role="button" data-slide="prev">
+                                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                    <span class="sr-only">Anterior</span>
+                                                </a>
+                                                <a class="carousel-control-next" href="#carruselVid" role="button" data-slide="next">
+                                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                    <span class="sr-only">Siguiente</span>
+                                                </a>-->
+                                            </div>
+                                         </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="videosNoticia" class="custom-file-upload" id="videosNoticiaLbl"><i class="fa fa-upload"></i>Agregar videos a la noticia</label>                                
+                                        <input type="file" id="videosNoticia" accept="video/mp4">
+                                        <button class="btn btn-outline-danger buttEditor btnDeleteSlide" onclick="deleteActualSlide('#carousel-videos', '#vidIndi', 'vid');"><i class="fa fa-window-close"></i>Eliminar slide actual</button>
                                            
                                         <div class="col-md-12" id="SeccionSel">
                                             <label for="selectSeccion">Elija la seccion de la noticia</label>                                
@@ -362,17 +385,19 @@
                                             </select>
                                         </div>
                                     </div>
+
+
                                     <div class="col-md-12" id="inputNoticia">
                                         <textarea name="palClavNoticia" id="infoNotpalClav" placeholder="Palabras clave. Ejemplo: noticia,popular,asalto,famosos,etc..." rows="1" onfocus="cleanTextarea('infoNotpalClav')"></textarea>
                                     </div>  
                                     <div class="col-md-12">
                                         <hr>
-                                        <button class="btn btn-outline-danger buttEditor" type="submit" id="btnSendinNot" onclick="checkNoticia('#editorNoticia', 1)"><i class="fa fa-paper-plane"></i>Enviar a revisionNUEVO</button>
-                                        <button class="btn btn-outline-danger buttEditor" type="submit" id="btnSaveinNot" onclick="checkNoticia('#editorNoticia', 0)"><i class="fa fa-floppy-o"></i>Guardar</button>
-                                        <button class="btn btn-outline-danger buttEditor" type="submit" id="btnSendSavedNot" onclick="checkNoticia('#editorNoticia', 3)"><i class="fa fa-paper-plane"></i>Enviar a revisionGUARDADO</button>
-                                        <button class="btn btn-outline-danger buttEditor" type="submit" id="btnSaveChangNot" onclick="checkNoticia('#editorNoticia', 2)"><i class="fa fa-floppy-o"></i>Guardar cambios</button>
-                                        <button class="btn btn-outline-danger buttEditor" type="submit" id="btnDeleteNot" onclick="deleteNoticiaIn()"><i class="fa fa-trash"></i>Eliminar noticia</button>
-                                        <button class="btn btn-outline-danger buttEditor" type="submit" data-toggle="modal" data-target="#editorNoticia" id="btnCancelinNot"><i class="fa fa-times"></i>Cancelar</button>
+                                        <button class="btn btn-outline-danger buttEditor" id="btnSendinNot" onclick="checkNoticia('#editorNoticia', 1)"><i class="fa fa-paper-plane"></i>Enviar a revisionNUEVO</button>
+                                        <button class="btn btn-outline-danger buttEditor" id="btnSaveinNot" onclick="checkNoticia('#editorNoticia', 0)"><i class="fa fa-floppy-o"></i>Guardar</button>
+                                        <button class="btn btn-outline-danger buttEditor" id="btnSendSavedNot" onclick="checkNoticia('#editorNoticia', 3)"><i class="fa fa-paper-plane"></i>Enviar a revisionGUARDADO</button>
+                                        <button class="btn btn-outline-danger buttEditor" id="btnSaveChangNot" onclick="checkNoticia('#editorNoticia', 2)"><i class="fa fa-floppy-o"></i>Guardar cambios</button>
+                                        <button class="btn btn-outline-danger buttEditor" id="btnDeleteNot" onclick="deleteNoticiaIn()"><i class="fa fa-trash"></i>Eliminar noticia</button>
+                                        <button class="btn btn-outline-danger buttEditor" data-toggle="modal" data-target="#editorNoticia" id="btnCancelinNot"><i class="fa fa-times"></i>Cancelar</button>
                                     </div>
 
                                 </div>

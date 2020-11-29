@@ -250,7 +250,7 @@
             <div class="col-md-12">   
                 <div class="row" id="noticiaHeader">        
                     <div class="col-md-1" id="sectionHeader"></div>        
-                    <div class="col-md-11" id="tituloNoticia">
+                    <div class="col-md-10" id="headerSections">
                         Secciones
                         
                     </div>

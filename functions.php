@@ -61,7 +61,6 @@ if ($method == "userSignUp")
     }
 }  
 
-
 if ($method == "getAllUsers"){
     $conn = connectDB();
 
@@ -248,8 +247,6 @@ if ($method == "deleteNoti"){
     }
 } 
 
-
-
 if ($method == "addSection"){
     //Creamos la conexion
        //Creamos la conexion
@@ -273,7 +270,6 @@ if ($method == "addSection"){
            closeDB($conn);
     }
 }
-
 
 if ($method == "getSecciones"){
     //Creamos la conexion
@@ -318,16 +314,19 @@ if ($method == "noticiaReg"){
         $descrLg= $_POST['descrLg'];
         $status= $_POST['status'];
 
-        $palClavArray=$_POST['arrayClv'];
         $sent= $_POST['sent'];
+
+        $palClavArray=json_decode($_POST['arrayClv']);
+        $imgMediaArray= json_decode($_POST['imgMedia']);
+        $vidMediaArray= json_decode($_POST['vidMedia']);
 
         $query  = "CALL sp_noticiaRegister($idSec,'$titleNot', 3, '$dateAcont', '$lugAcont', '$descrSh', '$descrLg', '$status', $sent)";
         mysqli_query($conn, $query);
         $fila = mysqli_affected_rows($conn);
-        if($fila!=0){
+        if($fila!=0){  
             
             $querylastID = "select LAST_INSERT_ID() AS 'LastID';";
-            //$querylastID = "CALL sp_lastInsertedID()";
+            //$querylastID = "CALL sp_lastInsertedID();";
             $resultado = mysqli_query($conn, $querylastID);
             $rowID = mysqli_fetch_assoc($resultado);
             $IDNot = $rowID['LastID'];
@@ -342,13 +341,46 @@ if ($method == "noticiaReg"){
                 else{
                     echo json_encode(array("msg"=>false));
                 }
-            }     
-            echo json_encode(array("msg"=>true));  
+            }
+
+            foreach($imgMediaArray as $imgMedia)
+            {
+                $image = mysqli_real_escape_string($conn, file_get_contents($imgMedia));
+
+                $firstExp = explode(";base64", $imgMedia);
+                $ext = explode("/", $firstExp[0]);
+
+                $queryImg  = "CALL sp_insertMedia('$image', '$ext[1]', $IDNot);";
+                mysqli_query($conn, $queryImg);
+                $rowImg = mysqli_affected_rows($conn);
+                if($rowImg!=0){ 
+                }
+                else{
+                    echo json_encode(array("msg"=>false));
+                }
+            }
+
+            foreach($vidMediaArray as $vidMedia)
+            {
+                $video = mysqli_real_escape_string($conn, file_get_contents($vidMedia));
+
+                $firstExp = explode(";base64", $vidMedia);
+                $ext = explode("/", $firstExp[0]);
+
+                $queryVid  = "CALL sp_insertMedia('$video', '$ext[1]', $IDNot);";
+                mysqli_query($conn, $queryVid);
+                $rowVid = mysqli_affected_rows($conn);
+                if($rowVid!=0){ 
+                }
+                else{
+                    echo json_encode(array("msg"=>false));
+                }
+            }
+            echo json_encode(array("msg"=>true));
         }
         else{
             echo json_encode(array("msg"=>false));
         }
-
         closeDB($conn);
     }
 } 
@@ -365,11 +397,13 @@ if ($method == "noticiaUpd"){
         $lugAcont=$_POST['lugAcont'];
         $descrSh=$_POST['descrSh'];
         $descrLg= $_POST['descrLg'];
-
-        $palClavArray=$_POST['arrayClv'];
-
         $newStatus= $_POST['status'];
+        
         $sent= $_POST['sent'];
+
+        $palClavArray=json_decode($_POST['arrayClv']);
+        $imgMediaArray= json_decode($_POST['imgMedia']);
+        $vidMediaArray= json_decode($_POST['vidMedia']);
 
         $query  = "CALL sp_noticiaUpdate($idNot,$idSec,'$titleNot','$dateAcont','$lugAcont','$descrSh','$descrLg','$newStatus', $sent)";
         mysqli_query($conn, $query);
@@ -385,7 +419,41 @@ if ($method == "noticiaUpd"){
             else{
                 echo json_encode(array("msg"=>false));
             }
-        }     
+        }   
+
+        foreach($imgMediaArray as $imgMedia)
+        {
+            $image = mysqli_real_escape_string($conn, file_get_contents($imgMedia));
+
+            $firstExp = explode(";base64", $imgMedia);
+            $ext = explode("/", $firstExp[0]);
+
+            $queryImg  = "CALL sp_insertMedia('$image', '$ext[1]', $idNot);";
+            mysqli_query($conn, $queryImg);
+            $rowImg = mysqli_affected_rows($conn);
+            if($rowImg!=0){ 
+            }
+            else{
+                echo json_encode(array("msg"=>false));
+            }
+        }  
+
+        foreach($vidMediaArray as $vidMedia)
+        {
+            $video = mysqli_real_escape_string($conn, file_get_contents($vidMedia));
+
+            $firstExp = explode(";base64", $vidMedia);
+            $ext = explode("/", $firstExp[0]);
+
+            $queryVid  = "CALL sp_insertMedia('$video', '$ext[1]', $idNot);";
+            mysqli_query($conn, $queryVid);
+            $rowVid = mysqli_affected_rows($conn);
+            if($rowVid!=0){ 
+            }
+            else{
+                echo json_encode(array("msg"=>false));
+            }
+        }
         echo json_encode(array("msg"=>true));
 
         closeDB($conn);
@@ -543,8 +611,6 @@ if ($method == "getSeccionesEliminar"){
     }
 }
 
-
-
 if ($method == "getNoticiasRed"){
     //Creamos la conexion
     $conn = connectDB();
@@ -570,7 +636,9 @@ if ($method == "getNoticiasRed"){
                   "lugAcont" => $row['lugar_Acontecimiento'],
                   "descrSh" => $row['descripcion_Corta'],
                   "descrLg" => $row['descripcion_Larga'],
-                  "status" => $row['estado']
+                  "status" => $row['estado'],
+                  "preview" => base64_encode($row['contenido_media']),
+                  "ext" => $row['blob_type']
                 );
                 $noticias[] = $notiRed;
               }             
@@ -605,7 +673,9 @@ if ($method == "getNoticiasPend"){
                   "lugAcont" => $row['lugar_Acontecimiento'],
                   "descrSh" => $row['descripcion_Corta'],
                   "descrLg" => $row['descripcion_Larga'],
-                  "status" => $row['estado']
+                  "status" => $row['estado'],
+                  "preview" => base64_encode($row['contenido_media']),
+                  "ext" => $row['blob_type']
                 );
                 $noticias[] = $notiRed;
               }             
@@ -642,7 +712,9 @@ if ($method == "getNoticiasDev"){
                   "descrLg" => $row['descripcion_Larga'],
                   "status" => $row['estado'],
                   "idfeed" => $row['id_NotFeed'],
-                  "feedback" => $row['feedback']
+                  "feedback" => $row['feedback'],
+                  "preview" => base64_encode($row['contenido_media']),
+                  "ext" => $row['blob_type']
                 );
                 $noticias[] = $notiRed;
               }             
@@ -682,7 +754,9 @@ if ($method == "getNoticiasEnv"){
                   "apePat" => $row['apellido_P'],
                   "apeMat" => $row['apellido_M'],
                   "sectionName" => $row['nombre_Seccion'],
-                  "sectionColor" => $row['color_Seccion']
+                  "sectionColor" => $row['color_Seccion'],
+                  "preview" => base64_encode($row['contenido_media']),
+                  "ext" => $row['blob_type']
                 );
                 $noticias[] = $notiRed;
               }             
@@ -718,7 +792,63 @@ if ($method == "getNoticiasPub"){
                   "lugAcont" => $row['lugar_Acontecimiento'],
                   "descrSh" => $row['descripcion_Corta'],
                   "descrLg" => $row['descripcion_Larga'],
-                  "status" => $row['estado']
+                  "status" => $row['estado'],
+                  "preview" => base64_encode($row['contenido_media']),
+                  "ext" => $row['blob_type']
+                );
+                $noticias[] = $notiRed;
+              }             
+             echo json_encode($noticias);
+        }       
+        closeDB($conn);
+    }
+}
+
+if ($method == "getImageMedia"){
+    //Creamos la conexion
+    $conn = connectDB();
+
+    if($conn){
+        
+        $idNot=$_POST['idNot'];
+
+        $query  = "CALL sp_getMedia($idNot,'img');";
+        $resultado = mysqli_query($conn, $query);
+    
+        $noticias = array();
+        
+        if($resultado){
+            while ($row = mysqli_fetch_assoc($resultado)) {
+                $notiRed = array(
+                  "image" => base64_encode($row['contenido_media']),
+                  "ext" => $row['blob_type']
+                );
+                $noticias[] = $notiRed;
+              }             
+             echo json_encode($noticias);
+        }       
+        closeDB($conn);
+    }
+}
+
+if ($method == "getVideoMedia"){
+    //Creamos la conexion
+    $conn = connectDB();
+
+    if($conn){
+        
+        $idNot=$_POST['idNot'];
+
+        $query  = "CALL sp_getMedia($idNot,'vid');";
+        $resultado = mysqli_query($conn, $query);
+    
+        $noticias = array();
+        
+        if($resultado){
+            while ($row = mysqli_fetch_assoc($resultado)) {
+                $notiRed = array(
+                  "video" => base64_encode($row['contenido_media']),
+                  "ext" => $row['blob_type']
                 );
                 $noticias[] = $notiRed;
               }             

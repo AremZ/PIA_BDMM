@@ -24,6 +24,87 @@ function setupImage(input, display, theClass){
     });
 }
 
+var indexSlidesImg = 0;
+var indexSlidesVid = 0;
+
+function setupNewsImage(input, carousel, slidesCarousel){
+    const addPhoto = document.getElementById(input);
+    const container =  document.getElementById(carousel);
+    const sliders = document.getElementById(slidesCarousel);
+
+    addPhoto.addEventListener("change", function(){
+        const file = this.files[0];
+
+        if(file){
+            const reader = new FileReader();
+            reader.addEventListener("load", function(){
+                container.innerHTML += '<div class="carousel-item"><img src="' + this.result +'"></div>';
+                $("#" + carousel + " div").last().addClass("active");
+                $("#" + carousel + " div:not(:last-child)").removeClass("active");
+
+                sliders.innerHTML += '<li data-target="#carruselImg" data-slide-to="'+ indexSlidesImg +'"></li>';
+                $("#" + slidesCarousel + " li").last().addClass("active");
+                $("#" + slidesCarousel + " li:not(:last-child)").removeClass("active");
+                indexSlidesImg++;
+            });
+
+            reader.readAsDataURL(file);
+
+        }
+    });
+}
+
+function setupNewsVideo(input, carousel, slidesCarousel){
+    const addPhoto = document.getElementById(input);
+    const container =  document.getElementById(carousel);
+    const sliders = document.getElementById(slidesCarousel);
+
+    addPhoto.addEventListener("change", function(){
+        const file = this.files[0];
+
+        if(file){
+            const reader = new FileReader();
+
+            reader.addEventListener("load", function(){
+                //var fileUrl = window.URL.createObjectURL(file);
+                container.innerHTML += '<div class="carousel-item"><video class="video-fluid" onplay="pauseCar();" onpause="playCar();" controls><source src="' +
+                this.result + '" type="video/mp4"></video></div>';
+                $("#" + carousel + " div").last().addClass("active");
+                $("#" + carousel + " div:not(:last-child)").removeClass("active");
+                
+                //sliders.innerHTML += '<li data-target="#carruselVid" data-slide-to="'+ indexSlidesVid +'"></li>';
+                //$("#" + slidesCarousel + " li").last().addClass("active");
+                //$("#" + slidesCarousel + " li:not(:last-child)").removeClass("active");
+                //indexSlidesVid++;
+            });
+
+            reader.readAsDataURL(file);
+
+        }
+    });
+}
+
+function pauseCar(){ 
+    $('#carruselVid').carousel('pause');
+}
+
+function playCar(){
+    $('#carruselVid').carousel('cycle');
+}
+
+function deleteActualSlide(carousel, slidesCarousel, whatIs){
+    $(carousel).find('.active').remove();
+    $(carousel).find('.carousel-item').first().addClass("active");
+    $(slidesCarousel + " li").last().remove();
+    $(slidesCarousel + " li").first().addClass("active");
+    $(slidesCarousel + " li:not(:first-child)").removeClass("active");       
+    
+    if(whatIs == 'img')
+        indexSlidesImg--;
+    else if(whatIs == 'vid');
+        //indexSlidesImg--;
+}
+
 function validaciones(mod){
     
     if (mod==1){
@@ -758,21 +839,21 @@ function checkNoticia(toggleWindow, action){
         error = 1;
     }
 
-    campo = document.getElementById('archivosNoticia').value;
-    if (campo != ""){
-        var startIndex = (campo.indexOf('\\') >= 0 ? campo.lastIndexOf('\\') : campo.lastIndexOf('/'));
-        var filename = campo.substring(startIndex);
-        if (filename.indexOf('\\') === 0 || filename.indexOf('/') === 0) {
-            filename = filename.substring(1);
-        }
-        alert(filename);
-    }
-    else{
+    campo = $('#carousel-images').find('.carousel-item');
+
+    if(campo.length == 0){
         alert("Seleccione una imagen por favor.")
         error = 1;
     }
 
-    if (error == 0){        
+    campo = $('#carousel-videos').find('.carousel-item');
+
+    if(campo.length == 0){
+        alert("Seleccione un video por favor.")
+        error = 1;
+    }
+
+    if (error == 0){                
         var idNot = document.getElementById("idNoti").value;
         var titNot = document.getElementById("headerNot").value;
         var feInput = document.getElementById("infoNotFe").value;
@@ -781,29 +862,56 @@ function checkNoticia(toggleWindow, action){
         var shNot = document.getElementById("descNoticia").value;
         var lgNot = document.getElementById("bodyNoticia").value;
         var clvInput = document.getElementById("infoNotpalClav").value;
-       
+ 
         var clvNot = clvInput.split(",");
 
         var select = document.getElementById("selectSeccion");
         var textSelect = select.options[select.selectedIndex].text; 
         var idSection = textSelect.split(" ");
 
+        var allVideos = [];
+        $('.carousel-item video source').each( function(){
+            allVideos.push($(this).attr("src"));
+        });
+
+        var allImages = [];
+        $('.carousel-item img').each( function(){
+            allImages.push($(this).attr("src"));
+        });
+        
+        var mediaForm = new FormData();
+        mediaForm.append("idSec", idSection[0]);
+        mediaForm.append("title", titNot);
+        mediaForm.append("lugAcont", lugNot);
+        mediaForm.append("descrSh", shNot);
+        mediaForm.append("descrLg", lgNot);
+        mediaForm.append("arrayClv", JSON.stringify(clvNot));
+        mediaForm.append("imgMedia", JSON.stringify(allImages));
+        mediaForm.append("vidMedia", JSON.stringify(allVideos));
+
         if (action == 0){
             var feAcont = feInput + " " + hoInput + ":00";
             var newEstado = 'redaccion';
             var isSent = 0;
+
+            mediaForm.append("method", 'noticiaReg');
+            mediaForm.append("dateAcont", feAcont);
+            mediaForm.append("status", newEstado);
+            mediaForm.append("sent", isSent);
+
             $.ajax({
                 url: "functions.php",
                 type: "post",
                 dataType: "json",
-                data: {method: 'noticiaReg', idSec: idSection[0], title: titNot, dateAcont: feAcont, lugAcont: lugNot, descrSh: shNot,
-                        descrLg: lgNot, arrayClv: clvNot, status: newEstado, sent: isSent},
+                contentType: false,
+                processData: false,
+                data: mediaForm,
                 success: function (result) {
                     if (result.msg) {
-                        alert("Noticia creada exitosamente!");
-                        emptyBlock('notiRedaccion');
-                        getNoticiasRed();
-                        $(toggleWindow).modal('toggle');
+                    alert("Noticia creada exitosamente!");
+                    emptyBlock('notiRedaccion');
+                    getNoticiasRed();
+                    $(toggleWindow).modal('toggle');                       
                     } else
                         alert("Ocurrio un error durante la ejecucion.");
                 }
@@ -814,12 +922,19 @@ function checkNoticia(toggleWindow, action){
             var feAcont = feInput + " " + hoInput + ":00";
             var newEstado = 'terminada';
             var isSent = 1;
+
+            mediaForm.append("method", 'noticiaReg');
+            mediaForm.append("dateAcont", feAcont);
+            mediaForm.append("status", newEstado);
+            mediaForm.append("sent", isSent);
+            
             $.ajax({
                 url: "functions.php",
                 type: "post",
                 dataType: "json",
-                data: {method: 'noticiaReg', idSec: idSection[0], title: titNot, dateAcont: feAcont, lugAcont: lugNot, descrSh: shNot,
-                        descrLg: lgNot, arrayClv: clvNot, status: newEstado, sent: isSent},
+                contentType: false,
+                processData: false,
+                data: mediaForm,
                 success: function (result) {
                     if (result.msg) {
                         alert("Noticia enviada exitosamente!");
@@ -838,12 +953,20 @@ function checkNoticia(toggleWindow, action){
             var feAcont = feInput + " " + hoInput;
             var newEstado = 'redaccion';
             var isSent = 0;
+
+            mediaForm.append("method", 'noticiaUpd');
+            mediaForm.append("idNot", idNot);
+            mediaForm.append("dateAcont", feAcont);
+            mediaForm.append("status", newEstado);
+            mediaForm.append("sent", isSent);
+
             $.ajax({
                 url: "functions.php",
                 type: "post",
                 dataType: "json",
-                data: {method: 'noticiaUpd', idNot: idNot,idSec: idSection[0], title: titNot, dateAcont: feAcont, lugAcont: lugNot, descrSh: shNot,
-                        descrLg: lgNot, arrayClv: clvNot, status: newEstado, sent: isSent},
+                contentType: false,
+                processData: false,
+                data: mediaForm,
                 success: function (result) {
                     if (result.msg) {
                         alert("Noticia editada exitosamente!");
@@ -864,12 +987,19 @@ function checkNoticia(toggleWindow, action){
             if (oldFeedID != "")
                 cleanOldFeedback(oldFeedID);
 
+            mediaForm.append("method", 'noticiaUpd');
+            mediaForm.append("idNot", idNot);
+            mediaForm.append("dateAcont", feAcont);
+            mediaForm.append("status", newEstado);
+            mediaForm.append("sent", isSent);
+
             $.ajax({
                 url: "functions.php",
                 type: "post",
                 dataType: "json",
-                data: {method: 'noticiaUpd', idNot: idNot,idSec: idSection[0], title: titNot, dateAcont: feAcont, lugAcont: lugNot, descrSh: shNot,
-                        descrLg: lgNot, arrayClv: clvNot, status: newEstado, sent: isSent},
+                contentType: false,
+                processData: false,
+                data: mediaForm,
                 success: function (result) {
                     if (result.msg) {
                         alert("Noticia enviada exitosamente!");
@@ -1100,9 +1230,19 @@ function nuevaNoticia(){
     document.getElementById("btnCancelinNot").hidden=false;
 
     document.getElementById("selectSeccion").selectedIndex=0;
+    
+    document.getElementById('carousel-images').innerHTML = "";
+    document.getElementById('imgIndi').innerHTML = "";
+    document.getElementById('carousel-videos').innerHTML = "";
+    indexSlidesImg = 0;
 }
 
 function verRetro(idFeed ,feedback, idNot, title, feAcont, luAcont, descrSh, descrLg, idSecc){
+    document.getElementById('carousel-images').innerHTML = "";
+    document.getElementById('imgIndi').innerHTML = "";
+    document.getElementById('carousel-videos').innerHTML = "";
+    indexSlidesImg = 0;
+
     $('#editorNoticia').modal('toggle');
 
     document.getElementById("notEdiNoticia").value = feedback;
@@ -1130,6 +1270,9 @@ function verRetro(idFeed ,feedback, idNot, title, feAcont, luAcont, descrSh, des
     document.getElementById("infoNotlug").value=luAcont;
     document.getElementById("descNoticia").value=descrSh;
     document.getElementById("bodyNoticia").value=descrLg;
+
+    getImageMedia(idNot, 'carousel-images', 'imgIndi');
+    getVideoMedia(idNot, 'carousel-videos');
  
     $.ajax({
         url: "functions.php",
@@ -1157,6 +1300,11 @@ function verRetro(idFeed ,feedback, idNot, title, feAcont, luAcont, descrSh, des
 }
 
 function editarNoticia(idNot, title, feAcont, luAcont, descrSh, descrLg, idSecc){  
+
+    document.getElementById('carousel-images').innerHTML = "";
+    document.getElementById('imgIndi').innerHTML = "";
+    document.getElementById('carousel-videos').innerHTML = "";
+    indexSlidesImg = 0;
 
     $('#editorNoticia').modal('toggle');
 
@@ -1193,6 +1341,9 @@ function editarNoticia(idNot, title, feAcont, luAcont, descrSh, descrLg, idSecc)
             document.getElementById("infoNotpalClav").value=contentClv;
         }
     });
+
+    getImageMedia(idNot, 'carousel-images', 'imgIndi');
+    getVideoMedia(idNot, 'carousel-videos');
 
     document.getElementById("infoNotFe").value=dateAcont;
     document.getElementById("infoNotHo").value=hoAcont
@@ -1546,6 +1697,7 @@ function getSecciones(){
 }
 
 function setOrden(){
+    var error = false;
     $("ol.allSections li").each(function() {
        
         //alert("Orden: "+index+"idSeccion: "+id );
@@ -1557,18 +1709,20 @@ function setOrden(){
             dataType: "json",
             data: {method: 'setOrden',newOrden: index,idSeccion:id},
             success: function (result) {
-                if(result.msg){
-                    //alert("Cambios guardados");    
-    
-                }
+                if(result.msg)
+                    error = false; 
                 else
-                    alert("Error en la actualización.");
+                    error = true;
             }
     
         });  
-
-        alert("Cambios guardados");    
+  
     });
+
+    if (!error)
+        alert("Cambios guardados");
+    else
+        alert("Error en la actualización.");
     
 }
 var secEditar;
@@ -1766,7 +1920,8 @@ function getNoticiasRed(){
             if (noticias != null){            
                 $.each(noticias, function(idx, notiRed){
                     $( "#notiRedaccion" ).append(
-                        '<div class="col-md-12"><div class="card enRed"><div class="row no-gutters"><div class="col-md-4"><img class="card-img" src="Sources/Note3.jpg"></div>' +
+                        '<div class="col-md-12"><div class="card enRed"><div class="row no-gutters"><div class="col-md-4"><img class="card-img" ' + 
+                        'src=data:image/' + noticias[idx].ext + ';base64,' + noticias[idx].preview + '></div>' +
                         '<div class="col-md-8"><div class="card-body"><h2 class="col-md-12 card-title titleEnRed">' + noticias[idx].title + '</h2>' +
                         '<p class="card-text bodyEnRed">' + noticias[idx].descrSh + '</p><div class="row buttons"><button class="btn btn-outline-danger barBut" type="submit" id="btnEdit"' +
                         'onclick="editarNoticia('+ noticias[idx].id + ",'" + noticias[idx].title + "','" + noticias[idx].feAcont + "','" +
@@ -1790,7 +1945,8 @@ function getNoticiasPend(){
             if (noticias != null){
                 $.each(noticias, function(idx, notiRed){
                     $( "#notiPendientes" ).append(
-                        '<div class="col-lg-12"><div class="card EnvRev"><img class="card-img" src="Sources/Note2.jpg"><div class="card-body">' +
+                        '<div class="col-lg-12"><div class="card EnvRev"><img class="card-img" ' + 
+                        'src=data:image/' + noticias[idx].ext + ';base64,' + noticias[idx].preview + '><div class="card-body">' +
                         '<h5 class="col-md-10 card-title titleEnvRev">' + noticias[idx].title + '</h5><h5 class="card-title col-md-6" id="PublicEnv">' +
                         'Enviado el: '+ noticias[idx].feEnvio.slice(8,10) + ' de ' + whichMonth(noticias[idx].feEnvio.slice(5,7)) + ' del ' +
                         noticias[idx].feEnvio.slice(0,4) + '</h5></div></div></div>'         
@@ -1812,7 +1968,8 @@ function getNoticiasEnv(){
             $.each(noticias, function(idx, notiRed){
                 var fullName = noticias[idx].name + ' ' + noticias[idx].apePat + ' ' + noticias[idx].apeMat;
                 $( "#notiEnviadas" ).append(
-                    '<div class="col-md-3"><div class="card revisionNoticias"><img class="card-img-top" src="Sources/Note1.jpg"><div class="card-body">' +
+                    '<div class="col-md-3"><div class="card revisionNoticias"><img class="card-img-top" ' + 
+                    'src=data:image/' + noticias[idx].ext + ';base64,' + noticias[idx].preview + '><div class="card-body">' +
                     '<h4 class="card-title" class="titleNoticia">' + noticias[idx].title + '</h4><p class="card-text" class="bodyNoticia">' + noticias[idx].descrSh +
                     '</p><h4 class="card-title" id="Reportero">Reportero: ' + fullName  + '</h4><h4 class="card-title" id="Publicacion">Enviado el: ' +
                     noticias[idx].feEnvio.slice(8,10) + ' de ' + whichMonth(noticias[idx].feEnvio.slice(5,7)) + ' del ' + noticias[idx].feEnvio.slice(0,4) + '</h4>' +
@@ -1840,8 +1997,8 @@ function getNoticiasDev(){
             if (noticias != null){
                 $.each(noticias, function(idx, notiRed){
                     $( "#notiDevueltas" ).append(
-                        '<div class="col-lg-12"><div class="card pendRev"><div class="row no-gutters"><div class="col-md-4"><img class="card-img"' +
-                        'src="Sources/Note3.jpg"></div><div class="col-md-8"><div class="card-body"><h4 class="col-md-10 card-title titleNotRev">' +
+                        '<div class="col-lg-12"><div class="card pendRev"><div class="row no-gutters"><div class="col-md-4"><img class="card-img" ' + 
+                        'src=data:image/' + noticias[idx].ext + ';base64,' + noticias[idx].preview + '></div><div class="col-md-8"><div class="card-body"><h4 class="col-md-10 card-title titleNotRev">' +
                         noticias[idx].title + '</h4><p class="card-text bodyNotRev">' + noticias[idx].descrSh + '</p><div class="row">' +
                         '<h4 class="card-title col-md-6" id="PublicRev">Devuelto el: ' + noticias[idx].feDevo.slice(8,10) + ' de ' +
                         whichMonth(noticias[idx].feDevo.slice(5,7)) + ' del ' + noticias[idx].feDevo.slice(0,4) + '</h4>' +
@@ -1865,7 +2022,8 @@ function getNoticiasPub(){
             if (noticias != null){
                 $.each(noticias, function(idx, notiRed){
                     $( "#NotiPubli" ).append(
-                        '<div class="col-md-3"><div class="card notPub"><img class="card-img-top" src="Sources/Note3.jpg"><div class="card-body">' +
+                        '<div class="col-md-3"><div class="card notPub"><img class="card-img-top" ' + 
+                        'src=data:image/' + noticias[idx].ext + ';base64,' + noticias[idx].preview + '><div class="card-body">' +
                         '<h4 class="card-title titleNotPub">' + noticias[idx].title + '</h4><p class="card-text bodyNotPub">' + noticias[idx].descrSh +
                         '</p><h4 class="card-title" id="pubNotPub">Publicado el: ' + noticias[idx].fePub.slice(8,10) + ' de ' +
                         whichMonth(noticias[idx].fePub.slice(5,7)) + ' del ' + noticias[idx].fePub.slice(0,4) + '</h4><div class="row"><div class="col-lg-12">' +
@@ -1878,8 +2036,16 @@ function getNoticiasPub(){
 }
 
 function seeNoticia(idNot, colorSection, titleNot, nameReportero, feAcont, lugAcont, descrSh, descrLg, feCreacion){
+    document.getElementById('carousel-images-rev').innerHTML = "";
+    document.getElementById('imgIndiRev').innerHTML = "";
+    document.getElementById('carousel-videos-rev').innerHTML = "";
+    indexSlidesImg = 0;
+
     $('#seeNoticia').modal('toggle');   
     cleanInput('eComments');
+
+    getImageMedia(idNot, 'carousel-images-rev', 'imgIndiRev');
+    getVideoMedia(idNot, 'carousel-videos-rev');
     
     document.getElementById("idNotiSent").value = idNot;
     document.getElementById("idNotiSentComm").value = idNot;
@@ -1918,8 +2084,16 @@ function seeNoticia(idNot, colorSection, titleNot, nameReportero, feAcont, lugAc
 }
 
 function sendComms(idNot, colorSection, titleNot, nameReportero, feAcont, lugAcont, descrSh, descrLg, feCreacion){
+    document.getElementById('carousel-images-rev').innerHTML = "";
+    document.getElementById('imgIndiRev').innerHTML = "";
+    document.getElementById('carousel-videos-rev').innerHTML = "";
+    indexSlidesImg = 0;
+
     $('#sendComments').modal('toggle');   
     cleanInput('eComments');
+
+    getImageMedia(idNot, 'carousel-images-rev', 'imgIndiRev');
+    getVideoMedia(idNot, 'carousel-videos-rev');
     
     document.getElementById("idNotiSent").value = idNot;
     document.getElementById("idNotiSentComm").value = idNot;
@@ -2036,6 +2210,58 @@ function cleanOldFeedback(idFeed){
             }
         }
     });  
+}
+
+function getImageMedia(idNoticia, carrusel_add, slides){
+    $.ajax({
+        url: "functions.php",
+        type: "post",
+        dataType: "json",
+        data: {method: 'getImageMedia', idNot: idNoticia},
+        success: function (noticias) {
+            if (noticias != null){
+
+                const container =  document.getElementById(carrusel_add);
+                const sliders = document.getElementById(slides);
+
+                $.each(noticias, function(idx, notiRed){
+                    container.innerHTML += '<div class="carousel-item"><img src=data:image/' + noticias[idx].ext +
+                    ';base64,' + noticias[idx].image + '></div>';
+                    $("#" + carrusel_add + " div").last().addClass("active");
+                    $("#" + carrusel_add + " div:not(:last-child)").removeClass("active");
+    
+                    sliders.innerHTML += '<li data-target="#carruselImg" data-slide-to="'+ indexSlidesImg +'"></li>';
+                    $("#" + slides + " li").last().addClass("active");
+                    $("#" + slides + " li:not(:last-child)").removeClass("active");
+                    indexSlidesImg++;       
+                });       
+                
+            }           
+        }
+    }); 
+}
+
+function getVideoMedia(idNoticia, carrusel_add){
+    $.ajax({
+        url: "functions.php",
+        type: "post",
+        dataType: "json",
+        data: {method: 'getVideoMedia', idNot: idNoticia},
+        success: function (noticias) {
+            if (noticias != null){
+
+                const container =  document.getElementById(carrusel_add);
+
+                $.each(noticias, function(idx, notiRed){
+                    container.innerHTML += '<div class="carousel-item"><video class="video-fluid" onplay="pauseCar();" onpause="playCar();" controls>' +
+                    '<source src=data:video/' + noticias[idx].ext + ';base64,' + noticias[idx].video + ' type="video/mp4"></video></div>';
+                    $("#" + carrusel_add + " div").last().addClass("active");
+                    $("#" + carrusel_add + " div:not(:last-child)").removeClass("active");    
+                });       
+                
+            }           
+        }
+    }); 
 }
 
 function whichMonth(number){
