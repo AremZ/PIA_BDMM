@@ -33,8 +33,12 @@ CREATE VIEW noticiaEssayMedia
 CREATE VIEW fullNoticiaComments
 	AS
 		SELECT N.id_Noticia, N.seccion_Noticia , N.titulo_Noticia , N.reportero_Autor, N.fecha_Creacion, N.fecha_Publicacion, N.fecha_Envio,
-        N.fecha_Devo, N.fecha_Acontecimiento, N.lugar_Acontecimiento, N.descripcion_Corta , N.descripcion_Larga, N.estado, FN.id_NotFeed, FN.feedback 
-        FROM noticia N INNER JOIN feedback_noticia FN ON N.id_Noticia = FN.id_Noticia;
+        N.fecha_Devo, N.fecha_Acontecimiento, N.lugar_Acontecimiento, N.descripcion_Corta , N.descripcion_Larga, N.estado, FN.id_NotFeed, FN.feedback,
+        M.contenido_media, M.blob_type 
+        FROM noticia N INNER JOIN feedback_noticia FN ON N.id_Noticia = FN.id_Noticia
+                       INNER JOIN media M ON N.id_Noticia = M.noticia_Duena
+                       INNER JOIN (SELECT noticia_Duena, MIN(id_Media) AS 'MediaID' FROM media GROUP BY noticia_Duena) SEL
+                       ON M.noticia_Duena = SEL.noticia_Duena AND M.id_Media = SEL.MediaID WHERE M.blob_type = 'png' OR M.blob_type = 'jpeg';
         
 CREATE VIEW nombreSeccion_View
 	AS
