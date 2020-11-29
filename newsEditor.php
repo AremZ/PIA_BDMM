@@ -306,27 +306,17 @@
                                             </div>
                                             <div class="col-md-12">
                                                 <!--Slider -->
-                                                <div id="slides" class="carousel slide carousel-fade" data-ride="carousel">
-                                                    <ul class="carousel-indicators">
-                                                        <li data-target="#slides" data-slide-to="0" class="active"></li>
-                                                        <li data-target="#slides" data-slide-to="1"></li>
-                                                        <li data-target="#slides" data-slide-to="2"></li>
+                                                <div id="carruselImg" class="carousel slide carousel-fade" data-ride="carousel">
+                                                    <ul class="carousel-indicators" id="imgIndiRev">
                                                     </ul>
                                                     <div class="carousel-inner">
-                                                        <div class="carousel-item active">
-                                                            <img src="Sources/Note1.jpg">
+                                                        <div id="carousel-images-rev">
                                                         </div>
-                                                        <div class="carousel-item">
-                                                            <img src="Sources/Note2.jpg">
-                                                        </div>
-                                                        <div class="carousel-item">
-                                                            <img src="Sources/Note3.jpg">
-                                                        </div>
-                                                        <a class="carousel-control-prev" href="#slides" role="button" data-slide="prev">
+                                                        <a class="carousel-control-prev" href="#carruselImg" role="button" data-slide="prev">
                                                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                                             <span class="sr-only">Anterior</span>
                                                         </a>
-                                                        <a class="carousel-control-next" href="#slides" role="button" data-slide="next">
+                                                        <a class="carousel-control-next" href="#carruselImg" role="button" data-slide="next">
                                                             <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                                             <span class="sr-only">Siguiente</span>
                                                         </a>
@@ -337,7 +327,28 @@
                                                     <div class="col-md-12" id="fullBodyVista">
                                                    
                                                     </div>
-                                                </div>                           
+                                                </div>       
+
+                                                <div class="col-md-12">
+                                                    <!--Slider vid-->
+                                                    <div id="carruselVid" class="carousel slide carousel-fade" data-ride="carousel">
+                                                        <ul class="carousel-indicators" id="vidIndiRev">
+                                                        </ul>
+                                                        <div class="carousel-inner">
+                                                            <div id="carousel-videos-rev">
+                                                            </div>
+                                                            <!--<a class="carousel-control-prev" href="#carruselVid" role="button" data-slide="prev">
+                                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                                <span class="sr-only">Anterior</span>
+                                                            </a>
+                                                            <a class="carousel-control-next" href="#carruselVid" role="button" data-slide="next">
+                                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                                <span class="sr-only">Siguiente</span>
+                                                            </a>-->
+                                                        </div>
+                                                    </div>
+                                                </div>  
+                                                                  
                                             </div>         
                                             <div class="col-md-12" id="fechaCreacionVista">
                                                 

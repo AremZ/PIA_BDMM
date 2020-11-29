@@ -602,17 +602,21 @@ textarea#bodyNoticia:focus{
     float: right;
 }
 
-#carruselEdit{
+#carruselVid, #carruselImg{
     margin-top: 1em;
 }
 
-label#archivosNoticiaLbl{
+label#videosNoticiaLbl, label#imagesNoticiaLbl{
     margin-top: 1em;
 }
 
 div#SeccionSel{
     font-family: 'Oswald', sans-serif !important;
     margin-top: 13em;
+}
+
+button#neededBtn{
+    margin-bottom: 300px;
 }
 
 select#selectSeccion{
@@ -630,7 +634,7 @@ select#selectSeccion:focus{
     background-color: var(--Color-2);
 }*/
 
-button#btnDeleteSlide{
+button.btnDeleteSlide{
     margin-top: 1em;
 }
 

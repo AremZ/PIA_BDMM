@@ -16,11 +16,21 @@ div#noticiaBG.row{
     padding-left: 5em;
     margin-left: 2em;
 }
-#tituloNoticia{
-    background-color:black !important;
+#headerSections{
+    background-color: black !important;
+    font-family: 'Oswald', sans-serif;  
+    font-size: 370%;
+    color: var(--TitleFont);
+    text-align: left;
+    border-radius: 5px;
 }
 
 .listaSeccion{
+    margin:3em;
+}
+
+.listaSeccion span{
+  font-family: 'Roboto', sans-serif;  
     margin:3em;
 }
 
