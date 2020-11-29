@@ -23,7 +23,29 @@
       $(document).ready(function(){
           $("#btnProfile").toggle();
             setupImage('agregarFoto', 'displayImg', '.preview-image');
-      });
+           
+        });
+
+        function getSearchData(){
+          
+          var palabraBuscar=document.getElementById("BRSearch").value;
+          alert("Palabra: "+palabraBuscar);
+        }
+        
+        function getSearchDataFiltros(){
+          var rangoInicial=document.getElementById("rangoInicialFechaBuscar").value;
+          var rangoFinal=document.getElementById("rangoFinalFechaBuscar").value;
+          alert("Fecha inicial: "+rangoInicial+" Fecha final: "+rangoFinal);
+          if($("#fT").prop("checked"))
+            alert("Filtro titulo.");
+          if($("#fD").prop("checked"))
+            alert("Filtro descripcion.");
+          if($("#fC").prop("checked"))
+            alert("Filtro clave.");
+     
+        }
+
+
     </script>
 
 </head>
@@ -42,8 +64,9 @@
                     <form class="form-inline my-2 my-lg-0" method="GET" action="searchResult.html">
                         <input class="form-control mr-sm-2" placeholder="Buscar..." aria-label="Buscar"
                             id="BRSearch">
-                        <button class="btn btn-outline-danger" type="submit" id="BTSearch">Buscar</button>
+                        <button class="btn btn-outline-danger" onclick="getSearchData()" id="BTSearch">Buscar</button>
                     </form>
+              
                 </li>                  
             </ul>
 
@@ -223,9 +246,17 @@
                     <div class="col-md-1" id="sectionHeader"></div>        
                     <div class="col-md-11" id="tituloNoticia">
                         Resultados de "palabra"
-                        
+                        <div id="contenedorDatePicker datepicker-container" style="margin-top: 0.5em; margin-bottom: 0.5em; font-size:medium !important;">
+                        <label for="rangoInicialFechaBuscar" style="color:whitesmoke; font-family: 'Roboto', sans-serif !important;">Desde: </label>
+                        <input type="date" name="rangoInicialFechaBuscar" id="rangoInicialFechaBuscar" class="col-md-6" style="width:160px;" onfocus="cleanTextarea('rangoInicialFechaBuscar')">
+                        <label for="rangoFinalFechaBuscar"  style="color:whitesmoke; font-family: 'Roboto', sans-serif !important;">Hasta: </label>
+                        <input type="date" name="rangoFinalFechaBuscar" id="rangoFinalFechaBuscar" class="col-md-6" style="width:160px;" onfocus="cleanTextarea('rangoFinalFechaBuscar')">
+                        <input type="checkbox" name="filtroTitulo" id="fT" value="1" style="margin-left: 1em;"> Título <input type="checkbox" name="filtroDesc" id="fD" value="2" style="margin-left: 1em;"> Descripción<input type="checkbox" name="filtroClave" id="fC" value="3" style="margin-left: 1em;"> Palabra clave
+                        <button class="btn btn-outline-danger" onclick="getSearchDataFiltros()" id="BTSearchFiltros" style="margin-left: 1em;">Aceptar</button>
+                      </div>
                     </div>
                 </div>
+                
                 <div class="row" id="noticiaBG">
                     <div class="col-md-12" id="noticiaBody">
                         <div class="row">

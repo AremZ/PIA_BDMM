@@ -80,6 +80,13 @@ nav.navbar#navBarSecciones{
     font-family: 'Roboto', sans-serif !important;
 }
 
+#contenedorDatePicker{
+    width:250px !important;
+    font-family: 'Roboto', sans-serif !important;
+}
+
+
+
 #BRSearch:focus{
     border: 1px solid var(--Color-2);
     box-shadow: 0 0 5px var(--Color-2);
