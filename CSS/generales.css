@@ -35,6 +35,24 @@ nav.navbar#navBarSecciones{
     color: var(--Color-2) !important;
 }
 
+
+.navbar .navbar-nav .rojo a:hover{
+    color: #aa281d !important;
+}
+
+.navbar .navbar-nav .verde a:hover{
+    color: #147c17 !important;
+}
+
+.navbar .navbar-nav .amari a:hover{
+    color: #FADA5E !important;
+}
+.navbar .navbar-nav .azul a:hover{
+    color: #0b81d6 !important;
+}
+.navbar .navbar-nav .rosa a:hover{
+    color: #eb75c9 !important;
+}
 .navbar .navbar-nav li a:active{
     color: var(--Color-2) !important;
 }
@@ -79,6 +97,13 @@ nav.navbar#navBarSecciones{
     width:500px !important;
     font-family: 'Roboto', sans-serif !important;
 }
+
+#contenedorDatePicker{
+    width:250px !important;
+    font-family: 'Roboto', sans-serif !important;
+}
+
+
 
 #BRSearch:focus{
     border: 1px solid var(--Color-2);
@@ -138,6 +163,13 @@ nav.navbar#navBarSecciones{
     background-color: var(--Color-2) ;
     color: whitesmoke;
     font-family: 'Oswald', sans-serif;
+}
+
+#nombreUsuario{
+    font-family: 'Oswald', sans-serif;
+    color: var(--Color-2);
+    margin-right: 1em;
+    margin-top: 0.5em;
 }
 
 input[type="file"] {

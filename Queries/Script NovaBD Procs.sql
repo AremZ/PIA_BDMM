@@ -1,10 +1,11 @@
+
 DELIMITER //
 CREATE PROCEDURE sp_getUsersLogin(
     IN in_Email varchar(50),
     IN in_Password varchar(20)
     )
     BEGIN
-		SELECT email, contrasena FROM usuario WHERE email = in_Email AND contrasena = in_Password;
+		SELECT id_Usuario, tipo_Usuario, nombres, email, contrasena FROM usuario WHERE email = in_Email AND contrasena = in_Password;
     END //
 DELIMITER ;
 
@@ -118,10 +119,19 @@ DELIMITER ;
 DELIMITER //
 CREATE PROCEDURE sp_getSections()
     BEGIN
-		SELECT nombre_Seccion, id_Seccion,color_Seccion FROM seccion WHERE estado=1 OR estado=2
+		SELECT nombre_Seccion, id_Seccion,color_Seccion FROM getSeccion_View WHERE estado=1 OR estado=2
         ORDER BY num_Prioridad;
     END //
 DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE sp_getSectionsEliminarPend()
+    BEGIN
+		select id_Seccion,nombre_Seccion from getSeccion_View WHERE estado=2;
+    END //
+DELIMITER ;
+
+
 
 DELIMITER //
 CREATE PROCEDURE sp_noticiaRegister(
@@ -397,6 +407,14 @@ CREATE PROCEDURE sp_askDeleteSeccion(
 DELIMITER ;
 
 DELIMITER //
+CREATE PROCEDURE sp_sectionTo1(
+	IN in_idSec int
+)
+    BEGIN
+		UPDATE seccion SET estado=1 WHERE id_Seccion=in_idSec;
+    END //
+DELIMITER ;
+
 CREATE PROCEDURE sp_getMedia(
 	IN in_NoticiaID int,
     IN whatMedia varchar(3)

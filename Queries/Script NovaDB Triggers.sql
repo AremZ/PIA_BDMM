@@ -53,6 +53,16 @@ CREATE VIEW nombreSeccion_View
 	AS
 		SELECT id_Seccion,nombre_Seccion FROM seccion;
         
+        
+CREATE VIEW getSeccion_View
+	AS
+		SELECT  id_Seccion,nombre_Seccion,num_Prioridad,estado,color_Seccion FROM seccion;
+
+        
+        
+        
+        
+        
 /* ---------------------------------------------------     FUNCTIONS      -------------------------------------------------------------------- */
 
 CREATE FUNCTION lastID ()

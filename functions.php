@@ -15,7 +15,7 @@ if ($method == "userLogin"){
         $row = mysqli_fetch_assoc($resultado);
         
         if($row['email'] != ""){
-            echo json_encode(array("msg"=>true));       
+            echo json_encode($row);       
         }
         else{
             echo json_encode(array("msg"=>false));
@@ -492,7 +492,7 @@ if ($method == "getSectionName"){
         
          
         $idSeccion=$_POST['idSeccionE'];
-        $query  = "UPDATE seccion SET estado=2 WHERE id_Seccion='$idSeccion';";
+        $query  = "CALL sp_askDeleteSeccion('$idSeccion');";
         $resultado=mysqli_query($conn, $query);
         $query  = "CALL sp_getSeccion('$idSeccion');";
         $resultado=mysqli_query($conn, $query);
@@ -520,7 +520,7 @@ if ($method == "regresarSeccion"){
         
          
         $idSeccion=$_POST['idSeccionE'];
-        $query  = "UPDATE seccion SET estado=1 WHERE id_Seccion='$idSeccion';";
+        $query  = "CALL sp_sectionTo1('$idSeccion');";
         $resultado=mysqli_query($conn, $query);
        
 
@@ -594,7 +594,7 @@ if ($method == "getSeccionesEliminar"){
        if($conn){
             //$idSeccion=$_POST['idSeccionE'];
 
-           $query  = "SELECT id_Seccion, nombre_Seccion FROM seccion WHERE estado=2;";
+           $query  = "CALL sp_getSectionsEliminarPend();";
            $resultado=mysqli_query($conn, $query);
 
            $secciones = array();
@@ -1084,10 +1084,10 @@ if ($method == "getUserData"){
 
 function connectDB(){
     $servername = "localhost"; 
-    //$username = "root";
-    $username = "PruebaDB3";
-    //$password = "";
-    $password = "password";
+    $username = "root";
+    //$username = "PruebaDB3";
+    $password = "";
+    //$password = "password";
     $dbname = "novadb";  
     
     $conn = mysqli_connect($servername, $username, $password, $dbname);
