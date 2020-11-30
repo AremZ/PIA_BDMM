@@ -15,7 +15,7 @@ if ($method == "userLogin"){
         $row = mysqli_fetch_assoc($resultado);
         
         if($row['email'] != ""){
-            echo json_encode(array("msg"=>true));       
+            echo json_encode($row);       
         }
         else{
             echo json_encode(array("msg"=>false));

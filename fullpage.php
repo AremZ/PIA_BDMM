@@ -20,28 +20,63 @@
 
     <script>
         $(document).ready(function(){
-            $("#btnProfile").toggle();
-            $(".reply-box").toggle();      
+            get();
+            getSeccionesToNavbar();     
             setupImage('agregarFoto', 'displayImg', '.preview-image');
+            
         });
+        function set(){
+          <?php 
+          $phpVar =  $_COOKIE['user'];
+          $cookie_name = "user";
+          setcookie($cookie_name, $phpVar, time() + (86400 * 30), "/"); // 86400 = 1 day
+          ?>
+          //alert("done");
+        }
+        function get(){
+            <?php
+            $currentUser= $_COOKIE["user"];
+            $currentType=$_COOKIE["type"];
+            $currentName=$_COOKIE["name"];
+            ?>
+            var currentU="<?php echo $currentUser ?>";
+            var currentT="<?php echo $currentType ?>";
+            var currentN="<?php echo $currentName ?>";
+            //alert(currentU);
+            if(currentU==0||currentU==null)
+                $("#btnProfile").toggle();
+            
+            else{
+                document.getElementById("nombreUsuario").innerHTML="¡ Hola "+currentN+" !";
+                $("#btnLogin").toggle();
+                if(currentT=="usuario"){
+                    $("#btnEscritorio").toggle();
+                    $("#btnSeccion").toggle();
+                }
+                else if(currentT=="reportero")
+                    $("#btnSeccion").toggle();
+            }
+                
+        }
     </script>
 
 </head>
 
 <body>
 
+
 <!------ Barra de Navegacion & Searchbar ------>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light" id="navBar">
     <div class="container-fluid">
-        <a class="navbar-brand" href="main.html"><img src="Sources/Header/LogoBar.png"></a>
+        <a class="navbar-brand" href="main.php"><img src="Sources/Header/LogoBar.png"></a>
         <button class="navbar-toggler bg-dangerf" type="button" data-toggle="collapse" data-target="#navBarColl">
             <span class="navbar-toggler-icon"></span>
         </button>           
         <div class="collapse navbar-collapse" id="navBarColl">
             <ul class="navbar-nav ml-auto">
                 <li>
-                    <form class="form-inline my-2 my-lg-0" method="GET" action="searchResult.html">
+                    <form class="form-inline my-2 my-lg-0" method="GET" action="searchResult.php">
                         <input class="form-control mr-sm-2" placeholder="Buscar..." aria-label="Buscar"
                             id="BRSearch">
                         <button class="btn btn-outline-danger" type="submit" id="BTSearch">Buscar</button>
@@ -49,22 +84,7 @@
                 </li>                  
             </ul>
 
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item" id="btnLogin">
-                    <a class="nav-link" href="" data-toggle="modal" data-target="#modLogin" onclick="cleanInput('emailLog'), cleanInput('pwdLog')">Iniciar Sesion</a>
-                </li>
-
-                <li class="nav-item dropdown" id="btnProfile">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMA" role="button"
-                        data-toggle="dropdown">Mi Cuenta</a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMA">
-                        <a class="dropdown-item" href="profile.html">Mi Perfil</a>
-                        <a class="dropdown-item" href="newsReportero.html">Escritorio</a>
-                        <a class="dropdown-item" href="sectionAdm.html">Gestionar Seccion</a>
-                        <a class="dropdown-item" onclick="cerrarSesion()">Cerrar Sesion</a>
-                    </div>
-                </li>         
-            </ul>
+    
         </div>
     </div>
 </nav>
@@ -72,26 +92,35 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top" id="navBarSecciones">
     <div class="container-fluid">
         <div class="collapse navbar-collapse">
-            <ul class="navbar-nav mr-auto ml-auto">
+        <ul id="seccionesNavB" class="navbar-nav mr-auto ml-auto seccionesNav">
+        <!--
                 <li class="nav-item active">
                     <a class="nav-link" href="main.html">Seccion 1</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Seccion 2</a>
+
+                -->
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item" id="btnLogin">
+                    <a class="nav-link" href="" data-toggle="modal" data-target="#modLogin" onclick="cleanInput('emailLog'), cleanInput('pwdLog')">Iniciar Sesion</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Seccion 3</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Seccion 4</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Seccion 5</a>
-                </li>
+            <label id="nombreUsuario"></label>
+                <li class="nav-item dropdown" id="btnProfile" style="position: relative;">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMA" role="button"
+                        data-toggle="dropdown" >Mi Cuenta</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMA" >
+                        <a class="dropdown-item" href="profile.php">Mi Perfil</a>
+                        <a id="btnEscritorio" class="dropdown-item" href="newsReportero.php">Escritorio</a>
+                        <a id="btnSeccion"class="dropdown-item" href="sectionAdm.php">Gestionar Seccion</a>
+                        <a class="dropdown-item" onclick="cerrarSesion(); set();">Cerrar Sesion</a>
+                    </div>
+                    
+                </li>  
             </ul>
         </div>
     </div>
 </nav>
+
 
 <!------ Login ------>
 <div id="modLogin" class="modal fade">

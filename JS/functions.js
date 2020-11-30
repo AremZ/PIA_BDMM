@@ -144,9 +144,14 @@ function validaciones(mod){
                 type: "post",
                 dataType: "json",
                 data: {method: 'userLogin', email: campoEmail.value, pass: campoPass.value},
-                success: function (result) {
-                    if(result.msg){
-                        alert("Sesion iniciada exitosamente!");                        
+                success: function (row) {
+                    if(row){
+                        alert("Sesion iniciada exitosamente!");    
+                        document.cookie = "user="+row.id_Usuario;
+                        document.cookie = "type="+row.tipo_Usuario;
+                        document.cookie="name="+row.nombres;
+                        document.getElementById("nombreUsuario").innerHTML="¡ Hola "+row.nombres+" !";
+                        //alert(row.tipo_Usuario);
                         $('#modLogin').modal('toggle');
                         $("#btnLogin").toggle();
                         $("#btnProfile").toggle()
@@ -156,6 +161,10 @@ function validaciones(mod){
                 }
             });
         }
+
+
+
+
         else{
             document.getElementById("mailContainer").className=document.getElementById("mailContainer").className+" error";
             document.getElementById("passContainer").className=document.getElementById("passContainer").className+" error";
@@ -250,7 +259,7 @@ function validaciones(mod){
                 processData: false,
                 success: function (result) {
                     if(result.msg){
-                        alert("¡Registro exitoso!");
+                        alert("¡Registro exitoso! Inicia sesión.");
                         document.getElementById("fnameLog").value="";
                         document.getElementById("snameLog").value="";
                         document.getElementById("lnameLog").value="";
@@ -259,14 +268,15 @@ function validaciones(mod){
                         document.getElementById("pwdRLog").value="";
                         document.getElementById("rpwdLog").value="";                    
                         $('#modLogin').modal('toggle');
-                        $("#btnLogin").toggle();
-                        $("#btnProfile").toggle()
+                        //$("#btnLogin").toggle();
+                        //$("#btnProfile").toggle()
                     }
                     else
                         alert("Correo ya registrado.");
                 }
             });
 
+            
             /*var formData = new FormData(document.getElementById("sentImg"));
             formData.append("method", 'setImage')
 
@@ -739,6 +749,10 @@ function validaciones(mod){
 function cerrarSesion(){
     $("#btnLogin").toggle();
     $("#btnProfile").toggle();
+    $("#nombreUsuario").toggle();
+    document.cookie = "user=0";
+    document.cookie = "type=''";
+    document.cookie = "name=''";
 }
 
 function limpiar(mod){
@@ -1512,13 +1526,6 @@ function getAllUsers(){
         data: {method: 'getAllUsers'},
         success: function (usuarios) {
             $.each(usuarios, function(idx, usser){
-                // picture.pic_location
-                // picture.name
-                // picture.age
-                // picture.gender
-                //alert(usuarios[idx].name);
-                //console.log(usuarios[idx].name+" "+usuarios[idx].apellidoP+" "+usuarios[idx].apellidoM);
-
                 if (usuarios[idx].tipoUsuario == "usuario"){
                     userLogo = "<i class='fa fa-user'></i>";        
                 } 
@@ -1676,10 +1683,6 @@ function getSecciones(){
         success: function (secciones) {
             $.each(secciones, function(idx, sect){
    
-
-               /* upperFirst = secciones[idx].name;
-                upperFirst = upperFirst.charAt(0).toUpperCase() + upperFirst.slice(1)*/
-
                 $( ".allSections" ).append(
                     "<li class='column' draggable='true'>" +
                     "<header>" +
@@ -1689,8 +1692,6 @@ function getSecciones(){
                         "<button class='btn btn-outline-danger btnDel' >Eliminar</button>"+
                         "</header>"+
                     "</li>");
-                    
-              //$(".draggable").draggable();
               });
              
         }
@@ -1707,33 +1708,32 @@ function getSeccionesToNavbar(){
         success: function (secciones) {
             $.each(secciones, function(idx, sect){
                 //alert(secciones[idx].color);
-                var colorSeccion;
+                /*var colorSeccion;
                 switch(secciones[idx].color){
                     case 'rojo':
-                        colorSeccion="#7c1d14";
+                        //colorSeccion="#7c1d14";
+                        colorSeccion="rojo";
                         break;
                     case 'verde':
-                        colorSeccion="#147c17";
+                        //colorSeccion="#147c17";
+                        colorSeccion="verde";
                         break;
                     case 'amari':
-                        colorSeccion="#FADA5E";
+                        //colorSeccion="#FADA5E";
+                        colorSeccion="amari";
                         break;
                     case 'azul':
-                        colorSeccion="#0b81d6";
+                        //colorSeccion="#0b81d6";
+                        colorSeccion="azyl";
                         break;
                     case 'rosa':
-                        colorSeccion="#ff70d7";
+                        //colorSeccion="#ff70d7";
                         break;
-                }
-               
-
+                }*/
                 $( ".seccionesNav" ).append(
-                    "<li id='"+secciones[idx].id+"' class='nav-item active'><a class='nav-link seccionNav' style='color:"+colorSeccion +"!important;' href='main.html'>"+secciones[idx].name+"</a></li>");
-
-
-              //$(".draggable").draggable();
+                    //"<li id='"+secciones[idx].id+"' class='nav-item active'><a class='nav-link seccionNav' style='color:"+colorSeccion +"!important;' href='main.html'>"+secciones[idx].name+"</a></li>");
+                    "<li id='"+secciones[idx].id+"' class='nav-item active "+secciones[idx].color+"'><a class='nav-link seccionNav'  href='noticiasSeccion.php'>"+secciones[idx].name+"</a></li>");
               });
-             
         }
 
     }); 

@@ -1,10 +1,11 @@
+
 DELIMITER //
 CREATE PROCEDURE sp_getUsersLogin(
     IN in_Email varchar(50),
     IN in_Password varchar(20)
     )
     BEGIN
-		SELECT email, contrasena FROM usuario WHERE email = in_Email AND contrasena = in_Password;
+		SELECT id_Usuario, tipo_Usuario, nombres, email, contrasena FROM usuario WHERE email = in_Email AND contrasena = in_Password;
     END //
 DELIMITER ;
 
