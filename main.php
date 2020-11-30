@@ -20,7 +20,7 @@
 
     <script>
         $(document).ready(function(){
-            setupImage('agregarFoto', 'displayImg', '.preview-image');;
+            setupImage('agregarFoto', 'displayImg', '.preview-image');
             displayPubNots("#displayNews");
             displayMostViewed("#displayMostViewed");
             displaySections(".allSections");
@@ -39,9 +39,24 @@
        
         function get(){
             <?php
-            $currentUser = ISSET($_COOKIE["user"]);
-            $currentType = ISSET($_COOKIE["type"]);
-            $currentName = ISSET($_COOKIE["name"]);
+            $cookie_name="user";
+            $cookie_value = 0;
+            if(!isset($_COOKIE[$cookie_name])) {
+                setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/"); // 86400 = 1 day
+            }
+            else
+            $cookie_name="type";
+            if(!isset($_COOKIE[$cookie_name])) {
+                setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/"); // 86400 = 1 day
+            }
+            $cookie_name="name";
+            if(!isset($_COOKIE[$cookie_name])) {   
+                setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/"); // 86400 = 1 day
+            }
+            
+            $currentUser =$_COOKIE["user"];
+            $currentType = $_COOKIE["type"];
+            $currentName = $_COOKIE["name"];
             ?>
             var currentU = "<?php echo $currentUser ?>";
             var currentT = "<?php echo $currentType ?>";

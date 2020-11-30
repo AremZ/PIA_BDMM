@@ -154,7 +154,9 @@ function validaciones(mod){
                         //alert(row.tipo_Usuario);
                         $('#modLogin').modal('toggle');
                         $("#btnLogin").toggle();
-                        $("#btnProfile").toggle()
+                        $("#btnProfile").toggle();
+                        $("#nombreUsuario").toggle()
+                        
                     }
                     else
                         alert("Verifique sus datos.");
