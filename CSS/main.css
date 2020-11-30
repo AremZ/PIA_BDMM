@@ -24,27 +24,44 @@ body{
     
 }
 
-
-div#noticiaHeader{
-    margin-left: -4em;
+div#sectionHeader{
+    margin-top: 1em;
 }
 
-div#tituloNoticia{
-    background-color: rgb(80, 12, 12);
+div#headerDisplay{
+  margin-left: -4em;
+}
+
+div#recentNoticias, div#masVisto{
+    background-color: black;
     font-family: 'Oswald', sans-serif;  
     font-size: 250%;
     color: var(--TitleFont);
     text-align: left;
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
+    border-radius: 5px;
 }
 
 div#noticiaBG{
-    margin-left: 5em;
+    margin-left: 1em;
     margin-top: 1em;
     border-radius: 5px;
     background-color: white;
-    float: left;
+    width: 100%;
+}
+
+div#masVistoBG{
+    margin-left: -0.8em;
+    margin-top: 1em;
+    border-radius: 5px;
+    background-color: white;
+    width: 100%;
+}
+
+div.BGSection{
+    margin-left: 0.2em;
+    margin-top: 1em;
+    border-radius: 5px;
+    background-color: white;
     width: 100%;
 }
 
@@ -54,8 +71,35 @@ div#noticiaBG{
     font-size: 200%;
     color: var(--TitleFont);
     text-align: left;
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
+}
+
+.publishedNews, .mostViewed, .sectionNews{
+  font-family: 'Roboto', sans-serif;
+  font-size: 95%;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.publishedNews .title, .mostViewed .title , .sectionNews .title{
+  font-family: 'Oswald', sans-serif;
+}
+
+.publishedNews button, .mostViewed button, .sectionNews button{
+  font-family: 'Oswald', sans-serif;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.publishedNews .pubDate, .mostViewed .pubDate, .sectionNews .pubDate{
+  font-family: 'Roboto', sans-serif;
+  font-size: 90%;
+  font-weight: bold;
+  margin-bottom: 0;
+}
+
+.mostViewed .card-img-top{
+    height: 100px;
+    object-fit: cover;
 }
 
 .tarjetaSeccion{
@@ -66,7 +110,19 @@ div#noticiaBG{
     border-width: 200px;
 }
 
+div.allSections{
+  margin-bottom: 1em;
+}
 
+.butMoreInfo{
+  border: none !important;
+  float: right;
+  margin-top: 10px;
+}
+
+.butMoreInfo:hover{
+  background-color: #000000 !important;
+}
 
 @media (min-width: 40rem) {
     .tarjetaSeccion{

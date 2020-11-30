@@ -9,6 +9,15 @@ BEGIN
 END //
 DELIMITER ;
 
+DELIMITER //
+CREATE TRIGGER delete_noticias_reportero
+BEFORE DELETE
+ON usuario FOR EACH ROW
+BEGIN
+	delete from noticia where reportero_Autor = OLD.id_Usuario AND estado != 'publicada';
+END //
+DELIMITER ;
+
 /* ---------------------------------------------------     VIEWS      -------------------------------------------------------------------- */
 
 CREATE VIEW fullNoticia
@@ -25,8 +34,8 @@ CREATE VIEW fullNoticia
 CREATE VIEW noticiaEssayMedia
 	AS
 	SELECT N.id_Noticia, N.seccion_Noticia , N.titulo_Noticia , N.reportero_Autor, N.fecha_Creacion, N.fecha_Publicacion, N.fecha_Envio,
-			N.fecha_Devo, N.fecha_Acontecimiento, N.lugar_Acontecimiento, N.descripcion_Corta , N.descripcion_Larga, N.estado, M.contenido_media,
-			M.blob_type FROM noticia N INNER JOIN media M ON N.id_Noticia = M.noticia_Duena INNER JOIN
+			N.fecha_Devo, N.fecha_Acontecimiento, N.lugar_Acontecimiento, N.descripcion_Corta , N.descripcion_Larga, N.cantidad_Vistas,
+            N.estado, M.contenido_media, M.blob_type FROM noticia N INNER JOIN media M ON N.id_Noticia = M.noticia_Duena INNER JOIN
 	( SELECT noticia_Duena, MIN(id_Media) AS 'MediaID' FROM media GROUP BY noticia_Duena) S ON M.noticia_Duena = S.noticia_Duena AND
 	M.id_Media = S.MediaID WHERE M.blob_type = 'png' OR M.blob_type = 'jpeg';
                        

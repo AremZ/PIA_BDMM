@@ -22,6 +22,10 @@
         $(document).ready(function(){
             $("#btnProfile").toggle();
             setupImage('agregarFoto', 'displayImg', '.preview-image');;
+
+            displayPubNots("#displayNews");
+            displayMostViewed("#displayMostViewed");
+            displaySections(".allSections");
         });
     </script>
 
@@ -216,379 +220,45 @@
     
 
     <!--Recientes-->
-    <div class="container-fluid padding" id="cuerpoNot">          
-        <div class="row">
-            <div class="col-md-9">   
-                <div class="row" id="noticiaHeader">        
-                    <div class="col-md-1" id="sectionHeader"></div>        
-                    <div class="col-md-11" id="tituloNoticia">
-                        Lo más reciente <br>
-                        
-                    </div>
-                </div>
-                <div class="row" id="noticiaBG">
-                   
-                       <div class="row">
-                           
-                        <div class="col-md-5" id="datosAcontecimiento"> 
-                        <div class="card">
-                                
-                                <img class="card-img-top" src="Sources/DisplayDGP1.png" >
-                                <div class="card-body">
-                                    <h4 class="card-title" id="Title">OTRA NOTICIA</h4>
-                                    <p class="card-text">NOTICIA NOTICIA NOTICIA
-                                    </p>
-                                    <a href="product.html" class="btn btn-outline-danger">Ver noticia</a>
-                                   
-                                </div>  
-                        </div>
-                        </div>
-                        <div class="col-sm-3" >
-                            <div class="card">
-                            <img class="card-img-top" src="Sources/DisplayDGP1.png" >
-                            <div class="card-body">
-                                <h4 class="card-title" id="Title">OTRA NOTICIA</h4>
-                                <p class="card-text">NOTICIA NOTICIA NOTICIA
-                                </p>
-                                <a href="product.html" class="btn btn-outline-danger">Ver noticia</a>
-                            </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-3">
-                            <div class="card">
-                            <img class="card-img-top" src="Sources/DisplayDGP1.png" >
-                            <div class="card-body">
-                                <h4 class="card-title" id="Title">OTRA NOTICIA</h4>
-                                <p class="card-text">NOTICIA NOTICIA NOTICIA
-                                </p>
-                                <a href="product.html" class="btn btn-outline-danger">Ver noticia</a>
-                            </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-2 tarjetaSecund">
-                            <div class="card">
-                            <img class="card-img-top" src="Sources/DisplayDGP1.png" >
-                            <div class="card-body">
-                                <h4 class="card-title" id="Title">OTRA NOTICIA</h4>
-                                <p class="card-text">NOTICIA NOTICIA NOTICIA
-                                </p>
-                                <a href="product.html" class="btn btn-outline-danger">Ver noticia</a>
-                            </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-2 tarjetaSecund">
-                            <div class="card">
-                            <img class="card-img-top" src="Sources/DisplayDGP1.png" >
-                            <div class="card-body">
-                                <h4 class="card-title" id="Title">OTRA NOTICIA</h4>
-                                <p class="card-text">NOTICIA NOTICIA NOTICIA
-                                </p>
-                                <a href="product.html" class="btn btn-outline-danger">Ver noticia</a>
-                            </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-2 tarjetaSecund">
-                            <div class="card">
-                            <img class="card-img-top" src="Sources/DisplayDGP1.png" >
-                            <div class="card-body">
-                                <h4 class="card-title" id="Title">OTRA NOTICIA</h4>
-                                <p class="card-text">NOTICIA NOTICIA NOTICIA
-                                </p>
-                                <a href="product.html" class="btn btn-outline-danger">Ver noticia</a>
-                            </div>
-                            </div>
-                        </div>
-                    
-                        <div class="col-sm-2 tarjetaSecund">
-                            <div class="card">
-                            <img class="card-img-top" src="Sources/DisplayDGP1.png" >
-                            <div class="card-body">
-                                <h4 class="card-title" id="Title">OTRA NOTICIA</h4>
-                                <p class="card-text">NOTICIA NOTICIA NOTICIA
-                                </p>
-                                <a href="product.html" class="btn btn-outline-danger">Ver noticia</a>
-                            </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-2 tarjetaSecund">
-                            <div class="card">
-                            <img class="card-img-top" src="Sources/DisplayDGP1.png" >
-                            <div class="card-body">
-                                <h4 class="card-title" id="Title">OTRA NOTICIA</h4>
-                                <p class="card-text">NOTICIA NOTICIA NOTICIA
-                                </p>
-                                <a href="product.html" class="btn btn-outline-danger">Ver noticia</a>
-                            </div>
-                            </div>
-                        </div>
-                        
-                    
-                </div>
-            </div>
-            
-            
-           
-    
-           
-        </div>
-        
-        <!--Populares-->
-            <div class="col-md-3 tarjetaPrincAside">
-                <br>
-                <h3 id="tituloPopulares">Más populares</h3><br>
-                <!-- TARJETA HORIZONTAL -->
-                <div class="row listaPopu">   
-                <div class="card mb-3" style="max-width: 540px;">
-                    <div class="row no-gutters">
-                      <div class="col-md-4">
-                          <div class=" img-popular">
-                        <img src="http://via.placeholder.com/100x150" class="card-img" alt="...">
-                    </div>
-                      </div>
-                      <div class="col-md-8">
-                        <div class="card-body">
-                          <h6 class="card-title">NOTICIA</h6>
-                          <p class="card-text card-horizontalT">POPULAR POPULAR POPULAR POPULAR </p>
-                          <a href="product.html" class="btn btn-outline-danger ">Ver noticia</a>
-                          
-                        </div>
-                      </div>
-                    </div>
-                </div>
-
-              
-
-
-                  <div class="card mb-3" style="max-width: 540px;">
-                    <div class="row no-gutters">
-                      <div class="col-md-4">
-                          <div class=" img-popular">
-                        <img src="http://via.placeholder.com/100x150" class="card-img" alt="...">
-                    </div>
-                      </div>
-                      <div class="col-md-8">
-                        <div class="card-body">
-                          <h6 class="card-title">NOTICIA</h6>
-                          <p class="card-text card-horizontalT">POPULAR POPULAR POPULAR POPULAR </p>
-                          <a href="product.html" class="btn btn-outline-danger ">Ver noticia</a>
-                          
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="card mb-3" style="max-width: 540px;">
-                    <div class="row no-gutters">
-                      <div class="col-md-4">
-                          <div class=" img-popular">
-                        <img src="http://via.placeholder.com/100x150" class="card-img" alt="...">
-                    </div>
-                      </div>
-                      <div class="col-md-8">
-                        <div class="card-body">
-                          <h6 class="card-title">NOTICIA</h6>
-                          <p class="card-text card-horizontalT">POPULAR POPULAR POPULAR POPULAR </p>
-                          <a href="product.html" class="btn btn-outline-danger ">Ver noticia</a>
-                          
-                        </div>
-                      </div>
-                    </div>
-                  </div>    
-               
-
-                  <div class="card mb-3" style="max-width: 540px;">
-                    <div class="row no-gutters">
-                      <div class="col-md-4">
-                          <div class=" img-popular">
-                        <img src="http://via.placeholder.com/100x150" class="card-img" alt="...">
-                    </div>
-                      </div>
-                      <div class="col-md-8">
-                        <div class="card-body">
-                          <h6 class="card-title">NOTICIA</h6>
-                          <p class="card-text card-horizontalT">POPULAR POPULAR POPULAR POPULAR </p>
-                          <a href="product.html" class="btn btn-outline-danger ">Ver noticia</a>
-                          
-                        </div>
-                      </div>
-                    </div>
-                  </div>    
-               
-
-
-                </div>
-            </div>
-          
-       
-    </div>
-    </div>
-   <br><br>
-
-   <!--Por seccion-->
-    <div class="container-fluid padding recienteSeccion" >          
-        <div class="row">
-            <div class="col-md-9">   
-                <div class="row" id="noticiaHeader">        
-                    <div class="col-md-1" id="sectionHeader"></div>        
-                    <div class="col-md-11 tituloSeccion" >
-                        Nacional 
-                        <a href="product.html" class="btn btn-outline-danger" style="border: none;">Ver más...</a>
-                    </div>
-                </div>
-                <div class="row" id="noticiaBG">
-                   
-                    <div class="row">
-                           
-                       
-                        <div class="col-sm-3" >
-                            <div class="card">
-                            <img class="card-img-top" src="Sources/DisplayDGP1.png" >
-                            <div class="card-body">
-                                <h5 class="card-titleS" id="Title">OTRA NOTICIA</h4>
-                                <p class="card-text">NOTICIA NOTICIA NOTICIA
-                                </p>
-                                <a href="product.html" class="btn btn-outline-danger">Ver</a>
-                            </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-3">
-                            <div class="card">
-                            <img class="card-img-top" src="Sources/DisplayDGP1.png" >
-                            <div class="card-body">
-                                <h5 class="card-title" id="Title">OTRA NOTICIA</h4>
-                                <p class="card-text">NOTICIA NOTICIA NOTICIA
-                                </p>
-                                <a href="product.html" class="btn btn-outline-danger">Ver</a>
-                            </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-3">
-                            <div class="card">
-                            <img class="card-img-top" src="Sources/DisplayDGP1.png" >
-                            <div class="card-body">
-                                <h5 class="card-title" id="Title">OTRA NOTICIA</h4>
-                                <p class="card-text">NOTICIA NOTICIA NOTICIA
-                                </p>
-                                <a href="product.html" class="btn btn-outline-danger">Ver</a>
-                            </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-3">
-                            <div class="card">
-                            <img class="card-img-top" src="Sources/DisplayDGP1.png" >
-                            <div class="card-body">
-                                <h5 class="card-title" id="Title">OTRA NOTICIA</h4>
-                                <p class="card-text">NOTICIA NOTICIA NOTICIA
-                                </p>
-                                <a href="product.html" class="btn btn-outline-danger">Ver</a>
-                            </div>
-                            </div>
-                        </div>
-
-                        
-                      
-                   
-                        
-                    
-                    </div>
-                   
-                </div>
-            
-            
-          
-           
-        </div>
-        
-       
-    </div>
-
-   
-    
-
-    </div>
-<br>
-
-<div class="container-fluid padding recienteSeccion" >          
+<div class="container-fluid padding" id="cuerpoNot">          
     <div class="row">
         <div class="col-md-9">   
-            <div class="row" id="noticiaHeader">        
-                <div class="col-md-1" id="sectionHeader"></div>        
-                <div class="col-md-11 tituloSeccion" >
-                    Espectáculos 
-                    <a href="product.html" class="btn btn-outline-danger" style="border: none;">Ver más...</a>
+            <div class="row" id="headerDisplay">        
+                <div class="col-md-1"></div>         
+                <div class="col-md-10" id="recentNoticias">
+                    Lo más reciente
                 </div>
             </div>
-            <div class="row" id="noticiaBG">
-               
-                <div class="row">
-                       
-                   
-                    <div class="col-sm-3" >
-                        <div class="card">
-                        <img class="card-img-top" src="Sources/DisplayDGP1.png" >
-                        <div class="card-body">
-                            <h5 class="card-titleS" id="Title">OTRA NOTICIA</h4>
-                            <p class="card-text">NOTICIA NOTICIA NOTICIA
-                            </p>
-                            <a href="product.html" class="btn btn-outline-danger">Ver</a>
-                        </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-3">
-                        <div class="card">
-                        <img class="card-img-top" src="Sources/DisplayDGP1.png" >
-                        <div class="card-body">
-                            <h5 class="card-title" id="Title">OTRA NOTICIA</h4>
-                            <p class="card-text">NOTICIA NOTICIA NOTICIA
-                            </p>
-                            <a href="product.html" class="btn btn-outline-danger">Ver</a>
-                        </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-3">
-                        <div class="card">
-                        <img class="card-img-top" src="Sources/DisplayDGP1.png" >
-                        <div class="card-body">
-                            <h5 class="card-title" id="Title">OTRA NOTICIA</h4>
-                            <p class="card-text">NOTICIA NOTICIA NOTICIA
-                            </p>
-                            <a href="product.html" class="btn btn-outline-danger">Ver</a>
-                        </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-3">
-                        <div class="card">
-                        <img class="card-img-top" src="Sources/DisplayDGP1.png" >
-                        <div class="card-body">
-                            <h5 class="card-title" id="Title">OTRA NOTICIA</h4>
-                            <p class="card-text">NOTICIA NOTICIA NOTICIA
-                            </p>
-                            <a href="product.html" class="btn btn-outline-danger">Ver</a>
-                        </div>
-                        </div>
-                    </div>
-
-                    
-                  
-               
-                    
-                
-                </div>
-               
+            <div class="col-md-11" id="noticiaBG">          
+                <div class="row" id="displayNews">
+            
+                </div>  
             </div>
-        
-        
-      
-       
-    </div>
+        </div> 
     
-   
+    <!--Populares-->
+        <div class="col-md-3">
+            <div class="row">
+                <div class="col-md-11" id="masVisto">
+                    Más populares
+                </div>
+            </div>
+            
+            <div class="col-md-12" id="masVistoBG">          
+                <div class="row" id="displayMostViewed">
+
+
+                </div>  
+            </div>        
+        </div>      
+    </div>
 </div>
 
-
-
+   <!--Por seccion-->
+<div class="container-fluid padding allSections" >
 
 </div>
+
 
  <!------ Footer ------>
  <footer>

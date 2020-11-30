@@ -286,7 +286,8 @@ if ($method == "getSecciones"){
             while ($row = mysqli_fetch_assoc($resultado)) {
                 $sect = array(
                   "id" => $row['id_Seccion'],
-                  "name" => $row['nombre_Seccion']
+                  "name" => $row['nombre_Seccion'],
+                  "color" => $row['color_Seccion']
                   /*,
                   "apellidoP" => $row['apellido_P'],
                   "apellidoM" => $row['apellido_M'],
@@ -442,10 +443,10 @@ if ($method == "noticiaUpd"){
         {
             $video = mysqli_real_escape_string($conn, file_get_contents($vidMedia));
 
-            $firstExp = explode(";base64", $vidMedia);
-            $ext = explode("/", $firstExp[0]);
+            //$firstExp = explode(";base64", $vidMedia);
+            //$ext = explode("/", $firstExp[0]);
 
-            $queryVid  = "CALL sp_insertMedia('$video', '$ext[1]', $idNot);";
+            $queryVid  = "CALL sp_insertMedia('$video', 'mp4', $idNot);";
             mysqli_query($conn, $queryVid);
             $rowVid = mysqli_affected_rows($conn);
             if($rowVid!=0){ 
@@ -793,6 +794,95 @@ if ($method == "getNoticiasPub"){
                   "descrSh" => $row['descripcion_Corta'],
                   "descrLg" => $row['descripcion_Larga'],
                   "status" => $row['estado'],
+                  "preview" => base64_encode($row['contenido_media']),
+                  "ext" => $row['blob_type']
+                );
+                $noticias[] = $notiRed;
+              }             
+             echo json_encode($noticias);
+        }       
+        closeDB($conn);
+    }
+}
+
+if ($method == "displayPubNotis"){
+    //Creamos la conexion
+    $conn = connectDB();
+
+    if($conn){
+      
+        $query  = "CALL sp_getRecentNews();";
+        $resultado = mysqli_query($conn, $query);
+    
+        $noticias = array();
+        
+        if($resultado){
+            while ($row = mysqli_fetch_assoc($resultado)) {
+                $notiRed = array(
+                  "id" => $row['id_Noticia'],
+                  "title" => $row['titulo_Noticia'],
+                  "fePub" => $row['fecha_Publicacion'],
+                  "descrSh" => $row['descripcion_Corta'],
+                  "preview" => base64_encode($row['contenido_media']),
+                  "ext" => $row['blob_type']
+                );
+                $noticias[] = $notiRed;
+              }             
+             echo json_encode($noticias);
+        }       
+        closeDB($conn);
+    }
+}
+
+if ($method == "displayMostViewed"){
+    //Creamos la conexion
+    $conn = connectDB();
+
+    if($conn){
+      
+        $query  = "CALL sp_getMostViewed();";
+        $resultado = mysqli_query($conn, $query);
+    
+        $noticias = array();
+        
+        if($resultado){
+            while ($row = mysqli_fetch_assoc($resultado)) {
+                $notiRed = array(
+                  "id" => $row['id_Noticia'],
+                  "title" => $row['titulo_Noticia'],
+                  "fePub" => $row['fecha_Publicacion'],
+                  "descrSh" => $row['descripcion_Corta'],
+                  "preview" => base64_encode($row['contenido_media']),
+                  "ext" => $row['blob_type']
+                );
+                $noticias[] = $notiRed;
+              }             
+             echo json_encode($noticias);
+        }       
+        closeDB($conn);
+    }
+}
+
+if ($method == "newsBySection"){
+    //Creamos la conexion
+    $conn = connectDB();
+
+    if($conn){
+      
+        $id=$_POST['idSection'];
+
+        $query  = "CALL sp_getNewsBySection($id);";
+        $resultado = mysqli_query($conn, $query);
+    
+        $noticias = array();
+        
+        if($resultado){
+            while ($row = mysqli_fetch_assoc($resultado)) {
+                $notiRed = array(
+                  "id" => $row['id_Noticia'],
+                  "title" => $row['titulo_Noticia'],
+                  "fePub" => $row['fecha_Publicacion'],
+                  "descrSh" => $row['descripcion_Corta'],
                   "preview" => base64_encode($row['contenido_media']),
                   "ext" => $row['blob_type']
                 );

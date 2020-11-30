@@ -392,9 +392,9 @@
                                     </div>  
                                     <div class="col-md-12">
                                         <hr>
-                                        <button class="btn btn-outline-danger buttEditor" id="btnSendinNot" onclick="checkNoticia('#editorNoticia', 1)"><i class="fa fa-paper-plane"></i>Enviar a revisionNUEVO</button>
+                                        <button class="btn btn-outline-danger buttEditor" id="btnSendinNot" onclick="checkNoticia('#editorNoticia', 1)"><i class="fa fa-paper-plane"></i>Enviar a revision</button>
                                         <button class="btn btn-outline-danger buttEditor" id="btnSaveinNot" onclick="checkNoticia('#editorNoticia', 0)"><i class="fa fa-floppy-o"></i>Guardar</button>
-                                        <button class="btn btn-outline-danger buttEditor" id="btnSendSavedNot" onclick="checkNoticia('#editorNoticia', 3)"><i class="fa fa-paper-plane"></i>Enviar a revisionGUARDADO</button>
+                                        <button class="btn btn-outline-danger buttEditor" id="btnSendSavedNot" onclick="checkNoticia('#editorNoticia', 3)"><i class="fa fa-paper-plane"></i>Enviar a revision</button>
                                         <button class="btn btn-outline-danger buttEditor" id="btnSaveChangNot" onclick="checkNoticia('#editorNoticia', 2)"><i class="fa fa-floppy-o"></i>Guardar cambios</button>
                                         <button class="btn btn-outline-danger buttEditor" id="btnDeleteNot" onclick="deleteNoticiaIn()"><i class="fa fa-trash"></i>Eliminar noticia</button>
                                         <button class="btn btn-outline-danger buttEditor" data-toggle="modal" data-target="#editorNoticia" id="btnCancelinNot"><i class="fa fa-times"></i>Cancelar</button>

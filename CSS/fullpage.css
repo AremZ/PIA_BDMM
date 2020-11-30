@@ -37,7 +37,7 @@ div#commentsBG{
     background-color: white;
 }
 
-div#sectionHeader{
+div#recentNoticias{
     background-color: var(--Color-6);
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;

@@ -118,7 +118,7 @@ DELIMITER ;
 DELIMITER //
 CREATE PROCEDURE sp_getSections()
     BEGIN
-		SELECT nombre_Seccion, id_Seccion FROM seccion WHERE estado=1 OR estado=2
+		SELECT nombre_Seccion, id_Seccion,color_Seccion FROM seccion WHERE estado=1 OR estado=2
         ORDER BY num_Prioridad;
     END //
 DELIMITER ;
@@ -225,8 +225,8 @@ CREATE PROCEDURE sp_getNoti(
     BEGIN
     IF in_ReporteroID = -1 THEN
 		SELECT id_Noticia, seccion_Noticia , titulo_Noticia , reportero_Autor, fecha_Creacion, fecha_Publicacion, fecha_Envio,
-        fecha_Devo, fecha_Acontecimiento, lugar_Acontecimiento, descripcion_Corta , descripcion_Larga, estado
-        FROM noticia WHERE estado = in_estado ORDER BY fecha_Creacion DESC;
+        fecha_Devo, fecha_Acontecimiento, lugar_Acontecimiento, descripcion_Corta , descripcion_Larga, estado, contenido_media, blob_type
+		FROM noticiaEssayMedia WHERE estado = in_estado ORDER BY fecha_Creacion DESC;
 	END IF;
     IF in_ReporteroID != -1 THEN
 		IF in_estado = 'redaccion' THEN
@@ -245,6 +245,38 @@ CREATE PROCEDURE sp_getNoti(
 			FROM noticiaEssayMedia WHERE reportero_Autor = in_ReporteroID AND estado = in_estado ORDER BY fecha_Publicacion DESC;
         END IF ;
 	END IF;
+    END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE sp_getRecentNews(
+)
+    BEGIN
+		SELECT id_Noticia, seccion_Noticia , titulo_Noticia , reportero_Autor, fecha_Creacion, fecha_Publicacion, fecha_Envio,
+        fecha_Devo, fecha_Acontecimiento, lugar_Acontecimiento, descripcion_Corta , descripcion_Larga, estado, contenido_media, blob_type
+		FROM noticiaEssayMedia WHERE estado = 'publicada' ORDER BY fecha_Publicacion DESC LIMIT 6;
+    END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE sp_getMostViewed(
+)
+    BEGIN
+		SELECT id_Noticia, seccion_Noticia , titulo_Noticia , reportero_Autor, fecha_Creacion, fecha_Publicacion, fecha_Envio,
+        fecha_Devo, fecha_Acontecimiento, lugar_Acontecimiento, descripcion_Corta , descripcion_Larga, estado, contenido_media, blob_type,
+        cantidad_Vistas
+		FROM noticiaEssayMedia WHERE estado = 'publicada' ORDER BY cantidad_Vistas DESC LIMIT 3;
+    END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE sp_getNewsBySection(
+	IN in_SectionID int
+)
+    BEGIN
+		SELECT id_Noticia, seccion_Noticia , titulo_Noticia , reportero_Autor, fecha_Creacion, fecha_Publicacion, fecha_Envio,
+        fecha_Devo, fecha_Acontecimiento, lugar_Acontecimiento, descripcion_Corta , descripcion_Larga, estado, contenido_media, blob_type
+		FROM noticiaEssayMedia WHERE estado = 'publicada' AND seccion_Noticia = in_SectionID ORDER BY fecha_Publicacion DESC LIMIT 4;
     END //
 DELIMITER ;
 

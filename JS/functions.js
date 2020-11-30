@@ -824,6 +824,8 @@ function checkNoticia(toggleWindow, action){
     campo = document.getElementById('descNoticia');
     if (campo.value == "" || campo.value.length > 200){
         document.getElementById('descNoticia').className=document.getElementById('descNoticia').className+" error";
+        if(campo.value.length > 200)
+            alert('El campo no debe exceder los 200 caracteres de longitud, tiene: ' + campo.value.length)
         error = 1;
     }
     
@@ -1209,6 +1211,8 @@ function confirmDeleteSelf(){
 }
 
 function nuevaNoticia(){
+    document.getElementById("idFeed").value = "";
+    
     document.getElementById("notEdiNoticia").hidden=true;
     document.getElementById("sepNotes").hidden=true;
 
@@ -1305,6 +1309,8 @@ function editarNoticia(idNot, title, feAcont, luAcont, descrSh, descrLg, idSecc)
     document.getElementById('imgIndi').innerHTML = "";
     document.getElementById('carousel-videos').innerHTML = "";
     indexSlidesImg = 0;
+
+    document.getElementById("idFeed").value = "";
 
     $('#editorNoticia').modal('toggle');
 
@@ -2035,6 +2041,128 @@ function getNoticiasPub(){
     }); 
 }
 
+function displayPubNots(appendTo){
+    $.ajax({
+        url: "functions.php",
+        type: "post",
+        dataType: "json",
+        data: {method: 'displayPubNotis'},
+        success: function (noticias) {
+            if (noticias != null){
+                $.each(noticias, function(idx, notiRed){
+                    $(appendTo).append(
+                        '<div class="col-md-4"><div class="card publishedNews"><img class="card-img-top"' + 
+                        'src=data:image/' + noticias[idx].ext + ';base64,' + noticias[idx].preview + '><div class="card-body">' +
+                        '<h4 class="card-title title">' + noticias[idx].title + '</h4><p class="card-text">' + noticias[idx].descrSh +
+                        '</p><h4 class="card-title pubDate">Publicado el: ' + noticias[idx].fePub.slice(8,10) + ' de ' +
+                        whichMonth(noticias[idx].fePub.slice(5,7)) + ' del ' + noticias[idx].fePub.slice(0,4) + '</h4>' +
+                        '<button class="btn btn-outline-danger barBut"><i class="fa fa-newspaper-o"></i>  Ver noticia</button></div></div></div>'   
+                )});       
+            }           
+        }
+    }); 
+}
+
+function displayMostViewed(appendTo){
+    $.ajax({
+        url: "functions.php",
+        type: "post",
+        dataType: "json",
+        data: {method: 'displayMostViewed'},
+        success: function (noticias) {
+            if (noticias != null){
+                $.each(noticias, function(idx, notiRed){
+                    var splitDescr = noticias[idx].descrSh.split(" ");
+                    var shorterDesc = "";
+                    splitDescr.forEach(function(actual, index){
+                        if (index < 9)
+                            shorterDesc += actual + " ";
+                        else if (index == 9){
+                            shorterDesc += actual + "...";
+                        }
+                    });
+
+                    $(appendTo).append(
+                        '<div class="col-md-12"><div class="card mostViewed"><img class="card-img-top"' + 
+                        'src=data:image/' + noticias[idx].ext + ';base64,' + noticias[idx].preview + '><div class="card-body">' +
+                        '<h4 class="card-title title">' + noticias[idx].title + '</h4><p class="card-text">' + shorterDesc +
+                        '</p><h4 class="card-title pubDate">Publicado el: ' + noticias[idx].fePub.slice(8,10) + ' de ' +
+                        whichMonth(noticias[idx].fePub.slice(5,7)) + ' del ' + noticias[idx].fePub.slice(0,4) + '</h4>' +
+                        '<button class="btn btn-outline-danger barBut"><i class="fa fa-newspaper-o"></i>  Ver noticia</button></div></div></div>'   
+                )});  
+            }           
+        }
+    }); 
+}
+
+function displaySections(appendTo){
+    $.ajax({
+        url: "functions.php",
+        type: "post",
+        dataType: "json",
+        data: {method: 'getSecciones'},
+        success: function (secciones) {
+            if (secciones != null){
+                $.each(secciones, function(idx, sect){
+                    
+                    var selectedColor;
+                    switch(secciones[idx].color){
+                        case 'rojo':
+                            selectedColor = "#7c1d14";
+                        break;
+                        case 'verde':
+                            selectedColor = "#147c17";
+                        break;
+                        case 'amari':
+                            selectedColor = "#f5bf42";          
+                        break;
+                        case 'azul':
+                            selectedColor = "#0b81d6";
+                        break;
+                        case 'rosa':
+                            selectedColor = "#ff70d7";
+                        break;
+                    }
+
+                    $(appendTo).append(
+                        '<div class="row"><div class="col-md-12"><div class="row" id="sectionHeader"><div class="col-md-1 sectionColor" ' +
+                        'style="background-color:' +  selectedColor + ';"></div><div class="col-md-11 tituloSeccion">' + secciones[idx].name +
+                        '<button class="btn btn-outline-danger butMoreInfo">Ver más...' + 
+                        '</button></div></div><div class="row BGSection" id="section' + secciones[idx].id +'"></div></div></div>' 
+                    )
+                    
+                    $.ajax({
+                        url: "functions.php",
+                        type: "post",
+                        dataType: "json",
+                        data: {method: 'newsBySection', idSection: secciones[idx].id},
+                        success: function (noticias) {
+                            if (noticias != null){
+                                $.each(noticias, function(idy, notiRed){
+                                    $('#section' + secciones[idx].id).append(
+                                        '<div class="col-md-3"><div class="card sectionNews"><img class="card-img-top" ' + 
+                                        'src=data:image/' + noticias[idy].ext + ';base64,' + noticias[idy].preview + '><div class="card-body">' +
+                                        '<h4 class="card-title title">' + noticias[idy].title + '</h4><p class="card-text">' + noticias[idy].descrSh +
+                                        '</p><h4 class="card-title pubDate">Publicado el: ' + noticias[idy].fePub.slice(8,10) + ' de ' +
+                                        whichMonth(noticias[idy].fePub.slice(5,7)) + ' del ' + noticias[idy].fePub.slice(0,4) + '</h4>' +
+                                        '<button class="btn btn-outline-danger barBut"><i class="fa fa-newspaper-o"></i>  Ver noticia</button></div></div></div>'
+                                    ) 
+                                })
+                            }
+                            else{
+                                alert("Ocurrio un error durante la obtencion de datos.")
+                            }  
+                        }
+                    })
+                })  
+            }
+            else {
+                alert("Ocurrio un error durante la obtencion de datos.")
+            }          
+        }
+    }) 
+}
+
 function seeNoticia(idNot, colorSection, titleNot, nameReportero, feAcont, lugAcont, descrSh, descrLg, feCreacion){
     document.getElementById('carousel-images-rev').innerHTML = "";
     document.getElementById('imgIndiRev').innerHTML = "";
@@ -2058,7 +2186,7 @@ function seeNoticia(idNot, colorSection, titleNot, nameReportero, feAcont, lugAc
             selectedColor = "#147c17";
         break;
         case 'amari':
-            selectedColor = "#00FF00";          
+            selectedColor = "#f5bf42";          
         break;
         case 'azul':
             selectedColor = "#0b81d6";
@@ -2106,7 +2234,7 @@ function sendComms(idNot, colorSection, titleNot, nameReportero, feAcont, lugAco
             selectedColor = "#147c17";
         break;
         case 'amari':
-            selectedColor = "#00FF00";          
+            selectedColor = "#f5bf42";          
         break;
         case 'azul':
             selectedColor = "#0b81d6";
