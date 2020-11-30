@@ -24,9 +24,6 @@ nav.navbar#navBar, nav.navbar#navBarSecciones{
     background-color: var(--NavBar) !important;
 }
 
-nav.navbar#navBar{
-}
-
 nav.navbar#navBarSecciones{
     height: 40px;
 }
@@ -64,9 +61,6 @@ nav.navbar#navBarSecciones{
 .navbar .navbar-nav li a{
     color:var(--TitleFont) !important;
     font-family: 'Oswald', sans-serif !important;
-}
-
-.navbar .nav-item .dropdown-menu{
 }
 
 .navbar .nav-item .dropdown-menu .dropdown-item{
@@ -167,7 +161,7 @@ nav.navbar#navBarSecciones{
 
 #nombreUsuario{
     font-family: 'Oswald', sans-serif;
-    color: var(--Color-2);
+    color: var(--TitleFont);
     margin-right: 1em;
     margin-top: 0.5em;
 }

@@ -21,30 +21,29 @@
       $(document).ready(function(){
         get();
         getSeccionesToNavbar();
-          //$("#btnProfile").toggle();
             setupImage('agregarFoto', 'displayImg', '.preview-image');
       });
 
-
-      function set(){
+        function set(){
           <?php 
-          $phpVar =  $_COOKIE['user'];
+          $phpVar =  ISSET($_COOKIE['user']);
           $cookie_name = "user";
-          setcookie($cookie_name, $phpVar, time() + (86400 * 30), "/"); // 86400 = 1 day
+          setcookie($cookie_name, $phpVar, time() + (86400 * 30), "/"); // 86400 = 1 day*/
           ?>
           //alert("done");
         }
+       
         function get(){
             <?php
-            $currentUser= $_COOKIE["user"];
-            $currentType=$_COOKIE["type"];
-            $currentName=$_COOKIE["name"];
+            $currentUser = ISSET($_COOKIE["user"]);
+            $currentType = ISSET($_COOKIE["type"]);
+            $currentName = ISSET($_COOKIE["name"]);
             ?>
-            var currentU="<?php echo $currentUser ?>";
-            var currentT="<?php echo $currentType ?>";
-            var currentN="<?php echo $currentName ?>";
+            var currentU = "<?php echo $currentUser ?>";
+            var currentT = "<?php echo $currentType ?>";
+            var currentN = "<?php echo $currentName ?>";
             //alert(currentU);
-            if(currentU==0||currentU==null)
+            if(currentU==0||currentU==null||currentU=="")
                 $("#btnProfile").toggle();
             
             else{

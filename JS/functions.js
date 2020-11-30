@@ -2151,19 +2151,19 @@ function displaySections(appendTo){
                     var selectedColor;
                     switch(secciones[idx].color){
                         case 'rojo':
-                            selectedColor = "#7c1d14";
+                            selectedColor = "#aa281d";
                         break;
                         case 'verde':
                             selectedColor = "#147c17";
                         break;
                         case 'amari':
-                            selectedColor = "#f5bf42";          
+                            selectedColor = "#FADA5E";          
                         break;
                         case 'azul':
                             selectedColor = "#0b81d6";
                         break;
                         case 'rosa':
-                            selectedColor = "#ff70d7";
+                            selectedColor = "#eb75c9";
                         break;
                     }
 
@@ -2223,19 +2223,19 @@ function seeNoticia(idNot, colorSection, titleNot, nameReportero, feAcont, lugAc
     var selectedColor;
     switch(colorSection){
         case 'rojo':
-            selectedColor = "#7c1d14";
+            selectedColor = "#aa281d";
         break;
         case 'verde':
             selectedColor = "#147c17";
         break;
         case 'amari':
-            selectedColor = "#f5bf42";          
+            selectedColor = "#FADA5E";          
         break;
         case 'azul':
             selectedColor = "#0b81d6";
         break;
         case 'rosa':
-            selectedColor = "#ff70d7";
+            selectedColor = "#eb75c9";
         break;
     }
 
@@ -2271,19 +2271,19 @@ function sendComms(idNot, colorSection, titleNot, nameReportero, feAcont, lugAco
     var selectedColor;
     switch(colorSection){
         case 'rojo':
-            selectedColor = "#7c1d14";
+            selectedColor = "#aa281d";
         break;
         case 'verde':
             selectedColor = "#147c17";
         break;
         case 'amari':
-            selectedColor = "#f5bf42";          
+            selectedColor = "#FADA5E";          
         break;
         case 'azul':
             selectedColor = "#0b81d6";
         break;
         case 'rosa':
-            selectedColor = "#ff70d7";
+            selectedColor = "#eb75c9";
         break;
     }
 
