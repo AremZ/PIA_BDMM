@@ -23,7 +23,8 @@
             get();
             getSeccionesToNavbar();     
             setupImage('agregarFoto', 'displayImg', '.preview-image');
-            
+            getNewsData(165);
+            upViews(165);
         });
 
         function set(){
@@ -251,59 +252,35 @@
                 <div class="row" id="noticiaHeader">        
                     <div class="col-md-1" id="sectionHeader"></div>        
                     <div class="col-md-11" id="tituloNoticia">
-                        AQUI VA EL HEADER DE LA NOTICIA
                         <div class="row">  
-                            <div class="col-md-5" id="nomReportero">Nota por Abraham Reyes Muñiz</div>
-                            <div class="col-md-7" id="datePublicacion">Publicado el 10 de Octubre del 2020 a las 8:18am</div>
+                            <div class="col-md-5" id="nomReportero"></div>
+                            <div class="col-md-7" id="datePublicacion"></div>
                         </div>
                     </div>
                 </div>
                 <div class="row" id="noticiaBG">
-                    <div class="col-md-12" id="datosAcontecimiento">09 de Octubre del 2020 a las 19:00pm,
-                                                                    Guadalupe, Nuevo Leon
+                    <div class="col-md-12" id="datosAcontecimiento">
                     </div>
                     <div class="col-md-12" id="noticiaBody">
                         <div class="row">
-                            <div class="col-md-12" id="descripcion">
-                                DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA 
-                                DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA 
-                                DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA 
-                                DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA 
-                                DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA 
-                                DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA DESCRIPCION CORTA 
+                            <div class="col-md-12" id="descripcion"> 
                             </div>
                             <div class="col-md-12">
                                 <hr>
                             </div>
                             <div class="col-md-12">
                                 <!--Slider -->
-                                <div id="slides" class="carousel slide carousel-fade" data-ride="carousel">
-                                    <ul class="carousel-indicators">
-                                        <li data-target="#slides" data-slide-to="0" class="active"></li>
-                                        <li data-target="#slides" data-slide-to="1"></li>
-                                        <li data-target="#slides" data-slide-to="2"></li>
-                                        <li data-target="#slides" data-slide-to="3"></li>
+                                <div id="carruselImg" class="carousel slide carousel-fade" data-ride="carousel">
+                                    <ul class="carousel-indicators" id="imgIndiDisplay">
                                     </ul>
                                     <div class="carousel-inner">
-                                        <div class="carousel-item active">
-                                            <img src="Sources/Note1.jpg">
+                                        <div id="carousel-images-display">
                                         </div>
-                                        <div class="carousel-item">
-                                            <img src="Sources/Note2.jpg">
-                                        </div>
-                                        <div class="carousel-item">
-                                            <img src="Sources/Note3.jpg">
-                                        </div>
-                                        <div class="carousel-item">
-                                            <video controls autoplay loop>
-                                              <source src="Sources/VPW.mp4" type="video/mp4">
-                                            </video>
-                                        </div>
-                                        <a class="carousel-control-prev" href="#slides" role="button" data-slide="prev">
+                                        <a class="carousel-control-prev" href="#carruselImg" role="button" data-slide="prev">
                                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                             <span class="sr-only">Anterior</span>
                                         </a>
-                                        <a class="carousel-control-next" href="#slides" role="button" data-slide="next">
+                                        <a class="carousel-control-next" href="#carruselImg" role="button" data-slide="next">
                                             <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                             <span class="sr-only">Siguiente</span>
                                         </a>
@@ -312,14 +289,17 @@
                                 
                                 <div class="row">
                                     <div class="col-md-12" id="fullBody">
-                                   CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO
-                                   CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO
-                                   CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO
-                                   CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO
-                                   CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO
-                                   CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO CUERPO
                                     </div>
-                                </div>                           
+                                </div> 
+
+                                <div id="carruselVid" class="carousel slide carousel-fade" data-ride="carousel">
+                                    <ul class="carousel-indicators" id="vidIndiDisplay">
+                                    </ul>
+                                    <div class="carousel-inner">
+                                        <div id="carousel-videos-display">
+                                        </div>
+                                    </div>
+                                </div>                          
                             </div>
                             <!--
                                 Los datos a mostrar son:
@@ -335,7 +315,6 @@
                                 Un usuario registrado puede dar likes , solo un like por publicación.
                             -->             
                             <div class="col-md-12" id="fechaCreacion">
-                                Nota creada el 08 de Octubre del 2020
                             </div>                 
                             <div class="col-md-12">
                                 <hr>
@@ -353,7 +332,7 @@
                 <div class="row" id="commentsBG">              
                     <div class="col-md-12">
                         <h2 id="titleComms">Comentarios</h2>   
-                        <span class="totalComments comments-sort">117 Comentarios</span>
+                        <span class="comments-sort" id="totalComments">117 Comentarios</span>
                         <hr>
 
                         <div class="container-fluid">

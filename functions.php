@@ -302,6 +302,37 @@ if ($method == "getSecciones"){
     }
 } 
 
+if ($method == "getSeccionesByID"){
+    //Creamos la conexion
+    $conn = connectDB();
+
+    if($conn){
+      
+        $query  = "CALL sp_getSectionsByID();";
+        $resultado = mysqli_query($conn, $query);
+    
+        $secciones = array();
+        
+        if($resultado){
+            while ($row = mysqli_fetch_assoc($resultado)) {
+                $sect = array(
+                  "id" => $row['id_Seccion'],
+                  "name" => $row['nombre_Seccion'],
+                  "color" => $row['color_Seccion']
+                  /*,
+                  "apellidoP" => $row['apellido_P'],
+                  "apellidoM" => $row['apellido_M'],
+                  "tipoUsuario" => $row['tipo_Usuario']*/
+                );
+                $secciones[] = $sect;
+              }
+              
+             echo json_encode($secciones);
+        }       
+        closeDB($conn);
+    }
+} 
+
 if ($method == "noticiaReg"){
     //Creamos la conexion
     $conn = connectDB();
@@ -325,12 +356,14 @@ if ($method == "noticiaReg"){
         mysqli_query($conn, $query);
         $fila = mysqli_affected_rows($conn);
         if($fila!=0){  
-            
+                        
             $querylastID = "select LAST_INSERT_ID() AS 'LastID';";
             //$querylastID = "CALL sp_lastInsertedID();";
             $resultado = mysqli_query($conn, $querylastID);
             $rowID = mysqli_fetch_assoc($resultado);
+            //$IDNot = mysqli_insert_id($conn);
             $IDNot = $rowID['LastID'];
+            //$abc = $IDNot;
 
             foreach($palClavArray as $palClav)
             {
@@ -377,7 +410,7 @@ if ($method == "noticiaReg"){
                     echo json_encode(array("msg"=>false));
                 }
             }
-            echo json_encode(array("msg"=>true));
+            echo json_encode(array("msg"=>true, /*"aa"=>$IDNot*/));
         }
         else{
             echo json_encode(array("msg"=>false));
@@ -507,6 +540,32 @@ if ($method == "getSectionName"){
                 $secciones[] = $sec;
               }             
              echo json_encode($secciones);
+        }       
+        closeDB($conn);
+    }
+} 
+
+if ($method == "getSectionData"){
+
+    $conn = connectDB();
+
+    if($conn){
+      
+        $id=$_POST['idSection'];
+      
+        $query  = "CALL sp_getSeccionData($id);";
+        $resultado = mysqli_query($conn, $query);
+        
+        if($resultado){
+            while ($row = mysqli_fetch_assoc($resultado)) {
+                $section = array(
+                    "id" => $row['id_Seccion'],
+                    "name" => $row['nombre_Seccion'],
+                    "color" => $row['color_Seccion']
+                );
+              }
+              
+             echo json_encode($section);
         }       
         closeDB($conn);
     }
@@ -870,8 +929,9 @@ if ($method == "newsBySection"){
     if($conn){
       
         $id=$_POST['idSection'];
+        $limit=$_POST['limit'];
 
-        $query  = "CALL sp_getNewsBySection($id);";
+        $query  = "CALL sp_getNewsBySection($id, $limit);";
         $resultado = mysqli_query($conn, $query);
     
         $noticias = array();
@@ -1082,12 +1142,73 @@ if ($method == "getUserData"){
     }
 }
 
+if ($method == "getNewsData"){
+    $conn = connectDB();
+
+    if($conn){
+      
+        $idNews=$_POST['idNews'];
+      
+        $query  = "CALL sp_getFullNews($idNews);";
+        $resultado = mysqli_query($conn, $query);
+        
+        if($resultado){
+            while ($row = mysqli_fetch_assoc($resultado)) {
+                $noticia = array(
+                    "id" => $row['id_Noticia'],
+                    //"idSecc" => $row['seccion_Noticia'],
+                    "title" => $row['titulo_Noticia'],
+                    //"idAutor" => $row['reportero_Autor'],
+                    "fePubli" => $row['fecha_Publicacion'],
+                    "feCreacion" => $row['fecha_Creacion'],
+                    "feAcont" => $row['fecha_Acontecimiento'],
+                    //"feEnvio" => $row['fecha_Envio'],
+                    //"feDevo" => $row['fecha_Devo'],
+                    "lugAcont" => $row['lugar_Acontecimiento'],
+                    "descrSh" => $row['descripcion_Corta'],
+                    "descrLg" => $row['descripcion_Larga'],
+                    //"status" => $row['estado'],
+                    "name" => $row['nombres'],
+                    "apePat" => $row['apellido_P'],
+                    "apeMat" => $row['apellido_M'],
+                    //"sectionName" => $row['nombre_Seccion'],
+                    "sectionColor" => $row['color_Seccion']
+                );
+              }
+              
+             echo json_encode($noticia);
+        }       
+        closeDB($conn);
+    }
+}
+
+if ($method == "increaseViews"){
+    $conn = connectDB();
+
+    if($conn){
+      
+        $idNews=$_POST['idNews'];
+      
+        $query  = "CALL sp_oneMoreView($idNews);";
+        mysqli_query($conn, $query);
+        
+        $fila=mysqli_affected_rows($conn);
+        if($fila!=0){
+            echo json_encode(array("msg"=>true));       
+        }
+        else{
+            echo json_encode(array("msg"=>false));
+        }
+        closeDB($conn);
+    }
+}
+
 function connectDB(){
     $servername = "localhost"; 
-    $username = "root";
-    //$username = "PruebaDB3";
-    $password = "";
-    //$password = "password";
+    //$username = "root";
+    $username = "PruebaDB3";
+    //$password = "";
+    $password = "password";
     $dbname = "novadb";  
     
     $conn = mysqli_connect($servername, $username, $password, $dbname);

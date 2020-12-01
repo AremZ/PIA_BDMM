@@ -94,7 +94,8 @@ div#tituloNoticia{
     font-size: 80% !important;
     font-weight: bold;
     font-style: italic;
-    text-align: right;  
+    text-align: right;
+    margin-top: 10px;
 }
 
 i.fa{
@@ -127,7 +128,7 @@ i.fa{
 }
 
 /*.comments-details button.btn.dropdown-toggle,
-.comments-details,*/ .totalComments {
+.comments-details,*/ #totalComments {
     margin-left: 1rem;
     font-family: 'Oswald', sans-serif;  
     font-size: 18px;
@@ -402,7 +403,7 @@ div#noticiaBGVista{
     background-color: white;
 }
 
-div#sectionHeaderVista, div#sectionCommentVista{
+div#sectionHeaderVista, div#sectionCommentVista, div#sectionHeader{
     background-color: var(--Color-6);
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
@@ -783,7 +784,6 @@ ul.allUsers:nth-child(even), ul.allReporteros:nth-child(even) {
 ul.allUsers, ul.allReporteros{
     margin-bottom: 1em;
 }
-
 
 
 

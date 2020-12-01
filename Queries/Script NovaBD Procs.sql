@@ -125,6 +125,13 @@ CREATE PROCEDURE sp_getSections()
 DELIMITER ;
 
 DELIMITER //
+CREATE PROCEDURE sp_getSectionsByID()
+    BEGIN
+		SELECT nombre_Seccion, id_Seccion,color_Seccion FROM getSeccion_View WHERE estado=1 OR estado=2;
+    END //
+DELIMITER ;
+
+DELIMITER //
 CREATE PROCEDURE sp_getSectionsEliminarPend()
     BEGIN
 		select id_Seccion,nombre_Seccion from getSeccion_View WHERE estado=2;
@@ -281,12 +288,20 @@ DELIMITER ;
 
 DELIMITER //
 CREATE PROCEDURE sp_getNewsBySection(
-	IN in_SectionID int
+	IN in_SectionID int,
+    IN typeSel int
 )
     BEGIN
-		SELECT id_Noticia, seccion_Noticia , titulo_Noticia , reportero_Autor, fecha_Creacion, fecha_Publicacion, fecha_Envio,
-        fecha_Devo, fecha_Acontecimiento, lugar_Acontecimiento, descripcion_Corta , descripcion_Larga, estado, contenido_media, blob_type
-		FROM noticiaEssayMedia WHERE estado = 'publicada' AND seccion_Noticia = in_SectionID ORDER BY fecha_Publicacion DESC LIMIT 4;
+		IF typeSel != 0 THEN
+			SELECT id_Noticia, seccion_Noticia , titulo_Noticia , reportero_Autor, fecha_Creacion, fecha_Publicacion, fecha_Envio,
+			fecha_Devo, fecha_Acontecimiento, lugar_Acontecimiento, descripcion_Corta , descripcion_Larga, estado, contenido_media, blob_type
+			FROM noticiaEssayMedia WHERE estado = 'publicada' AND seccion_Noticia = in_SectionID ORDER BY fecha_Publicacion DESC LIMIT typeSel;
+		END IF ;
+		IF typeSel = 0 THEN
+			SELECT id_Noticia, seccion_Noticia , titulo_Noticia , reportero_Autor, fecha_Creacion, fecha_Publicacion, fecha_Envio,
+			fecha_Devo, fecha_Acontecimiento, lugar_Acontecimiento, descripcion_Corta , descripcion_Larga, estado, contenido_media, blob_type
+			FROM noticiaEssayMedia WHERE estado = 'publicada' AND seccion_Noticia = in_SectionID ORDER BY fecha_Publicacion DESC;
+		END IF ;
     END //
 DELIMITER ;
 
@@ -311,6 +326,17 @@ CREATE PROCEDURE sp_getSentNotis(
         fecha_Acontecimiento, lugar_Acontecimiento, descripcion_Corta , descripcion_Larga, estado, nombres, apellido_P, apellido_M,
         nombre_Seccion, color_Seccion, contenido_media, blob_type
         FROM fullNoticia WHERE estado = in_estado ORDER BY fecha_Envio DESC;
+	END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE sp_getFullNews(
+    IN in_newsID int
+)
+    BEGIN
+		SELECT id_Noticia, seccion_Noticia , titulo_Noticia , reportero_Autor, fecha_Creacion, fecha_Publicacion, fecha_Envio, fecha_Devo,
+        fecha_Acontecimiento, lugar_Acontecimiento, descripcion_Corta , descripcion_Larga, estado, nombres, apellido_P, apellido_M,
+        nombre_Seccion, color_Seccion FROM fullNotDisplay WHERE id_Noticia = 1;
 	END //
 DELIMITER ;
 
@@ -372,7 +398,16 @@ CREATE PROCEDURE sp_getSeccion(
 	IN in_idSec int
 )
     BEGIN
-		select id_Seccion,nombre_Seccion from nombreSeccion_View WHERE id_Seccion=in_idSec;
+		select id_Seccion,nombre_Seccion,color_Seccion from nombreSeccion_View WHERE id_Seccion=in_idSec;
+    END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE sp_getSeccionData(
+	IN in_idSec int
+)
+    BEGIN
+		select id_Seccion,nombre_Seccion,color_Seccion from getSeccion_View WHERE id_Seccion=in_idSec;
     END //
 DELIMITER ;
 
@@ -415,6 +450,7 @@ CREATE PROCEDURE sp_sectionTo1(
     END //
 DELIMITER ;
 
+DELIMITER //
 CREATE PROCEDURE sp_getMedia(
 	IN in_NoticiaID int,
     IN whatMedia varchar(3)
@@ -427,5 +463,14 @@ CREATE PROCEDURE sp_getMedia(
 		IF whatMedia = 'vid' THEN
 			SELECT id_Media, contenido_media, blob_type , noticia_Duena FROM media WHERE noticia_Duena = in_NoticiaID AND blob_type = 'mp4';
 		END IF;
+    END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE sp_oneMoreView(
+	IN in_NoticiaID int
+)
+    BEGIN
+		UPDATE noticia SET cantidad_Vistas = cantidad_Vistas + 1 WHERE id_Noticia = in_NoticiaID;
     END //
 DELIMITER ;

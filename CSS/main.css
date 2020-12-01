@@ -41,6 +41,24 @@ div#recentNoticias, div#masVisto{
     border-radius: 5px;
 }
 
+div#sectColor{
+  background-color: var(--Color-6);
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+
+}
+
+div#topSection{
+  background-color: black;
+  font-family: 'Oswald', sans-serif;  
+  font-size: 250%;
+  color: var(--TitleFont);
+  text-align: left;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+
+}
+
 div#noticiaBG{
     margin-left: 1em;
     margin-top: 1em;
@@ -102,12 +120,8 @@ div.BGSection{
     object-fit: cover;
 }
 
-.tarjetaSeccion{
-    max-width: 540px; 
-    margin: 2em; 
-    border-style: solid; 
-    border-color: black;
-    border-width: 200px;
+div#MostViewedSect{
+    margin-bottom: 1em;
 }
 
 div.allSections{

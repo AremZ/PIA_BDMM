@@ -926,6 +926,7 @@ function checkNoticia(toggleWindow, action){
                 data: mediaForm,
                 success: function (result) {
                     if (result.msg) {
+                    //alert(result.aa);
                     alert("Noticia creada exitosamente!");
                     emptyBlock('notiRedaccion');
                     getNoticiasRed();
@@ -1938,7 +1939,7 @@ function getSeccionesNoti(){
         url: "functions.php",
         type: "post",
         dataType: "json",
-        data: {method: 'getSecciones'},
+        data: {method: 'getSeccionesByID'},
         success: function (secciones) {
             if (secciones != null){
                 $.each(secciones, function(idx, sect){
@@ -2180,7 +2181,7 @@ function displaySections(appendTo){
                         url: "functions.php",
                         type: "post",
                         dataType: "json",
-                        data: {method: 'newsBySection', idSection: secciones[idx].id},
+                        data: {method: 'newsBySection', idSection: secciones[idx].id, limit: 4},
                         success: function (noticias) {
                             if (noticias != null){
                                 $.each(noticias, function(idy, notiRed){
@@ -2206,6 +2207,64 @@ function displaySections(appendTo){
             }          
         }
     }) 
+}
+
+function displayNewsBySection(appendTo, sectionID){
+    $.ajax({
+        url: "functions.php",
+        type: "post",
+        dataType: "json",
+        data: {method: 'newsBySection', idSection: sectionID, limit: 0},
+        success: function (noticias) {
+            if (noticias != null){
+                $.each(noticias, function(idx, notiRed){
+                    $(appendTo).append(
+                        '<div class="col-md-4"><div class="card publishedNews"><img class="card-img-top"' + 
+                        'src=data:image/' + noticias[idx].ext + ';base64,' + noticias[idx].preview + '><div class="card-body">' +
+                        '<h4 class="card-title title">' + noticias[idx].title + '</h4><p class="card-text">' + noticias[idx].descrSh +
+                        '</p><h4 class="card-title pubDate">Publicado el: ' + noticias[idx].fePub.slice(8,10) + ' de ' +
+                        whichMonth(noticias[idx].fePub.slice(5,7)) + ' del ' + noticias[idx].fePub.slice(0,4) + '</h4>' +
+                        '<button class="btn btn-outline-danger barBut"><i class="fa fa-newspaper-o"></i>  Ver noticia</button></div></div></div>'   
+                )});       
+            }           
+        }
+    }); 
+}
+
+function getSectionData(sectionID){
+    $.ajax({
+        url: "functions.php",
+        type: "post",
+        dataType: "json",
+        data: {method: 'getSectionData', idSection: sectionID},
+        success: function (section) {
+            if (section != null){
+                document.getElementById('topSection').innerHTML = section.name;
+                
+                var selectedColor;
+                switch(section.color){
+                    case 'rojo':
+                        selectedColor = "#aa281d";
+                    break;
+                    case 'verde':
+                        selectedColor = "#147c17";
+                    break;
+                    case 'amari':
+                        selectedColor = "#FADA5E";          
+                    break;
+                    case 'azul':
+                        selectedColor = "#0b81d6";
+                    break;
+                    case 'rosa':
+                        selectedColor = "#eb75c9";
+                    break;
+                }
+
+                document.getElementById("sectColor").style.background = selectedColor;                
+            }           
+        }
+    }); 
+
 }
 
 function seeNoticia(idNot, colorSection, titleNot, nameReportero, feAcont, lugAcont, descrSh, descrLg, feCreacion){
@@ -2369,6 +2428,80 @@ function getUserData(userID){
             alert("Ocurrio un error durante la obtencion de datos.");
         }
 
+    });
+}
+
+function getNewsData(newsID){
+    $.ajax({
+        url: "functions.php",
+        type: "post",
+        dataType: "json",
+        data: {method: 'getNewsData', idNews: newsID},
+        success: function (noticia) {
+            if (noticia != null){
+                
+                var selectedColor;
+                switch(noticia.sectionColor){
+                    case 'rojo':
+                        selectedColor = "#aa281d";
+                    break;
+                    case 'verde':
+                        selectedColor = "#147c17";
+                    break;
+                    case 'amari':
+                        selectedColor = "#FADA5E";          
+                    break;
+                    case 'azul':
+                        selectedColor = "#0b81d6";
+                    break;
+                    case 'rosa':
+                        selectedColor = "#eb75c9";
+                    break;
+                }
+
+                document.getElementById("sectionHeader").style.background = selectedColor; 
+
+                document.getElementById("tituloNoticia").innerHTML = noticia.title + '<div class="row"><div class="col-md-5" id="nomReportero">' +
+                '</div><div class="col-md-7" id="datePublicacion"></div></div>';
+                document.getElementById("nomReportero").innerHTML = 'Nota por ' + noticia.name + " " + noticia.apePat + " " + noticia.apeMat;
+                document.getElementById("datePublicacion").innerHTML =  'Publicado el ' + noticia.fePubli.slice(8,10) + ' de ' + 
+                whichMonth(noticia.fePubli.slice(5,7)) + ' del ' + noticia.fePubli.slice(0,4) + ' a las ' + noticia.fePubli.slice(11,16);  
+                document.getElementById("datosAcontecimiento").innerHTML = noticia.feAcont.slice(8,10) + ' de ' + 
+                whichMonth(noticia.feAcont.slice(5,7)) + ' del ' + noticia.feAcont.slice(0,4) + ' a las ' + noticia.feAcont.slice(11,16) +
+                ', ' + noticia.lugAcont;
+                document.getElementById("descripcion").innerHTML = noticia.descrSh;
+                document.getElementById("fullBody").innerHTML = noticia.descrLg;
+                document.getElementById("fechaCreacion").innerHTML = 'Nota creada el ' + noticia.feCreacion.slice(8,10) + ' de ' + 
+                whichMonth(noticia.feCreacion.slice(5,7)) + ' del ' + noticia.feCreacion.slice(0,4);
+
+                getImageMedia(newsID, 'carousel-images-display', 'imgIndiDisplay');
+                getVideoMedia(newsID, 'carousel-videos-display');
+                
+                /*document.getElementById("snamePerfil").value = usuario[0].apellidoP;
+                document.getElementById("lnamePerfil").value = usuario[0].apellidoM;
+                document.getElementById("emailPerfil").value = usuario[0].email;
+                document.getElementById("telPerfil").value = usuario[0].tel;
+                document.getElementById("pwdPerfil").value = usuario[0].password;
+                $("#dispImgProfile").attr('src','data:image/' + usuario[0].imgType + ';base64,' + usuario[0].avatar);*/
+            }   
+        },
+        error: function (result) {
+            alert("Ocurrio un error durante la obtencion de datos.");
+        }
+
+    });
+}
+
+function upViews(newsID){
+    $.ajax({
+        url: "functions.php",
+        type: "post",
+        dataType: "json",
+        data: {method: 'increaseViews', idNews: newsID},
+        success: function (result) {
+            if (result.msg) {
+            }
+        }
     });
 }
 

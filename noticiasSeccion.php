@@ -21,7 +21,10 @@
       $(document).ready(function(){
         get();
         getSeccionesToNavbar();
-            setupImage('agregarFoto', 'displayImg', '.preview-image');
+        setupImage('agregarFoto', 'displayImg', '.preview-image');
+        displayMostViewed("#MostViewedSect");
+        displayNewsBySection("#displayNews", 3);
+        getSectionData(3);
       });
 
         function set(){
@@ -248,230 +251,43 @@
 
     <div class="container-fluid padding" id="cuerpoNot">          
         <div class="row">
-            <div class="col-md-9">   
-                <div class="row" id="noticiaHeader">        
-                    <div class="col-md-1" id="sectionHeader"></div>        
-                    <div class="col-md-11" id="tituloNoticia">
-                        Noticias Nacionales
-                        
-                    </div>
+
+        <div class="col-md-9">   
+            <div class="row" id="headerDisplay">        
+                <div class="col-md-1"></div>         
+                <div class="col-md-1" id= "sectColor"></div>        
+                <div class="col-md-9" id="topSection">
+                    Nombre de la seccion
                 </div>
-                <div class="row" id="noticiaBG">
-                    <div class="col-md-12" id="datosAcontecimiento">09 de Octubre del 2020 a las 19:00pm,
-                                                                    Guadalupe, Nuevo Leon
-                    </div>
-                    <div class="col-md-12" id="noticiaBody">
-                        <div class="row">
-                            
-                            <div class="col-md-12">
-                                <hr>
-                            </div>
-                                 <!-- TARJETA HORIZONTAL -->
-                                 <div class="card mb-6 tarjetaSeccion" style="border-color: black;">
-                                    <div class="row no-gutters">
-                                      <div class="col-md-4"><br>
-                                        <img src="http://via.placeholder.com/300x250" class="card-img" alt="..." style="padding-left:1em;">
-                                      </div>
-                                      <div class="col-md-8">
-                                        <div class="card-body">
-                                          <h5 class="card-title">Card title</h5>
-                                          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                          <a href="product.html" class="btn btn-danger" style="background-color: black; border-style: none; color: rgb(167, 11, 11);">Ver noticia</a>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-
-                                  <div class="card mb-6 tarjetaSeccion" style="border-color: black;">
-                                    <div class="row no-gutters">
-                                      <div class="col-md-4"><br>
-                                        <img src="http://via.placeholder.com/300x250" class="card-img" alt="..." style="padding-left:1em;">
-                                      </div>
-                                      <div class="col-md-8">
-                                        <div class="card-body">
-                                          <h5 class="card-title">Card title</h5>
-                                          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                          <a href="product.html" class="btn btn-danger" style="background-color: black; border-style: none; color: rgb(167, 11, 11);">Ver noticia</a>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                      
-                        </div>
-
-                        <div class="row">
-                            
-                            <div class="col-md-12">
-                                <hr>
-                            </div>
-                                 <!-- TARJETA HORIZONTAL -->
-                                 <div class="card mb-6 tarjetaSeccion" style="border-color: black;">
-                                  <div class="row no-gutters">
-                                    <div class="col-md-4"><br>
-                                      <img src="http://via.placeholder.com/300x250" class="card-img" alt="..." style="padding-left:1em;">
-                                    </div>
-                                    <div class="col-md-8">
-                                      <div class="card-body">
-                                        <h5 class="card-title">Card title</h5>
-                                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                        <a href="product.html" class="btn btn-danger" style="background-color: black; border-style: none; color: rgb(167, 11, 11);">Ver noticia</a>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-
-                                <div class="card mb-6 tarjetaSeccion" style="border-color: black;">
-                                  <div class="row no-gutters">
-                                    <div class="col-md-4"><br>
-                                      <img src="http://via.placeholder.com/300x250" class="card-img" alt="..." style="padding-left:1em;">
-                                    </div>
-                                    <div class="col-md-8">
-                                      <div class="card-body">
-                                        <h5 class="card-title">Card title</h5>
-                                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                        <a href="product.html" class="btn btn-danger" style="background-color: black; border-style: none; color: rgb(167, 11, 11);">Ver noticia</a>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                      
-                        </div>
-
-                        <div class="row">
-                            
-                            <div class="col-md-12">
-                                <hr>
-                            </div>
-                                 <!-- TARJETA HORIZONTAL -->
-                                 <div class="card mb-6 tarjetaSeccion" style="border-color: black;">
-                                  <div class="row no-gutters">
-                                    <div class="col-md-4"><br>
-                                      <img src="http://via.placeholder.com/300x250" class="card-img" alt="..." style="padding-left:1em;">
-                                    </div>
-                                    <div class="col-md-8">
-                                      <div class="card-body">
-                                        <h5 class="card-title">Card title</h5>
-                                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                        <a href="product.html" class="btn btn-danger" style="background-color: black; border-style: none; color: rgb(167, 11, 11);">Ver noticia</a>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="card mb-6 tarjetaSeccion" style="border-color: black;">
-                                  <div class="row no-gutters">
-                                    <div class="col-md-4"><br>
-                                      <img src="http://via.placeholder.com/300x250" class="card-img" alt="..." style="padding-left:1em;">
-                                    </div>
-                                    <div class="col-md-8">
-                                      <div class="card-body">
-                                        <h5 class="card-title">Card title</h5>
-                                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                        <a href="product.html" class="btn btn-danger" style="background-color: black; border-style: none; color: rgb(167, 11, 11);">Ver noticia</a>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                      
-                        </div>
-
-                    </div>              
-                   
-                </div>
-                
-               
             </div>
-            <!--Populares-->
-            <div class="col-md-3 tarjetaPrincAside">
-                <br>
-                <h3 id="tituloPopulares">Más populares</h3><br>
-                <!-- TARJETA HORIZONTAL -->
-                <div class="row listaPopu">   
-                <div class="card mb-3" style="max-width: 540px;">
-                    <div class="row no-gutters">
-                      <div class="col-md-4">
-                          <div class=" img-popular">
-                        <img src="http://via.placeholder.com/100x150" class="card-img" alt="...">
-                    </div>
-                      </div>
-                      <div class="col-md-8">
-                        <div class="card-body">
-                          <h6 class="card-title">NOTICIA</h6>
-                          <p class="card-text card-horizontalT">POPULAR POPULAR POPULAR POPULAR </p>
-                          <a href="product.html" class="btn btn-outline-danger ">Ver noticia</a>
-                          
-                        </div>
-                      </div>
-                    </div>
-                </div>
-
-              
-
-
-                  <div class="card mb-3" style="max-width: 540px;">
-                    <div class="row no-gutters">
-                      <div class="col-md-4">
-                          <div class=" img-popular">
-                        <img src="http://via.placeholder.com/100x150" class="card-img" alt="...">
-                    </div>
-                      </div>
-                      <div class="col-md-8">
-                        <div class="card-body">
-                          <h6 class="card-title">NOTICIA</h6>
-                          <p class="card-text card-horizontalT">POPULAR POPULAR POPULAR POPULAR </p>
-                          <a href="product.html" class="btn btn-outline-danger ">Ver noticia</a>
-                          
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="card mb-3" style="max-width: 540px;">
-                    <div class="row no-gutters">
-                      <div class="col-md-4">
-                          <div class=" img-popular">
-                        <img src="http://via.placeholder.com/100x150" class="card-img" alt="...">
-                    </div>
-                      </div>
-                      <div class="col-md-8">
-                        <div class="card-body">
-                          <h6 class="card-title">NOTICIA</h6>
-                          <p class="card-text card-horizontalT">POPULAR POPULAR POPULAR POPULAR </p>
-                          <a href="product.html" class="btn btn-outline-danger ">Ver noticia</a>
-                          
-                        </div>
-                      </div>
-                    </div>
-                  </div>    
-               
-
-                  <div class="card mb-3" style="max-width: 540px;">
-                    <div class="row no-gutters">
-                      <div class="col-md-4">
-                          <div class=" img-popular">
-                        <img src="http://via.placeholder.com/100x150" class="card-img" alt="...">
-                    </div>
-                      </div>
-                      <div class="col-md-8">
-                        <div class="card-body">
-                          <h6 class="card-title">NOTICIA</h6>
-                          <p class="card-text card-horizontalT">POPULAR POPULAR POPULAR POPULAR </p>
-                          <a href="product.html" class="btn btn-outline-danger ">Ver noticia</a>
-                          
-                        </div>
-                      </div>
-                    </div>
-                  </div>    
-               
-
-
-                </div>
+            <div class="col-md-11" id="noticiaBG">          
+                <div class="row" id="displayNews">
+            
+                </div>  
             </div>
         </div>
+ 
 
+    <!--Populares-->
+    <div class="col-md-3">
+      <div class="row">
+          <div class="col-md-11" id="masVisto">
+              Más populares
+          </div>
+      </div>
+      
+      <div class="col-md-12" id="masVistoBG">          
+          <div class="row" id="MostViewedSect">
+
+
+          </div>  
+      </div>        
+    </div> 
 
 
 
     </div>
+  </div>
 
 
 
@@ -481,35 +297,6 @@
  <footer>
     <div class="container-fluid padding">
         <div class="row text-center">
-            <!--
-            <div class="col-lg-4">
-                <img src="Sources/Header/LogoBar.png">
-                <hr class="Light">
-                <p>305-696-0419</p>
-                <p>LAOrnamental@Aol.com</p>
-                <p>3708 NW 82nd Street</p>
-                <p>Miami, Florida</p>
-            </div>
-
-            
-            <div class="col-lg-4">
-                <hr class="Light">
-                <h5>Our hours</h5>
-                <hr class="Light">
-                <p>Monday to Friday: 10am to 7pm</p>
-                <p>Saturday: 10am to 9pm</p>
-                <p>Sunday: Closed</p>
-            </div>
-
-            <div class="col-md-4">
-                <hr class="Light">
-                <h5>Service Area</h5>
-                <hr class="Light">
-                <p>Miami, Florida 33147</p>
-                <p>Laredo, Texas 78040</p>
-                <p>Chicago, Illinois 60007</p>
-                <p>Los Angeles, California 90001</p>
-            </div>-->
 
             <div class="col-12">
                 <img src="Sources/Header/LogoBar.png">
