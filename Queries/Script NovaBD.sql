@@ -40,11 +40,28 @@ lugar_Acontecimiento VARCHAR(150) NOT NULL,
 descripcion_Corta VARCHAR(200) NOT NULL,
 descripcion_Larga TEXT NOT NULL,
 estado enum('redaccion', 'terminada', 'devuelta','publicada') NOT NULL,
-cantidad_Likes int DEFAULT(0),
 cantidad_Vistas int DEFAULT(0),
 primary key(id_Noticia),
 constraint FK_Secc_Not foreign key(seccion_Noticia) references seccion(id_Seccion),
 constraint FK_Autor_Not foreign key(reportero_Autor) references usuario(id_Usuario)
+);
+
+CREATE TABLE noticia_backup(
+id_Noticia int NOT NULL,
+seccion_Noticia int,
+titulo_Noticia varchar(100),
+reportero_Autor int,
+fecha_Creacion DATE,
+fecha_Publicacion DATETIME,
+fecha_Envio DATE,
+fecha_Devo DATE,
+fecha_Acontecimiento DATETIME,
+lugar_Acontecimiento VARCHAR(150),
+descripcion_Corta VARCHAR(200),
+descripcion_Larga TEXT,
+estado enum('redaccion', 'terminada', 'devuelta','publicada'),
+cantidad_Vistas int,
+primary key(id_Noticia)
 );
 
 CREATE TABLE media(
@@ -85,4 +102,13 @@ feedback text NOT NULL,
 primary key(id_NotFeed),
 constraint FK_Editor_Feedback foreign key(id_editorNoti) references usuario(id_Usuario),
 constraint FK_Noticia_Feedback foreign key(id_Noticia) references noticia(id_Noticia)
+);
+
+CREATE TABLE likes(
+id_like int NOT NULL AUTO_INCREMENT,
+id_user int NOT NULL,
+id_not int NOT NULL,
+primary key(id_like),
+constraint FK_User_Like foreign key(id_user) references usuario(id_Usuario),
+constraint FK_Noticia_Like foreign key(id_not) references noticia(id_Noticia)
 );

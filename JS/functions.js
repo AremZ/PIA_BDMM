@@ -790,7 +790,8 @@ function cleanInputClass(idInput){
 }
 
 function popUpComm(){
-    $(".reply-box").toggle();
+    //document.getElementById('carousel-videos').innerHTML = "";
+    //$(".containerReply").innerHTML();
 }
 
 function switchModals(id1, id2){
@@ -2476,13 +2477,6 @@ function getNewsData(newsID){
 
                 getImageMedia(newsID, 'carousel-images-display', 'imgIndiDisplay');
                 getVideoMedia(newsID, 'carousel-videos-display');
-                
-                /*document.getElementById("snamePerfil").value = usuario[0].apellidoP;
-                document.getElementById("lnamePerfil").value = usuario[0].apellidoM;
-                document.getElementById("emailPerfil").value = usuario[0].email;
-                document.getElementById("telPerfil").value = usuario[0].tel;
-                document.getElementById("pwdPerfil").value = usuario[0].password;
-                $("#dispImgProfile").attr('src','data:image/' + usuario[0].imgType + ';base64,' + usuario[0].avatar);*/
             }   
         },
         error: function (result) {
@@ -2505,6 +2499,48 @@ function upViews(newsID){
     });
 }
 
+function getTotalComments(newsID){
+    $.ajax({
+        url: "functions.php",
+        type: "post",
+        dataType: "json",
+        data: {method: 'countOfComments', idNews: newsID},
+        success: function (result) {
+            if (result != null){
+                var theMsg;
+                if (result.totalComms == 1)
+                    theMsg = result.totalComms + ' Comentario.'
+                else
+                theMsg = result.totalComms + ' Comentarios.'
+
+                document.getElementById("totalComments").innerHTML = theMsg;
+            }   
+        },
+        error: function (result) {
+            alert("Ocurrio un error durante la obtencion de datos.");
+        }
+
+    });
+}
+
+function getPublishedNotes(){
+    $.ajax({
+        url: "functions.php",
+        type: "post",
+        dataType: "json",
+        data: {method: 'getPublishedNotes'},
+        success: function (result) {
+            if (result != null){
+                document.getElementById("publishedNews").innerHTML = 'Noticias publicadas en el sitio: ' + result.totalNews;
+            }   
+        },
+        error: function (result) {
+            alert("Ocurrio un error durante la obtencion de datos.");
+        }
+
+    });
+}
+
 function cleanOldFeedback(idFeed){
     $.ajax({
         url: "functions.php",
@@ -2516,6 +2552,52 @@ function cleanOldFeedback(idFeed){
             }
         }
     });  
+}
+
+function publicarComentario(idUser, idNews){
+    var comentario = document.getElementById("contentComment").value;
+
+    $.ajax({
+        url: "functions.php",
+        type: "post",
+        dataType: "json",
+        data: {method: 'postComment', idParent: 0, idUser: idUser, idNews: idNews, comment: comentario},
+        success: function (result) {
+            if (result.msg) { 
+                document.getElementById("contentComment").value = "";   
+                document.getElementById("allComments").innerHTML = "";
+                getNewsComments(idNews);
+                getTotalComments(idNews);
+                alert("Comentario enviado.");                   
+            } 
+            else
+                alert("Ocurrio un error durante la ejecucion.");
+        }
+    }); 
+
+}
+
+function responderComentario(idParent, idUser, idNews){
+    var comentario = document.getElementById('inputNo' + idParent).value;
+
+    $.ajax({
+        url: "functions.php",
+        type: "post",
+        dataType: "json",
+        data: {method: 'postComment', idParent: idParent, idUser: idUser, idNews: idNews, comment: comentario},
+        success: function (result) {
+            if (result.msg) { 
+                document.getElementById("contentComment").value = "";   
+                document.getElementById("allComments").innerHTML = "";
+                getNewsComments(idNews);
+                getTotalComments(idNews);
+                alert("Comentario enviado.");                   
+            } 
+            else
+                alert("Ocurrio un error durante la ejecucion.");
+        }
+    }); 
+
 }
 
 function getImageMedia(idNoticia, carrusel_add, slides){
@@ -2569,6 +2651,239 @@ function getVideoMedia(idNoticia, carrusel_add){
         }
     }); 
 }
+
+function getNewsComments(idNoticia){
+    $.ajax({
+        url: "functions.php",
+        type: "post",
+        dataType: "json",
+        data: {method: 'getComments', idNot: idNoticia},
+        success: function (comments) {
+            if (comments != null){
+                $.each(comments, function(idx, comentario){
+                    $('#allComments').append(                       
+                        '<div class="comment-box"><span class="commenter-pic"><img class="img-fluid" ' + 
+                        'src=data:image/' + comments[idx].type + ';base64,' + comments[idx].avatar + '></span>' +
+                        '<span class="commenter-name"><a>' + comments[idx].name + " " + comments[idx].apePat + " " + comments[idx].apeMat +
+                        '</a><span class="comment-time">' + whichMonth(comments[idx].dateComm.slice(5,7)) + ' ' + comments[idx].dateComm.slice(8,10) +
+                        ', ' + comments[idx].dateComm.slice(0,4) + ' a las ' + comments[idx].dateComm.slice(11,16) + '</span></span>' +
+                        '<p class="comment-txt">' + comments[idx].comment + '</p><div class="comment-meta">' +
+                        '<button class="comment-reply btn btn-outline-danger reply-popup" id="replyToComm">' +
+                        '<i class="fa fa-reply-all" aria-hidden="true"></i> Responder</button>' +
+                        '<button class="comment-reply btn btn-outline-danger delete-comm" onclick="deleteComm('+ idNoticia + ',' + comments[idx].commentID +')">' +
+                        '<i class="fa fa-trash-o" aria-hidden="true"></i> Borrar</button></div>' +
+                        '<div class="containerReply"></div><div id="idComment" style="display: none">' + comments[idx].commentID +
+                        '</div><div id="replies' + comments[idx].commentID + '"></div>'
+                    )
+
+                    var idParent = comments[idx].commentID;
+
+                    $.ajax({
+                        url: "functions.php",
+                        type: "post",
+                        dataType: "json",
+                        data: {method: 'getCommentReplies', idNot: idNoticia, idParent: idParent},
+                        success: function (replies) {
+                            if (replies != null){
+                                $.each(replies, function(idz, respuestas){
+                                    $('#replies' + idParent).append(
+                                    '<div class="comment-box replied"><span class="commenter-pic"><img class="img-fluid" ' +
+                                    'src=data:image/' + replies[idz].type + ';base64,' + replies[idz].avatar + '></span>' +
+                                    '<span class="commenter-name"><a>' + replies[idz].name + " " + replies[idz].apePat + " " +
+                                    replies[idz].apeMat + '</a><span class="comment-time">' + whichMonth(replies[idz].dateComm.slice(5,7)) +
+                                    ' ' + replies[idz].dateComm.slice(8,10) + ', ' + replies[idz].dateComm.slice(0,4) + ' a las ' +
+                                    replies[idz].dateComm.slice(11,16) + '</span></span><p class="comment-txt">' + replies[idz].comment + '</p>' +
+                                    '<button class="comment-reply btn btn-outline-danger delete-comm" onclick="deleteComm('+ idNoticia + ',' +
+                                    replies[idz].commentID +')">' + '<i class="fa fa-trash-o" aria-hidden="true"></i> Borrar</button></div>'
+                                    )    
+                                });
+                            }           
+                        }
+                    });
+
+                    $('#allComments').append(                       
+                        '</div>'
+                    )      
+                });
+            }           
+        }
+    }); 
+}
+
+function deleteComm(idNot, idComm){
+    $.ajax({
+        url: "functions.php",
+        type: "post",
+        dataType: "json",
+        data: {method: 'deleteComm', id: idComm},
+        success: function (result) {
+            if (result.msg) {
+                alert("Comentario eliminado exitosamente!");   
+                document.getElementById("allComments").innerHTML = "";
+                getNewsComments(idNot);
+                getTotalComments(idNews);
+            }
+        }
+    });
+
+}
+
+function likeNoticia(idUser, idNot){
+    var classes = $("#BTLike").attr("class");
+    var likedClass = classes.split(" ");
+
+    if(likedClass[1]== "btn-outline-danger"){
+        $("#BTLike").removeClass("btn-outline-danger");
+        $("#BTLike").html('<i class="fa fa-thumbs-up"></i>Te Gusta');
+        $("#BTLike").addClass("btn-danger");
+
+        $.ajax({
+            url: "functions.php",
+            type: "post",
+            dataType: "json",
+            data: {method: 'likeNoticia', idUser: idUser, idNot: idNot},
+            success: function (result) {
+                if (result.msg) { 
+                    getTotalLikes(idNot);
+                } 
+                else
+                    alert("Ocurrio un error durante la ejecucion.");
+            }
+        });    
+    }
+    else if(likedClass[1]== "btn-danger"){
+        $("#BTLike").removeClass("btn-danger");
+        $("#BTLike").html('<i class="fa fa-thumbs-up"></i>Me Gusta');
+        $("#BTLike").addClass("btn-outline-danger");
+
+        $.ajax({
+            url: "functions.php",
+            type: "post",
+            dataType: "json",
+            data: {method: 'deleteLike', idUser: idUser, idNot: idNot},
+            success: function (result) {
+                if (result.msg) { 
+                    getTotalLikes(idNot);
+                } 
+                else
+                    alert("Ocurrio un error durante la ejecucion.");
+            }
+        }); 
+    }   
+}
+
+function updateLikeButt(idUser, idNot){
+    $.ajax({
+        url: "functions.php",
+        type: "post",
+        dataType: "json",
+        data: {method: 'updateLikeButt', idUser: idUser, idNot: idNot},
+        success: function (result) {
+            if (result.msg) { 
+                $("#BTLike").removeClass("btn-outline-danger");
+                $("#BTLike").html('<i class="fa fa-thumbs-up"></i>Te Gusta');
+                $("#BTLike").addClass("btn-danger");
+            } 
+        }
+    });
+}
+
+function getTotalLikes(newsID){
+    $.ajax({
+        url: "functions.php",
+        type: "post",
+        dataType: "json",
+        data: {method: 'countOfLikes', idNews: newsID},
+        success: function (result) {
+            if (result != null){
+                var theMsg;
+                if (result.totalLikes == 1)
+                    theMsg = "A " + result.totalLikes + ' persona le gusta esto.'
+                else
+                    theMsg = "A " + result.totalLikes + ' personas les gusta esto.'
+
+                document.getElementById("liked").innerHTML = theMsg;
+            }   
+        },
+        error: function () {
+            alert("Ocurrio un error durante la obtencion de datos.");
+        }
+    });
+}
+
+function getNotKeywords(idNot){
+    var arrayIDRelated = [];
+
+    $.ajax({
+        url: "functions.php",
+        type: "post",
+        dataType: "json",
+        async: false,   
+        data: {method: 'getKeyNotID', idNot: idNot},
+        success: function (allKeywords) {
+
+            $.each(allKeywords, function(idx){
+                $.ajax({
+                    url: "functions.php",
+                    type: "post",
+                    dataType: "json",
+                    async: false,   
+                    data: {method: 'getRelated', keyword: allKeywords[idx].content, actualNot: idNot},
+                    success: function (relatedNots) {
+                        $.each(relatedNots, function(idz, NoticiasSimilares){
+                            arrayIDRelated.push(relatedNots[idz].idNot);
+                        });
+
+                    }
+                })
+            });
+
+        }
+    });
+    var counts = {};
+    arrayIDRelated.forEach(function(x) { counts[x] = (counts[x] || 0) + 1; });
+
+    var IDCoincidencias = [];
+    IDCoincidencias = Object.entries(counts).sort((a,b) => b[1]-a[1]).map(el=>el[0]).slice(0,5);
+
+    
+    IDCoincidencias.forEach(function(actual){
+        //NO ES
+        $.ajax({
+            url: "functions.php",
+            type: "post",
+            dataType: "json",
+            data: {method: 'getNewsByIDDisplay', idNews: actual},
+            success: function (noticia) {
+                if (noticia != null){
+                    
+                    var splitDescr = noticia[0].descrSh.split(" ");
+                    var shorterDesc = "";
+                    splitDescr.forEach(function(actual, index){
+                        if (index < 9)
+                            shorterDesc += actual + " ";
+                        else if (index == 9){
+                            shorterDesc += actual + "...";
+                        }
+                    });
+
+                    $('#displayMostViewed').append(
+                        '<div class="col-md-12"><div class="card mostViewed"><img class="card-img-top"' + 
+                        'src=data:image/' + noticia[0].ext + ';base64,' + noticia[0].preview + '><div class="card-body">' +
+                        '<h4 class="card-title title">' + noticia[0].title + '</h4><p class="card-text">' + shorterDesc +
+                        '</p><h4 class="card-title pubDate">Publicado el: ' + noticia[0].fePub.slice(8,10) + ' de ' +
+                        whichMonth(noticia[0].fePub.slice(5,7)) + ' del ' + noticia[0].fePub.slice(0,4) + '</h4>' +
+                        '<button class="btn btn-outline-danger barBut"><i class="fa fa-newspaper-o"></i>  Ver noticia</button></div></div></div>'   
+                    )
+                }   
+            },
+            error: function (result) {
+                alert("Ocurrio un error durante la obtencion de datos.");
+            }
+        });
+    })
+}
+
 
 function whichMonth(number){
     if (number == 1)
