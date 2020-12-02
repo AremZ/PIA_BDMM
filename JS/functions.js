@@ -146,26 +146,18 @@ function validaciones(mod){
                 data: {method: 'userLogin', email: campoEmail.value, pass: campoPass.value},
                 success: function (row) {
                     if(row){
-                        alert("Sesion iniciada exitosamente!");    
+                        alert("¡Sesion iniciada exitosamente!");    
                         document.cookie = "user="+row.id_Usuario;
-                        document.cookie = "type="+row.tipo_Usuario;
-                        document.cookie="name="+row.nombres;
                         document.getElementById("nombreUsuario").innerHTML="¡ Hola "+row.nombres+" !";
-                        //alert(row.tipo_Usuario);
                         $('#modLogin').modal('toggle');
                         $("#btnLogin").toggle();
                         $("#btnProfile").toggle();
-                        $("#nombreUsuario").toggle()
-                        
                     }
                     else
                         alert("Verifique sus datos.");
                 }
             });
         }
-
-
-
 
         else{
             document.getElementById("mailContainer").className=document.getElementById("mailContainer").className+" error";
@@ -199,6 +191,7 @@ function validaciones(mod){
             else{
                 if (!(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(campo.value))){
                     document.getElementById("mailRContainer").className=document.getElementById("mailRContainer").className+" error";
+                    datosCorrec=false;
                     alert("Dirección de correo inválida.")
             }
         }
@@ -748,13 +741,37 @@ function validaciones(mod){
     }
 }
 
+function getLogged(userID){
+    $.ajax({
+        url: "functions.php",
+        type: "post",
+        dataType: "json",
+        data: {method: 'getUserData', idUser: userID},
+        success: function (usuario, usser) {
+            if (usuario != null){
+                var name = usuario[0].name;
+                var type = usuario[0].tipoUsuario;
+                document.getElementById("nombreUsuario").innerHTML="¡ Hola "+name+" !";
+                if(type=="usuario"){
+                    $("#btnEscritorio").toggle();
+                    $("#btnSeccion").toggle();
+                }
+                else if(type=="reportero")
+                    $("#btnSeccion").toggle();
+            }   
+        },
+        error: function (result) {
+            alert("Ocurrio un error durante la obtencion de datos.");
+        }
+
+    });
+}
+
 function cerrarSesion(){
     $("#btnLogin").toggle();
     $("#btnProfile").toggle();
-    $("#nombreUsuario").toggle();
+    document.getElementById("nombreUsuario").innerHTML="¡ Hola !";
     document.cookie = "user=0";
-    document.cookie = "type=''";
-    document.cookie = "name=''";
 }
 
 function limpiar(mod){
@@ -1716,29 +1733,7 @@ function getSeccionesToNavbar(){
         data: {method: 'getSecciones'},
         success: function (secciones) {
             $.each(secciones, function(idx, sect){
-                //alert(secciones[idx].color);
-                /*var colorSeccion;
-                switch(secciones[idx].color){
-                    case 'rojo':
-                        //colorSeccion="#7c1d14";
-                        colorSeccion="rojo";
-                        break;
-                    case 'verde':
-                        //colorSeccion="#147c17";
-                        colorSeccion="verde";
-                        break;
-                    case 'amari':
-                        //colorSeccion="#FADA5E";
-                        colorSeccion="amari";
-                        break;
-                    case 'azul':
-                        //colorSeccion="#0b81d6";
-                        colorSeccion="azyl";
-                        break;
-                    case 'rosa':
-                        //colorSeccion="#ff70d7";
-                        break;
-                }*/
+
                 $( ".seccionesNav" ).append(
                     //"<li id='"+secciones[idx].id+"' class='nav-item active'><a class='nav-link seccionNav' style='color:"+colorSeccion +"!important;' href='main.html'>"+secciones[idx].name+"</a></li>");
                     "<li id='"+secciones[idx].id+"' class='nav-item active "+secciones[idx].color+"'><a class='nav-link seccionNav'  href='noticiasSeccion.php'>"+secciones[idx].name+"</a></li>");
@@ -1753,7 +1748,7 @@ function setOrden(){
     $("ol.allSections li").each(function() {
        
         //alert("Orden: "+index+"idSeccion: "+id );
-        var index = ($( "li" ).index( this ))-9;
+        var index = ($( "li" ).index( this ))-8;
         var id = $(this).find(".ordenSec").text();
         $.ajax({
             url: "functions.php",
@@ -1761,18 +1756,21 @@ function setOrden(){
             dataType: "json",
             data: {method: 'setOrden',newOrden: index,idSeccion:id},
             success: function (result) {
-                if(result.msg)
+                if(result.msg){
                     error = false; 
+                }
                 else
                     error = true;
             }
-    
+            
+          
         });  
-  
     });
 
-    if (!error)
+    if (!error){
         alert("Cambios guardados");
+        emptyListSeccion();
+    }
     else
         alert("Error en la actualización.");
     
@@ -1846,15 +1844,15 @@ function confirmarEliminarSeccion(){
             $.each(secciones, function(idx, sect){
                 var id=secciones[idx].id;
                 var name=secciones[idx].name;
-
                 var eliminar=confirm("Se quiere eliminar la sección: "+name+". ¿Proceder?");
 
                 if(eliminar)
                     deleteSeccion(id);
+                    
+                
                 else
                     regresarSeccion(id);
               });
-             
         }
 
     }); 
@@ -1868,14 +1866,10 @@ function regresarSeccion(id){
        success: function (result) {
             if(result.msg){
                 alert("¡Sección restaurada!");
-                //emptyListSeccion();    
-                //$('#modChangeN').modal('toggle');
-                //emptyListSeccion();    
             }
             else
                 alert("Error en el proceso.");
          }
-
     });  
 }
 function deleteSeccion(idEliminar){
@@ -1889,9 +1883,7 @@ function deleteSeccion(idEliminar){
            success: function (result) {
                 if(result.msg){
                     alert("¡Sección eliminada!");
-                    //emptyListSeccion();    
                     $('#modChangeN').modal('toggle');
-                    //emptyListSeccion();    
                 }
                 else
                     alert("Error en el proceso.");
@@ -1902,12 +1894,7 @@ function deleteSeccion(idEliminar){
 }
 
 function getSeccionPendienteElim(id){
-    //var eliminar=false;
-    //var seccion;
     if(id!=0){
-        //eliminar=confirm("Se quiere eliminar la sección: "+seccionPorEliminar);
-       // if(eliminar){
-
             $.ajax({
                 url: "functions.php",
                 type: "post",
@@ -1915,15 +1902,10 @@ function getSeccionPendienteElim(id){
                 data: {method: 'getSectionName', idSeccionE: id},
                 success: function (secciones) {
                     if (secciones != null){
-                        
                         alert("Petición enviada. Se quiere eliminar: "+secciones[0].nombreSection);
-                        //return seccion;
                     }    
                 }
             }); 
-
-        //}
-            //deleteSeccion(idSeccionPorEliminar);
     }
 }
 
@@ -2384,7 +2366,6 @@ function aprobarNoticia(){
 
 function devolverNoticia(){  
     var comment = document.getElementById('eComments').value;
-    
     if (comment == "")
         document.getElementById('eComments').className=document.getElementById('eComments').className+" error";
     else {
@@ -2555,9 +2536,7 @@ function getVideoMedia(idNoticia, carrusel_add){
         data: {method: 'getVideoMedia', idNot: idNoticia},
         success: function (noticias) {
             if (noticias != null){
-
                 const container =  document.getElementById(carrusel_add);
-
                 $.each(noticias, function(idx, notiRed){
                     container.innerHTML += '<div class="carousel-item"><video class="video-fluid" onplay="pauseCar();" onpause="playCar();" controls>' +
                     '<source src=data:video/' + noticias[idx].ext + ';base64,' + noticias[idx].video + ' type="video/mp4"></video></div>';
@@ -2607,4 +2586,36 @@ function whichMonth(number){
     if (number == 12)
         return 'Diciembre' 
 }
+
+function displaySearchResults(palabraT, palabraD, palabraC, fechaInicial, fechaFinal){
+    document.getElementById("contenedorResultados").innerHTML = "";
+    $.ajax({
+        url: "functions.php",
+        type: "post",
+        dataType: "json",
+        data: {method: 'getSearchResult',tituloB:palabraT,descripB:palabraD,claveB:palabraC,fechaIB:fechaInicial,fechaFB:fechaFinal},
+        success: function (noticias) {
+            $.each(noticias, function(idx, noti){
+                
+                //alert(noticias[idx].id);
+                $( "#contenedorResultados").append(
+                    
+                    "<div class='row' id='noticiaBG'> <div class='col-md-12' id='noticiaBody'> <div class='row'> <div class='col-md-12'> <hr> </div>"+
+                    "<div class='card mb-6 tarjetaResult' style='border-color: black;'> <div class='row no-gutters'> <div class='col-md-3 imgTarjeta'><br>"+
+                    "<img src='http://via.placeholder.com/150x100' class='card-img' alt='Imagen no disponible'> </div> <div class='col-md-9'> <div class='card-body'>"+
+                    "<h5 class='card-title'><a href=''>"+noticias[idx].titulo+"</a> </h5>"+
+                        "<p class='card-text'>"+noticias[idx].descripcionCorta+"</p>"+
+                       "<div class='col-md-9' id='datePublicacion'>"+noticias[idx].fechaPublicada+"</div>"+
+                       "</div></div> </div></div> <div class='col-md-12'><hr> </div></div> </div> </div>"
+                );
+              
+                });
+             
+        }
+    }); 
+}
+
+
+
+
 

@@ -28,8 +28,8 @@
             $(function  () {
             $("ol.example").sortable();
             });
-        getSeccionesToNavbar();
-        getSecciones();
+            getSeccionesToNavbar();
+            getSecciones();
 
 
             $("body").on("click", ".btnEdit",function(){

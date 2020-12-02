@@ -1,4 +1,4 @@
-
+DROP PROCEDURE IF EXISTS sp_getUsersLogin;
 DELIMITER //
 CREATE PROCEDURE sp_getUsersLogin(
     IN in_Email varchar(50),
@@ -9,6 +9,7 @@ CREATE PROCEDURE sp_getUsersLogin(
     END //
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS sp_userSignUp;
 DELIMITER //
 CREATE PROCEDURE sp_userSignUp(
 	IN in_userType varchar(15),
@@ -27,6 +28,7 @@ CREATE PROCEDURE sp_userSignUp(
     END //
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS sp_getAllUsers;
 DELIMITER //
 CREATE PROCEDURE sp_getAllUsers(
 	IN typeGet int
@@ -41,6 +43,7 @@ CREATE PROCEDURE sp_getAllUsers(
     END //
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS sp_getUserData;
 DELIMITER //
 CREATE PROCEDURE sp_getUserData(
 	IN in_userID int
@@ -51,6 +54,7 @@ CREATE PROCEDURE sp_getUserData(
     END //
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS sp_bajaUser;
 DELIMITER //
 CREATE PROCEDURE sp_bajaUser(
 	IN in_userID int
@@ -60,6 +64,7 @@ CREATE PROCEDURE sp_bajaUser(
     END //
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS sp_editUser;
 DELIMITER //
 CREATE PROCEDURE sp_editUser(
 	IN in_userID int,
@@ -76,6 +81,7 @@ CREATE PROCEDURE sp_editUser(
     END //
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS sp_editUserSelf;
 DELIMITER //
 CREATE PROCEDURE sp_editUserSelf(
 	IN in_userID int,
@@ -91,6 +97,7 @@ CREATE PROCEDURE sp_editUserSelf(
     END //
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS sp_updateImg;
 DELIMITER //
 CREATE PROCEDURE sp_updateImg(
 	IN in_userID int,
@@ -102,6 +109,7 @@ CREATE PROCEDURE sp_updateImg(
     END //
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS sp_addSection;
 DELIMITER //
 CREATE PROCEDURE sp_addSection(
 	IN in_sectName varchar(30),
@@ -116,6 +124,7 @@ WHERE NOT EXISTS (SELECT nombre_Seccion FROM seccion WHERE nombre_Seccion =in_se
     END //
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS sp_getSections;
 DELIMITER //
 CREATE PROCEDURE sp_getSections()
     BEGIN
@@ -124,6 +133,7 @@ CREATE PROCEDURE sp_getSections()
     END //
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS sp_getSectionsByID;
 DELIMITER //
 CREATE PROCEDURE sp_getSectionsByID()
     BEGIN
@@ -131,6 +141,7 @@ CREATE PROCEDURE sp_getSectionsByID()
     END //
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS sp_getSectionsEliminarPend;
 DELIMITER //
 CREATE PROCEDURE sp_getSectionsEliminarPend()
     BEGIN
@@ -138,8 +149,7 @@ CREATE PROCEDURE sp_getSectionsEliminarPend()
     END //
 DELIMITER ;
 
-
-
+DROP PROCEDURE IF EXISTS sp_noticiaRegister;
 DELIMITER //
 CREATE PROCEDURE sp_noticiaRegister(
 	IN in_secNot int,
@@ -166,6 +176,7 @@ CREATE PROCEDURE sp_noticiaRegister(
     END //
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS sp_insertMedia;
 DELIMITER //
 CREATE PROCEDURE sp_insertMedia(
 	IN in_media longblob,
@@ -178,6 +189,7 @@ CREATE PROCEDURE sp_insertMedia(
     END //
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS sp_noticiaUpdate;
 DELIMITER //
 CREATE PROCEDURE sp_noticiaUpdate(
 	IN in_notID int,
@@ -207,6 +219,7 @@ CREATE PROCEDURE sp_noticiaUpdate(
     END //
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS sp_setOrdenSeccion;
 DELIMITER //
 CREATE PROCEDURE sp_setOrdenSeccion(
 	IN in_orden tinyint,
@@ -217,6 +230,7 @@ CREATE PROCEDURE sp_setOrdenSeccion(
     END //
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS sp_lastInsertedID;
 DELIMITER //
 CREATE PROCEDURE sp_lastInsertedID()
     BEGIN
@@ -224,6 +238,7 @@ CREATE PROCEDURE sp_lastInsertedID()
     END //
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS sp_insertPalClav;
 DELIMITER //
 CREATE PROCEDURE sp_insertPalClav(
 	IN in_pal_Clave varchar(20),
@@ -234,6 +249,7 @@ CREATE PROCEDURE sp_insertPalClav(
     END //
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS sp_getNoti;
 DELIMITER //
 CREATE PROCEDURE sp_getNoti(
 	IN in_ReporteroID int,
@@ -265,6 +281,7 @@ CREATE PROCEDURE sp_getNoti(
     END //
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS sp_getRecentNews;
 DELIMITER //
 CREATE PROCEDURE sp_getRecentNews(
 )
@@ -275,6 +292,7 @@ CREATE PROCEDURE sp_getRecentNews(
     END //
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS sp_getMostViewed;
 DELIMITER //
 CREATE PROCEDURE sp_getMostViewed(
 )
@@ -286,6 +304,7 @@ CREATE PROCEDURE sp_getMostViewed(
     END //
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS sp_getNewsBySection;
 DELIMITER //
 CREATE PROCEDURE sp_getNewsBySection(
 	IN in_SectionID int,
@@ -305,6 +324,7 @@ CREATE PROCEDURE sp_getNewsBySection(
     END //
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS sp_getNotiDev;
 DELIMITER //
 CREATE PROCEDURE sp_getNotiDev(
 	IN in_ReporteroID int
@@ -317,6 +337,7 @@ CREATE PROCEDURE sp_getNotiDev(
     END //
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS sp_getSentNotis;
 DELIMITER //
 CREATE PROCEDURE sp_getSentNotis(
     IN in_estado varchar(15)
@@ -329,6 +350,7 @@ CREATE PROCEDURE sp_getSentNotis(
 	END //
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS sp_getFullNews;
 DELIMITER //
 CREATE PROCEDURE sp_getFullNews(
     IN in_newsID int
@@ -340,6 +362,7 @@ CREATE PROCEDURE sp_getFullNews(
 	END //
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS sp_getKeywordsByNewsID;
 DELIMITER //
 CREATE PROCEDURE sp_getKeywordsByNewsID(
 	IN in_NoticiaID int
@@ -349,6 +372,7 @@ CREATE PROCEDURE sp_getKeywordsByNewsID(
     END //
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS sp_deleteNoticia;
 DELIMITER //
 CREATE PROCEDURE sp_deleteNoticia(
 	IN in_NoticiaID int
@@ -358,6 +382,7 @@ CREATE PROCEDURE sp_deleteNoticia(
     END //
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS sp_updateNotStatus;
 DELIMITER //
 CREATE PROCEDURE sp_updateNotStatus(
 	IN in_NoticiaID int,
@@ -373,6 +398,7 @@ CREATE PROCEDURE sp_updateNotStatus(
     END //
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS sp_saveComment;
 DELIMITER //
 CREATE PROCEDURE sp_saveComment(
 	IN in_EditorID int,
@@ -384,6 +410,7 @@ CREATE PROCEDURE sp_saveComment(
     END //
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS sp_deleteOldFeed;
 DELIMITER //
 CREATE PROCEDURE sp_deleteOldFeed(
 	IN in_FeedID int
@@ -393,15 +420,17 @@ CREATE PROCEDURE sp_deleteOldFeed(
     END //
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS sp_getSeccion;
 DELIMITER //
 CREATE PROCEDURE sp_getSeccion(
 	IN in_idSec int
 )
     BEGIN
-		select id_Seccion,nombre_Seccion,color_Seccion from nombreSeccion_View WHERE id_Seccion=in_idSec;
+		select id_Seccion,nombre_Seccion from nombreSeccion_View WHERE id_Seccion=in_idSec;
     END //
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS sp_getSeccionData;
 DELIMITER //
 CREATE PROCEDURE sp_getSeccionData(
 	IN in_idSec int
@@ -411,6 +440,7 @@ CREATE PROCEDURE sp_getSeccionData(
     END //
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS sp_updateSeccion;
 DELIMITER //
 CREATE PROCEDURE sp_updateSeccion(
 	IN in_idSec int,
@@ -422,7 +452,7 @@ CREATE PROCEDURE sp_updateSeccion(
     END //
 DELIMITER ;
 
-
+DROP PROCEDURE IF EXISTS sp_deleteSeccion;
 DELIMITER //
 CREATE PROCEDURE sp_deleteSeccion(
 	IN in_idSec int
@@ -432,6 +462,7 @@ CREATE PROCEDURE sp_deleteSeccion(
     END //
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS sp_askDeleteSeccion;
 DELIMITER //
 CREATE PROCEDURE sp_askDeleteSeccion(
 	IN in_idSec int
@@ -441,6 +472,7 @@ CREATE PROCEDURE sp_askDeleteSeccion(
     END //
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS sp_sectionTo1;
 DELIMITER //
 CREATE PROCEDURE sp_sectionTo1(
 	IN in_idSec int
@@ -450,6 +482,7 @@ CREATE PROCEDURE sp_sectionTo1(
     END //
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS sp_getMedia;
 DELIMITER //
 CREATE PROCEDURE sp_getMedia(
 	IN in_NoticiaID int,
@@ -466,6 +499,7 @@ CREATE PROCEDURE sp_getMedia(
     END //
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS sp_oneMoreView;
 DELIMITER //
 CREATE PROCEDURE sp_oneMoreView(
 	IN in_NoticiaID int
@@ -474,3 +508,27 @@ CREATE PROCEDURE sp_oneMoreView(
 		UPDATE noticia SET cantidad_Vistas = cantidad_Vistas + 1 WHERE id_Noticia = in_NoticiaID;
     END //
 DELIMITER ;
+
+DROP PROCEDURE IF EXISTS sp_Search;
+DELIMITER //
+CREATE PROCEDURE sp_Search(
+	IN in_Opc VARCHAR(1),
+    IN in_titulo VARCHAR(50),
+    IN in_palabra VARCHAR(50),
+    IN in_clave VARCHAR(20),
+    IN in_fechaDesde DATE,
+    IN in_fechaHasta DATE
+)
+BEGIN 
+	IF in_Opc = 'B' THEN
+		IF in_titulo='null' THEN SELECT null INTO in_titulo; END IF;
+		IF in_palabra='null' THEN SELECT null INTO in_palabra; END IF;
+        IF in_clave='null' THEN SELECT null INTO in_clave; END IF;
+        SELECT id_Noticia, titulo_Noticia, fecha_Publicacion, fecha_Creacion,
+		descripcion_Corta, estado, contenido_media, blob_type, PC.pal_Clave
+		FROM noticiaEssayMedia 
+		JOIN palabra_clave PC ON id_Noticia=id_NoticiaProp
+        WHERE estado=4 AND ((titulo_Noticia LIKE CONCAT("%",in_titulo,"%"))) OR ((descripcion_Corta LIKE CONCAT("%",in_palabra,"%"))) OR ((PC.pal_Clave LIKE CONCAT("%",in_clave,"%"))) AND ((DATE(fecha_Creacion) >= in_fechaDesde AND DATE(fecha_Creacion) <= in_fechaHasta)) GROUP BY id_Noticia ORDER BY fecha_Creacion DESC ;
+	END IF;
+	
+END//

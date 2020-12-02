@@ -1,3 +1,14 @@
+<?php
+$phpVar = 0;
+if(!isset($_COOKIE['user'])){
+     $phpVar = $_COOKIE['user'];
+    
+    $cookie_name = "user";
+    setcookie($cookie_name, $phpVar, time() + (86400 * 30), "/"); // 86400 = 1 day*/
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -35,37 +46,36 @@
 
         function set(){
           <?php 
-          $phpVar =  ISSET($_COOKIE['user']);
-          $cookie_name = "user";
-          setcookie($cookie_name, $phpVar, time() + (86400 * 30), "/"); // 86400 = 1 day*/
+          //$phpVar=0;
+          if(!isset($_COOKIE['user']))
+            if($_COOKIE['user']!=0){
+                $phpVar =  $_COOKIE['user'];
+
+                $cookie_name = "user";
+                setcookie($cookie_name, $phpVar, time() + (86400 * 30), "/"); // 86400 = 1 day*/
+            }
           ?>
           //alert("done");
         }
        
         function get(){
             <?php
-            $currentUser = ISSET($_COOKIE["user"]);
-            $currentType = ISSET($_COOKIE["type"]);
-            $currentName = ISSET($_COOKIE["name"]);
+            $cookie_name="user";
+            $cookie_value = 0;
+            if(!isset($_COOKIE[$cookie_name])) {
+                setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/"); // 86400 = 1 day
+            }
+            $currentUser =$_COOKIE["user"];
             ?>
             var currentU = "<?php echo $currentUser ?>";
-            var currentT = "<?php echo $currentType ?>";
-            var currentN = "<?php echo $currentName ?>";
             //alert(currentU);
             if(currentU==0||currentU==null||currentU=="")
                 $("#btnProfile").toggle();
             
             else{
-                document.getElementById("nombreUsuario").innerHTML="¡ Hola "+currentN+" !";
+                getLogged(currentU);
                 $("#btnLogin").toggle();
-                if(currentT=="usuario"){
-                    $("#btnEscritorio").toggle();
-                    $("#btnSeccion").toggle();
-                }
-                else if(currentT=="reportero")
-                    $("#btnSeccion").toggle();
             }
-                
         }
     </script>
 </head>
@@ -108,10 +118,11 @@
                 -->
             </ul>
             <ul class="navbar-nav ml-auto">
+            <label id="nombreUsuario"></label>
                 <li class="nav-item" id="btnLogin">
                     <a class="nav-link" href="" data-toggle="modal" data-target="#modLogin" onclick="cleanInput('emailLog'), cleanInput('pwdLog')">Iniciar Sesion</a>
                 </li>
-            <label id="nombreUsuario"></label>
+           
                 <li class="nav-item dropdown" id="btnProfile" style="position: relative;">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMA" role="button"
                         data-toggle="dropdown" >Mi Cuenta</a>

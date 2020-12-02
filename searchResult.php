@@ -1,3 +1,13 @@
+<?php
+$phpVar = 0;
+if(!isset($_COOKIE['user'])){
+     $phpVar = $_COOKIE['user'];
+    
+    $cookie_name = "user";
+    setcookie($cookie_name, $phpVar, time() + (86400 * 30), "/"); // 86400 = 1 day*/
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,72 +34,108 @@
           get();
           setupImage('agregarFoto', 'displayImg', '.preview-image');
           getSeccionesToNavbar();
+          var palabraBuscar = getUrlParameter('palabra');
+          document.getElementById("palabraB").innerHTML="Resultados de: "+palabraBuscar; 
+          document.getElementById("BRSearch").value=palabraBuscar;
+          //document.getElementById("rangoFinalFechaBuscar").datepicker( "option", "gotoCurrent", true );
+          var date=(curday('-'));
+          document.getElementById("rangoFinalFechaBuscar").value = date;
+          document.getElementById("rangoInicialFechaBuscar").value = date;
+          if(palabraBuscar!="")
+            displaySearchResults(palabraBuscar, "null", "null", date, date);
+          
         });
 
-        
-       
-        function getSearchData(){
-          
-          var palabraBuscar=document.getElementById("BRSearch").value;
-          alert("Palabra: "+palabraBuscar);
+        var curday = function(sp){
+          today = new Date();
+          var dd = today.getDate();
+          var mm = today.getMonth()+1; //As January is 0.
+          var yyyy = today.getFullYear();
+
+          if(dd<10) dd='0'+dd;
+          if(mm<10) mm='0'+mm;
+          return (yyyy+sp+mm+sp+dd);
+        };
+
+        function search(){
+            var palabraBuscar=document.getElementById("BRSearch").value;
+            url = 'searchResult.php?palabra=' + palabraBuscar;
+            //window.location.replace(url);
+            window.location = url;
+            //alert("Palabra: "+palabraBuscar);
         }
-        
+       
         function getSearchDataFiltros(){
+          var palabraBuscar=document.getElementById("BRSearch").value;
           var rangoInicial=document.getElementById("rangoInicialFechaBuscar").value;
           var rangoFinal=document.getElementById("rangoFinalFechaBuscar").value;
-          alert("Fecha inicial: "+rangoInicial+" Fecha final: "+rangoFinal);
+          //alert("Fecha inicial: "+rangoInicial+" Fecha final: "+rangoFinal);
+          var titulo="null";
           if($("#fT").prop("checked"))
-            alert("Filtro titulo.");
+            titulo=palabraBuscar;
+          var desc="null";
           if($("#fD").prop("checked"))
-            alert("Filtro descripcion.");
+            desc=palabraBuscar;
+          var clave="null";
           if($("#fC").prop("checked"))
-            alert("Filtro clave.");
-     
+            clave=palabraBuscar;
+          
+          displaySearchResults(titulo, desc, clave, rangoInicial, rangoFinal);
+          
         }
 
         function set(){
           <?php 
-          $phpVar =  $_COOKIE['user'];
-          $cookie_name = "user";
-          setcookie($cookie_name, $phpVar, time() + (86400 * 30), "/"); // 86400 = 1 day
-          ?>
-          //alert("done");
-        }
+          //$phpVar=0;
+          if(!isset($_COOKIE['user']))
+            if($_COOKIE['user']!=0){
+                $phpVar =  $_COOKIE['user'];
 
-        function set(){
-          <?php 
-          $phpVar =  ISSET($_COOKIE['user']);
-          $cookie_name = "user";
-          setcookie($cookie_name, $phpVar, time() + (86400 * 30), "/"); // 86400 = 1 day*/
+                $cookie_name = "user";
+                setcookie($cookie_name, $phpVar, time() + (86400 * 30), "/"); // 86400 = 1 day*/
+            }
           ?>
           //alert("done");
         }
+       
        
         function get(){
             <?php
-            $currentUser = ISSET($_COOKIE["user"]);
-            $currentType = ISSET($_COOKIE["type"]);
-            $currentName = ISSET($_COOKIE["name"]);
+            $cookie_name="user";
+            $cookie_value = 0;
+            if(!isset($_COOKIE[$cookie_name])) {
+                setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/"); // 86400 = 1 day
+            }
+            $currentUser =$_COOKIE["user"];
             ?>
             var currentU = "<?php echo $currentUser ?>";
-            var currentT = "<?php echo $currentType ?>";
-            var currentN = "<?php echo $currentName ?>";
             //alert(currentU);
             if(currentU==0||currentU==null||currentU=="")
                 $("#btnProfile").toggle();
             
             else{
-                document.getElementById("nombreUsuario").innerHTML="¡ Hola "+currentN+" !";
+                getLogged(currentU);
                 $("#btnLogin").toggle();
-                if(currentT=="usuario"){
-                    $("#btnEscritorio").toggle();
-                    $("#btnSeccion").toggle();
-                }
-                else if(currentT=="reportero")
-                    $("#btnSeccion").toggle();
             }
-                
         }
+
+
+
+
+        var getUrlParameter = function getUrlParameter(sParam) {
+    var sPageURL = window.location.search.substring(1),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+        }
+    }
+};
     </script>
 
 </head>
@@ -108,7 +154,7 @@
                     <form class="form-inline my-2 my-lg-0" method="GET" action="searchResult.php">
                         <input class="form-control mr-sm-2" placeholder="Buscar..." aria-label="Buscar"
                             id="BRSearch">
-                        <button class="btn btn-outline-danger" type="submit" id="BTSearch">Buscar</button>
+                            <button class="btn btn-outline-danger" type="button" id="BTSearch" onclick="search();">Buscar</button>
                     </form>
                 </li>                  
             </ul>
@@ -130,10 +176,11 @@
                 -->
             </ul>
             <ul class="navbar-nav ml-auto">
+            <label id="nombreUsuario">¡ Hola!</label>
+
                 <li class="nav-item" id="btnLogin">
                     <a class="nav-link" href="" data-toggle="modal" data-target="#modLogin" onclick="cleanInput('emailLog'), cleanInput('pwdLog')">Iniciar Sesion</a>
                 </li>
-            <label id="nombreUsuario"></label>
                 <li class="nav-item dropdown" id="btnProfile" style="position: relative;">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMA" role="button"
                         data-toggle="dropdown" >Mi Cuenta</a>
@@ -278,149 +325,30 @@
     <div class="container-fluid padding" id="cuerpoNot">          
         <div class="row">
             <div class="col-md-9">   
+            
                 <div class="row" id="noticiaHeader">        
                     <div class="col-md-1" id="sectionHeader"></div>        
                     <div class="col-md-11" id="tituloNoticia">
-                        Resultados de "palabra"
+                        <label id="palabraB"> Resultados de: </label>
                         <div id="contenedorDatePicker datepicker-container" style="margin-top: 0.5em; margin-bottom: 0.5em; font-size:medium !important;">
                         <label for="rangoInicialFechaBuscar" style="color:whitesmoke; font-family: 'Roboto', sans-serif !important;">Desde: </label>
                         <input type="date" name="rangoInicialFechaBuscar" id="rangoInicialFechaBuscar" class="col-md-6" style="width:160px;" onfocus="cleanTextarea('rangoInicialFechaBuscar')">
                         <label for="rangoFinalFechaBuscar"  style="color:whitesmoke; font-family: 'Roboto', sans-serif !important;">Hasta: </label>
                         <input type="date" name="rangoFinalFechaBuscar" id="rangoFinalFechaBuscar" class="col-md-6" style="width:160px;" onfocus="cleanTextarea('rangoFinalFechaBuscar')">
-                        <input type="checkbox" name="filtroTitulo" id="fT" value="1" style="margin-left: 1em;"> Título <input type="checkbox" name="filtroDesc" id="fD" value="2" style="margin-left: 1em;"> Descripción<input type="checkbox" name="filtroClave" id="fC" value="3" style="margin-left: 1em;"> Palabra clave
+                        <input type="checkbox" name="filtroTitulo" id="fT" value="1" style="margin-left: 1em;" checked="true"> Título <input type="checkbox" name="filtroDesc" id="fD" value="2" style="margin-left: 1em;"> Descripción<input type="checkbox" name="filtroClave" id="fC" value="3" style="margin-left: 1em;"> Palabra clave
                         <button class="btn btn-outline-danger" onclick="getSearchDataFiltros()" id="BTSearchFiltros" style="margin-left: 1em;">Aceptar</button>
                       </div>
                     </div>
                 </div>
+                <div id="contenedorResultados">
                 
-                <div class="row" id="noticiaBG">
-                    <div class="col-md-12" id="noticiaBody">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <hr>
-                            </div>
-                                 <!-- TARJETA HORIZONTAL -->
-                                 <div class="card mb-6 tarjetaResult" style="border-color: black;">
-                                    <div class="row no-gutters">
-                                      <div class="col-md-3 imgTarjeta"><br>
-                                        <img src="http://via.placeholder.com/150x100" class="card-img" alt="...">
-                                      </div>
-                                      <div class="col-md-9">
-                                        <div class="card-body">
-                                          <h5 class="card-title"><a href="">TITULO NOTICIA</a> </h5>
-                                          <p class="card-text">NOTICIA NOTICIA NOTICIA NOTICIA NOTICIA NOTICIA NOTICIA NOTICIA NOTICIA NOTICIA NOTICIA
-                                            NOTICIA NOTICIA NOTICIA NOTICIA NOTICIA NOTICIA NOTICIA NOTICIA NOTICIA NOTICIA NOTICIA
-                                          </p>              
-                                          <div class="col-md-9" id="datePublicacion">10 de Octubre del 2020 a las 8:18am</div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                            <div class="col-md-12">
-                                <hr>
-                            </div>
-                        </div>
-                    </div>              
-                   
                 </div>
-                
-                <div class="row" id="noticiaBG">
-                    <div class="col-md-12" id="noticiaBody">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <hr>
-                            </div>
-                                 <!-- TARJETA HORIZONTAL -->
-                                 <div class="card mb-6 tarjetaResult" style="border-color: black;">
-                                    <div class="row no-gutters">
-                                      <div class="col-md-3 imgTarjeta"><br>
-                                        <img src="http://via.placeholder.com/150x100" class="card-img" alt="...">
-                                      </div>
-                                      <div class="col-md-9">
-                                        <div class="card-body">
-                                          <h5 class="card-title"><a href="">TITULO NOTICIA</a> </h5>
-                                          <p class="card-text">NOTICIA NOTICIA NOTICIA NOTICIA NOTICIA NOTICIA NOTICIA NOTICIA NOTICIA NOTICIA NOTICIA
-                                            NOTICIA NOTICIA NOTICIA NOTICIA NOTICIA NOTICIA NOTICIA NOTICIA NOTICIA NOTICIA NOTICIA
-                                          </p>
-                                          <div class="col-md-9" id="datePublicacion">10 de Octubre del 2020 a las 8:18am</div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div class="col-md-12">
-                                    <hr>
-                                </div>        
-                        </div>
-                    </div>              
-                   
-                </div>
-                
-                <div class="row" id="noticiaBG">
-                    <div class="col-md-12" id="noticiaBody">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <hr>
-                            </div>
-                                 <!-- TARJETA HORIZONTAL -->
-                                 <div class="card mb-6 tarjetaResult" style="border-color: black;">
-                                    <div class="row no-gutters">
-                                      <div class="col-md-3 imgTarjeta"><br>
-                                        <img src="http://via.placeholder.com/150x100" class="card-img" alt="...">
-                                      </div>
-                                      <div class="col-md-9">
-                                        <div class="card-body">
-                                          <h5 class="card-title"><a href="">TITULO NOTICIA</a> </h5>
-                                          <p class="card-text">NOTICIA NOTICIA NOTICIA NOTICIA NOTICIA NOTICIA NOTICIA NOTICIA NOTICIA NOTICIA NOTICIA
-                                            NOTICIA NOTICIA NOTICIA NOTICIA NOTICIA NOTICIA NOTICIA NOTICIA NOTICIA NOTICIA NOTICIA
-                                          </p>
-                                          <div class="col-md-9" id="datePublicacion">10 de Octubre del 2020 a las 8:18am</div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div class="col-md-12">
-                                    <hr>
-                                </div>
-                            </div>
-                    </div>              
-                   
-                </div>
-
-
-                <div class="row" id="noticiaBG">
-                    <div class="col-md-12" id="noticiaBody">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <hr>
-                            </div>
-                                 <!-- TARJETA HORIZONTAL -->
-                                 <div class="card mb-6 tarjetaResult" style="border-color: black;">
-                                    <div class="row no-gutters">
-                                      <div class="col-md-3 imgTarjeta"><br>
-                                        <img src="http://via.placeholder.com/150x100" class="card-img" alt="...">
-                                      </div>
-                                      <div class="col-md-9">
-                                        <div class="card-body">
-                                          <h5 class="card-title"><a href="">TITULO NOTICIA</a> </h5>
-                                          <p class="card-text">NOTICIA NOTICIA NOTICIA NOTICIA NOTICIA NOTICIA NOTICIA NOTICIA NOTICIA NOTICIA NOTICIA
-                                            NOTICIA NOTICIA NOTICIA NOTICIA NOTICIA NOTICIA NOTICIA NOTICIA NOTICIA NOTICIA NOTICIA
-                                          </p>
-                                          <div class="col-md-9" id="datePublicacion">10 de Octubre del 2020 a las 8:18am</div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  
-                                    </div>
-                                    <div class="col-md-12">
-                                        <hr>
-                                    </div>
-                            </div>
-                    </div>              
-                   
-                </div>
-
+               
 
             </div>
+
+
+
             <!--Populares-->
             <div class="col-md-3 tarjetaPrincAside">
                 <br>
@@ -507,6 +435,11 @@
 
                 </div>
             </div>
+
+
+
+
+            
         </div>
 
 

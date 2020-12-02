@@ -1,3 +1,13 @@
+<?php
+$phpVar = 0;
+if(!isset($_COOKIE['user'])){
+     $phpVar = $_COOKIE['user'];
+    
+    $cookie_name = "user";
+    setcookie($cookie_name, $phpVar, time() + (86400 * 30), "/"); // 86400 = 1 day*/
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,13 +36,27 @@
             displaySections(".allSections");
             get();
             getSeccionesToNavbar();
+        
         });
+
+        function search(){
+            var palabraBuscar=document.getElementById("BRSearch").value;
+            url = 'searchResult.php?palabra=' + palabraBuscar;
+            //window.location.replace(url);
+            window.location = url;
+            //alert("Palabra: "+palabraBuscar);
+        }
 
         function set(){
           <?php 
-          $phpVar =  ISSET($_COOKIE['user']);
-          $cookie_name = "user";
-          setcookie($cookie_name, $phpVar, time() + (86400 * 30), "/"); // 86400 = 1 day*/
+          //$phpVar=0;
+          if(!isset($_COOKIE['user']))
+            if($_COOKIE['user']!=0){
+                $phpVar =  $_COOKIE['user'];
+
+                $cookie_name = "user";
+                setcookie($cookie_name, $phpVar, time() + (86400 * 30), "/"); // 86400 = 1 day*/
+            }
           ?>
           //alert("done");
         }
@@ -44,39 +68,19 @@
             if(!isset($_COOKIE[$cookie_name])) {
                 setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/"); // 86400 = 1 day
             }
-            else
-            $cookie_name="type";
-            if(!isset($_COOKIE[$cookie_name])) {
-                setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/"); // 86400 = 1 day
-            }
-            $cookie_name="name";
-            if(!isset($_COOKIE[$cookie_name])) {   
-                setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/"); // 86400 = 1 day
-            }
-            
             $currentUser =$_COOKIE["user"];
-            $currentType = $_COOKIE["type"];
-            $currentName = $_COOKIE["name"];
             ?>
             var currentU = "<?php echo $currentUser ?>";
-            var currentT = "<?php echo $currentType ?>";
-            var currentN = "<?php echo $currentName ?>";
             //alert(currentU);
             if(currentU==0||currentU==null||currentU=="")
                 $("#btnProfile").toggle();
             
             else{
-                document.getElementById("nombreUsuario").innerHTML="¡ Hola "+currentN+" !";
+                getLogged(currentU);
                 $("#btnLogin").toggle();
-                if(currentT=="usuario"){
-                    $("#btnEscritorio").toggle();
-                    $("#btnSeccion").toggle();
-                }
-                else if(currentT=="reportero")
-                    $("#btnSeccion").toggle();
             }
-                
         }
+
     </script>
 
 
@@ -94,10 +98,10 @@
         <div class="collapse navbar-collapse" id="navBarColl">
             <ul class="navbar-nav ml-auto">
                 <li>
-                    <form class="form-inline my-2 my-lg-0" method="GET" action="searchResult.php">
+                    <form id="searchForm"class="form-inline my-2 my-lg-0" method="GET" >
                         <input class="form-control mr-sm-2" placeholder="Buscar..." aria-label="Buscar"
                             id="BRSearch">
-                        <button class="btn btn-outline-danger" type="submit" id="BTSearch">Buscar</button>
+                            <button class="btn btn-outline-danger" type="button" id="BTSearch" onclick="search();">Buscar</button>
                     </form>
                 </li>                  
             </ul>
@@ -119,10 +123,11 @@
                 -->
             </ul>
             <ul class="navbar-nav ml-auto">
+            <label id="nombreUsuario">¡ Hola!</label>
                 <li class="nav-item" id="btnLogin">
                     <a class="nav-link" href="" data-toggle="modal" data-target="#modLogin" onclick="cleanInput('emailLog'), cleanInput('pwdLog')">Iniciar Sesion</a>
                 </li>
-            <label id="nombreUsuario"></label>
+           
                 <li class="nav-item dropdown" id="btnProfile" style="position: relative;">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMA" role="button"
                         data-toggle="dropdown" >Mi Cuenta</a>
