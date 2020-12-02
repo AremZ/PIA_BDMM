@@ -105,6 +105,47 @@ function deleteActualSlide(carousel, slidesCarousel, whatIs){
         //indexSlidesImg--;
 }
 
+var curday = function(sp){
+  today = new Date();
+  var dd = today.getDate();
+  var mm = today.getMonth()+1; //As January is 0.
+  var yyyy = today.getFullYear();
+
+  if(dd<10) dd='0'+dd;
+  if(mm<10) mm='0'+mm;
+  return (yyyy+sp+mm+sp+dd);
+};
+
+function search(){
+    var palabraBuscar=document.getElementById("BRSearch").value;
+    url = 'searchResult.php?palabra=' + palabraBuscar;
+    //window.location.replace(url);
+    window.location = url;
+    //alert("Palabra: "+palabraBuscar);
+}
+
+function getSearchDataFiltros(){
+  var palabraBuscar=document.getElementById("BRSearch").value;
+  var rangoInicial=document.getElementById("rangoInicialFechaBuscar").value;
+  var rangoFinal=document.getElementById("rangoFinalFechaBuscar").value;
+  //alert("Fecha inicial: "+rangoInicial+" Fecha final: "+rangoFinal);
+
+  var titulo="null";
+  if($("#fT").prop("checked"))
+    titulo=palabraBuscar;
+
+  var desc="null";
+  if($("#fD").prop("checked"))
+    desc=palabraBuscar;
+    
+  var clave="null";
+  if($("#fC").prop("checked"))
+    clave=palabraBuscar;
+  
+  displaySearchResults(titulo, desc, clave, rangoInicial, rangoFinal);
+  
+}
+
 function validaciones(mod){
     
     if (mod==1){
@@ -140,7 +181,7 @@ function validaciones(mod){
         if (inputEmail && inputPass) {
             
             $.ajax({
-                url: "functions.php",
+                url: "PHP/users.php",
                 type: "post",
                 dataType: "json",
                 data: {method: 'userLogin', email: campoEmail.value, pass: campoPass.value},
@@ -246,7 +287,7 @@ function validaciones(mod){
             theForm.append("pfp", avatar);
 
             $.ajax({
-                url: "functions.php",
+                url: "PHP/users.php",
                 type: "post",
                 dataType: "json",
                 data: theForm,
@@ -270,22 +311,6 @@ function validaciones(mod){
                         alert("Correo ya registrado.");
                 }
             });
-
-            
-            /*var formData = new FormData(document.getElementById("sentImg"));
-            formData.append("method", 'setImage')
-
-            $.ajax({
-                url: "functions.php",
-                type: "POST",
-                dataType: "HTML",
-                data: formData,
-                cache: false,
-                contentType: false,
-                processData: false
-            }).done(function(echo){
-                alert(echo);
-            });*/
         }
     }
 
@@ -377,7 +402,7 @@ function validaciones(mod){
             theForm.append("pfp", avatar);
             
             $.ajax({
-                url: "functions.php",
+                url: "PHP/users.php",
                 type: "post",
                 dataType: "json",
                 data: theForm,
@@ -481,7 +506,7 @@ function validaciones(mod){
             theForm.append("pfp", avatar);
             
             $.ajax({
-                url: "functions.php",
+                url: "PHP/users.php",
                 type: "post",
                 dataType: "json",
                 data: theForm,
@@ -578,7 +603,7 @@ function validaciones(mod){
                 type = 'editor';                
                 
             $.ajax({
-                url: "functions.php",
+                url: "PHP/users.php",
                 type: "post",
                 dataType: "json",
                 data: {method: 'editUsers', userType: type, id: usuarioID.value, name: campoName.value, lastName: campoLN.value, lastName2: campoLN2.value, email: campoEmail.value, numTel: campoTel.value, pass: campoPass.value},
@@ -592,7 +617,7 @@ function validaciones(mod){
                             theForm.append("pfp", avatar);
                                   
                             $.ajax({
-                                url: "functions.php",
+                                url: "PHP/media.php",
                                 type: "post",
                                 dataType: "json",
                                 data: theForm,
@@ -689,7 +714,7 @@ function validaciones(mod){
             var usuarioID = document.getElementById("idReportero");
 
             $.ajax({
-                url: "functions.php",
+                url: "PHP/users.php",
                 type: "post",
                 dataType: "json",
                 data: {method: 'editUsers', userType: 'reportero', id: usuarioID.value, name: campoName.value, lastName: campoLN.value,
@@ -704,7 +729,7 @@ function validaciones(mod){
                             theForm.append("pfp", avatar);
                                   
                             $.ajax({
-                                url: "functions.php",
+                                url: "PHP/media.php",
                                 type: "post",
                                 dataType: "json",
                                 data: theForm,
@@ -743,7 +768,7 @@ function validaciones(mod){
 
 function getLogged(userID){
     $.ajax({
-        url: "functions.php",
+        url: "PHP/users.php",
         type: "post",
         dataType: "json",
         data: {method: 'getUserData', idUser: userID},
@@ -936,7 +961,7 @@ function checkNoticia(toggleWindow, action){
             mediaForm.append("sent", isSent);
 
             $.ajax({
-                url: "functions.php",
+                url: "PHP/noticias.php",
                 type: "post",
                 dataType: "json",
                 contentType: false,
@@ -966,7 +991,7 @@ function checkNoticia(toggleWindow, action){
             mediaForm.append("sent", isSent);
             
             $.ajax({
-                url: "functions.php",
+                url: "PHP/noticias.php",
                 type: "post",
                 dataType: "json",
                 contentType: false,
@@ -998,7 +1023,7 @@ function checkNoticia(toggleWindow, action){
             mediaForm.append("sent", isSent);
 
             $.ajax({
-                url: "functions.php",
+                url: "PHP/noticias.php",
                 type: "post",
                 dataType: "json",
                 contentType: false,
@@ -1031,7 +1056,7 @@ function checkNoticia(toggleWindow, action){
             mediaForm.append("sent", isSent);
 
             $.ajax({
-                url: "functions.php",
+                url: "PHP/noticias.php",
                 type: "post",
                 dataType: "json",
                 contentType: false,
@@ -1172,7 +1197,7 @@ function verificarDatos(){
         var pwd = document.getElementById("pwdPerfil").value;
 
         $.ajax({
-            url: "functions.php",
+            url: "PHP/users.php",
             type: "post",
             dataType: "json",
             data: {method: 'editUsersSelf', id: userID, name: firstName, lastName: secondName,
@@ -1187,7 +1212,7 @@ function verificarDatos(){
                         theForm.append("pfp", avatar);
                               
                         $.ajax({
-                            url: "functions.php",
+                            url: "PHP/media.php",
                             type: "post",
                             dataType: "json",
                             data: theForm,
@@ -1231,7 +1256,7 @@ function confirmDeleteSelf(){
     var userID = document.getElementById("idDataUser").value;
 
     $.ajax({
-        url: "functions.php",
+        url: "PHP/users.php",
         type: "post",
         dataType: "json",
         data: {method: 'deleteUser', id: userID},
@@ -1314,7 +1339,7 @@ function verRetro(idFeed ,feedback, idNot, title, feAcont, luAcont, descrSh, des
     getVideoMedia(idNot, 'carousel-videos');
  
     $.ajax({
-        url: "functions.php",
+        url: "PHP/feedback.php",
         type: "post",
         dataType: "json",
         data: {method: 'getKeyNotID', idNot: idNot},
@@ -1369,7 +1394,7 @@ function editarNoticia(idNot, title, feAcont, luAcont, descrSh, descrLg, idSecc)
     });
  
     $.ajax({
-        url: "functions.php",
+        url: "PHP/feedback.php",
         type: "post",
         dataType: "json",
         data: {method: 'getKeyNotID', idNot: idNot},
@@ -1417,7 +1442,7 @@ function confirmDeleteNoticia(){
     var noticiaDelete = document.getElementById("idNoticiaDelete").value;
 
     $.ajax({
-        url: "functions.php",
+        url: "PHP/noticias.php",
         type: "post",
         dataType: "json",
         data: {method: 'deleteNoti', id: noticiaDelete},
@@ -1477,7 +1502,7 @@ function confirmDeleteUsuario(){
     var userDelete = document.getElementById("idUserDelete").value;
 
     $.ajax({
-        url: "functions.php",
+        url: "PHP/users.php",
         type: "post",
         dataType: "json",
         data: {method: 'deleteUser', id: userDelete},
@@ -1527,7 +1552,7 @@ function confirmDeleteReportero(){
     var userDelete = document.getElementById("idReporteroDelete").value;
 ``
     $.ajax({
-        url: "functions.php",
+        url: "PHP/users.php",
         type: "post",
         dataType: "json",
         data: {method: 'deleteUser', id: userDelete},
@@ -1547,7 +1572,7 @@ function getAllUsers(){
     var userLogo;
     var upperFirst;
     $.ajax({
-        url: "functions.php",
+        url: "PHP/users.php",
         type: "post",
         dataType: "json",
         data: {method: 'getAllUsers'},
@@ -1589,7 +1614,7 @@ function getAllReporteros(){
     var userLogo;
     var upperFirst;
     $.ajax({
-        url: "functions.php",
+        url: "PHP/users.php",
         type: "post",
         dataType: "json",
         data: {method: 'getAllReporteros'},
@@ -1679,7 +1704,7 @@ function addSection(){
     
     if(name.value.length>0){
     $.ajax({
-        url: "functions.php",
+        url: "PHP/sections.php",
         type: "post",
         dataType: "json",
         data: {method: 'addSection',nameS: name.value,color:colorS, order:nuevoUltimo},
@@ -1703,7 +1728,7 @@ alert("Campo vacío.")
 
 function getSecciones(){
     $.ajax({
-        url: "functions.php",
+        url: "PHP/sections.php",
         type: "post",
         dataType: "json",
         data: {method: 'getSecciones'},
@@ -1728,7 +1753,7 @@ function getSecciones(){
 
 function getSeccionesToNavbar(){
     $.ajax({
-        url: "functions.php",
+        url: "PHP/sections.php",
         type: "post",
         dataType: "json",
         data: {method: 'getSecciones'},
@@ -1752,7 +1777,7 @@ function setOrden(){
         var index = ($( "li" ).index( this ))-8;
         var id = $(this).find(".ordenSec").text();
         $.ajax({
-            url: "functions.php",
+            url: "PHP/sections.php",
             type: "post",
             dataType: "json",
             data: {method: 'setOrden',newOrden: index,idSeccion:id},
@@ -1782,7 +1807,7 @@ function getSeccionEDT(idSectionEditar){
     secEditar=idSectionEditar;
     var seccionName=document.getElementById("sectM");
     $.ajax({
-        url: "functions.php",
+        url: "PHP/sections.php",
         type: "post",
         dataType: "json",
         data: {method: 'getSectionName', idSeccionE: idSectionEditar},
@@ -1813,7 +1838,7 @@ function updateSeccion(){
 
     if(nameS.value.length>0){
             $.ajax({
-                url: "functions.php",
+                url: "PHP/sections.php",
                 type: "post",
                 dataType: "json",
                 data: {method: 'updateSeccion',idSeccionE:secEditar,nameS: nameS.value,color:colorSe},
@@ -1837,7 +1862,7 @@ function updateSeccion(){
 
 function confirmarEliminarSeccion(){
     $.ajax({
-        url: "functions.php",
+        url: "PHP/sections.php",
         type: "post",
         dataType: "json",
         data: {method: 'getSeccionesEliminar'},
@@ -1860,7 +1885,7 @@ function confirmarEliminarSeccion(){
 }
 function regresarSeccion(id){
     $.ajax({
-        url: "functions.php",
+        url: "PHP/sections.php",
        type: "post",
         dataType: "json",
         data: {method: 'regresarSeccion',idSeccionE:id},
@@ -1877,7 +1902,7 @@ function deleteSeccion(idEliminar){
     var confirmD=confirm("¿Eliminar sección?");
     if(confirmD){
         $.ajax({
-            url: "functions.php",
+            url: "PHP/sections.php",
            type: "post",
             dataType: "json",
             data: {method: 'deleteSeccion',idSeccionE:idEliminar},
@@ -1897,7 +1922,7 @@ function deleteSeccion(idEliminar){
 function getSeccionPendienteElim(id){
     if(id!=0){
             $.ajax({
-                url: "functions.php",
+                url: "PHP/sections.php",
                 type: "post",
                 dataType: "json",
                 data: {method: 'getSectionName', idSeccionE: id},
@@ -1919,7 +1944,7 @@ function pedirEliminarSeccion(idEliminar){
 function getSeccionesNoti(){
     var index = 0;
     $.ajax({
-        url: "functions.php",
+        url: "PHP/sections.php",
         type: "post",
         dataType: "json",
         data: {method: 'getSeccionesByID'},
@@ -1947,7 +1972,7 @@ function nuevaSeccion(){
 
 function getNoticiasRed(){
     $.ajax({
-        url: "functions.php",
+        url: "PHP/noticias.php",
         type: "post",
         dataType: "json",
         data: {method: 'getNoticiasRed'},
@@ -1972,7 +1997,7 @@ function getNoticiasRed(){
 
 function getNoticiasPend(){
     $.ajax({
-        url: "functions.php",
+        url: "PHP/noticias.php",
         type: "post",
         dataType: "json",
         data: {method: 'getNoticiasPend'},
@@ -1994,7 +2019,7 @@ function getNoticiasPend(){
 
 function getNoticiasEnv(){
     $.ajax({
-        url: "functions.php",
+        url: "PHP/noticias.php",
         type: "post",
         dataType: "json",
         data: {method: 'getNoticiasEnv'},
@@ -2024,7 +2049,7 @@ function getNoticiasEnv(){
 
 function getNoticiasDev(){
     $.ajax({
-        url: "functions.php",
+        url: "PHP/noticias.php",
         type: "post",
         dataType: "json",
         data: {method: 'getNoticiasDev'},
@@ -2049,7 +2074,7 @@ function getNoticiasDev(){
 
 function getNoticiasPub(){
     $.ajax({
-        url: "functions.php",
+        url: "PHP/noticias.php",
         type: "post",
         dataType: "json",
         data: {method: 'getNoticiasPub'},
@@ -2072,7 +2097,7 @@ function getNoticiasPub(){
 
 function displayPubNots(appendTo){
     $.ajax({
-        url: "functions.php",
+        url: "PHP/noticias.php",
         type: "post",
         dataType: "json",
         data: {method: 'displayPubNotis'},
@@ -2094,7 +2119,7 @@ function displayPubNots(appendTo){
 
 function displayMostViewed(appendTo){
     $.ajax({
-        url: "functions.php",
+        url: "PHP/noticias.php",
         type: "post",
         dataType: "json",
         data: {method: 'displayMostViewed'},
@@ -2126,7 +2151,7 @@ function displayMostViewed(appendTo){
 
 function displaySections(appendTo){
     $.ajax({
-        url: "functions.php",
+        url: "PHP/sections.php",
         type: "post",
         dataType: "json",
         data: {method: 'getSecciones'},
@@ -2161,7 +2186,7 @@ function displaySections(appendTo){
                     )
                     
                     $.ajax({
-                        url: "functions.php",
+                        url: "PHP/noticias.php",
                         type: "post",
                         dataType: "json",
                         data: {method: 'newsBySection', idSection: secciones[idx].id, limit: 4},
@@ -2194,7 +2219,7 @@ function displaySections(appendTo){
 
 function displayNewsBySection(appendTo, sectionID){
     $.ajax({
-        url: "functions.php",
+        url: "PHP/noticias.php",
         type: "post",
         dataType: "json",
         data: {method: 'newsBySection', idSection: sectionID, limit: 0},
@@ -2216,7 +2241,7 @@ function displayNewsBySection(appendTo, sectionID){
 
 function getSectionData(sectionID){
     $.ajax({
-        url: "functions.php",
+        url: "PHP/sections.php",
         type: "post",
         dataType: "json",
         data: {method: 'getSectionData', idSection: sectionID},
@@ -2349,7 +2374,7 @@ function sendComms(idNot, colorSection, titleNot, nameReportero, feAcont, lugAco
 function aprobarNoticia(){
     var notID = document.getElementById("idNotiSent").value;              
     $.ajax({
-        url: "functions.php",
+        url: "PHP/noticias.php",
         type: "post",
         dataType: "json",
         data: {method: 'noticiaUpdStatus', idNot: notID, status: 'publicada'},
@@ -2372,7 +2397,7 @@ function devolverNoticia(){
     else {
         var notID = document.getElementById("idNotiSentComm").value;              
         $.ajax({
-            url: "functions.php",
+            url: "PHP/noticias.php",
             type: "post",
             dataType: "json",
             data: {method: 'noticiaUpdStatusFeedback', idNot: notID, status: 'devuelta', idEditor: 3, comment: comment},
@@ -2391,7 +2416,7 @@ function devolverNoticia(){
 
 function getUserData(userID){
     $.ajax({
-        url: "functions.php",
+        url: "PHP/users.php",
         type: "post",
         dataType: "json",
         data: {method: 'getUserData', idUser: userID},
@@ -2415,7 +2440,7 @@ function getUserData(userID){
 
 function getNewsData(newsID){
     $.ajax({
-        url: "functions.php",
+        url: "PHP/noticias.php",
         type: "post",
         dataType: "json",
         data: {method: 'getNewsData', idNews: newsID},
@@ -2469,7 +2494,7 @@ function getNewsData(newsID){
 
 function upViews(newsID){
     $.ajax({
-        url: "functions.php",
+        url: "PHP/vistas.php",
         type: "post",
         dataType: "json",
         data: {method: 'increaseViews', idNews: newsID},
@@ -2482,7 +2507,7 @@ function upViews(newsID){
 
 function getTotalComments(newsID){
     $.ajax({
-        url: "functions.php",
+        url: "PHP/comments.php",
         type: "post",
         dataType: "json",
         data: {method: 'countOfComments', idNews: newsID},
@@ -2506,7 +2531,7 @@ function getTotalComments(newsID){
 
 function getPublishedNotes(){
     $.ajax({
-        url: "functions.php",
+        url: "PHP/noticias.php",
         type: "post",
         dataType: "json",
         data: {method: 'getPublishedNotes'},
@@ -2524,7 +2549,7 @@ function getPublishedNotes(){
 
 function cleanOldFeedback(idFeed){
     $.ajax({
-        url: "functions.php",
+        url: "PHP/feedback.php",
         type: "post",
         dataType: "json",
         data: {method: 'deleteOldFeed', id: idFeed},
@@ -2539,7 +2564,7 @@ function publicarComentario(idUser, idNews){
     var comentario = document.getElementById("contentComment").value;
 
     $.ajax({
-        url: "functions.php",
+        url: "PHP/comments.php",
         type: "post",
         dataType: "json",
         data: {method: 'postComment', idParent: 0, idUser: idUser, idNews: idNews, comment: comentario},
@@ -2562,7 +2587,7 @@ function responderComentario(idParent, idUser, idNews){
     var comentario = document.getElementById('inputNo' + idParent).value;
 
     $.ajax({
-        url: "functions.php",
+        url: "PHP/Comments.php",
         type: "post",
         dataType: "json",
         data: {method: 'postComment', idParent: idParent, idUser: idUser, idNews: idNews, comment: comentario},
@@ -2583,7 +2608,7 @@ function responderComentario(idParent, idUser, idNews){
 
 function getImageMedia(idNoticia, carrusel_add, slides){
     $.ajax({
-        url: "functions.php",
+        url: "PHP/media.php",
         type: "post",
         dataType: "json",
         data: {method: 'getImageMedia', idNot: idNoticia},
@@ -2612,7 +2637,7 @@ function getImageMedia(idNoticia, carrusel_add, slides){
 
 function getVideoMedia(idNoticia, carrusel_add){
     $.ajax({
-        url: "functions.php",
+        url: "PHP/media.php",
         type: "post",
         dataType: "json",
         data: {method: 'getVideoMedia', idNot: idNoticia},
@@ -2633,7 +2658,7 @@ function getVideoMedia(idNoticia, carrusel_add){
 
 function getNewsComments(idNoticia){
     $.ajax({
-        url: "functions.php",
+        url: "PHP/comments.php",
         type: "post",
         dataType: "json",
         data: {method: 'getComments', idNot: idNoticia},
@@ -2658,7 +2683,7 @@ function getNewsComments(idNoticia){
                     var idParent = comments[idx].commentID;
 
                     $.ajax({
-                        url: "functions.php",
+                        url: "PHP/comments.php",
                         type: "post",
                         dataType: "json",
                         data: {method: 'getCommentReplies', idNot: idNoticia, idParent: idParent},
@@ -2691,7 +2716,7 @@ function getNewsComments(idNoticia){
 
 function deleteComm(idNot, idComm){
     $.ajax({
-        url: "functions.php",
+        url: "PHP/comments.php",
         type: "post",
         dataType: "json",
         data: {method: 'deleteComm', id: idComm},
@@ -2717,7 +2742,7 @@ function likeNoticia(idUser, idNot){
         $("#BTLike").addClass("btn-danger");
 
         $.ajax({
-            url: "functions.php",
+            url: "PHP/likes.php",
             type: "post",
             dataType: "json",
             data: {method: 'likeNoticia', idUser: idUser, idNot: idNot},
@@ -2736,7 +2761,7 @@ function likeNoticia(idUser, idNot){
         $("#BTLike").addClass("btn-outline-danger");
 
         $.ajax({
-            url: "functions.php",
+            url: "PHP/likes.php",
             type: "post",
             dataType: "json",
             data: {method: 'deleteLike', idUser: idUser, idNot: idNot},
@@ -2753,7 +2778,7 @@ function likeNoticia(idUser, idNot){
 
 function updateLikeButt(idUser, idNot){
     $.ajax({
-        url: "functions.php",
+        url: "PHP/likes.php",
         type: "post",
         dataType: "json",
         data: {method: 'updateLikeButt', idUser: idUser, idNot: idNot},
@@ -2769,7 +2794,7 @@ function updateLikeButt(idUser, idNot){
 
 function getTotalLikes(newsID){
     $.ajax({
-        url: "functions.php",
+        url: "PHP/likes.php",
         type: "post",
         dataType: "json",
         data: {method: 'countOfLikes', idNews: newsID},
@@ -2794,7 +2819,7 @@ function getNotKeywords(idNot){
     var arrayIDRelated = [];
 
     $.ajax({
-        url: "functions.php",
+        url: "PHP/feedback.php",
         type: "post",
         dataType: "json",
         async: false,   
@@ -2803,7 +2828,7 @@ function getNotKeywords(idNot){
 
             $.each(allKeywords, function(idx){
                 $.ajax({
-                    url: "functions.php",
+                    url: "PHP/noticias.php",
                     type: "post",
                     dataType: "json",
                     async: false,   
@@ -2827,9 +2852,8 @@ function getNotKeywords(idNot){
 
     
     IDCoincidencias.forEach(function(actual){
-        //NO ES
         $.ajax({
-            url: "functions.php",
+            url: "PHP/noticias.php",
             type: "post",
             dataType: "json",
             data: {method: 'getNewsByIDDisplay', idNews: actual},
@@ -2905,7 +2929,7 @@ function whichMonth(number){
 function displaySearchResults(palabraT, palabraD, palabraC, fechaInicial, fechaFinal){
     document.getElementById("contenedorResultados").innerHTML = "";
     $.ajax({
-        url: "functions.php",
+        url: "PHP/busqueda.php",
         type: "post",
         dataType: "json",
         data: {method: 'getSearchResult',tituloB:palabraT,descripB:palabraD,claveB:palabraC,fechaIB:fechaInicial,fechaFB:fechaFinal},

@@ -541,10 +541,17 @@ BEGIN
 		descripcion_Corta, estado, contenido_media, blob_type, PC.pal_Clave
 		FROM noticiaEssayMedia 
 		JOIN palabra_clave PC ON id_Noticia=id_NoticiaProp
-        WHERE estado=4 AND ((titulo_Noticia LIKE CONCAT("%",in_titulo,"%"))) OR ((descripcion_Corta LIKE CONCAT("%",in_palabra,"%"))) OR ((PC.pal_Clave LIKE CONCAT("%",in_clave,"%"))) AND ((DATE(fecha_Creacion) >= in_fechaDesde AND DATE(fecha_Creacion) <= in_fechaHasta)) GROUP BY id_Noticia ORDER BY fecha_Creacion DESC ;
+        WHERE estado = 4 AND
+        (((titulo_Noticia LIKE CONCAT("%",in_titulo,"%"))) OR
+        ((descripcion_Corta LIKE CONCAT("%",in_palabra,"%"))) OR
+        ((descripcion_Larga LIKE CONCAT("%",in_palabra,"%"))) OR
+        ((PC.pal_Clave LIKE CONCAT("%",in_clave,"%")))) AND
+        (DATE(fecha_Publicacion) >= in_fechaDesde AND
+        DATE(fecha_Publicacion) <= in_fechaHasta)
+        GROUP BY id_Noticia ORDER BY fecha_Publicacion DESC ;
 	END IF;
-	
 END//
+
 DROP PROCEDURE IF EXISTS sp_insertComment;
 DELIMITER //
 CREATE PROCEDURE sp_insertComment(

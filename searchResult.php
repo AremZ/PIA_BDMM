@@ -46,44 +46,6 @@ if(!isset($_COOKIE['user'])){
           
         });
 
-        var curday = function(sp){
-          today = new Date();
-          var dd = today.getDate();
-          var mm = today.getMonth()+1; //As January is 0.
-          var yyyy = today.getFullYear();
-
-          if(dd<10) dd='0'+dd;
-          if(mm<10) mm='0'+mm;
-          return (yyyy+sp+mm+sp+dd);
-        };
-
-        function search(){
-            var palabraBuscar=document.getElementById("BRSearch").value;
-            url = 'searchResult.php?palabra=' + palabraBuscar;
-            //window.location.replace(url);
-            window.location = url;
-            //alert("Palabra: "+palabraBuscar);
-        }
-       
-        function getSearchDataFiltros(){
-          var palabraBuscar=document.getElementById("BRSearch").value;
-          var rangoInicial=document.getElementById("rangoInicialFechaBuscar").value;
-          var rangoFinal=document.getElementById("rangoFinalFechaBuscar").value;
-          //alert("Fecha inicial: "+rangoInicial+" Fecha final: "+rangoFinal);
-          var titulo="null";
-          if($("#fT").prop("checked"))
-            titulo=palabraBuscar;
-          var desc="null";
-          if($("#fD").prop("checked"))
-            desc=palabraBuscar;
-          var clave="null";
-          if($("#fC").prop("checked"))
-            clave=palabraBuscar;
-          
-          displaySearchResults(titulo, desc, clave, rangoInicial, rangoFinal);
-          
-        }
-
         function set(){
           <?php 
           //$phpVar=0;
