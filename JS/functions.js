@@ -2868,7 +2868,7 @@ function getNotKeywords(idNot){
                     });
 
                     $('#displayMostViewed').append(
-                        '<div class="col-md-12"><div class="card mostViewed"><img class="card-img-top"' + 
+                        '<div class="col-md-12"><div class="card relatedNew"><img class="card-img-top"' + 
                         'src=data:image/' + noticia[0].ext + ';base64,' + noticia[0].preview + '><div class="card-body">' +
                         '<h4 class="card-title title">' + noticia[0].title + '</h4><p class="card-text">' + shorterDesc +
                         '</p><h4 class="card-title pubDate">Publicado el: ' + noticia[0].fePub.slice(8,10) + ' de ' +
