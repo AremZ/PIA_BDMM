@@ -116,6 +116,18 @@ var curday = function(sp){
   return (yyyy+sp+mm+sp+dd);
 };
 
+var curdayminus = function(sp){
+  today = new Date();
+  today.setDate(today.getDate()-7);
+  var dd = today.getDate();
+  var mm = today.getMonth()+1; //As January is 0.
+  var yyyy = today.getFullYear();
+
+  if(dd<10) dd='0'+dd;
+  if(mm<10) mm='0'+mm;
+  return (yyyy+sp+mm+sp+dd);
+};
+
 function search(){
     var palabraBuscar=document.getElementById("BRSearch").value;
     url = 'searchResult.php?palabra=' + palabraBuscar;
@@ -137,7 +149,7 @@ function getSearchDataFiltros(){
   var desc="null";
   if($("#fD").prop("checked"))
     desc=palabraBuscar;
-    
+
   var clave="null";
   if($("#fC").prop("checked"))
     clave=palabraBuscar;
@@ -2927,7 +2939,7 @@ function whichMonth(number){
 }
 
 function displaySearchResults(palabraT, palabraD, palabraC, fechaInicial, fechaFinal){
-    document.getElementById("contenedorResultados").innerHTML = "";
+    document.getElementById("displayNews").innerHTML = "";
     $.ajax({
         url: "PHP/busqueda.php",
         type: "post",
@@ -2937,15 +2949,14 @@ function displaySearchResults(palabraT, palabraD, palabraC, fechaInicial, fechaF
             $.each(noticias, function(idx, noti){
                 
                 //alert(noticias[idx].id);
-                $( "#contenedorResultados").append(
+                $( "#displayNews").append(
                     
-                    "<div class='row' id='noticiaBG'> <div class='col-md-12' id='noticiaBody'> <div class='row'> <div class='col-md-12'> <hr> </div>"+
-                    "<div class='card mb-6 tarjetaResult' style='border-color: black;'> <div class='row no-gutters'> <div class='col-md-3 imgTarjeta'><br>"+
-                    "<img src='http://via.placeholder.com/150x100' class='card-img' alt='Imagen no disponible'> </div> <div class='col-md-9'> <div class='card-body'>"+
-                    "<h5 class='card-title'><a href=''>"+noticias[idx].titulo+"</a> </h5>"+
-                        "<p class='card-text'>"+noticias[idx].descripcionCorta+"</p>"+
-                       "<div class='col-md-9' id='datePublicacion'>"+noticias[idx].fechaPublicada+"</div>"+
-                       "</div></div> </div></div> <div class='col-md-12'><hr> </div></div> </div> </div>"
+                    '<div class="col-md-4"><div class="card searchResult"><img class="card-img-top"' + 
+                    'src=data:image/' + noticias[idx].ext + ';base64,' + noticias[idx].preview + '><div class="card-body">' +
+                    '<h4 class="card-title title">' + noticias[idx].title + '</h4><p class="card-text">' + noticias[idx].descrSh +
+                    '</p><h4 class="card-title pubDate">Publicado el: ' + noticias[idx].fePub.slice(8,10) + ' de ' +
+                    whichMonth(noticias[idx].fePub.slice(5,7)) + ' del ' + noticias[idx].fePub.slice(0,4) + '</h4>' +
+                    '<button class="btn btn-outline-danger barBut"><i class="fa fa-newspaper-o"></i>  Ver noticia</button></div></div></div>'
                 );
               
                 });

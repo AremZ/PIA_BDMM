@@ -24,9 +24,11 @@ if ($method == "getSearchResult"){
             while ($row = mysqli_fetch_assoc($resultado)) {
                 $noti = array(
                   "id" => $row['id_Noticia'],
-                  "titulo" => $row['titulo_Noticia'],
-                  "descripcionCorta" => $row['descripcion_Corta'],
-                  "fechaPublicada" => $row['fecha_Publicacion']
+                  "title" => $row['titulo_Noticia'],
+                  "fePub" => $row['fecha_Publicacion'],
+                  "descrSh" => $row['descripcion_Corta'],
+                  "preview" => base64_encode($row['contenido_media']),
+                  "ext" => $row['blob_type']
                 );
                 $noticias[] = $noti;
               }

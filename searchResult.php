@@ -32,6 +32,7 @@ if(!isset($_COOKIE['user'])){
     <script>
       $(document).ready(function(){
           get();
+          displayMostViewed("#displayMostViewed");
           setupImage('agregarFoto', 'displayImg', '.preview-image');
           getSeccionesToNavbar();
           var palabraBuscar = getUrlParameter('palabra');
@@ -39,10 +40,11 @@ if(!isset($_COOKIE['user'])){
           document.getElementById("BRSearch").value=palabraBuscar;
           //document.getElementById("rangoFinalFechaBuscar").datepicker( "option", "gotoCurrent", true );
           var date=(curday('-'));
+          var dateMinus=(curdayminus('-'));
           document.getElementById("rangoFinalFechaBuscar").value = date;
-          document.getElementById("rangoInicialFechaBuscar").value = date;
+          document.getElementById("rangoInicialFechaBuscar").value = dateMinus;
           if(palabraBuscar!="")
-            displaySearchResults(palabraBuscar, "null", "null", date, date);
+            displaySearchResults(palabraBuscar, palabraBuscar, palabraBuscar, dateMinus, date);
           
         });
 
@@ -284,138 +286,52 @@ if(!isset($_COOKIE['user'])){
 
     <!------ Title ------>
 
-    <div class="container-fluid padding" id="cuerpoNot">          
-        <div class="row">
-            <div class="col-md-9">   
-            
-                <div class="row" id="noticiaHeader">        
-                    <div class="col-md-1" id="sectionHeader"></div>        
-                    <div class="col-md-11" id="tituloNoticia">
-                        <label id="palabraB"> Resultados de: </label>
-                        <div id="contenedorDatePicker datepicker-container" style="margin-top: 0.5em; margin-bottom: 0.5em; font-size:medium !important;">
-                        <label for="rangoInicialFechaBuscar" style="color:whitesmoke; font-family: 'Roboto', sans-serif !important;">Desde: </label>
-                        <input type="date" name="rangoInicialFechaBuscar" id="rangoInicialFechaBuscar" class="col-md-6" style="width:160px;" onfocus="cleanTextarea('rangoInicialFechaBuscar')">
-                        <label for="rangoFinalFechaBuscar"  style="color:whitesmoke; font-family: 'Roboto', sans-serif !important;">Hasta: </label>
-                        <input type="date" name="rangoFinalFechaBuscar" id="rangoFinalFechaBuscar" class="col-md-6" style="width:160px;" onfocus="cleanTextarea('rangoFinalFechaBuscar')">
-                        <input type="checkbox" name="filtroTitulo" id="fT" value="1" style="margin-left: 1em;" checked="true"> Título <input type="checkbox" name="filtroDesc" id="fD" value="2" style="margin-left: 1em;"> Descripción<input type="checkbox" name="filtroClave" id="fC" value="3" style="margin-left: 1em;"> Palabra clave
-                        <button class="btn btn-outline-danger" onclick="getSearchDataFiltros()" id="BTSearchFiltros" style="margin-left: 1em;">Aceptar</button>
-                      </div>
+<div class="container-fluid padding" id="cuerpoNot">          
+    <div class="row">
+        <div class="col-md-9">             
+            <div class="row" id="headerDisplay">          
+                <div class="col-md-1"></div>             
+                <div class="col-md-10" id="searchHeader">
+                    <label id="palabraB"> Resultados de: </label>
+                    <div id="contenedorDatePicker datepicker-container">
+                        <label for="rangoInicialFechaBuscar" class="stylerDate">Desde: </label>
+                        <input type="date" name="rangoInicialFechaBuscar" id="rangoInicialFechaBuscar" class="dateInputs" onfocus="cleanTextarea('rangoInicialFechaBuscar')">
+                        <label for="rangoFinalFechaBuscar" class="stylerDate">Hasta: </label>
+                        <input type="date" name="rangoFinalFechaBuscar" id="rangoFinalFechaBuscar" class="dateInputs" onfocus="cleanTextarea('rangoFinalFechaBuscar')">
+                        <input type="checkbox" name="filtroTitulo" id="fT" value="1" class="checkboxes-f" checked="true"> Título
+                        <input type="checkbox" name="filtroDesc" id="fD" value="2" class="checkboxes" checked="true"> Descripción
+                        <input type="checkbox" name="filtroClave" id="fC" value="3" class="checkboxes" checked="true"> Palabra clave
+                        <button class="btn btn-outline-danger" onclick="getSearchDataFiltros()" id="BTSearchFiltros">Aceptar</button>
                     </div>
                 </div>
-                <div id="contenedorResultados">
+            </div>
+            <div class="col-md-11" id="noticiaBG">          
+                <div class="row" id="displayNews">
+            
+                </div>  
+            </div>
+            </div>
+    
+    <!--Populares-->
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-11" id="masVisto">
+                        Populares
+                    </div>
+                </div>
                 
-                </div>
-               
-
-            </div>
+                <div class="col-md-12" id="masVistoBG">          
+                    <div class="row" id="displayMostViewed">
 
 
+                    </div>  
+                </div>        
+            </div> 
 
-            <!--Populares-->
-            <div class="col-md-3 tarjetaPrincAside">
-                <br>
-                <h3 id="tituloPopulares">Más populares</h3><br>
-                <!-- TARJETA HORIZONTAL -->
-                <div class="row listaPopu">   
-                <div class="card mb-3">
-                    <div class="row no-gutters">
-                      <div class="col-md-4">
-                          <div class=" img-popular">
-                        <img src="http://via.placeholder.com/100x150" class="card-img" alt="...">
-                        </div>
-                      </div>
-                      <div class="col-md-8">
-                        <div class="card-body">
-                          <h6 class="card-title">NOTICIA</h6>
-                          <p class="card-text card-horizontalT">POPULAR POPULAR POPULAR POPULAR </p>
-                          <a href="product.html" class="btn btn-outline-danger ">Ver noticia</a>
-                          
-                        </div>
-                      </div>
-                    </div>
-                </div>
-
-              
-
-
-                  <div class="card mb-3" style="max-width: 540px;">
-                    <div class="row no-gutters">
-                      <div class="col-md-4">
-                          <div class=" img-popular">
-                        <img src="http://via.placeholder.com/100x150" class="card-img" alt="...">
-                    </div>
-                      </div>
-                      <div class="col-md-8">
-                        <div class="card-body">
-                          <h6 class="card-title">NOTICIA</h6>
-                          <p class="card-text card-horizontalT">POPULAR POPULAR POPULAR POPULAR </p>
-                          <a href="product.html" class="btn btn-outline-danger ">Ver noticia</a>
-                          
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="card mb-3" style="max-width: 540px;">
-                    <div class="row no-gutters">
-                      <div class="col-md-4">
-                          <div class=" img-popular">
-                        <img src="http://via.placeholder.com/100x150" class="card-img" alt="...">
-                    </div>
-                      </div>
-                      <div class="col-md-8">
-                        <div class="card-body">
-                          <h6 class="card-title">NOTICIA</h6>
-                          <p class="card-text card-horizontalT">POPULAR POPULAR POPULAR POPULAR </p>
-                          <a href="product.html" class="btn btn-outline-danger ">Ver noticia</a>
-                          
-                        </div>
-                      </div>
-                    </div>
-                  </div>    
-               
-
-                  <div class="card mb-3" style="max-width: 540px;">
-                    <div class="row no-gutters">
-                      <div class="col-md-4">
-                          <div class=" img-popular">
-                        <img src="http://via.placeholder.com/100x150" class="card-img" alt="...">
-                    </div>
-                      </div>
-                      <div class="col-md-8">
-                        <div class="card-body">
-                          <h6 class="card-title">NOTICIA</h6>
-                          <p class="card-text card-horizontalT">POPULAR POPULAR POPULAR POPULAR </p>
-                          <a href="product.html" class="btn btn-outline-danger ">Ver noticia</a>
-                          
-                        </div>
-                      </div>
-                    </div>
-                  </div>    
-               
-
-
-                </div>
-            </div>
-
-
-
-
-            
         </div>
-
-
-
-
     </div>
+</div>
 
-
-
-
-
-        
-
-    </div>
 
 
 
