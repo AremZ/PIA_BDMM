@@ -19,12 +19,13 @@
 
     <script>
       $(document).ready(function(){
+        var theID = getUrlParameter('id');
         get();
         getSeccionesToNavbar();
         setupImage('agregarFoto', 'displayImg', '.preview-image');
         displayMostViewed("#MostViewedSect");
-        displayNewsBySection("#displayNews", 3);
-        getSectionData(3);
+        displayNewsBySection("#displayNews", theID);
+        getSectionData(theID);
       });
 
         function set(){

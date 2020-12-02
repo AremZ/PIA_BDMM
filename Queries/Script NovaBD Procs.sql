@@ -537,7 +537,7 @@ BEGIN
 		IF in_titulo='null' THEN SELECT null INTO in_titulo; END IF;
 		IF in_palabra='null' THEN SELECT null INTO in_palabra; END IF;
         IF in_clave='null' THEN SELECT null INTO in_clave; END IF;
-        SELECT id_Noticia, titulo_Noticia, fecha_Publicacion, fecha_Creacion,
+        SELECT id_Noticia, titulo_Noticia, fecha_Publicacion,
 		descripcion_Corta, estado, contenido_media, blob_type, PC.pal_Clave
 		FROM noticiaEssayMedia 
 		JOIN palabra_clave PC ON id_Noticia=id_NoticiaProp

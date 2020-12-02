@@ -20,16 +20,17 @@
 
     <script>
         $(document).ready(function(){
+            var theID = getUrlParameter('id');
             get();
             getSeccionesToNavbar();     
             setupImage('agregarFoto', 'displayImg', '.preview-image');
-            getNewsData(165);
-            upViews(165);
-            getNewsComments(165);
-            getTotalComments(165);
-            updateLikeButt(3, 165);
-            getTotalLikes(165);
-            getNotKeywords(165);
+            getNewsData(theID);
+            upViews(theID);
+            getNewsComments(theID);
+            getTotalComments(theID);
+            updateLikeButt(3, theID);
+            getTotalLikes(theID);
+            getNotKeywords(theID);
             
             $("div").on("click", "#replyToComm", function() {
                 if($(this).parent().parent().find(".containerReply").html() == ""){
@@ -38,7 +39,7 @@
                     $(this).parent().parent().find(".containerReply").append('<div class="comment-box add-comment reply-box"><span class="commenter-pic-mine">' +
                     '<img src="Sources/11.jpg" class="img-fluid"></span><span class="commenter-name"><input type="text" ' + 
                     'placeholder="Responder a comentario..." name="Add Comment" id="inputNo'+ parentId +'"><button class="btn btn-outline-danger" id="closeReply"><i class="fa fa-times"></i>Cancelar</button>' +
-                    '<button class="btn btn-outline-danger" onclick="responderComentario(' + parentId +', 3, 165);"><i class="fa fa-reply">' +
+                    '<button class="btn btn-outline-danger" onclick="responderComentario(' + parentId +', 3,' + theID + ');"><i class="fa fa-reply">' +
                     '</i>Responder</button></span></div>');
                 }
             });
@@ -46,6 +47,15 @@
             $("div").on("click", "#closeReply", function() {
                 $(this).parent().parent().parent().empty();
             });
+
+            
+            document.getElementById("BTLike").addEventListener("click", function() {
+                likeNoticia(3, theID);
+            })
+
+            document.getElementById("BTComment").addEventListener("click", function() {
+                publicarComentario(3, theID);
+            })
         });
 
         function set(){
@@ -329,7 +339,7 @@
                         </div>
                     </div>              
                     <div class="col-md-8">
-                        <button class="btn btn-outline-danger" id="BTLike" onclick="likeNoticia(3, 165);"><i class="fa fa-thumbs-up"></i>Me Gusta</button>
+                        <button class="btn btn-outline-danger" id="BTLike"><i class="fa fa-thumbs-up"></i>Me Gusta</button>
                         <span id="liked">
                             Like.
                         </span>
@@ -352,7 +362,7 @@
                                     </span>
                                     <span class="commenter-name">
                                       <input type="text" placeholder="Agregar un comentario..." name="Agregar Comentario" id="contentComment">
-                                      <button class="btn btn-outline-danger" onclick="publicarComentario(3, 165);"><i class="fa fa-comments"></i>Publicar</button>
+                                      <button class="btn btn-outline-danger" id="BTComment"><i class="fa fa-comments"></i>Publicar</button>
                                     </span>
                                   </div>
 

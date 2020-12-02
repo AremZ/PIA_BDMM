@@ -1774,7 +1774,8 @@ function getSeccionesToNavbar(){
 
                 $( ".seccionesNav" ).append(
                     //"<li id='"+secciones[idx].id+"' class='nav-item active'><a class='nav-link seccionNav' style='color:"+colorSeccion +"!important;' href='main.html'>"+secciones[idx].name+"</a></li>");
-                    "<li id='"+secciones[idx].id+"' class='nav-item active "+secciones[idx].color+"'><a class='nav-link seccionNav'  href='noticiasSeccion.php'>"+secciones[idx].name+"</a></li>");
+                    "<li id='"+secciones[idx].id+"' class='nav-item active "+secciones[idx].color+"'><a class='nav-link seccionNav'" + 
+                    "onclick='sendtoSectionPage(" + secciones[idx].id + ")'>"+ secciones[idx].name+ "</a></li>");
               });
         }
 
@@ -2099,8 +2100,8 @@ function getNoticiasPub(){
                         '<h4 class="card-title titleNotPub">' + noticias[idx].title + '</h4><p class="card-text bodyNotPub">' + noticias[idx].descrSh +
                         '</p><h4 class="card-title" id="pubNotPub">Publicado el: ' + noticias[idx].fePub.slice(8,10) + ' de ' +
                         whichMonth(noticias[idx].fePub.slice(5,7)) + ' del ' + noticias[idx].fePub.slice(0,4) + '</h4><div class="row"><div class="col-lg-12">' +
-                        '<form action="fullpage.php"><button class="btn btn-outline-danger barBut" type="submit" id="btnSeeNot"><i class="fa fa-newspaper-o"></i>Ver noticia</button>' +
-                        '</form></div></div></div></div></div>'  
+                        '<button class="btn btn-outline-danger barBut" id="btnSeeNot" onclick="sendtoFullPage(' + noticias[idx].id + ')">' + 
+                        '<i class="fa fa-newspaper-o"></i>Ver noticia</button></form></div></div></div></div></div>'  
                 )});       
             }           
         }
@@ -2122,7 +2123,7 @@ function displayPubNots(appendTo){
                         '<h4 class="card-title title">' + noticias[idx].title + '</h4><p class="card-text">' + noticias[idx].descrSh +
                         '</p><h4 class="card-title pubDate">Publicado el: ' + noticias[idx].fePub.slice(8,10) + ' de ' +
                         whichMonth(noticias[idx].fePub.slice(5,7)) + ' del ' + noticias[idx].fePub.slice(0,4) + '</h4>' +
-                        '<button class="btn btn-outline-danger barBut"><i class="fa fa-newspaper-o"></i>  Ver noticia</button></div></div></div>'   
+                        '<button class="btn btn-outline-danger barBut" onclick="sendtoFullPage(' + noticias[idx].id + ')"><i class="fa fa-newspaper-o"></i>  Ver noticia</button></div></div></div>'   
                 )});       
             }           
         }
@@ -2154,7 +2155,7 @@ function displayMostViewed(appendTo){
                         '<h4 class="card-title title">' + noticias[idx].title + '</h4><p class="card-text">' + shorterDesc +
                         '</p><h4 class="card-title pubDate">Publicado el: ' + noticias[idx].fePub.slice(8,10) + ' de ' +
                         whichMonth(noticias[idx].fePub.slice(5,7)) + ' del ' + noticias[idx].fePub.slice(0,4) + '</h4>' +
-                        '<button class="btn btn-outline-danger barBut"><i class="fa fa-newspaper-o"></i>  Ver noticia</button></div></div></div>'   
+                        '<button class="btn btn-outline-danger barBut" onclick="sendtoFullPage(' + noticias[idx].id + ')"><i class="fa fa-newspaper-o"></i>  Ver noticia</button></div></div></div>'   
                 )});  
             }           
         }
@@ -2193,7 +2194,7 @@ function displaySections(appendTo){
                     $(appendTo).append(
                         '<div class="row"><div class="col-md-12"><div class="row" id="sectionHeader"><div class="col-md-1 sectionColor" ' +
                         'style="background-color:' +  selectedColor + ';"></div><div class="col-md-11 tituloSeccion">' + secciones[idx].name +
-                        '<button class="btn btn-outline-danger butMoreInfo">Ver más...' + 
+                        '<button class="btn btn-outline-danger butMoreInfo" onclick="sendtoSectionPage(' + secciones[idx].id + ')">Ver más...' + 
                         '</button></div></div><div class="row BGSection" id="section' + secciones[idx].id +'"></div></div></div>' 
                     )
                     
@@ -2211,7 +2212,7 @@ function displaySections(appendTo){
                                         '<h4 class="card-title title">' + noticias[idy].title + '</h4><p class="card-text">' + noticias[idy].descrSh +
                                         '</p><h4 class="card-title pubDate">Publicado el: ' + noticias[idy].fePub.slice(8,10) + ' de ' +
                                         whichMonth(noticias[idy].fePub.slice(5,7)) + ' del ' + noticias[idy].fePub.slice(0,4) + '</h4>' +
-                                        '<button class="btn btn-outline-danger barBut"><i class="fa fa-newspaper-o"></i>  Ver noticia</button></div></div></div>'
+                                        '<button class="btn btn-outline-danger barBut" onclick="sendtoFullPage(' + noticias[idy].id + ')"><i class="fa fa-newspaper-o"></i>  Ver noticia</button></div></div></div>'
                                     ) 
                                 })
                             }
@@ -2244,7 +2245,7 @@ function displayNewsBySection(appendTo, sectionID){
                         '<h4 class="card-title title">' + noticias[idx].title + '</h4><p class="card-text">' + noticias[idx].descrSh +
                         '</p><h4 class="card-title pubDate">Publicado el: ' + noticias[idx].fePub.slice(8,10) + ' de ' +
                         whichMonth(noticias[idx].fePub.slice(5,7)) + ' del ' + noticias[idx].fePub.slice(0,4) + '</h4>' +
-                        '<button class="btn btn-outline-danger barBut"><i class="fa fa-newspaper-o"></i>  Ver noticia</button></div></div></div>'   
+                        '<button class="btn btn-outline-danger barBut" onclick="sendtoFullPage(' + noticias[idx].id + ')"><i class="fa fa-newspaper-o"></i>  Ver noticia</button></div></div></div>'   
                 )});       
             }           
         }
@@ -2888,7 +2889,7 @@ function getNotKeywords(idNot){
                         '<h4 class="card-title title">' + noticia[0].title + '</h4><p class="card-text">' + shorterDesc +
                         '</p><h4 class="card-title pubDate">Publicado el: ' + noticia[0].fePub.slice(8,10) + ' de ' +
                         whichMonth(noticia[0].fePub.slice(5,7)) + ' del ' + noticia[0].fePub.slice(0,4) + '</h4>' +
-                        '<button class="btn btn-outline-danger barBut"><i class="fa fa-newspaper-o"></i>  Ver noticia</button></div></div></div>'   
+                        '<button class="btn btn-outline-danger barBut" onclick="sendtoFullPage(' + noticia[0].id + ')"><i class="fa fa-newspaper-o"></i>  Ver noticia</button></div></div></div>'   
                     )
                 }   
             },
@@ -2899,6 +2900,15 @@ function getNotKeywords(idNot){
     })
 }
 
+function sendtoFullPage(idNot){
+    url = 'fullpage.php?id=' + idNot;
+    window.location = url;
+}
+
+function sendtoSectionPage(IdSect){
+    url = 'noticiasSeccion.php?id=' + IdSect;
+    window.location = url;
+}
 
 function whichMonth(number){
     if (number == 1)
@@ -2938,6 +2948,21 @@ function whichMonth(number){
         return 'Diciembre' 
 }
 
+function getUrlParameter(sParam) {
+    var sPageURL = window.location.search.substring(1),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+        }
+    }
+};
+
 function displaySearchResults(palabraT, palabraD, palabraC, fechaInicial, fechaFinal){
     document.getElementById("displayNews").innerHTML = "";
     $.ajax({
@@ -2956,7 +2981,7 @@ function displaySearchResults(palabraT, palabraD, palabraC, fechaInicial, fechaF
                     '<h4 class="card-title title">' + noticias[idx].title + '</h4><p class="card-text">' + noticias[idx].descrSh +
                     '</p><h4 class="card-title pubDate">Publicado el: ' + noticias[idx].fePub.slice(8,10) + ' de ' +
                     whichMonth(noticias[idx].fePub.slice(5,7)) + ' del ' + noticias[idx].fePub.slice(0,4) + '</h4>' +
-                    '<button class="btn btn-outline-danger barBut"><i class="fa fa-newspaper-o"></i>  Ver noticia</button></div></div></div>'
+                    '<button class="btn btn-outline-danger barBut" onclick="sendtoFullPage(' + noticias[idx].id + ')"><i class="fa fa-newspaper-o"></i>  Ver noticia</button></div></div></div>'
                 );
               
                 });
