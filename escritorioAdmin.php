@@ -23,9 +23,9 @@
             get();
             getAllUsers();
             confirmarEliminarSeccion();
-            getSeccionesToNavbar();
             setupImage('agregarFoto', 'displayImg', '.preview-image');
             setupImage('agregarFotoAdmin', 'displayImgAdmin', '.preview-image');
+            getSeccionesToNavbar();
         });
 
         function set(){

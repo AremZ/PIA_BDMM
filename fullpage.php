@@ -25,6 +25,27 @@
             setupImage('agregarFoto', 'displayImg', '.preview-image');
             getNewsData(165);
             upViews(165);
+            getNewsComments(165);
+            getTotalComments(165);
+            updateLikeButt(3, 165);
+            getTotalLikes(165);
+            getNotKeywords(165);
+            
+            $("div").on("click", "#replyToComm", function() {
+                if($(this).parent().parent().find(".containerReply").html() == ""){
+                    var parentId = $(this).parent().parent().find("#idComment").html();
+
+                    $(this).parent().parent().find(".containerReply").append('<div class="comment-box add-comment reply-box"><span class="commenter-pic-mine">' +
+                    '<img src="Sources/11.jpg" class="img-fluid"></span><span class="commenter-name"><input type="text" ' + 
+                    'placeholder="Responder a comentario..." name="Add Comment" id="inputNo'+ parentId +'"><button class="btn btn-outline-danger" id="closeReply"><i class="fa fa-times"></i>Cancelar</button>' +
+                    '<button class="btn btn-outline-danger" onclick="responderComentario(' + parentId +', 3, 165);"><i class="fa fa-reply">' +
+                    '</i>Responder</button></span></div>');
+                }
+            });
+
+            $("div").on("click", "#closeReply", function() {
+                $(this).parent().parent().parent().empty();
+            });
         });
 
         function set(){
@@ -66,7 +87,6 @@
 </head>
 
 <body>
-
 
 <!------ Barra de Navegacion & Searchbar ------>
 
@@ -300,20 +320,7 @@
                                         </div>
                                     </div>
                                 </div>                          
-                            </div>
-                            <!--
-                                Los datos a mostrar son:
-
-                                Los comentarios deben de tener:
-                                Avatar
-                                Nombre
-                                Fecha y hora
-                                Comentario
-
-                                Lista de noticias relacionadas por palabras clave con la noticia principal
-
-                                Un usuario registrado puede dar likes , solo un like por publicación.
-                            -->             
+                            </div>        
                             <div class="col-md-12" id="fechaCreacion">
                             </div>                 
                             <div class="col-md-12">
@@ -322,9 +329,9 @@
                         </div>
                     </div>              
                     <div class="col-md-8">
-                        <button class="btn btn-outline-danger" type="submit" id="BTLike"><i class="fa fa-thumbs-up"></i>Me Gusta</button>
+                        <button class="btn btn-outline-danger" id="BTLike" onclick="likeNoticia(3, 165);"><i class="fa fa-thumbs-up"></i>Me Gusta</button>
                         <span id="liked">
-                            A ti y 57765 personas mas les gusta esto.
+                            Like.
                         </span>
                     </div>
                 </div>
@@ -344,87 +351,14 @@
                                       <img src="Sources/11.jpg" class="img-fluid">
                                     </span>
                                     <span class="commenter-name">
-                                      <input type="text" placeholder="Agregar un comentario..." name="Agregar Comentario">
-                                      <button type="submit" class="btn btn-outline-danger"><i class="fa fa-comments"></i>Publicar</button>
+                                      <input type="text" placeholder="Agregar un comentario..." name="Agregar Comentario" id="contentComment">
+                                      <button class="btn btn-outline-danger" onclick="publicarComentario(3, 165);"><i class="fa fa-comments"></i>Publicar</button>
                                     </span>
                                   </div>
 
-                                  <div class="comment-box">
-                                    <span class="commenter-pic">
-                                      <img src="Sources/14.jpg" class="img-fluid">
-                                    </span>
-                                    <span class="commenter-name">
-                                      <a>Alejandra Ramirez</a> <span class="comment-time">Octubre 9, 2020 a las 17:51</span>
-                                    </span>       
-                                    <p class="comment-txt">
-                                        Muy padre muy bueno
-                                    </p>
-                                    <div class="comment-meta">
-                                      <button class="comment-reply btn btn-outline-danger reply-popup" onclick="popUpComm()"><i class="fa fa-reply-all" aria-hidden="true"></i> Responder</button>                                          
-                                    </div>
-                                    
-                                    <div class="comment-box add-comment reply-box">
-                                        <span class="commenter-pic-mine">
-                                          <img src="Sources/11.jpg" class="img-fluid">
-                                        </span>
-                                        <span class="commenter-name">
-                                          <input type="text" placeholder="Responder a comentario..." name="Add Comment">
-                                          <button type="submit" class="btn btn-outline-danger">Responder</button>
-                                          <button type="cancel" class="btn btn-outline-danger" onclick="popUpComm()">Cancelar</button>
-                                        </span>
-                                    </div>
-                                    
-                                    <div class="comment-box replied">
-                                        <span class="commenter-pic">
-                                            <img src="Sources/12.jpg" class="img-fluid">
-                                          </span>
-                                          <span class="commenter-name">
-                                            <a>Maria Castañeda</a> <span class="comment-time">Octubre 9, 2020 a las 17:51</span>
-                                          </span>       
-                                          <p class="comment-txt">
-                                              Muy padre muy bueno
-                                          </p>
-                                    </div>
-                                  </div>
-                                <div class="comment-box">
-                                    <span class="commenter-pic">
-                                      <img src="Sources/14.jpg" class="img-fluid">
-                                    </span>
-                                    <span class="commenter-name">
-                                      <a>Alejandra Ramirez</a> <span class="comment-time">Octubre 9, 2020 a las 17:51</span>
-                                    </span>       
-                                    <p class="comment-txt">
-                                        Muy padre muy bueno
-                                    </p>
-                                    <div class="comment-meta">
-                                      <button class="comment-reply btn btn-outline-danger reply-popup" onclick="popUpComm()"><i class="fa fa-reply-all" aria-hidden="true"></i> Responder</button>                                          
-                                    </div>
-                                    
-                                    <div class="comment-box add-comment reply-box">
-                                        <span class="commenter-pic-mine">
-                                          <img src="Sources/11.jpg" class="img-fluid">
-                                        </span>
-                                        <span class="commenter-name">
-                                          <input type="text" placeholder="Responder a comentario..." name="Add Comment">
-                                          <button type="submit" class="btn btn-outline-danger">Responder</button>
-                                          <button type="cancel" class="btn btn-outline-danger" onclick="popUpComm()">Cancelar</button>
-                                        </span>
-                                    </div>
-                                    
-                                    <div class="comment-box replied">
-                                        <span class="commenter-pic">
-                                            <img src="Sources/12.jpg" class="img-fluid">
-                                          </span>
-                                          <span class="commenter-name">
-                                            <a>Maria Castañeda</a> <span class="comment-time">Octubre 9, 2020 a las 17:51</span>
-                                          </span>       
-                                          <p class="comment-txt">
-                                              Muy padre muy bueno
-                                          </p>
-                                    </div>
+                                  <div id="allComments"> </div>
                                 </div>
-                                </div>
-                                </div>
+                            </div>
                             </div>
                             </div>
                     </div>  
@@ -432,38 +366,18 @@
             </div>
             
             <div class="col-md-3">
-                <div class="card recomendado">
-                    <img class="card-img-top" src="Sources/Note1.jpg" >
-                    <div class="card-body">
-                        <h4 class="card-title titleNoticiaRec">OTRA NOTICIA</h4>
-                        <p class="card-text descrNoticiaRec">
-                            NOTICIA NOTICIA NOTICIA
-                        </p>
-                        <button class="btn btn-outline-danger"><i class="fa fa-newspaper-o"></i>Ver noticia</button>   
+                <div class="row">
+                    <div class="col-md-11" id="related">
+                        Relacionados
                     </div>
                 </div>
-            
-                <div class="card recomendado">
-                    <img class="card-img-top" src="Sources/Note1.jpg" >
-                    <div class="card-body">
-                        <h4 class="card-title titleNoticiaRec">OTRA NOTICIA</h4>
-                        <p class="card-text descrNoticiaRec">
-                            NOTICIA NOTICIA NOTICIA
-                        </p>
-                        <button class="btn btn-outline-danger"><i class="fa fa-newspaper-o"></i>Ver noticia</button>   
-                    </div>
-                </div>
-            
-                <div class="card recomendado">
-                    <img class="card-img-top" src="Sources/Note1.jpg" >
-                    <div class="card-body">
-                        <h4 class="card-title titleNoticiaRec">OTRA NOTICIA</h4>
-                        <p class="card-text descrNoticiaRec">
-                            NOTICIA NOTICIA NOTICIA
-                        </p>
-                        <button class="btn btn-outline-danger"><i class="fa fa-newspaper-o"></i>Ver noticia</button>   
-                    </div>
-                </div>    
+                
+                <div class="col-md-11" id="relatedBG">                             
+                    <div class="row" id="displayMostViewed">
+
+
+                    </div>  
+                </div>     
             </div>
         </div>
     </div>

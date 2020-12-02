@@ -304,6 +304,19 @@ CREATE PROCEDURE sp_getMostViewed(
     END //
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS sp_getNewsByID;
+DELIMITER //
+CREATE PROCEDURE sp_getNewsByID(
+	IN in_notID int
+)
+    BEGIN
+		SELECT id_Noticia, seccion_Noticia , titulo_Noticia , reportero_Autor, fecha_Creacion, fecha_Publicacion, fecha_Envio,
+        fecha_Devo, fecha_Acontecimiento, lugar_Acontecimiento, descripcion_Corta , descripcion_Larga, estado, contenido_media, blob_type,
+        cantidad_Vistas
+		FROM noticiaEssayMedia WHERE estado = 'publicada' AND id_Noticia = in_notID;
+    END //
+DELIMITER ;
+
 DROP PROCEDURE IF EXISTS sp_getNewsBySection;
 DELIMITER //
 CREATE PROCEDURE sp_getNewsBySection(
@@ -358,7 +371,7 @@ CREATE PROCEDURE sp_getFullNews(
     BEGIN
 		SELECT id_Noticia, seccion_Noticia , titulo_Noticia , reportero_Autor, fecha_Creacion, fecha_Publicacion, fecha_Envio, fecha_Devo,
         fecha_Acontecimiento, lugar_Acontecimiento, descripcion_Corta , descripcion_Larga, estado, nombres, apellido_P, apellido_M,
-        nombre_Seccion, color_Seccion FROM fullNotDisplay WHERE id_Noticia = 1;
+        nombre_Seccion, color_Seccion FROM fullNotDisplay WHERE id_Noticia = in_newsID;
 	END //
 DELIMITER ;
 
@@ -532,3 +545,131 @@ BEGIN
 	END IF;
 	
 END//
+DROP PROCEDURE IF EXISTS sp_insertComment;
+DELIMITER //
+CREATE PROCEDURE sp_insertComment(
+	IN in_parentID int,
+	IN in_userID int,
+	IN in_newsID int,
+	IN in_comment text
+)
+    BEGIN
+		IF in_parentID = 0 THEN
+			INSERT INTO comentario(noticia_Comentario, usuario_Comentario, contenido_Comentario, fecha_Comentario)
+            VALUES (in_newsID, in_userID, in_comment, NOW());
+        END IF;
+		IF in_parentID != 0 THEN
+			INSERT INTO comentario(noticia_Comentario, usuario_Comentario, contenido_Comentario, fecha_Comentario, comentario_Dueno)
+            VALUES (in_newsID, in_userID, in_comment, NOW(), in_parentID);
+        END IF;
+    END //
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS sp_getNewsComments;
+DELIMITER //
+CREATE PROCEDURE sp_getNewsComments(
+	IN in_newsID int
+)
+    BEGIN
+		SELECT id_Usuario, nombres, apellido_P, apellido_M, foto_Perfil, blob_type,
+			   id_Comentario, comentario_Dueno, contenido_Comentario, fecha_Comentario, noticia_Comentario
+               FROM Comments_User where noticia_Comentario = in_newsID AND comentario_Dueno IS NULL ORDER BY fecha_Comentario DESC;
+    END //
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS sp_getRepliesComments;
+DELIMITER //
+CREATE PROCEDURE sp_getRepliesComments(
+	IN in_newsID int,
+	IN in_parentID int
+)
+    BEGIN
+		SELECT id_Usuario, nombres, apellido_P, apellido_M, foto_Perfil, blob_type,
+			   id_Comentario, comentario_Dueno, contenido_Comentario, fecha_Comentario, noticia_Comentario
+               FROM Comments_User where noticia_Comentario = in_newsID AND comentario_Dueno = in_parentID ORDER BY fecha_Comentario DESC;
+    END //
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS sp_deleteComm;
+DELIMITER //
+CREATE PROCEDURE sp_deleteComm(
+	IN in_commID int
+)
+    BEGIN
+		DELETE FROM comentario WHERE comentario_Dueno = in_commID;
+		DELETE FROM comentario WHERE id_Comentario = in_commID;
+    END //
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS sp_getCommentsNews;
+DELIMITER //
+CREATE PROCEDURE sp_getCommentsNews(
+	IN in_notID int
+)
+    BEGIN
+       SELECT getTotalComments(in_notID) AS 'totalComms';
+    END //
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS sp_getLikesNews;
+DELIMITER //
+CREATE PROCEDURE sp_getLikesNews(
+	IN in_notID int
+)
+    BEGIN
+       SELECT getTotalLikes(in_notID) AS 'totalLikes';
+    END //
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS sp_getPubNews;
+DELIMITER //
+CREATE PROCEDURE sp_getPubNews(
+)
+    BEGIN
+       SELECT getPostedNews() AS 'totalNews';
+    END //
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS sp_LikeNoticia;
+DELIMITER //
+CREATE PROCEDURE sp_LikeNoticia(
+	IN in_userID int,
+	IN in_notID int
+)
+    BEGIN
+		INSERT INTO likes(id_user, id_not) VALUES (in_userID, in_notID);
+    END //
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS sp_deleteLike;
+DELIMITER //
+CREATE PROCEDURE sp_deleteLike(
+	IN in_userID int,
+	IN in_notID int
+)
+    BEGIN
+		DELETE FROM likes WHERE id_user = in_userID AND id_not = in_notID;
+    END //
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS sp_isLiked;
+DELIMITER //
+CREATE PROCEDURE sp_isLiked(
+	IN in_userID int,
+	IN in_notID int
+)
+    BEGIN
+		SELECT id_like FROM likes WHERE id_user = in_userID AND id_not = in_notID;
+    END //
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS sp_getRelated;
+DELIMITER //
+CREATE PROCEDURE sp_getRelated(
+	IN in_keyword varchar(20),
+	IN in_actualNot int
+)
+    BEGIN
+		SELECT id_Noticia, pal_Clave FROM Noticia_Keywords WHERE pal_Clave = in_keyword AND estado = 'publicada' AND id_Noticia != in_actualNot;
+    END //
+DELIMITER ;

@@ -24,6 +24,7 @@
             getSeccionesToNavbar();
             getNoticiasEnv();
             setupImage('agregarFoto', 'displayImg', '.preview-image');
+            getPublishedNotes();
         });
 
         function set(){
@@ -242,6 +243,16 @@
     </div>
 </div>
 
+
+    <div class="container">
+        <div class="row">
+            <span id="publishedNews">
+                Noticias publicadas en el sitio:
+            </span>
+        </div>
+    </div>
+
+    <hr class="topNews">
     <div class="containder-fluid padding">
         <div class="row">
             <div class="col-lg-11" id="hTitle">

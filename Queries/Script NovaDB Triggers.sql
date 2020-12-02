@@ -3,21 +3,56 @@ CREATE TRIGGER delete_info_noticia
 BEFORE DELETE
 ON noticia FOR EACH ROW
 BEGIN
+	insert into noticia_backup(id_Noticia, seccion_Noticia, titulo_Noticia, reportero_Autor, fecha_Creacion, fecha_Publicacion, fecha_Envio,
+    fecha_Devo, fecha_Acontecimiento, lugar_Acontecimiento, descripcion_Corta, descripcion_Larga, estado, cantidad_Vistas) VALUES
+    (OLD.id_Noticia, OLD.seccion_Noticia,OLD.titulo_Noticia,OLD.reportero_Autor,OLD.fecha_Creacion,OLD.fecha_Publicacion,OLD.fecha_Envio,
+    OLD.fecha_Devo,OLD.fecha_Acontecimiento,OLD.lugar_Acontecimiento,OLD.descripcion_Corta,OLD.descripcion_Larga,OLD.estado,
+    OLD.cantidad_Vistas);
+
 	delete from palabra_clave where id_NoticiaProp = OLD.id_Noticia;
 	delete from feedback_noticia where id_Noticia = OLD.id_Noticia;
 	delete from media where noticia_Duena = OLD.id_Noticia;
+	delete from comentario where noticia_Comentario = OLD.id_Noticia;
+	delete from likes where id_not = OLD.id_Noticia;
 END //
 DELIMITER ;
 
 DELIMITER //
 CREATE TRIGGER delete_noticias_reportero
-BEFORE DELETE
+AFTER UPDATE
 ON usuario FOR EACH ROW
 BEGIN
-	delete from noticia where reportero_Autor = OLD.id_Usuario AND estado != 'publicada';
+	IF NEW.estado = 0 THEN
+		delete from noticia where reportero_Autor = OLD.id_Usuario AND estado != 'publicada';
+	END IF;
 END //
 DELIMITER ;
 
+DELIMITER //
+CREATE TRIGGER delete_news_section
+AFTER UPDATE
+ON seccion FOR EACH ROW
+BEGIN
+	IF NEW.estado = 0 THEN
+		delete from noticia where seccion_Noticia = OLD.id_Seccion;
+    END IF;
+END //
+DELIMITER ;
+
+/* ---------------------------------------------------     FUNCTIONS      -------------------------------------------------------------------- */
+
+CREATE FUNCTION getTotalComments (idNoticia int)
+	   RETURNS int READS SQL DATA
+       RETURN (SELECT COUNT(id_Comentario) AS 'totalComms' FROM comentario WHERE noticia_Comentario = idNoticia);
+       
+CREATE FUNCTION getTotalLikes (idNoticia int)
+	   RETURNS int READS SQL DATA
+       RETURN (SELECT COUNT(id_like) AS 'totalLikes' FROM likes WHERE id_not = idNoticia);
+       
+CREATE FUNCTION getPostedNews ()
+	   RETURNS int READS SQL DATA
+       RETURN (SELECT COUNT(id_Noticia) AS 'publishedNews' FROM noticia WHERE estado = 'publicada');
+       
 /* ---------------------------------------------------     VIEWS      -------------------------------------------------------------------- */
 
 CREATE VIEW fullNoticia
@@ -66,12 +101,17 @@ CREATE VIEW nombreSeccion_View
 CREATE VIEW getSeccion_View
 	AS
 		SELECT  id_Seccion,nombre_Seccion,num_Prioridad,estado,color_Seccion FROM seccion;
+        
+CREATE VIEW Comments_User
+	AS
+		SELECT U.id_Usuario, U.nombres, U.apellido_P, U.apellido_M, U.foto_Perfil, U.blob_type,
+			   C.id_Comentario, C.comentario_Dueno, C.contenido_Comentario, C.fecha_Comentario, C.noticia_Comentario
+        FROM usuario U INNER JOIN comentario C ON C.usuario_Comentario = U.id_Usuario;
+        
+CREATE VIEW Noticia_Keywords
+	AS
+		SELECT id_Noticia, pal_Clave, titulo_Noticia, estado FROM palabra_clave PC INNER JOIN noticia N on PC.id_NoticiaProp = N.id_Noticia;
 
-        
-        
-        
-        
-        
 /* ---------------------------------------------------     FUNCTIONS      -------------------------------------------------------------------- */
 
 CREATE FUNCTION lastID ()

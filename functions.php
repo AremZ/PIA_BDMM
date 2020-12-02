@@ -367,7 +367,8 @@ if ($method == "noticiaReg"){
 
             foreach($palClavArray as $palClav)
             {
-                $queryClav  = "CALL sp_insertPalClav('$palClav', $IDNot)";
+                $finalKey = strtolower($palClav);
+                $queryClav  = "CALL sp_insertPalClav('$finalKey', $IDNot)";
                 mysqli_query($conn, $queryClav);
                 $row = mysqli_affected_rows($conn);
                 if($row!=0){ 
@@ -445,7 +446,8 @@ if ($method == "noticiaUpd"){
 
         foreach($palClavArray as $palClav)
         {
-            $queryClav  = "CALL sp_insertPalClav('$palClav', $idNot)";
+            $finalKey = strtolower($palClav);
+            $queryClav  = "CALL sp_insertPalClav('$finalKey', $idNot)";
             mysqli_query($conn, $queryClav);
             $row = mysqli_affected_rows($conn);
             if($row!=0){ 
@@ -527,6 +529,7 @@ if ($method == "getSectionName"){
         $idSeccion=$_POST['idSeccionE'];
         $query  = "CALL sp_askDeleteSeccion('$idSeccion');";
         $resultado=mysqli_query($conn, $query);
+
         $query  = "CALL sp_getSeccion('$idSeccion');";
         $resultado=mysqli_query($conn, $query);
 
@@ -1178,6 +1181,85 @@ if ($method == "getNewsData"){
     }
 }
 
+if ($method == "getNewsByIDDisplay"){
+    $conn = connectDB();
+
+    if($conn){
+      
+        $idNews=$_POST['idNews'];
+      
+        $query  = "CALL sp_getNewsByID($idNews);";
+        $resultado = mysqli_query($conn, $query);
+    
+        $noticias = array();
+        
+        if($resultado){
+            while ($row = mysqli_fetch_assoc($resultado)) {
+                $notiRed = array(
+                  "id" => $row['id_Noticia'],
+                  "title" => $row['titulo_Noticia'],
+                  "fePub" => $row['fecha_Publicacion'],
+                  "descrSh" => $row['descripcion_Corta'],
+                  "preview" => base64_encode($row['contenido_media']),
+                  "ext" => $row['blob_type']
+                );
+                $noticias[] = $notiRed;
+              }             
+             echo json_encode($noticias);
+        }       
+        closeDB($conn);
+    }
+}
+
+if ($method == "getPublishedNotes"){
+    $conn = connectDB();
+
+    if($conn){
+            
+        $query  = "CALL sp_getPubNews();";
+        $resultado = mysqli_query($conn, $query);
+        if($resultado){
+            $row = mysqli_fetch_assoc($resultado);          
+            echo json_encode(array("totalNews" => $row['totalNews']));  
+        }
+        closeDB($conn);
+    }
+}
+
+if ($method == "countOfComments"){
+    $conn = connectDB();
+
+    if($conn){
+      
+        $idNews=$_POST['idNews'];
+      
+        $query  = "CALL sp_getCommentsNews($idNews);";
+        $resultado = mysqli_query($conn, $query);
+        if($resultado){
+            $row = mysqli_fetch_assoc($resultado);          
+            echo json_encode(array("totalComms" => $row['totalComms']));  
+        }
+        closeDB($conn);
+    }
+}
+
+if ($method == "countOfLikes"){
+    $conn = connectDB();
+
+    if($conn){
+      
+        $idNews=$_POST['idNews'];
+      
+        $query  = "CALL sp_getLikesNews($idNews);";
+        $resultado = mysqli_query($conn, $query);
+        if($resultado){
+            $row = mysqli_fetch_assoc($resultado);          
+            echo json_encode(array("totalLikes" => $row['totalLikes']));  
+        }
+        closeDB($conn);
+    }
+}
+
 if ($method == "increaseViews"){
     $conn = connectDB();
 
@@ -1230,6 +1312,210 @@ if ($method == "getSearchResult"){
               }
               
              echo json_encode($noticias);
+if ($method == "postComment"){
+    $conn = connectDB();
+
+    if($conn){
+      
+        $idParent=$_POST['idParent'];
+        $idUser=$_POST['idUser'];
+        $idNews=$_POST['idNews'];
+        $comment=$_POST['comment'];
+      
+        $query  = "CALL sp_insertComment($idParent, $idUser, $idNews, '$comment');";
+        mysqli_query($conn, $query);
+        
+        $fila=mysqli_affected_rows($conn);
+        if($fila!=0){
+            echo json_encode(array("msg"=>true));       
+        }
+        else{
+            echo json_encode(array("msg"=>false));
+        }
+        closeDB($conn);
+    }
+}
+
+if ($method == "getComments"){
+    $conn = connectDB();
+
+    if($conn){
+      
+        $idNews=$_POST['idNot'];
+      
+        $query  = "CALL sp_getNewsComments($idNews);";
+        $resultado = mysqli_query($conn, $query);
+        $comments = array();
+        
+        if($resultado){
+            while ($row = mysqli_fetch_assoc($resultado)) {
+                $comentario = array(
+                    "userID" => $row['id_Usuario'],
+                    "name" => $row['nombres'],
+                    "apePat" => $row['apellido_P'],
+                    "apeMat" => $row['apellido_M'],
+                    "avatar" => base64_encode($row['foto_Perfil']),
+                    "type" => $row['blob_type'],
+                    "commentID" => $row['id_Comentario'],
+                    "commentPadre" => $row['comentario_Dueno'],
+                    "comment" => $row['contenido_Comentario'],
+                    "dateComm" => $row['fecha_Comentario'],
+                    "newsID" => $row['noticia_Comentario']
+                );
+                $comments[] = $comentario;
+              }
+              
+             echo json_encode($comments);
+        }       
+        closeDB($conn);
+    }
+}
+
+if ($method == "getCommentReplies"){
+    $conn = connectDB();
+
+    if($conn){
+      
+        $idNews=$_POST['idNot'];
+        $idParent=$_POST['idParent'];
+      
+        $query  = "CALL sp_getRepliesComments($idNews, $idParent);";
+        $resultado = mysqli_query($conn, $query);
+        $replies = array();
+        
+        if($resultado){
+            while ($row = mysqli_fetch_assoc($resultado)) {
+                $respuestas = array(
+                    "userID" => $row['id_Usuario'],
+                    "name" => $row['nombres'],
+                    "apePat" => $row['apellido_P'],
+                    "apeMat" => $row['apellido_M'],
+                    "avatar" => base64_encode($row['foto_Perfil']),
+                    "type" => $row['blob_type'],
+                    "commentID" => $row['id_Comentario'],
+                    "commentPadre" => $row['comentario_Dueno'],
+                    "comment" => $row['contenido_Comentario'],
+                    "dateComm" => $row['fecha_Comentario'],
+                    "newsID" => $row['noticia_Comentario']
+                );
+                $replies[] = $respuestas;
+              }
+              
+             echo json_encode($replies);
+        }       
+        closeDB($conn);
+    }
+}
+
+if ($method == "deleteComm"){
+    $conn = connectDB();
+
+    if($conn){
+        $id=$_POST['id'];
+
+        $query = "CALL sp_deleteComm($id)";
+
+        mysqli_query($conn, $query);
+        $row = mysqli_affected_rows($conn);
+        if($row!=0){
+            echo json_encode(array("msg"=>true));       
+        }
+        else{
+            echo json_encode(array("msg"=>false));
+        }
+        closeDB($conn);
+    }
+}
+
+if ($method == "likeNoticia"){
+    $conn = connectDB();
+
+    if($conn){
+      
+        $idUser=$_POST['idUser'];
+        $idNot=$_POST['idNot'];
+      
+        $query  = "CALL sp_LikeNoticia($idUser, $idNot);";
+        mysqli_query($conn, $query);
+        
+        $fila=mysqli_affected_rows($conn);
+        if($fila!=0){
+            echo json_encode(array("msg"=>true));       
+        }
+        else{
+            echo json_encode(array("msg"=>false));
+        }
+        closeDB($conn);
+    }
+}
+
+if ($method == "deleteLike"){
+    $conn = connectDB();
+
+    if($conn){
+      
+        $idUser=$_POST['idUser'];
+        $idNot=$_POST['idNot'];
+      
+        $query  = "CALL sp_deleteLike($idUser, $idNot);";
+        mysqli_query($conn, $query);
+        
+        $fila=mysqli_affected_rows($conn);
+        if($fila!=0){
+            echo json_encode(array("msg"=>true));       
+        }
+        else{
+            echo json_encode(array("msg"=>false));
+        }
+        closeDB($conn);
+    }
+}
+
+if ($method == "updateLikeButt"){
+    $conn = connectDB();
+
+    if($conn){
+      
+        $idUser=$_POST['idUser'];
+        $idNot=$_POST['idNot'];
+        
+        $query  = "CALL sp_isLiked($idUser, $idNot);";
+        $resultado = mysqli_query($conn, $query);
+        $row = mysqli_fetch_assoc($resultado);
+        
+        if($row['id_like'] != ""){     
+            echo json_encode(array("msg"=>true));
+        }
+        else{
+            echo json_encode(array("msg"=>false));
+        }
+        closeDB($conn);
+    }
+}   
+
+if ($method == "getRelated"){
+    //Creamos la conexion
+    $conn = connectDB();
+
+    if($conn){
+      
+        $keyword=$_POST['keyword'];
+        $idNot=$_POST['actualNot'];
+
+        $query  = "CALL sp_getRelated('$keyword', $idNot);";
+        $resultado = mysqli_query($conn, $query);       
+        $relatedNots = array();
+        
+        if($resultado){
+            while ($row = mysqli_fetch_assoc($resultado)) {
+                $newsRel = array(
+                    "idNot" => $row['id_Noticia'],
+                    "palClav" => $row['pal_Clave']
+                );
+                $relatedNots[] = $newsRel;
+              }
+              
+             echo json_encode($relatedNots);
         }       
         closeDB($conn);
     }
