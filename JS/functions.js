@@ -116,6 +116,18 @@ var curday = function(sp){
   return (yyyy+sp+mm+sp+dd);
 };
 
+var curdayminus = function(sp){
+  today = new Date();
+  today.setDate(today.getDate()-7);
+  var dd = today.getDate();
+  var mm = today.getMonth()+1; //As January is 0.
+  var yyyy = today.getFullYear();
+
+  if(dd<10) dd='0'+dd;
+  if(mm<10) mm='0'+mm;
+  return (yyyy+sp+mm+sp+dd);
+};
+
 function search(){
     var palabraBuscar=document.getElementById("BRSearch").value;
     url = 'searchResult.php?palabra=' + palabraBuscar;
@@ -137,7 +149,7 @@ function getSearchDataFiltros(){
   var desc="null";
   if($("#fD").prop("checked"))
     desc=palabraBuscar;
-    
+
   var clave="null";
   if($("#fC").prop("checked"))
     clave=palabraBuscar;
@@ -1803,7 +1815,8 @@ function getSeccionesToNavbar(){
 
                 $( ".seccionesNav" ).append(
                     //"<li id='"+secciones[idx].id+"' class='nav-item active'><a class='nav-link seccionNav' style='color:"+colorSeccion +"!important;' href='main.html'>"+secciones[idx].name+"</a></li>");
-                    "<li id='"+secciones[idx].id+"' class='nav-item active "+secciones[idx].color+"'><a class='nav-link seccionNav'  href='noticiasSeccion.php'>"+secciones[idx].name+"</a></li>");
+                    "<li id='"+secciones[idx].id+"' class='nav-item active "+secciones[idx].color+"'><a class='nav-link seccionNav'" + 
+                    "onclick='sendtoSectionPage(" + secciones[idx].id + ")'>"+ secciones[idx].name+ "</a></li>");
               });
         }
 
@@ -2128,8 +2141,8 @@ function getNoticiasPub(){
                         '<h4 class="card-title titleNotPub">' + noticias[idx].title + '</h4><p class="card-text bodyNotPub">' + noticias[idx].descrSh +
                         '</p><h4 class="card-title" id="pubNotPub">Publicado el: ' + noticias[idx].fePub.slice(8,10) + ' de ' +
                         whichMonth(noticias[idx].fePub.slice(5,7)) + ' del ' + noticias[idx].fePub.slice(0,4) + '</h4><div class="row"><div class="col-lg-12">' +
-                        '<form action="fullpage.php"><button class="btn btn-outline-danger barBut" type="submit" id="btnSeeNot"><i class="fa fa-newspaper-o"></i>Ver noticia</button>' +
-                        '</form></div></div></div></div></div>'  
+                        '<button class="btn btn-outline-danger barBut" id="btnSeeNot" onclick="sendtoFullPage(' + noticias[idx].id + ')">' + 
+                        '<i class="fa fa-newspaper-o"></i>Ver noticia</button></form></div></div></div></div></div>'  
                 )});       
             }           
         }
@@ -2151,7 +2164,7 @@ function displayPubNots(appendTo){
                         '<h4 class="card-title title">' + noticias[idx].title + '</h4><p class="card-text">' + noticias[idx].descrSh +
                         '</p><h4 class="card-title pubDate">Publicado el: ' + noticias[idx].fePub.slice(8,10) + ' de ' +
                         whichMonth(noticias[idx].fePub.slice(5,7)) + ' del ' + noticias[idx].fePub.slice(0,4) + '</h4>' +
-                        '<button class="btn btn-outline-danger barBut"><i class="fa fa-newspaper-o"></i>  Ver noticia</button></div></div></div>'   
+                        '<button class="btn btn-outline-danger barBut" onclick="sendtoFullPage(' + noticias[idx].id + ')"><i class="fa fa-newspaper-o"></i>  Ver noticia</button></div></div></div>'   
                 )});       
             }           
         }
@@ -2183,7 +2196,7 @@ function displayMostViewed(appendTo){
                         '<h4 class="card-title title">' + noticias[idx].title + '</h4><p class="card-text">' + shorterDesc +
                         '</p><h4 class="card-title pubDate">Publicado el: ' + noticias[idx].fePub.slice(8,10) + ' de ' +
                         whichMonth(noticias[idx].fePub.slice(5,7)) + ' del ' + noticias[idx].fePub.slice(0,4) + '</h4>' +
-                        '<button class="btn btn-outline-danger barBut"><i class="fa fa-newspaper-o"></i>  Ver noticia</button></div></div></div>'   
+                        '<button class="btn btn-outline-danger barBut" onclick="sendtoFullPage(' + noticias[idx].id + ')"><i class="fa fa-newspaper-o"></i>  Ver noticia</button></div></div></div>'   
                 )});  
             }           
         }
@@ -2222,7 +2235,7 @@ function displaySections(appendTo){
                     $(appendTo).append(
                         '<div class="row"><div class="col-md-12"><div class="row" id="sectionHeader"><div class="col-md-1 sectionColor" ' +
                         'style="background-color:' +  selectedColor + ';"></div><div class="col-md-11 tituloSeccion">' + secciones[idx].name +
-                        '<button class="btn btn-outline-danger butMoreInfo">Ver más...' + 
+                        '<button class="btn btn-outline-danger butMoreInfo" onclick="sendtoSectionPage(' + secciones[idx].id + ')">Ver más...' + 
                         '</button></div></div><div class="row BGSection" id="section' + secciones[idx].id +'"></div></div></div>' 
                     )
                     
@@ -2240,7 +2253,7 @@ function displaySections(appendTo){
                                         '<h4 class="card-title title">' + noticias[idy].title + '</h4><p class="card-text">' + noticias[idy].descrSh +
                                         '</p><h4 class="card-title pubDate">Publicado el: ' + noticias[idy].fePub.slice(8,10) + ' de ' +
                                         whichMonth(noticias[idy].fePub.slice(5,7)) + ' del ' + noticias[idy].fePub.slice(0,4) + '</h4>' +
-                                        '<button class="btn btn-outline-danger barBut"><i class="fa fa-newspaper-o"></i>  Ver noticia</button></div></div></div>'
+                                        '<button class="btn btn-outline-danger barBut" onclick="sendtoFullPage(' + noticias[idy].id + ')"><i class="fa fa-newspaper-o"></i>  Ver noticia</button></div></div></div>'
                                     ) 
                                 })
                             }
@@ -2273,7 +2286,7 @@ function displayNewsBySection(appendTo, sectionID){
                         '<h4 class="card-title title">' + noticias[idx].title + '</h4><p class="card-text">' + noticias[idx].descrSh +
                         '</p><h4 class="card-title pubDate">Publicado el: ' + noticias[idx].fePub.slice(8,10) + ' de ' +
                         whichMonth(noticias[idx].fePub.slice(5,7)) + ' del ' + noticias[idx].fePub.slice(0,4) + '</h4>' +
-                        '<button class="btn btn-outline-danger barBut"><i class="fa fa-newspaper-o"></i>  Ver noticia</button></div></div></div>'   
+                        '<button class="btn btn-outline-danger barBut" onclick="sendtoFullPage(' + noticias[idx].id + ')"><i class="fa fa-newspaper-o"></i>  Ver noticia</button></div></div></div>'   
                 )});       
             }           
         }
@@ -2917,7 +2930,7 @@ function getNotKeywords(idNot){
                         '<h4 class="card-title title">' + noticia[0].title + '</h4><p class="card-text">' + shorterDesc +
                         '</p><h4 class="card-title pubDate">Publicado el: ' + noticia[0].fePub.slice(8,10) + ' de ' +
                         whichMonth(noticia[0].fePub.slice(5,7)) + ' del ' + noticia[0].fePub.slice(0,4) + '</h4>' +
-                        '<button class="btn btn-outline-danger barBut"><i class="fa fa-newspaper-o"></i>  Ver noticia</button></div></div></div>'   
+                        '<button class="btn btn-outline-danger barBut" onclick="sendtoFullPage(' + noticia[0].id + ')"><i class="fa fa-newspaper-o"></i>  Ver noticia</button></div></div></div>'   
                     )
                 }   
             },
@@ -2928,6 +2941,15 @@ function getNotKeywords(idNot){
     })
 }
 
+function sendtoFullPage(idNot){
+    url = 'fullpage.php?id=' + idNot;
+    window.location = url;
+}
+
+function sendtoSectionPage(IdSect){
+    url = 'noticiasSeccion.php?id=' + IdSect;
+    window.location = url;
+}
 
 function whichMonth(number){
     if (number == 1)
@@ -2967,8 +2989,23 @@ function whichMonth(number){
         return 'Diciembre' 
 }
 
+function getUrlParameter(sParam) {
+    var sPageURL = window.location.search.substring(1),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+        }
+    }
+};
+
 function displaySearchResults(palabraT, palabraD, palabraC, fechaInicial, fechaFinal){
-    document.getElementById("contenedorResultados").innerHTML = "";
+    document.getElementById("displayNews").innerHTML = "";
     $.ajax({
         url: "PHP/busqueda.php",
         type: "post",
@@ -2978,15 +3015,14 @@ function displaySearchResults(palabraT, palabraD, palabraC, fechaInicial, fechaF
             $.each(noticias, function(idx, noti){
                 
                 //alert(noticias[idx].id);
-                $( "#contenedorResultados").append(
+                $( "#displayNews").append(
                     
-                    "<div class='row' id='noticiaBG'> <div class='col-md-12' id='noticiaBody'> <div class='row'> <div class='col-md-12'> <hr> </div>"+
-                    "<div class='card mb-6 tarjetaResult' style='border-color: black;'> <div class='row no-gutters'> <div class='col-md-3 imgTarjeta'><br>"+
-                    "<img src='http://via.placeholder.com/150x100' class='card-img' alt='Imagen no disponible'> </div> <div class='col-md-9'> <div class='card-body'>"+
-                    "<h5 class='card-title'><a href=''>"+noticias[idx].titulo+"</a> </h5>"+
-                        "<p class='card-text'>"+noticias[idx].descripcionCorta+"</p>"+
-                       "<div class='col-md-9' id='datePublicacion'>"+noticias[idx].fechaPublicada+"</div>"+
-                       "</div></div> </div></div> <div class='col-md-12'><hr> </div></div> </div> </div>"
+                    '<div class="col-md-4"><div class="card searchResult"><img class="card-img-top"' + 
+                    'src=data:image/' + noticias[idx].ext + ';base64,' + noticias[idx].preview + '><div class="card-body">' +
+                    '<h4 class="card-title title">' + noticias[idx].title + '</h4><p class="card-text">' + noticias[idx].descrSh +
+                    '</p><h4 class="card-title pubDate">Publicado el: ' + noticias[idx].fePub.slice(8,10) + ' de ' +
+                    whichMonth(noticias[idx].fePub.slice(5,7)) + ' del ' + noticias[idx].fePub.slice(0,4) + '</h4>' +
+                    '<button class="btn btn-outline-danger barBut" onclick="sendtoFullPage(' + noticias[idx].id + ')"><i class="fa fa-newspaper-o"></i>  Ver noticia</button></div></div></div>'
                 );
               
                 });

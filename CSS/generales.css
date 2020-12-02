@@ -245,3 +245,7 @@ hr.Light-100{
     border-top: 1px solid var(--TitleFont);
     width: 100%;
 }
+
+a.seccionNav{
+    cursor: pointer;
+}
