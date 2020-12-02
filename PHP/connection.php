@@ -2,10 +2,10 @@
 
 function connectDB(){
     $servername = "localhost"; 
-    //$username = "root";
-    $username = "PruebaDB3";
-    //$password = "";
-    $password = "password";
+    $username = "root";
+    //$username = "PruebaDB3";
+    $password = "";
+    //$password = "password";
     $dbname = "novadb";  
     
     $conn = mysqli_connect($servername, $username, $password, $dbname);

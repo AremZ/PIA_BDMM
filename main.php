@@ -1,12 +1,4 @@
-<?php
-$phpVar = 0;
-if(!isset($_COOKIE['user'])){
-     $phpVar = $_COOKIE['user'];
-    
-    $cookie_name = "user";
-    setcookie($cookie_name, $phpVar, time() + (86400 * 30), "/"); // 86400 = 1 day*/
-}
-?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -34,8 +26,10 @@ if(!isset($_COOKIE['user'])){
             displayPubNots("#displayNews");
             displayMostViewed("#displayMostViewed");
             displaySections(".allSections");
-            get();
+            //get();
             getSeccionesToNavbar();
+            $("#btnLogin").toggle();
+            getLogged();
         
         });
 
@@ -47,39 +41,7 @@ if(!isset($_COOKIE['user'])){
             //alert("Palabra: "+palabraBuscar);
         }
 
-        function set(){
-          <?php 
-          //$phpVar=0;
-          if(!isset($_COOKIE['user']))
-            if($_COOKIE['user']!=0){
-                $phpVar =  $_COOKIE['user'];
-
-                $cookie_name = "user";
-                setcookie($cookie_name, $phpVar, time() + (86400 * 30), "/"); // 86400 = 1 day*/
-            }
-          ?>
-          //alert("done");
-        }
        
-        function get(){
-            <?php
-            $cookie_name="user";
-            $cookie_value = 0;
-            if(!isset($_COOKIE[$cookie_name])) {
-                setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/"); // 86400 = 1 day
-            }
-            $currentUser =$_COOKIE["user"];
-            ?>
-            var currentU = "<?php echo $currentUser ?>";
-            //alert(currentU);
-            if(currentU==0||currentU==null||currentU=="")
-                $("#btnProfile").toggle();
-            
-            else{
-                getLogged(currentU);
-                $("#btnLogin").toggle();
-            }
-        }
 
     </script>
 
@@ -124,18 +86,18 @@ if(!isset($_COOKIE['user'])){
             </ul>
             <ul class="navbar-nav ml-auto">
             <label id="nombreUsuario">¡ Hola!</label>
-                <li class="nav-item" id="btnLogin">
+                <li class="nav-item" id="btnLogin"  style="display:none;">
                     <a class="nav-link" href="" data-toggle="modal" data-target="#modLogin" onclick="cleanInput('emailLog'), cleanInput('pwdLog')">Iniciar Sesion</a>
                 </li>
            
-                <li class="nav-item dropdown" id="btnProfile" style="position: relative;">
+                <li class="nav-item dropdown" id="btnProfile" style="position: relative; display:none;">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMA" role="button"
                         data-toggle="dropdown" >Mi Cuenta</a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMA" >
                         <a class="dropdown-item" href="profile.php">Mi Perfil</a>
                         <a id="btnEscritorio" class="dropdown-item" href="newsReportero.php">Escritorio</a>
                         <a id="btnSeccion"class="dropdown-item" href="sectionAdm.php">Gestionar Seccion</a>
-                        <a class="dropdown-item" onclick="cerrarSesion(); set();">Cerrar Sesion</a>
+                        <a class="dropdown-item" onclick="cerrarSesion()">Cerrar Sesion</a>
                     </div>
                     
                 </li>  
@@ -188,7 +150,7 @@ if(!isset($_COOKIE['user'])){
                         </form>
                         <hr>
                         <button id="logMeIn" type="button" class="btn btn-outline-danger" 
-                            style="float:right" onclick="validaciones(1); set();"><i class="fa fa-check"></i>Iniciar Sesion</button>
+                            style="float:right" onclick="validaciones(1); "><i class="fa fa-check"></i>Iniciar Sesion</button>
                     </div>
   
                     <div id="register" class="tab-pane fade">

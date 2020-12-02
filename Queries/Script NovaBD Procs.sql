@@ -11,7 +11,7 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_userSignUp;
 DELIMITER //
-CREATE PROCEDURE sp_userSignUp(
+CREATE PROCEDURE sp_userSignUp()
 	IN in_userType varchar(15),
     IN in_name varchar(50),
     IN in_lastN varchar(30),

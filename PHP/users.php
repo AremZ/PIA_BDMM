@@ -15,6 +15,9 @@ if ($method == "userLogin"){
         $row = mysqli_fetch_assoc($resultado);
         
         if($row['email'] != ""){
+            $value =  $row['id_Usuario'];
+            $cookie_name = "user";
+            setcookie($cookie_name, $value, time() + (86400 * 30), "/"); // 86400 = 1 day*/
             echo json_encode($row);       
         }
         else{
@@ -22,6 +25,13 @@ if ($method == "userLogin"){
         }
         closeDB($conn);
     }
+}
+
+if ($method == "userLogout"){
+   
+    setcookie ("user","", time()-3600, '/');
+    echo json_encode(array("msg"=>true));       
+
 }
 
 if ($method == "userSignUp"){ 
@@ -228,4 +238,39 @@ if ($method == "getAllReporteros"){
         closeDB($conn);
     }
 }
+
+if ($method == "getLoggedUser"){
+    
+    $conn = connectDB();
+    
+    $cookie_name="user";
+
+    if(!isset($_COOKIE[$cookie_name])){
+        echo json_encode(array("msg"=>false));     
+    }
+    
+    else{
+    if($conn){
+        $query  = "CALL sp_getUserData($_COOKIE[$cookie_name]);";
+        $resultado = mysqli_query($conn, $query);        
+        $usuarios = array();
+        if($resultado){
+            while ($row = mysqli_fetch_assoc($resultado)) {
+                $usser = array(
+                    "id" => $row['id_Usuario'],
+                    "tipoUsuario" => $row['tipo_Usuario'],
+                    "name" => $row['nombres']//,
+                    //"avatar" => base64_encode($row['foto_Perfil']),
+                   // "imgType" => $row['blob_type']
+                );
+                $usuarios[] = $usser;
+              }
+              
+             echo json_encode($usuarios);
+        }       
+        closeDB($conn);
+    }
+}
+}
 ?>
+

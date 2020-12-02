@@ -164,13 +164,15 @@ function validaciones(mod){
                 alert("Dirección de correo inválida.")
                 inputEmail = false;
             }
+            else if(campoEmail.length>45)
+                inputEmail = false;
             else{
                 inputEmail = true;
             }
         }
-        
+      
         var campoPass = document.getElementById("pwdLog");
-        if(campoPass.value==""){
+        if(campoPass.value==""||campoPass.value.length<8|| campoPass.value.length > 20){
             document.getElementById("passContainer").className=document.getElementById("passContainer").className+" error";
             inputPass = false;
         }
@@ -188,11 +190,10 @@ function validaciones(mod){
                 success: function (row) {
                     if(row){
                         alert("¡Sesion iniciada exitosamente!");    
-                        document.cookie = "user="+row.id_Usuario;
                         document.getElementById("nombreUsuario").innerHTML="¡ Hola "+row.nombres+" !";
                         $('#modLogin').modal('toggle');
-                        $("#btnLogin").toggle();
-                        $("#btnProfile").toggle();
+                        window.location.reload();
+                       
                     }
                     else
                         alert("Verifique sus datos.");
@@ -203,6 +204,7 @@ function validaciones(mod){
         else{
             document.getElementById("mailContainer").className=document.getElementById("mailContainer").className+" error";
             document.getElementById("passContainer").className=document.getElementById("passContainer").className+" error";
+            alert("Verifique sus datos.");
         }
     }
 
@@ -229,7 +231,9 @@ function validaciones(mod){
             document.getElementById("mailRContainer").className=document.getElementById("mailRContainer").className+" error";
             datosCorrec=false;
             }
-            else{
+        else if(campo.length>45)
+            datosCorrec = false;
+        else{
                 if (!(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(campo.value))){
                     document.getElementById("mailRContainer").className=document.getElementById("mailRContainer").className+" error";
                     datosCorrec=false;
@@ -250,7 +254,7 @@ function validaciones(mod){
 
         }
         campo = document.getElementById("pwdRLog");
-        if(campo.value==""){
+        if(campo.value==""||campo.value.length<8||campo.value.length<20){
             document.getElementById("passRContainer").className=document.getElementById("passRContainer").className+" error";   
             datosCorrec=false;
         }
@@ -295,7 +299,7 @@ function validaciones(mod){
                 processData: false,
                 success: function (result) {
                     if(result.msg){
-                        alert("¡Registro exitoso! Inicia sesión.");
+                        alert("¡Registro exitoso!");
                         document.getElementById("fnameLog").value="";
                         document.getElementById("snameLog").value="";
                         document.getElementById("lnameLog").value="";
@@ -312,6 +316,8 @@ function validaciones(mod){
                 }
             });
         }
+        else
+            alert("Verifique sus datos.");
     }
 
     else if (mod==3){
@@ -336,6 +342,8 @@ function validaciones(mod){
             document.getElementById("mailRContainerAdmin").className=document.getElementById("mailRContainerAdmin").className+" error";
             datosCorrec=false;
             }
+        else if(campo.value.length>45)
+            datosCorrec=false;
             else{
                 if (!(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(campo.value))){
                     document.getElementById("mailRContainerAdmin").className=document.getElementById("mailRContainerAdmin").className+" error";
@@ -355,7 +363,7 @@ function validaciones(mod){
 
         }
         campo = document.getElementById("pwdAdmin");
-        if(campo.value==""){
+        if(campo.value==""||  campo.value.length < 8 || campo.value.length > 20){
             document.getElementById("passRContainerAdmin").className=document.getElementById("passRContainerAdmin").className+" error";   
             datosCorrec=false;
         }
@@ -426,7 +434,9 @@ function validaciones(mod){
                 }
             });
             
-        }     
+        }   
+        else
+        alert("Verifique sus datos.");  
     }
     
     else if (mod == 4) {
@@ -450,7 +460,10 @@ function validaciones(mod){
         if (campo.value == "") {
             document.getElementById("mailRContainerEditor").className = document.getElementById("mailRContainerEditor").className + " error";
             datosCorrec = false;
-        } else {
+        } 
+        else if(campo.value.length>45)
+        datosCorrec=false;
+        else {
             if (!(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(campo.value))) {
                 document.getElementById("mailRContainerEditor").className = document.getElementById("mailRContainerEditor").className + " error";
                 alert("Dirección de correo inválida.")
@@ -468,7 +481,7 @@ function validaciones(mod){
 
         }
         campo = document.getElementById("pwdEditor");
-        if (campo.value == "") {
+        if (campo.value == ""||campo.value.length<8||campo.value.length > 20) {
             document.getElementById("passRContainerEditor").className = document.getElementById("passRContainerEditor").className + " error";
             datosCorrec = false;
         }
@@ -530,6 +543,8 @@ function validaciones(mod){
                 }
             });
         }
+        else
+        alert("Verifique sus datos.");
     }
 
     else if (mod==5){
@@ -554,6 +569,8 @@ function validaciones(mod){
             document.getElementById("mailRContainerAdmin").className=document.getElementById("mailRContainerAdmin").className+" error";
             datosCorrec=false;
             }
+        else if(campo.value.length>45)
+            datosCorrec=false;
             else{
                 if (!(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(campo.value))){
                     document.getElementById("mailRContainerAdmin").className=document.getElementById("mailRContainerAdmin").className+" error";
@@ -573,7 +590,7 @@ function validaciones(mod){
 
         }
         campo = document.getElementById("pwdAdmin");
-        if(campo.value==""){
+        if(campo.value==""||campo.value.length<8||campo.value.length > 20){
             document.getElementById("passRContainerAdmin").className=document.getElementById("passRContainerAdmin").className+" error";   
             datosCorrec=false;
         }
@@ -651,7 +668,9 @@ function validaciones(mod){
                         alert("Ocurrio un error actualizando los datos.");
                 }
             });
-        }     
+        } 
+        else
+        alert("Verifique sus datos.");    
     }
 
     else if (mod == 6) {
@@ -675,7 +694,10 @@ function validaciones(mod){
         if (campo.value == "") {
             document.getElementById("mailRContainerEditor").className = document.getElementById("mailRContainerEditor").className + " error";
             datosCorrec = false;
-        } else {
+        } 
+        else if(campo.value.length>45)
+            datosCorrec=false;
+        else {
             if (!(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(campo.value))) {
                 document.getElementById("mailRContainerEditor").className = document.getElementById("mailRContainerEditor").className + " error";
                 alert("Dirección de correo inválida.")
@@ -693,7 +715,7 @@ function validaciones(mod){
 
         }
         campo = document.getElementById("pwdEditor");
-        if (campo.value == "") {
+        if (campo.value == ""||campo.value.length<8||campo.value.length > 20) {
             document.getElementById("passRContainerEditor").className = document.getElementById("passRContainerEditor").className + " error";
             datosCorrec = false;
         }
@@ -763,30 +785,36 @@ function validaciones(mod){
                 }
             });
         }
+        else
+        alert("Verifique sus datos.");
     }
 }
 
-function getLogged(userID){
+function getLogged(){
     $.ajax({
         url: "PHP/users.php",
         type: "post",
         dataType: "json",
-        data: {method: 'getUserData', idUser: userID},
+        data: {method: 'getLoggedUser'},
         success: function (usuario, usser) {
-            if (usuario != null){
+            if (usuario != null&&usuario.msg!=false){
                 var name = usuario[0].name;
                 var type = usuario[0].tipoUsuario;
                 document.getElementById("nombreUsuario").innerHTML="¡ Hola "+name+" !";
+                $("#btnLogin").toggle();
+                $("#btnProfile").toggle();
                 if(type=="usuario"){
                     $("#btnEscritorio").toggle();
                     $("#btnSeccion").toggle();
                 }
-                else if(type=="reportero")
-                    $("#btnSeccion").toggle();
-            }   
+                //else if(type=="reportero")
+                 //   $("#btnSeccion").toggle();
+            }
+            else
+                alert("¡Bienvenido invitado!");   
         },
         error: function (result) {
-            alert("Ocurrio un error durante la obtencion de datos.");
+            alert("Error");
         }
 
     });
@@ -796,9 +824,22 @@ function cerrarSesion(){
     $("#btnLogin").toggle();
     $("#btnProfile").toggle();
     document.getElementById("nombreUsuario").innerHTML="¡ Hola !";
-    document.cookie = "user=0";
-}
+    $.ajax({
+        url: "PHP/users.php",
+        type: "post",
+        dataType: "json",
+        data: {method: 'userLogout'},
+        success: function (result) {
+            if(result.msg){
+                alert("¡Hasta luego!")
+            }
+            else
+                alert("Error.");
+        }
 
+    });
+}
+     
 function limpiar(mod){
     if(mod==0)
         document.getElementById("mailContainer").className=document.getElementById("mailContainer").className.replace(" error","");
