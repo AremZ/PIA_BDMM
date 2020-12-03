@@ -53,6 +53,10 @@ CREATE FUNCTION getPostedNews ()
 	   RETURNS int READS SQL DATA
        RETURN (SELECT COUNT(id_Noticia) AS 'publishedNews' FROM noticia WHERE estado = 'publicada');
        
+CREATE FUNCTION lastID ()
+	   RETURNS int READS SQL DATA
+       RETURN (SELECT LAST_INSERT_ID());
+       
 /* ---------------------------------------------------     VIEWS      -------------------------------------------------------------------- */
 
 CREATE VIEW fullNoticia
@@ -111,9 +115,3 @@ CREATE VIEW Comments_User
 CREATE VIEW Noticia_Keywords
 	AS
 		SELECT id_Noticia, pal_Clave, titulo_Noticia, estado FROM palabra_clave PC INNER JOIN noticia N on PC.id_NoticiaProp = N.id_Noticia;
-
-/* ---------------------------------------------------     FUNCTIONS      -------------------------------------------------------------------- */
-
-CREATE FUNCTION lastID ()
-	   RETURNS int READS SQL DATA
-       RETURN (SELECT LAST_INSERT_ID());

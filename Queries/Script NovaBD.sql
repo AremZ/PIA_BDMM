@@ -4,7 +4,7 @@ USE novaDB;
 
 CREATE TABLE usuario(
 id_Usuario int NOT NULL auto_increment,
-tipo_Usuario enum('editor', 'reportero', 'usuario') NOT NULL,
+tipo_Usuario enum('administrador', 'editor', 'reportero', 'usuario') NOT NULL,
 nombres varchar(50) NOT NULL,
 apellido_P varchar(30) NOT NULL,
 apellido_M varchar(30) NOT NULL,

@@ -20,26 +20,34 @@
 
     <script>
         $(document).ready(function(){
+            
             var theID = getUrlParameter('id');
-            get();
+            
+            var userData = getLogged();
+            var isOwner = cmpNewsPoster(userData[0], theID);
+            var isInvited = isInvitado(userData[2]);
+
             getSeccionesToNavbar();     
             setupImage('agregarFoto', 'displayImg', '.preview-image');
             getNewsData(theID);
             upViews(theID);
-            getNewsComments(theID);
+            getNewsComments(theID, isOwner, isInvited);
             getTotalComments(theID);
-            updateLikeButt(3, theID);
+            updateLikeButt(userData[0], theID);
             getTotalLikes(theID);
             getNotKeywords(theID);
+
+            $("#myImage").attr('src','data:image/' + userData[4] + ';base64,' + userData[3]);
             
             $("div").on("click", "#replyToComm", function() {
                 if($(this).parent().parent().find(".containerReply").html() == ""){
                     var parentId = $(this).parent().parent().find("#idComment").html();
 
                     $(this).parent().parent().find(".containerReply").append('<div class="comment-box add-comment reply-box"><span class="commenter-pic-mine">' +
-                    '<img src="Sources/11.jpg" class="img-fluid"></span><span class="commenter-name"><input type="text" ' + 
+                    '<img class="img-fluid" src=data:image/' + userData[4] + ';base64,' + userData[3] + '></span><span class="commenter-name"><input type="text" ' + 
                     'placeholder="Responder a comentario..." name="Add Comment" id="inputNo'+ parentId +'"><button class="btn btn-outline-danger" id="closeReply"><i class="fa fa-times"></i>Cancelar</button>' +
-                    '<button class="btn btn-outline-danger" onclick="responderComentario(' + parentId +', 3,' + theID + ');"><i class="fa fa-reply">' +
+                    '<button class="btn btn-outline-danger" onclick="responderComentario(' + parentId +',' + userData[0] + ',' + theID + ', ' + isOwner +
+                    ', ' + isInvited +');"><i class="fa fa-reply">' +
                     '</i>Responder</button></span></div>');
                 }
             });
@@ -50,48 +58,13 @@
 
             
             document.getElementById("BTLike").addEventListener("click", function() {
-                likeNoticia(3, theID);
+                likeNoticia(userData[0], theID);
             })
 
             document.getElementById("BTComment").addEventListener("click", function() {
-                publicarComentario(3, theID);
+                publicarComentario(userData[0], theID, isOwner, isInvited);
             })
         });
-
-        function set(){
-          <?php 
-          $phpVar =  ISSET($_COOKIE['user']);
-          $cookie_name = "user";
-          setcookie($cookie_name, $phpVar, time() + (86400 * 30), "/"); // 86400 = 1 day*/
-          ?>
-          //alert("done");
-        }
-       
-        function get(){
-            <?php
-            $currentUser = ISSET($_COOKIE["user"]);
-            $currentType = ISSET($_COOKIE["type"]);
-            $currentName = ISSET($_COOKIE["name"]);
-            ?>
-            var currentU = "<?php echo $currentUser ?>";
-            var currentT = "<?php echo $currentType ?>";
-            var currentN = "<?php echo $currentName ?>";
-            //alert(currentU);
-            if(currentU==0||currentU==null||currentU=="")
-                $("#btnProfile").toggle();
-            
-            else{
-                document.getElementById("nombreUsuario").innerHTML="¡ Hola "+currentN+" !";
-                $("#btnLogin").toggle();
-                if(currentT=="usuario"){
-                    $("#btnEscritorio").toggle();
-                    $("#btnSeccion").toggle();
-                }
-                else if(currentT=="reportero")
-                    $("#btnSeccion").toggle();
-            }
-                
-        }
     </script>
 
 </head>
@@ -112,7 +85,7 @@
                     <form class="form-inline my-2 my-lg-0" method="GET" action="searchResult.php">
                         <input class="form-control mr-sm-2" placeholder="Buscar..." aria-label="Buscar"
                             id="BRSearch">
-                        <button class="btn btn-outline-danger" type="submit" id="BTSearch">Buscar</button>
+                            <button class="btn btn-outline-danger" type="button" id="BTSearch" onclick="search();">Buscar</button>
                     </form>
                 </li>                  
             </ul>
@@ -134,18 +107,17 @@
                 -->
             </ul>
             <ul class="navbar-nav ml-auto">
+            <label id="nombreUsuario">¡ Hola!</label>
+             <div id="displayAvatar">
+                 <img src="" class="preview-image">
+             </div>
                 <li class="nav-item" id="btnLogin">
                     <a class="nav-link" href="" data-toggle="modal" data-target="#modLogin" onclick="cleanInput('emailLog'), cleanInput('pwdLog')">Iniciar Sesion</a>
                 </li>
-            <label id="nombreUsuario"></label>
                 <li class="nav-item dropdown" id="btnProfile" style="position: relative;">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMA" role="button"
                         data-toggle="dropdown" >Mi Cuenta</a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMA" >
-                        <a class="dropdown-item" href="profile.php">Mi Perfil</a>
-                        <a id="btnEscritorio" class="dropdown-item" href="newsReportero.php">Escritorio</a>
-                        <a id="btnSeccion"class="dropdown-item" href="sectionAdm.php">Gestionar Seccion</a>
-                        <a class="dropdown-item" onclick="cerrarSesion(); set();">Cerrar Sesion</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMA" id="dropOpcionesAccount">
                     </div>
                     
                 </li>  
@@ -356,9 +328,9 @@
                             <div class="row">
                               <div class="col-lg-12">
                                 <div class="comments">
-                                  <div class="comment-box add-comment">
+                                  <div class="comment-box add-comment" id="fullCommBox">
                                     <span class="commenter-pic-mine">
-                                      <img src="Sources/11.jpg" class="img-fluid">
+                                      <img src="Sources/11.jpg" class="img-fluid" id="myImage">
                                     </span>
                                     <span class="commenter-name">
                                       <input type="text" placeholder="Agregar un comentario..." name="Agregar Comentario" id="contentComment">
@@ -396,35 +368,6 @@
     <footer>
         <div class="container-fluid padding">
             <div class="row text-center">
-                <!--
-                <div class="col-lg-4">
-                    <img src="Sources/Header/LogoBar.png">
-                    <hr class="Light">
-                    <p>305-696-0419</p>
-                    <p>LAOrnamental@Aol.com</p>
-                    <p>3708 NW 82nd Street</p>
-                    <p>Miami, Florida</p>
-                </div>
-
-                
-                <div class="col-lg-4">
-                    <hr class="Light">
-                    <h5>Our hours</h5>
-                    <hr class="Light">
-                    <p>Monday to Friday: 10am to 7pm</p>
-                    <p>Saturday: 10am to 9pm</p>
-                    <p>Sunday: Closed</p>
-                </div>
-
-                <div class="col-md-4">
-                    <hr class="Light">
-                    <h5>Service Area</h5>
-                    <hr class="Light">
-                    <p>Miami, Florida 33147</p>
-                    <p>Laredo, Texas 78040</p>
-                    <p>Chicago, Illinois 60007</p>
-                    <p>Los Angeles, California 90001</p>
-                </div>-->
 
                 <div class="col-12">
                     <img src="Sources/Header/LogoBar.png">

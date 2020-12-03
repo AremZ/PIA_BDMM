@@ -5,7 +5,8 @@ CREATE PROCEDURE sp_getUsersLogin(
     IN in_Password varchar(20)
     )
     BEGIN
-		SELECT id_Usuario, tipo_Usuario, nombres, email, contrasena FROM usuario WHERE email = in_Email AND contrasena = in_Password;
+		SELECT id_Usuario, tipo_Usuario, nombres, email, contrasena FROM usuario
+        WHERE email = in_Email AND contrasena = in_Password AND estado = 1;
     END //
 DELIMITER ;
 
@@ -359,7 +360,7 @@ CREATE PROCEDURE sp_getSentNotis(
 		SELECT id_Noticia, seccion_Noticia , titulo_Noticia , reportero_Autor, fecha_Creacion, fecha_Publicacion, fecha_Envio, fecha_Devo,
         fecha_Acontecimiento, lugar_Acontecimiento, descripcion_Corta , descripcion_Larga, estado, nombres, apellido_P, apellido_M,
         nombre_Seccion, color_Seccion, contenido_media, blob_type
-        FROM fullNoticia WHERE estado = in_estado ORDER BY fecha_Envio DESC;
+        FROM fullNoticia WHERE estado = in_estado ORDER BY fecha_Envio DESC, id_Noticia DESC;
 	END //
 DELIMITER ;
 
@@ -678,5 +679,16 @@ CREATE PROCEDURE sp_getRelated(
 )
     BEGIN
 		SELECT id_Noticia, pal_Clave FROM Noticia_Keywords WHERE pal_Clave = in_keyword AND estado = 'publicada' AND id_Noticia != in_actualNot;
+    END //
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS sp_cmpNews;
+DELIMITER //
+CREATE PROCEDURE sp_cmpNews(
+	IN in_userID int,
+	IN in_newsID int
+)
+    BEGIN
+		SELECT id_Noticia FROM noticia WHERE id_Noticia = in_newsID AND reportero_Autor = in_userID;
     END //
 DELIMITER ;

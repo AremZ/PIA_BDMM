@@ -30,53 +30,41 @@ if(!isset($_COOKIE['user'])){
     integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
     <script>
-        $(document).ready(function(){
-            get();
+        $(document).ready(function(){       
+            var user = getLogged();
+            if (user[2] != 'reportero'){
+                window.location = 'main.php'
+            }
+
+            var theID = getUrlParameter('id');
+
             getSeccionesToNavbar();
             getSeccionesNoti();
             setupImage('agregarFoto', 'displayImg', '.preview-image');
             setupNewsImage('imagesNoticia', 'carousel-images', 'imgIndi');
             setupNewsVideo('videosNoticia', 'carousel-videos', 'vidIndi');
             
-            getNoticiasRed();
-            getNoticiasPend();
-            getNoticiasDev();
-            getNoticiasPub();
+            getNoticiasRed(theID);
+            getNoticiasPend(theID);
+            getNoticiasDev(theID);
+            getNoticiasPub(theID);
+        
+            document.getElementById("btnSendinNot").addEventListener("click", function() {
+                checkNoticia('#editorNoticia', 1, theID);
+            })
+        
+            document.getElementById("btnSaveinNot").addEventListener("click", function() {
+                checkNoticia('#editorNoticia', 0, theID);
+            })
+        
+            document.getElementById("btnSendSavedNot").addEventListener("click", function() {
+                checkNoticia('#editorNoticia', 3, theID);
+            })
+        
+            document.getElementById("btnSaveChangNot").addEventListener("click", function() {
+                checkNoticia('#editorNoticia', 2, theID);
+            })
         });
-
-        function set(){
-          <?php 
-          //$phpVar=0;
-          if(!isset($_COOKIE['user']))
-            if($_COOKIE['user']!=0){
-                $phpVar =  $_COOKIE['user'];
-
-                $cookie_name = "user";
-                setcookie($cookie_name, $phpVar, time() + (86400 * 30), "/"); // 86400 = 1 day*/
-            }
-          ?>
-          //alert("done");
-        }
-       
-        function get(){
-            <?php
-            $cookie_name="user";
-            $cookie_value = 0;
-            if(!isset($_COOKIE[$cookie_name])) {
-                setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/"); // 86400 = 1 day
-            }
-            $currentUser =$_COOKIE["user"];
-            ?>
-            var currentU = "<?php echo $currentUser ?>";
-            //alert(currentU);
-            if(currentU==0||currentU==null||currentU=="")
-                $("#btnProfile").toggle();
-            
-            else{
-                getLogged(currentU);
-                $("#btnLogin").toggle();
-            }
-        }
     </script>
 </head>
 
@@ -96,7 +84,7 @@ if(!isset($_COOKIE['user'])){
                     <form class="form-inline my-2 my-lg-0" method="GET" action="searchResult.php">
                         <input class="form-control mr-sm-2" placeholder="Buscar..." aria-label="Buscar"
                             id="BRSearch">
-                        <button class="btn btn-outline-danger" type="submit" id="BTSearch">Buscar</button>
+                            <button class="btn btn-outline-danger" type="button" id="BTSearch" onclick="search();">Buscar</button>
                     </form>
                 </li>                  
             </ul>
@@ -118,7 +106,10 @@ if(!isset($_COOKIE['user'])){
                 -->
             </ul>
             <ul class="navbar-nav ml-auto">
-            <label id="nombreUsuario"></label>
+            <label id="nombreUsuario">¡ Hola!</label>
+             <div id="displayAvatar">
+                 <img src="" class="preview-image">
+             </div>
                 <li class="nav-item" id="btnLogin">
                     <a class="nav-link" href="" data-toggle="modal" data-target="#modLogin" onclick="cleanInput('emailLog'), cleanInput('pwdLog')">Iniciar Sesion</a>
                 </li>
@@ -126,11 +117,7 @@ if(!isset($_COOKIE['user'])){
                 <li class="nav-item dropdown" id="btnProfile" style="position: relative;">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMA" role="button"
                         data-toggle="dropdown" >Mi Cuenta</a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMA" >
-                        <a class="dropdown-item" href="profile.php">Mi Perfil</a>
-                        <a id="btnEscritorio" class="dropdown-item" href="newsReportero.php">Escritorio</a>
-                        <a id="btnSeccion"class="dropdown-item" href="sectionAdm.php">Gestionar Seccion</a>
-                        <a class="dropdown-item" onclick="cerrarSesion(); set();">Cerrar Sesion</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMA" id="dropOpcionesAccount">
                     </div>
                     
                 </li>  
@@ -433,10 +420,10 @@ if(!isset($_COOKIE['user'])){
                                     </div>  
                                     <div class="col-md-12">
                                         <hr>
-                                        <button class="btn btn-outline-danger buttEditor" id="btnSendinNot" onclick="checkNoticia('#editorNoticia', 1)"><i class="fa fa-paper-plane"></i>Enviar a revision</button>
-                                        <button class="btn btn-outline-danger buttEditor" id="btnSaveinNot" onclick="checkNoticia('#editorNoticia', 0)"><i class="fa fa-floppy-o"></i>Guardar</button>
-                                        <button class="btn btn-outline-danger buttEditor" id="btnSendSavedNot" onclick="checkNoticia('#editorNoticia', 3)"><i class="fa fa-paper-plane"></i>Enviar a revision</button>
-                                        <button class="btn btn-outline-danger buttEditor" id="btnSaveChangNot" onclick="checkNoticia('#editorNoticia', 2)"><i class="fa fa-floppy-o"></i>Guardar cambios</button>
+                                        <button class="btn btn-outline-danger buttEditor" id="btnSendinNot"><i class="fa fa-paper-plane"></i>Enviar a revision</button>
+                                        <button class="btn btn-outline-danger buttEditor" id="btnSaveinNot"><i class="fa fa-floppy-o"></i>Guardar</button>
+                                        <button class="btn btn-outline-danger buttEditor" id="btnSendSavedNot"><i class="fa fa-paper-plane"></i>Enviar a revision</button>
+                                        <button class="btn btn-outline-danger buttEditor" id="btnSaveChangNot"><i class="fa fa-floppy-o"></i>Guardar cambios</button>
                                         <button class="btn btn-outline-danger buttEditor" id="btnDeleteNot" onclick="deleteNoticiaIn()"><i class="fa fa-trash"></i>Eliminar noticia</button>
                                         <button class="btn btn-outline-danger buttEditor" data-toggle="modal" data-target="#editorNoticia" id="btnCancelinNot"><i class="fa fa-times"></i>Cancelar</button>
                                     </div>

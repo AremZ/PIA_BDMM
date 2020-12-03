@@ -25,7 +25,7 @@ nav.navbar#navBar, nav.navbar#navBarSecciones{
 }
 
 nav.navbar#navBarSecciones{
-    height: 40px;
+    height: 45px;
 }
 
 .navbar .navbar-nav li a:hover{
@@ -215,6 +215,18 @@ div#displayImg img, div#displayImgAdmin img, div#displayImgEditor img{
     float: right;
 }
 
+div#displayAvatar img{
+    width: 35px;
+    height: 35px;
+    border: 1px solid var(--Color-2);
+    border-radius: 100%;
+    object-fit: cover;
+    overflow: hidden;
+    margin-right: 1em;
+    margin-left: 1em;
+    margin-bottom: -12px;
+}
+
 .modal-body button{   
     font-family: 'Oswald', sans-serif !important;
     margin-right: .5em;
@@ -246,6 +258,6 @@ hr.Light-100{
     width: 100%;
 }
 
-a.seccionNav{
+a.seccionNav, .ddUser{
     cursor: pointer;
 }

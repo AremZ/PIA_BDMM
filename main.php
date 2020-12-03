@@ -26,23 +26,10 @@
             displayPubNots("#displayNews");
             displayMostViewed("#displayMostViewed");
             displaySections(".allSections");
-            //get();
             getSeccionesToNavbar();
-            $("#btnLogin").toggle();
-            getLogged();
-        
+            
+            var user = getLogged();  
         });
-
-        function search(){
-            var palabraBuscar=document.getElementById("BRSearch").value;
-            url = 'searchResult.php?palabra=' + palabraBuscar;
-            //window.location.replace(url);
-            window.location = url;
-            //alert("Palabra: "+palabraBuscar);
-        }
-
-       
-
     </script>
 
 
@@ -85,19 +72,18 @@
                 -->
             </ul>
             <ul class="navbar-nav ml-auto">
-            <label id="nombreUsuario">¡ Hola!</label>
-                <li class="nav-item" id="btnLogin"  style="display:none;">
+             <label id="nombreUsuario">¡ Hola!</label>
+             <div id="displayAvatar">
+                 <img src="" class="preview-image">
+             </div>
+                <li class="nav-item" id="btnLogin">
                     <a class="nav-link" href="" data-toggle="modal" data-target="#modLogin" onclick="cleanInput('emailLog'), cleanInput('pwdLog')">Iniciar Sesion</a>
                 </li>
            
-                <li class="nav-item dropdown" id="btnProfile" style="position: relative; display:none;">
+                <li class="nav-item dropdown" id="btnProfile" style="position: relative;">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMA" role="button"
                         data-toggle="dropdown" >Mi Cuenta</a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMA" >
-                        <a class="dropdown-item" href="profile.php">Mi Perfil</a>
-                        <a id="btnEscritorio" class="dropdown-item" href="newsReportero.php">Escritorio</a>
-                        <a id="btnSeccion"class="dropdown-item" href="sectionAdm.php">Gestionar Seccion</a>
-                        <a class="dropdown-item" onclick="cerrarSesion()">Cerrar Sesion</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMA" id="dropOpcionesAccount">
                     </div>
                     
                 </li>  

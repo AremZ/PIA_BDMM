@@ -1,13 +1,3 @@
-<?php
-$phpVar = 0;
-if(!isset($_COOKIE['user'])){
-     $phpVar = $_COOKIE['user'];
-    
-    $cookie_name = "user";
-    setcookie($cookie_name, $phpVar, time() + (86400 * 30), "/"); // 86400 = 1 day*/
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -31,57 +21,24 @@ if(!isset($_COOKIE['user'])){
 
     <script>
       $(document).ready(function(){
-          get();
-          displayMostViewed("#displayMostViewed");
-          setupImage('agregarFoto', 'displayImg', '.preview-image');
-          getSeccionesToNavbar();
-          var palabraBuscar = getUrlParameter('palabra');
-          document.getElementById("palabraB").innerHTML="Resultados de: "+palabraBuscar; 
-          document.getElementById("BRSearch").value=palabraBuscar;
-          //document.getElementById("rangoFinalFechaBuscar").datepicker( "option", "gotoCurrent", true );
-          var date=(curday('-'));
-          var dateMinus=(curdayminus('-'));
-          document.getElementById("rangoFinalFechaBuscar").value = date;
-          document.getElementById("rangoInicialFechaBuscar").value = dateMinus;
-          if(palabraBuscar!="")
+        displayMostViewed("#displayMostViewed");
+        setupImage('agregarFoto', 'displayImg', '.preview-image');
+        getSeccionesToNavbar();
+        var palabraBuscar = getUrlParameter('palabra');
+        document.getElementById("palabraB").innerHTML="Resultados de: "+palabraBuscar; 
+        document.getElementById("BRSearch").value=palabraBuscar;
+        var date=(curday('-'));
+        var dateMinus=(curdayminus('-'));
+        document.getElementById("rangoFinalFechaBuscar").value = date;
+        document.getElementById("rangoInicialFechaBuscar").value = dateMinus;
+        if(palabraBuscar!="")
             displaySearchResults(palabraBuscar, palabraBuscar, palabraBuscar, dateMinus, date);
-          
-        });
 
-        function set(){
-          <?php 
-          //$phpVar=0;
-          if(!isset($_COOKIE['user']))
-            if($_COOKIE['user']!=0){
-                $phpVar =  $_COOKIE['user'];
-
-                $cookie_name = "user";
-                setcookie($cookie_name, $phpVar, time() + (86400 * 30), "/"); // 86400 = 1 day*/
-            }
-          ?>
-          //alert("done");
-        }
-       
-       
-        function get(){
-            <?php
-            $cookie_name="user";
-            $cookie_value = 0;
-            if(!isset($_COOKIE[$cookie_name])) {
-                setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/"); // 86400 = 1 day
-            }
-            $currentUser =$_COOKIE["user"];
-            ?>
-            var currentU = "<?php echo $currentUser ?>";
-            //alert(currentU);
-            if(currentU==0||currentU==null||currentU=="")
-                $("#btnProfile").toggle();
             
-            else{
-                getLogged(currentU);
-                $("#btnLogin").toggle();
-            }
-        }
+
+        
+        var user = getLogged();          
+        });
     </script>
 
 </head>
@@ -123,6 +80,9 @@ if(!isset($_COOKIE['user'])){
             </ul>
             <ul class="navbar-nav ml-auto">
             <label id="nombreUsuario">¡ Hola!</label>
+             <div id="displayAvatar">
+                 <img src="" class="preview-image">
+             </div>
 
                 <li class="nav-item" id="btnLogin">
                     <a class="nav-link" href="" data-toggle="modal" data-target="#modLogin" onclick="cleanInput('emailLog'), cleanInput('pwdLog')">Iniciar Sesion</a>
@@ -130,11 +90,7 @@ if(!isset($_COOKIE['user'])){
                 <li class="nav-item dropdown" id="btnProfile" style="position: relative;">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMA" role="button"
                         data-toggle="dropdown" >Mi Cuenta</a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMA" >
-                        <a class="dropdown-item" href="profile.php">Mi Perfil</a>
-                        <a id="btnEscritorio" class="dropdown-item" href="newsReportero.php">Escritorio</a>
-                        <a id="btnSeccion"class="dropdown-item" href="sectionAdm.php">Gestionar Seccion</a>
-                        <a class="dropdown-item" onclick="cerrarSesion(); set();">Cerrar Sesion</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMA" id="dropOpcionesAccount">
                     </div>
                     
                 </li>  

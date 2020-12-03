@@ -18,7 +18,8 @@ if ($method == "userLogin"){
             $value =  $row['id_Usuario'];
             $cookie_name = "user";
             setcookie($cookie_name, $value, time() + (86400 * 30), "/"); // 86400 = 1 day*/
-            echo json_encode($row);       
+            echo json_encode(array("msg"=>true,
+                                    "content"=>$row));
         }
         else{
             echo json_encode(array("msg"=>false));
@@ -259,9 +260,9 @@ if ($method == "getLoggedUser"){
                 $usser = array(
                     "id" => $row['id_Usuario'],
                     "tipoUsuario" => $row['tipo_Usuario'],
-                    "name" => $row['nombres']//,
-                    //"avatar" => base64_encode($row['foto_Perfil']),
-                   // "imgType" => $row['blob_type']
+                    "name" => $row['nombres'],
+                    "avatar" => base64_encode($row['foto_Perfil']),
+                    "imgType" => $row['blob_type']
                 );
                 $usuarios[] = $usser;
               }

@@ -131,9 +131,7 @@ var curdayminus = function(sp){
 function search(){
     var palabraBuscar=document.getElementById("BRSearch").value;
     url = 'searchResult.php?palabra=' + palabraBuscar;
-    //window.location.replace(url);
     window.location = url;
-    //alert("Palabra: "+palabraBuscar);
 }
 
 function getSearchDataFiltros(){
@@ -184,7 +182,7 @@ function validaciones(mod){
         }
       
         var campoPass = document.getElementById("pwdLog");
-        if(campoPass.value==""||campoPass.value.length<8|| campoPass.value.length > 20){
+        if(campoPass.value==""||campoPass.value.length > 20){
             document.getElementById("passContainer").className=document.getElementById("passContainer").className+" error";
             inputPass = false;
         }
@@ -200,12 +198,11 @@ function validaciones(mod){
                 dataType: "json",
                 data: {method: 'userLogin', email: campoEmail.value, pass: campoPass.value},
                 success: function (row) {
-                    if(row){
+                    if(row.msg){
                         alert("¡Sesion iniciada exitosamente!");    
-                        document.getElementById("nombreUsuario").innerHTML="¡ Hola "+row.nombres+" !";
-                        $('#modLogin').modal('toggle');
-                        window.location.reload();
-                       
+                        //document.getElementById("nombreUsuario").innerHTML="¡ Hola "+row.content.nombres+" !";
+                        //$('#modLogin').modal('toggle');
+                        window.location.reload();   
                     }
                     else
                         alert("Verifique sus datos.");
@@ -224,27 +221,25 @@ function validaciones(mod){
         var campo;
         var datosCorrec=true;
         campo = document.getElementById("fnameLog");
-        if(campo.value==""){
+        if(campo.value==""|| campo.length>50){
             document.getElementById("nameContainer").className=document.getElementById("nameContainer").className+" error";
             datosCorrec=false;
         }
         campo = document.getElementById("snameLog");
-        if(campo.value==""){
+        if(campo.value==""|| campo.length>30){
             document.getElementById("snameContainer").className=document.getElementById("snameContainer").className+" error";
             datosCorrec=false;
         }
         campo = document.getElementById("lnameLog");
-        if(campo.value==""){
+        if(campo.value==""|| campo.length>30){
             document.getElementById("lnameContainer").className=document.getElementById("lnameContainer").className+" error";
             datosCorrec=false;
         }
         campo = document.getElementById("emailRLog");
-        if(campo.value==""){
+        if(campo.value=="" || campo.length>50){
             document.getElementById("mailRContainer").className=document.getElementById("mailRContainer").className+" error";
             datosCorrec=false;
-            }
-        else if(campo.length>45)
-            datosCorrec = false;
+        }
         else{
                 if (!(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(campo.value))){
                     document.getElementById("mailRContainer").className=document.getElementById("mailRContainer").className+" error";
@@ -266,7 +261,7 @@ function validaciones(mod){
 
         }
         campo = document.getElementById("pwdRLog");
-        if(campo.value==""||campo.value.length<8||campo.value.length<20){
+        if(campo.value==""||campo.value.length>20){
             document.getElementById("passRContainer").className=document.getElementById("passRContainer").className+" error";   
             datosCorrec=false;
         }
@@ -310,18 +305,27 @@ function validaciones(mod){
                 contentType: false,
                 processData: false,
                 success: function (result) {
-                    if(result.msg){
-                        alert("¡Registro exitoso!");
-                        document.getElementById("fnameLog").value="";
-                        document.getElementById("snameLog").value="";
-                        document.getElementById("lnameLog").value="";
-                        document.getElementById("emailRLog").value="";
-                        document.getElementById("telLog").value="";
-                        document.getElementById("pwdRLog").value="";
-                        document.getElementById("rpwdLog").value="";                    
-                        $('#modLogin').modal('toggle');
-                        //$("#btnLogin").toggle();
-                        //$("#btnProfile").toggle()
+                    if(result.msg){   
+                        $.ajax({
+                            url: "PHP/users.php",
+                            type: "post",
+                            dataType: "json",
+                            data: {method: 'userLogin', email: campoEmail.value, pass: campoPass.value},
+                            success: function (row) {
+                                if(row.msg){            
+                                    alert("¡Registro exitoso!");
+                                    document.getElementById("fnameLog").value="";
+                                    document.getElementById("snameLog").value="";
+                                    document.getElementById("lnameLog").value="";
+                                    document.getElementById("emailRLog").value="";
+                                    document.getElementById("telLog").value="";
+                                    document.getElementById("pwdRLog").value="";
+                                    document.getElementById("rpwdLog").value="";        
+                                    $('#modLogin').modal('toggle');          
+                                    window.location = 'main.php';
+                                }
+                            }
+                        });
                     }
                     else
                         alert("Correo ya registrado.");
@@ -335,47 +339,47 @@ function validaciones(mod){
     else if (mod==3){
         var datosCorrec=true;
         campo = document.getElementById("fnameAdmin");
-        if(campo.value==""){
+        if(campo.value==""|| campo.length>50){
             document.getElementById("nameContainerAdmin").className=document.getElementById("nameContainerAdmin").className+" error";
             datosCorrec=false;
         }
         campo = document.getElementById("snameAdmin");
-        if(campo.value==""){
+        if(campo.value==""|| campo.length>30){
             document.getElementById("snameContainerAdmin").className=document.getElementById("snameContainerAdmin").className+" error";
             datosCorrec=false;
         }
         campo = document.getElementById("lnameAdmin");
-        if(campo.value==""){
+        if(campo.value==""|| campo.length>30){
             document.getElementById("lnameContainerAdmin").className=document.getElementById("lnameContainerAdmin").className+" error";
             datosCorrec=false;
         }
         campo = document.getElementById("emailRAdmin");
-        if(campo.value==""){
+        if(campo.value==""|| campo.length>50){
             document.getElementById("mailRContainerAdmin").className=document.getElementById("mailRContainerAdmin").className+" error";
             datosCorrec=false;
             }
-        else if(campo.value.length>45)
-            datosCorrec=false;
-            else{
-                if (!(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(campo.value))){
+        else{
+            if (!(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(campo.value))){
                     document.getElementById("mailRContainerAdmin").className=document.getElementById("mailRContainerAdmin").className+" error";
+                    datosCorrec=false;
                     alert("Dirección de correo inválida.")
             }
         }
         campo = document.getElementById("telAdmin");
-        if(campo.value==""){
+        if(campo.value==""||campo.value.length<8||campo.value.length>10){
             document.getElementById("telContainerAdmin").className=document.getElementById("telContainerAdmin").className+" error";
             datosCorrec=false;
         }
             else{
                 if(isNaN(campo.value)||campo.value.length<8||campo.value.length>10){
+                    datosCorrec=false;
                     alert("Número telefónico inválido.")
                     document.getElementById("telContainerAdmin").className=document.getElementById("telContainerAdmin").className+" error";
             }
 
         }
         campo = document.getElementById("pwdAdmin");
-        if(campo.value==""||  campo.value.length < 8 || campo.value.length > 20){
+        if(campo.value==""||  campo.value.length > 20){
             document.getElementById("passRContainerAdmin").className=document.getElementById("passRContainerAdmin").className+" error";   
             datosCorrec=false;
         }
@@ -454,30 +458,29 @@ function validaciones(mod){
     else if (mod == 4) {
         var datosCorrec = true;
         campo = document.getElementById("fnameEditor");
-        if (campo.value == "") {
+        if (campo.value == ""|| campo.length>50) {
             document.getElementById("nameContainerEditor").className = document.getElementById("nameContainerEditor").className + " error";
             datosCorrec = false;
         }
         campo = document.getElementById("snameEditor");
-        if (campo.value == "") {
+        if (campo.value == ""|| campo.length>30) {
             document.getElementById("snameContainerEditor").className = document.getElementById("snameContainerEditor").className + " error";
             datosCorrec = false;
         }
         campo = document.getElementById("lnameEditor");
-        if (campo.value == "") {
+        if (campo.value == ""|| campo.length>30) {
             document.getElementById("lnameContainerEditor").className = document.getElementById("lnameContainerEditor").className + " error";
             datosCorrec = false;
         }
         campo = document.getElementById("emailREditor");
-        if (campo.value == "") {
+        if (campo.value == ""|| campo.length>50) {
             document.getElementById("mailRContainerEditor").className = document.getElementById("mailRContainerEditor").className + " error";
             datosCorrec = false;
         } 
-        else if(campo.value.length>45)
-        datosCorrec=false;
-        else {
+        else{
             if (!(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(campo.value))) {
                 document.getElementById("mailRContainerEditor").className = document.getElementById("mailRContainerEditor").className + " error";
+                datosCorrec = false;
                 alert("Dirección de correo inválida.")
             }
         }
@@ -487,13 +490,14 @@ function validaciones(mod){
             datosCorrec = false;
         } else {
             if (isNaN(campo.value) || campo.value.length < 8 || campo.value.length > 10) {
+                datosCorrec=false;
                 alert("Número telefónico inválido.")
                 document.getElementById("telContainerEditor").className = document.getElementById("telContainerEditor").className + " error";
             }
 
         }
         campo = document.getElementById("pwdEditor");
-        if (campo.value == ""||campo.value.length<8||campo.value.length > 20) {
+        if (campo.value == ""||campo.value.length > 20) {
             document.getElementById("passRContainerEditor").className = document.getElementById("passRContainerEditor").className + " error";
             datosCorrec = false;
         }
@@ -562,31 +566,30 @@ function validaciones(mod){
     else if (mod==5){
         var datosCorrec=true;
         campo = document.getElementById("fnameAdmin");
-        if(campo.value==""){
+        if(campo.value==""|| campo.length>50){
             document.getElementById("nameContainerAdmin").className=document.getElementById("nameContainerAdmin").className+" error";
             datosCorrec=false;
         }
         campo = document.getElementById("snameAdmin");
-        if(campo.value==""){
+        if(campo.value==""|| campo.length>30){
             document.getElementById("snameContainerAdmin").className=document.getElementById("snameContainerAdmin").className+" error";
             datosCorrec=false;
         }
         campo = document.getElementById("lnameAdmin");
-        if(campo.value==""){
+        if(campo.value==""|| campo.length>30){
             document.getElementById("lnameContainerAdmin").className=document.getElementById("lnameContainerAdmin").className+" error";
             datosCorrec=false;
         }
         campo = document.getElementById("emailRAdmin");
-        if(campo.value==""){
+        if(campo.value==""|| campo.length>50){
             document.getElementById("mailRContainerAdmin").className=document.getElementById("mailRContainerAdmin").className+" error";
             datosCorrec=false;
             }
-        else if(campo.value.length>45)
-            datosCorrec=false;
-            else{
-                if (!(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(campo.value))){
-                    document.getElementById("mailRContainerAdmin").className=document.getElementById("mailRContainerAdmin").className+" error";
-                    alert("Dirección de correo inválida.")
+        else{
+            if (!(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(campo.value))){
+                document.getElementById("mailRContainerAdmin").className=document.getElementById("mailRContainerAdmin").className+" error";
+                alert("Dirección de correo inválida.")
+                datosCorrec=false;
             }
         }
         campo = document.getElementById("telAdmin");
@@ -596,13 +599,14 @@ function validaciones(mod){
         }
             else{
                 if(isNaN(campo.value)||campo.value.length<8||campo.value.length>10){
+                    datosCorrec=false;
                     alert("Número telefónico inválido.")
                     document.getElementById("telContainerAdmin").className=document.getElementById("telContainerAdmin").className+" error";
             }
 
         }
         campo = document.getElementById("pwdAdmin");
-        if(campo.value==""||campo.value.length<8||campo.value.length > 20){
+        if(campo.value==""||campo.value.length > 20){
             document.getElementById("passRContainerAdmin").className=document.getElementById("passRContainerAdmin").className+" error";   
             datosCorrec=false;
         }
@@ -688,31 +692,30 @@ function validaciones(mod){
     else if (mod == 6) {
         var datosCorrec = true;
         campo = document.getElementById("fnameEditor");
-        if (campo.value == "") {
+        if (campo.value == ""|| campo.length>50) {
             document.getElementById("nameContainerEditor").className = document.getElementById("nameContainerEditor").className + " error";
             datosCorrec = false;
         }
         campo = document.getElementById("snameEditor");
-        if (campo.value == "") {
+        if (campo.value == ""|| campo.length>30) {
             document.getElementById("snameContainerEditor").className = document.getElementById("snameContainerEditor").className + " error";
             datosCorrec = false;
         }
         campo = document.getElementById("lnameEditor");
-        if (campo.value == "") {
+        if (campo.value == ""|| campo.length>30) {
             document.getElementById("lnameContainerEditor").className = document.getElementById("lnameContainerEditor").className + " error";
             datosCorrec = false;
         }
         campo = document.getElementById("emailREditor");
-        if (campo.value == "") {
+        if (campo.value == ""|| campo.length>50) {
             document.getElementById("mailRContainerEditor").className = document.getElementById("mailRContainerEditor").className + " error";
             datosCorrec = false;
         } 
-        else if(campo.value.length>45)
-            datosCorrec=false;
         else {
             if (!(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(campo.value))) {
                 document.getElementById("mailRContainerEditor").className = document.getElementById("mailRContainerEditor").className + " error";
                 alert("Dirección de correo inválida.")
+                datosCorrec = false;
             }
         }
         campo = document.getElementById("telEditor");
@@ -721,13 +724,14 @@ function validaciones(mod){
             datosCorrec = false;
         } else {
             if (isNaN(campo.value) || campo.value.length < 8 || campo.value.length > 10) {
+                datosCorrec = false;
                 alert("Número telefónico inválido.")
                 document.getElementById("telContainerEditor").className = document.getElementById("telContainerEditor").className + " error";
             }
 
         }
         campo = document.getElementById("pwdEditor");
-        if (campo.value == ""||campo.value.length<8||campo.value.length > 20) {
+        if (campo.value == ""||campo.value.length > 20) {
             document.getElementById("passRContainerEditor").className = document.getElementById("passRContainerEditor").className + " error";
             datosCorrec = false;
         }
@@ -803,33 +807,87 @@ function validaciones(mod){
 }
 
 function getLogged(){
+    var name = "";;
+    var typeUser = "";
+    var userData = [];
+
     $.ajax({
         url: "PHP/users.php",
         type: "post",
         dataType: "json",
+        async: false,
         data: {method: 'getLoggedUser'},
         success: function (usuario, usser) {
-            if (usuario != null&&usuario.msg!=false){
-                var name = usuario[0].name;
-                var type = usuario[0].tipoUsuario;
+            if (usuario != null && usuario.msg!=false){
+                name = usuario[0].name;
+                typeUser = usuario[0].tipoUsuario;
+
+                userData.push(usuario[0].id);
+                userData.push(usuario[0].name);
+                userData.push(usuario[0].tipoUsuario);
+                userData.push(usuario[0].avatar);
+                userData.push(usuario[0].imgType);
+
                 document.getElementById("nombreUsuario").innerHTML="¡ Hola "+name+" !";
-                $("#btnLogin").toggle();
-                $("#btnProfile").toggle();
-                if(type=="usuario"){
-                    $("#btnEscritorio").toggle();
-                    $("#btnSeccion").toggle();
+                if(typeUser=="usuario"){            
+                    $("#btnLogin").toggle();
+                    $("#displayAvatar img").attr('src','data:image/' + usuario[0].imgType + ';base64,' + usuario[0].avatar);
+                    console.log("¡Bienvenido usuario!");
+                    $("#dropOpcionesAccount").append(
+                        '<a class="dropdown-item ddUser" onclick="sendtoMyProfile(' + usuario[0].id + ')">Mi Perfil</a>' +
+                        '<a class="dropdown-item ddUser" onclick="cerrarSesion()">Cerrar Sesion</a>'
+                    );
                 }
-                //else if(type=="reportero")
-                 //   $("#btnSeccion").toggle();
+                else if(typeUser=="reportero"){            
+                    $("#btnLogin").toggle();
+                    $("#displayAvatar img").attr('src','data:image/' + usuario[0].imgType + ';base64,' + usuario[0].avatar);
+                    console.log("¡Bienvenido reportero!");
+                    $("#dropOpcionesAccount").append(
+                        '<a class="dropdown-item ddUser" onclick="sendtoDeskRep(' + usuario[0].id + ')">Mi Escritorio</a>' +
+                        '<a class="dropdown-item ddUser" onclick="sendtoMyProfile(' + usuario[0].id + ')">Mi Perfil</a>' +
+                        '<a class="dropdown-item ddUser" onclick="cerrarSesion()">Cerrar Sesion</a>'
+                    );
+                }  
+                else if(typeUser=="editor"){            
+                    $("#btnLogin").toggle();
+                    $("#displayAvatar img").attr('src','data:image/' + usuario[0].imgType + ';base64,' + usuario[0].avatar);
+                    console.log("¡Bienvenido editor!");  
+                    $("#dropOpcionesAccount").append(
+                        '<a class="dropdown-item ddUser" href="newsEditor.php">Mi Escritorio</a>' +
+                        '<a class="dropdown-item ddUser" href="escritorioEditor.php">Reporteros</a>' +
+                        '<a class="dropdown-item ddUser" href="sectionAdm.php">Secciones</a>' +
+                        '<a class="dropdown-item ddUser" onclick="sendtoMyProfile(' + usuario[0].id + ')">Mi Perfil</a>' +
+                        '<a class="dropdown-item ddUser" onclick="cerrarSesion()">Cerrar Sesion</a>'
+                    );
+                }
+                else if(typeUser=="administrador"){            
+                    $("#btnLogin").toggle();
+                    $("#displayAvatar img").attr('src','sources/default-image.png');
+                    console.log("¡Bienvenido editor!");  
+                    $("#dropOpcionesAccount").append(
+                        '<a class="dropdown-item ddUser" href="escritorioAdmin.php">Mi Escritorio</a>' +
+                        '<a class="dropdown-item ddUser" onclick="cerrarSesion()">Cerrar Sesion</a>'
+                    );
+                }
             }
-            else
-                alert("¡Bienvenido invitado!");   
+            else{
+                console.log("¡Bienvenido invitado!");            
+                $("#btnProfile").toggle();
+                $("#displayAvatar img").attr('src','sources/default-image.png');
+                userData.push(-1);
+                userData.push("");
+                userData.push('invitado');
+                userData.push('');
+                userData.push('');
+            }
         },
         error: function (result) {
             alert("Error");
         }
 
     });
+
+    return userData;
 }
 
 function cerrarSesion(){
@@ -843,7 +901,7 @@ function cerrarSesion(){
         data: {method: 'userLogout'},
         success: function (result) {
             if(result.msg){
-                alert("¡Hasta luego!")
+                window.location = 'main.php';
             }
             else
                 alert("Error.");
@@ -884,11 +942,6 @@ function cleanInputClass(idInput){
     document.getElementById(parentDiv).className = document.getElementById(parentDiv).className.replace(" error","");
 }
 
-function popUpComm(){
-    //document.getElementById('carousel-videos').innerHTML = "";
-    //$(".containerReply").innerHTML();
-}
-
 function switchModals(id1, id2){
     $(id1).modal('toggle');
 
@@ -905,7 +958,7 @@ function checkTextarea(idTxt, toggleWindow){
         $(toggleWindow).modal('toggle');
 }
 
-function checkNoticia(toggleWindow, action){
+function checkNoticia(toggleWindow, action, userID){
     var campo;
     var error = 0;
     
@@ -992,7 +1045,7 @@ function checkNoticia(toggleWindow, action){
         $('.carousel-item img').each( function(){
             allImages.push($(this).attr("src"));
         });
-        
+        userID
         var mediaForm = new FormData();
         mediaForm.append("idSec", idSection[0]);
         mediaForm.append("title", titNot);
@@ -1008,6 +1061,8 @@ function checkNoticia(toggleWindow, action){
             var newEstado = 'redaccion';
             var isSent = 0;
 
+            
+            mediaForm.append("idPoster", userID);
             mediaForm.append("method", 'noticiaReg');
             mediaForm.append("dateAcont", feAcont);
             mediaForm.append("status", newEstado);
@@ -1022,10 +1077,9 @@ function checkNoticia(toggleWindow, action){
                 data: mediaForm,
                 success: function (result) {
                     if (result.msg) {
-                    //alert(result.aa);
                     alert("Noticia creada exitosamente!");
                     emptyBlock('notiRedaccion');
-                    getNoticiasRed();
+                    getNoticiasRed(userID);
                     $(toggleWindow).modal('toggle');                       
                     } else
                         alert("Ocurrio un error durante la ejecucion.");
@@ -1038,6 +1092,7 @@ function checkNoticia(toggleWindow, action){
             var newEstado = 'terminada';
             var isSent = 1;
 
+            mediaForm.append("idPoster", userID);
             mediaForm.append("method", 'noticiaReg');
             mediaForm.append("dateAcont", feAcont);
             mediaForm.append("status", newEstado);
@@ -1054,9 +1109,9 @@ function checkNoticia(toggleWindow, action){
                     if (result.msg) {
                         alert("Noticia enviada exitosamente!");
                         emptyBlock('notiRedaccion');
-                        getNoticiasRed();
+                        getNoticiasRed(userID);
                         emptyBlockEnRev('notiPendientes');
-                        getNoticiasPend();
+                        getNoticiasPend(userID);
                         $(toggleWindow).modal('toggle');
                     } else
                         alert("Ocurrio un error durante la ejecucion.");
@@ -1086,7 +1141,7 @@ function checkNoticia(toggleWindow, action){
                     if (result.msg) {
                         alert("Noticia editada exitosamente!");
                         emptyBlock('notiRedaccion');
-                        getNoticiasRed();
+                        getNoticiasRed(userID);
                         $(toggleWindow).modal('toggle');
                     } else
                         alert("Ocurrio un error durante la ejecucion.");
@@ -1119,11 +1174,11 @@ function checkNoticia(toggleWindow, action){
                     if (result.msg) {
                         alert("Noticia enviada exitosamente!");
                         emptyBlock('notiRedaccion');
-                        getNoticiasRed();
+                        getNoticiasRed(userID);
                         emptyBlockEnRev('notiPendientes');
-                        getNoticiasPend();
+                        getNoticiasPend(userID);
                         emptyBlockDev('notiDevueltas');
-                        getNoticiasDev();
+                        getNoticiasDev(userID);
                         document.getElementById("idFeed").value = '';
                         $(toggleWindow).modal('toggle');
                     } else
@@ -1317,7 +1372,8 @@ function confirmDeleteSelf(){
             if (result.msg) {
                 alert("Su perfil ha sido eliminado exitosamente!");
                 $('#confirmDelete').modal('toggle');
-                window.location.href='main.php';
+                window.location = 'main.php';
+                cerrarSesion();
             }
         }
     });
@@ -1603,7 +1659,6 @@ function deleteReportero(idReportero){
 
 function confirmDeleteReportero(){
     var userDelete = document.getElementById("idReporteroDelete").value;
-``
     $.ajax({
         url: "PHP/users.php",
         type: "post",
@@ -1612,7 +1667,7 @@ function confirmDeleteReportero(){
         success: function (result) {
             if (result.msg) {
                 alert("Usuario eliminado exitosamente!");
-                document.getElementById("idUserDelete").value = "";
+                document.getElementById("idReporteroDelete").value = "";
                 emptyList('reportList');
                 getAllReporteros();
                 $('#confirmDeleteAdmin').modal('toggle');
@@ -1957,8 +2012,9 @@ function deleteSeccion(idEliminar){
     if(confirmD){
         $.ajax({
             url: "PHP/sections.php",
-           type: "post",
+            type: "post",
             dataType: "json",
+            async: false,
             data: {method: 'deleteSeccion',idSeccionE:idEliminar},
            success: function (result) {
                 if(result.msg){
@@ -1971,6 +2027,8 @@ function deleteSeccion(idEliminar){
 
         });  
     }
+    document.getElementById("seccionesNavB").innerHTML = "";
+    getSeccionesToNavbar();
 }
 
 function getSeccionPendienteElim(id){
@@ -2024,12 +2082,12 @@ function nuevaSeccion(){
 
 }
 
-function getNoticiasRed(){
+function getNoticiasRed(userID){
     $.ajax({
         url: "PHP/noticias.php",
         type: "post",
         dataType: "json",
-        data: {method: 'getNoticiasRed'},
+        data: {method: 'getNoticiasRed', userID: userID},
         success: function (noticias) {
             if (noticias != null){            
                 $.each(noticias, function(idx, notiRed){
@@ -2049,12 +2107,12 @@ function getNoticiasRed(){
     }); 
 }
 
-function getNoticiasPend(){
+function getNoticiasPend(userID){
     $.ajax({
         url: "PHP/noticias.php",
         type: "post",
         dataType: "json",
-        data: {method: 'getNoticiasPend'},
+        data: {method: 'getNoticiasPend', userID: userID},
         success: function (noticias) {
             if (noticias != null){
                 $.each(noticias, function(idx, notiRed){
@@ -2101,12 +2159,12 @@ function getNoticiasEnv(){
     }); 
 }
 
-function getNoticiasDev(){
+function getNoticiasDev(userID){
     $.ajax({
         url: "PHP/noticias.php",
         type: "post",
         dataType: "json",
-        data: {method: 'getNoticiasDev'},
+        data: {method: 'getNoticiasDev', userID: userID},
         success: function (noticias) {
             if (noticias != null){
                 $.each(noticias, function(idx, notiRed){
@@ -2126,12 +2184,12 @@ function getNoticiasDev(){
     }); 
 }
 
-function getNoticiasPub(){
+function getNoticiasPub(userID){
     $.ajax({
         url: "PHP/noticias.php",
         type: "post",
         dataType: "json",
-        data: {method: 'getNoticiasPub'},
+        data: {method: 'getNoticiasPub', userID: userID},
         success: function (noticias) {
             if (noticias != null){
                 $.each(noticias, function(idx, notiRed){
@@ -2437,6 +2495,7 @@ function aprobarNoticia(){
                 alert("Noticia publicada exitosamente!");
                 emptyBlock('notiEnviadas');
                 getNoticiasEnv();
+                getPublishedNotes();
                 $('#seeNoticia').modal('toggle');
             } else
                 alert("Ocurrio un error durante la ejecucion.");
@@ -2444,7 +2503,7 @@ function aprobarNoticia(){
     });
 }
 
-function devolverNoticia(){  
+function devolverNoticia(editorID){  
     var comment = document.getElementById('eComments').value;
     if (comment == "")
         document.getElementById('eComments').className=document.getElementById('eComments').className+" error";
@@ -2454,7 +2513,7 @@ function devolverNoticia(){
             url: "PHP/noticias.php",
             type: "post",
             dataType: "json",
-            data: {method: 'noticiaUpdStatusFeedback', idNot: notID, status: 'devuelta', idEditor: 3, comment: comment},
+            data: {method: 'noticiaUpdStatusFeedback', idNot: notID, status: 'devuelta', idEditor: editorID, comment: comment},
             success: function (result) {
                 if (result.msg) {
                     alert("Noticia devuelta exitosamente!");
@@ -2614,7 +2673,7 @@ function cleanOldFeedback(idFeed){
     });  
 }
 
-function publicarComentario(idUser, idNews){
+function publicarComentario(idUser, idNews, isOwner, isInvited){
     var comentario = document.getElementById("contentComment").value;
 
     $.ajax({
@@ -2626,7 +2685,7 @@ function publicarComentario(idUser, idNews){
             if (result.msg) { 
                 document.getElementById("contentComment").value = "";   
                 document.getElementById("allComments").innerHTML = "";
-                getNewsComments(idNews);
+                getNewsComments(idNews, isOwner, isInvited);
                 getTotalComments(idNews);
                 alert("Comentario enviado.");                   
             } 
@@ -2637,7 +2696,7 @@ function publicarComentario(idUser, idNews){
 
 }
 
-function responderComentario(idParent, idUser, idNews){
+function responderComentario(idParent, idUser, idNews, isOwner, isInvited){
     var comentario = document.getElementById('inputNo' + idParent).value;
 
     $.ajax({
@@ -2649,7 +2708,7 @@ function responderComentario(idParent, idUser, idNews){
             if (result.msg) { 
                 document.getElementById("contentComment").value = "";   
                 document.getElementById("allComments").innerHTML = "";
-                getNewsComments(idNews);
+                getNewsComments(idNews, isOwner, isInvited);
                 getTotalComments(idNews);
                 alert("Comentario enviado.");                   
             } 
@@ -2710,7 +2769,7 @@ function getVideoMedia(idNoticia, carrusel_add){
     }); 
 }
 
-function getNewsComments(idNoticia){
+function getNewsComments(idNoticia, isOwner, isInvited){
     $.ajax({
         url: "PHP/comments.php",
         type: "post",
@@ -2719,20 +2778,25 @@ function getNewsComments(idNoticia){
         success: function (comments) {
             if (comments != null){
                 $.each(comments, function(idx, comentario){
-                    $('#allComments').append(                       
-                        '<div class="comment-box"><span class="commenter-pic"><img class="img-fluid" ' + 
+                    var theComment = '<div class="comment-box"><span class="commenter-pic"><img class="img-fluid" ' + 
                         'src=data:image/' + comments[idx].type + ';base64,' + comments[idx].avatar + '></span>' +
                         '<span class="commenter-name"><a>' + comments[idx].name + " " + comments[idx].apePat + " " + comments[idx].apeMat +
                         '</a><span class="comment-time">' + whichMonth(comments[idx].dateComm.slice(5,7)) + ' ' + comments[idx].dateComm.slice(8,10) +
                         ', ' + comments[idx].dateComm.slice(0,4) + ' a las ' + comments[idx].dateComm.slice(11,16) + '</span></span>' +
-                        '<p class="comment-txt">' + comments[idx].comment + '</p><div class="comment-meta">' +
-                        '<button class="comment-reply btn btn-outline-danger reply-popup" id="replyToComm">' +
-                        '<i class="fa fa-reply-all" aria-hidden="true"></i> Responder</button>' +
-                        '<button class="comment-reply btn btn-outline-danger delete-comm" onclick="deleteComm('+ idNoticia + ',' + comments[idx].commentID +')">' +
-                        '<i class="fa fa-trash-o" aria-hidden="true"></i> Borrar</button></div>' +
-                        '<div class="containerReply"></div><div id="idComment" style="display: none">' + comments[idx].commentID +
+                        '<p class="comment-txt">' + comments[idx].comment + '</p><div class="comment-meta">'
+                    if(!isInvited)
+                        theComment +='<button class="comment-reply btn btn-outline-danger reply-popup" id="replyToComm">' +
+                        '<i class="fa fa-reply-all" aria-hidden="true"></i> Responder</button>'
+                    if(isOwner)   
+                        theComment +='<button class="comment-reply btn btn-outline-danger delete-comm" onclick="deleteComm('+ idNoticia + ',' +
+                        comments[idx].commentID + ', ' + isOwner + ', ' + isInvited + ')">' + '<i class="fa fa-trash-o" aria-hidden="true"></i> Borrar</button>'
+                        
+                        
+                    theComment += '</div><div class="containerReply"></div><div id="idComment" style="display: none">' + comments[idx].commentID +
                         '</div><div id="replies' + comments[idx].commentID + '"></div>'
-                    )
+
+
+                    $('#allComments').append(theComment);
 
                     var idParent = comments[idx].commentID;
 
@@ -2744,31 +2808,33 @@ function getNewsComments(idNoticia){
                         success: function (replies) {
                             if (replies != null){
                                 $.each(replies, function(idz, respuestas){
-                                    $('#replies' + idParent).append(
-                                    '<div class="comment-box replied"><span class="commenter-pic"><img class="img-fluid" ' +
+                                    var theReply = '<div class="comment-box replied"><span class="commenter-pic"><img class="img-fluid" ' +
                                     'src=data:image/' + replies[idz].type + ';base64,' + replies[idz].avatar + '></span>' +
                                     '<span class="commenter-name"><a>' + replies[idz].name + " " + replies[idz].apePat + " " +
                                     replies[idz].apeMat + '</a><span class="comment-time">' + whichMonth(replies[idz].dateComm.slice(5,7)) +
                                     ' ' + replies[idz].dateComm.slice(8,10) + ', ' + replies[idz].dateComm.slice(0,4) + ' a las ' +
-                                    replies[idz].dateComm.slice(11,16) + '</span></span><p class="comment-txt">' + replies[idz].comment + '</p>' +
-                                    '<button class="comment-reply btn btn-outline-danger delete-comm" onclick="deleteComm('+ idNoticia + ',' +
-                                    replies[idz].commentID +')">' + '<i class="fa fa-trash-o" aria-hidden="true"></i> Borrar</button></div>'
-                                    )    
+                                    replies[idz].dateComm.slice(11,16) + '</span></span><p class="comment-txt">' + replies[idz].comment + '</p>'
+
+                                    if(isOwner)   
+                                        theReply +='<button class="comment-reply btn btn-outline-danger delete-comm" onclick="deleteComm('+ idNoticia + ',' +
+                                        replies[idz].commentID + ', ' + isOwner + ', ' + isInvited +')">' + '<i class="fa fa-trash-o" aria-hidden="true"></i> Borrar</button>'
+                                                                            
+                                    theReply += '</div>'            
+                                    $('#replies' + idParent).append(theReply); 
                                 });
                             }           
                         }
                     });
-
                     $('#allComments').append(                       
                         '</div>'
-                    )      
-                });
+                    )  
+                })  
             }           
         }
     }); 
 }
 
-function deleteComm(idNot, idComm){
+function deleteComm(idNot, idComm, isOwner, isInvited){
     $.ajax({
         url: "PHP/comments.php",
         type: "post",
@@ -2778,8 +2844,8 @@ function deleteComm(idNot, idComm){
             if (result.msg) {
                 alert("Comentario eliminado exitosamente!");   
                 document.getElementById("allComments").innerHTML = "";
-                getNewsComments(idNot);
-                getTotalComments(idNews);
+                getNewsComments(idNot, isOwner, isInvited);
+                getTotalComments(idNot);
             }
         }
     });
@@ -2951,6 +3017,39 @@ function sendtoSectionPage(IdSect){
     window.location = url;
 }
 
+function sendtoMyProfile(IdUser){
+    url = 'profile.php?id=' + IdUser;
+    window.location = url;
+}
+
+function sendtoDeskRep(IdUser){
+    url = 'newsReportero.php?id=' + IdUser;
+    window.location = url;
+}
+
+function cmpNewsPoster(userID, newsID){
+    var propietario = false;
+
+    $.ajax({
+        url: "PHP/noticias.php",
+        type: "post",
+        dataType: "json",
+        async: false,
+        data: {method: 'cmpNews', user: userID, noticia: newsID},
+        success: function (result) {
+            if (result.msg)
+                propietario = true;
+            else
+                propietario = false;
+        },
+        error: function (result) {
+            alert("Error");
+        }
+
+    });
+    return propietario;
+}
+
 function whichMonth(number){
     if (number == 1)
         return 'Enero'
@@ -3003,6 +3102,16 @@ function getUrlParameter(sParam) {
         }
     }
 };
+
+function isInvitado(userType){
+    if (userType == 'invitado' || userType == 'administrador'){
+        $("#fullCommBox").css('display', 'none');
+        $("#BTLike").css('display', 'none');
+        return true;
+    }
+    else
+        return false;
+}
 
 function displaySearchResults(palabraT, palabraD, palabraC, fechaInicial, fechaFinal){
     document.getElementById("displayNews").innerHTML = "";

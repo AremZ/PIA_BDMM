@@ -7,6 +7,7 @@ if ($method == "noticiaReg"){
     $conn = connectDB();
 
     if($conn){
+        $idUser=$_POST['idPoster'];
         $idSec=$_POST['idSec'];
         $titleNot=$_POST['title'];
         $dateAcont=$_POST['dateAcont'];
@@ -21,18 +22,20 @@ if ($method == "noticiaReg"){
         $imgMediaArray= json_decode($_POST['imgMedia']);
         $vidMediaArray= json_decode($_POST['vidMedia']);
 
-        $query  = "CALL sp_noticiaRegister($idSec,'$titleNot', 3, '$dateAcont', '$lugAcont', '$descrSh', '$descrLg', '$status', $sent)";
+        $query  = "CALL sp_noticiaRegister($idSec,'$titleNot', $idUser, '$dateAcont', '$lugAcont', '$descrSh', '$descrLg', '$status', $sent)";
         mysqli_query($conn, $query);
         $fila = mysqli_affected_rows($conn);
         if($fila!=0){  
-                        
-            $querylastID = "select LAST_INSERT_ID() AS 'LastID';";
-            //$querylastID = "CALL sp_lastInsertedID();";
+
+            $querylastID = "CALL sp_lastInsertedID();";
             $resultado = mysqli_query($conn, $querylastID);
             $rowID = mysqli_fetch_assoc($resultado);
-            //$IDNot = mysqli_insert_id($conn);
             $IDNot = $rowID['LastID'];
-            //$abc = $IDNot;
+
+            while(mysqli_more_results($conn) ){
+                mysqli_next_result($conn);
+                mysqli_use_result($conn);
+            }
 
             foreach($palClavArray as $palClav)
             {
@@ -80,7 +83,7 @@ if ($method == "noticiaReg"){
                     echo json_encode(array("msg"=>false));
                 }
             }
-            echo json_encode(array("msg"=>true, /*"aa"=>$IDNot*/));
+            echo json_encode(array("msg"=>true));
         }
         else{
             echo json_encode(array("msg"=>false));
@@ -272,8 +275,10 @@ if ($method == "getNoticiasRed"){
     $conn = connectDB();
 
     if($conn){
+
+        $id = $_POST['userID'];
       
-        $query  = "CALL sp_getNoti(3,'redaccion');";
+        $query  = "CALL sp_getNoti($id,'redaccion');";
         $resultado = mysqli_query($conn, $query);
     
         $noticias = array();
@@ -308,8 +313,10 @@ if ($method == "getNoticiasPend"){
     $conn = connectDB();
 
     if($conn){
+
+        $id = $_POST['userID'];
       
-        $query  = "CALL sp_getNoti(3,'terminada');";
+        $query  = "CALL sp_getNoti($id,'terminada');";
         $resultado = mysqli_query($conn, $query);
     
         $noticias = array();
@@ -344,8 +351,10 @@ if ($method == "getNoticiasDev"){
     $conn = connectDB();
 
     if($conn){
+
+        $id = $_POST['userID'];
       
-        $query  = "CALL sp_getNotiDev(3);";
+        $query  = "CALL sp_getNotiDev($id);";
         $resultado = mysqli_query($conn, $query);
     
         $noticias = array();
@@ -423,8 +432,10 @@ if ($method == "getNoticiasPub"){
     $conn = connectDB();
 
     if($conn){
+
+        $id = $_POST['userID'];
       
-        $query  = "CALL sp_getNoti(3,'publicada');";
+        $query  = "CALL sp_getNoti($id,'publicada');";
         $resultado = mysqli_query($conn, $query);
     
         $noticias = array();
@@ -608,6 +619,27 @@ if ($method == "getRelated"){
               
              echo json_encode($relatedNots);
         }       
+        closeDB($conn);
+    }
+}
+
+if ($method == "cmpNews"){
+    $conn = connectDB();
+
+    if($conn){
+        $userID= $_POST['user'];
+        $newsID= $_POST['noticia'];
+        
+        $query  = "CALL sp_cmpNews($userID, $newsID);";
+        $resultado = mysqli_query($conn, $query);
+        $row = mysqli_fetch_assoc($resultado);
+        
+        if($row['id_Noticia'] != ""){
+            echo json_encode(array("msg"=>true));
+        }
+        else{
+            echo json_encode(array("msg"=>false));
+        }
         closeDB($conn);
     }
 }
