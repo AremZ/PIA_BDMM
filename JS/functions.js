@@ -66,16 +66,10 @@ function setupNewsVideo(input, carousel, slidesCarousel){
             const reader = new FileReader();
 
             reader.addEventListener("load", function(){
-                //var fileUrl = window.URL.createObjectURL(file);
                 container.innerHTML += '<div class="carousel-item"><video class="video-fluid" onplay="pauseCar();" onpause="playCar();" controls><source src="' +
                 this.result + '" type="video/mp4"></video></div>';
                 $("#" + carousel + " div").last().addClass("active");
                 $("#" + carousel + " div:not(:last-child)").removeClass("active");
-                
-                //sliders.innerHTML += '<li data-target="#carruselVid" data-slide-to="'+ indexSlidesVid +'"></li>';
-                //$("#" + slidesCarousel + " li").last().addClass("active");
-                //$("#" + slidesCarousel + " li:not(:last-child)").removeClass("active");
-                //indexSlidesVid++;
             });
 
             reader.readAsDataURL(file);
@@ -102,13 +96,12 @@ function deleteActualSlide(carousel, slidesCarousel, whatIs){
     if(whatIs == 'img')
         indexSlidesImg--;
     else if(whatIs == 'vid');
-        //indexSlidesImg--;
 }
 
 var curday = function(sp){
   today = new Date();
   var dd = today.getDate();
-  var mm = today.getMonth()+1; //As January is 0.
+  var mm = today.getMonth()+1;
   var yyyy = today.getFullYear();
 
   if(dd<10) dd='0'+dd;
@@ -120,7 +113,7 @@ var curdayminus = function(sp){
   today = new Date();
   today.setDate(today.getDate()-7);
   var dd = today.getDate();
-  var mm = today.getMonth()+1; //As January is 0.
+  var mm = today.getMonth()+1;
   var yyyy = today.getFullYear();
 
   if(dd<10) dd='0'+dd;
@@ -138,7 +131,6 @@ function getSearchDataFiltros(){
   var palabraBuscar=document.getElementById("BRSearch").value;
   var rangoInicial=document.getElementById("rangoInicialFechaBuscar").value;
   var rangoFinal=document.getElementById("rangoFinalFechaBuscar").value;
-  //alert("Fecha inicial: "+rangoInicial+" Fecha final: "+rangoFinal);
 
   var titulo="null";
   if($("#fT").prop("checked"))
@@ -199,9 +191,7 @@ function validaciones(mod){
                 data: {method: 'userLogin', email: campoEmail.value, pass: campoPass.value},
                 success: function (row) {
                     if(row.msg){
-                        alert("¡Sesion iniciada exitosamente!");    
-                        //document.getElementById("nombreUsuario").innerHTML="¡ Hola "+row.content.nombres+" !";
-                        //$('#modLogin').modal('toggle');
+                        alert("¡Sesion iniciada exitosamente!");   
                         window.location.reload();   
                     }
                     else
@@ -1239,25 +1229,25 @@ function verificarDatos(){
     var error = 0;
     var campo;
     campo = document.getElementById("fnamePerfil");
-    if(campo.value == ""){
+    if(campo.value == ""|| campo.length>50){
         document.getElementById("fnamePerfil").className=document.getElementById("fnamePerfil").className+" error";
         error = 1;
     }
 
     campo = document.getElementById("snamePerfil");
-    if(campo.value == ""){
+    if(campo.value == ""|| campo.length>30){
         document.getElementById("snamePerfil").className=document.getElementById("snamePerfil").className+" error";
         error = 1;
     }
 
     campo = document.getElementById("lnamePerfil");
-    if(campo.value == ""){
+    if(campo.value == ""|| campo.length>30){
         document.getElementById("lnamePerfil").className=document.getElementById("lnamePerfil").className+" error";
         error = 1;
     }
 
     campo = document.getElementById("emailPerfil");
-    if(campo.value == ""){
+    if(campo.value == ""|| campo.length>50){
         document.getElementById("emailPerfil").className=document.getElementById("emailPerfil").className+" error";
         error = 1;
     }
@@ -1268,7 +1258,7 @@ function verificarDatos(){
     }
 
     campo = document.getElementById("telPerfil");
-    if(campo.value == ""){
+    if(campo.value == ""|| campo.length>10|| campo.length<8){
         document.getElementById("telPerfil").className=document.getElementById("telPerfil").className+" error";
         error = 1;
     }
@@ -1279,7 +1269,7 @@ function verificarDatos(){
     }
 
     campo = document.getElementById("pwdPerfil");
-    if(campo.value == ""){
+    if(campo.value == ""|| campo.length>20){
         document.getElementById("pwdPerfil").className=document.getElementById("pwdPerfil").className+" error";
         error = 1;
     }
@@ -1344,6 +1334,8 @@ function verificarDatos(){
                     $("#btnCambiarFoto").toggle();
                     $("#rpwdPerfil").toggle();
                     $("#lblrpwdPerfil").toggle();
+                    
+                    window.location.reload();   
                     document.getElementById("fnamePerfil").disabled=true;
                     document.getElementById("snamePerfil").disabled=true;
                     document.getElementById("lnamePerfil").disabled=true;
@@ -1787,9 +1779,6 @@ function emptyBlockDev(idBlock){
     document.getElementById(idBlock).innerHTML = '<div class="col-lg-12" id="DevRev"><h2>Notas devueltas de revision</h2></div>'
 }
 
-
-/*////////////////////////////////////////*/
-
 function addSection(){
     var name=document.getElementById("sect");
 
@@ -1869,7 +1858,6 @@ function getSeccionesToNavbar(){
             $.each(secciones, function(idx, sect){
 
                 $( ".seccionesNav" ).append(
-                    //"<li id='"+secciones[idx].id+"' class='nav-item active'><a class='nav-link seccionNav' style='color:"+colorSeccion +"!important;' href='main.html'>"+secciones[idx].name+"</a></li>");
                     "<li id='"+secciones[idx].id+"' class='nav-item active "+secciones[idx].color+"'><a class='nav-link seccionNav'" + 
                     "onclick='sendtoSectionPage(" + secciones[idx].id + ")'>"+ secciones[idx].name+ "</a></li>");
               });
@@ -1882,7 +1870,6 @@ function setOrden(){
     var error = false;
     $("ol.allSections li").each(function() {
        
-        //alert("Orden: "+index+"idSeccion: "+id );
         var index = ($( "li" ).index( this ))-8;
         var id = $(this).find(".ordenSec").text();
         $.ajax({
@@ -1954,7 +1941,6 @@ function updateSeccion(){
                 success: function (result) {
                     if(result.msg){
                         alert("¡Sección actualizada!");
-                        //emptyListSeccion();    
                         $('#modChangeN').modal('toggle');
                         emptyListSeccion();    
                     }
@@ -3122,8 +3108,6 @@ function displaySearchResults(palabraT, palabraD, palabraC, fechaInicial, fechaF
         data: {method: 'getSearchResult',tituloB:palabraT,descripB:palabraD,claveB:palabraC,fechaIB:fechaInicial,fechaFB:fechaFinal},
         success: function (noticias) {
             $.each(noticias, function(idx, noti){
-                
-                //alert(noticias[idx].id);
                 $( "#displayNews").append(
                     
                     '<div class="col-md-4"><div class="card searchResult"><img class="card-img-top"' + 

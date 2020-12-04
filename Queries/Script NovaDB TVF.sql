@@ -1,3 +1,10 @@
+
+SET GLOBAL max_allowed_packet= 64000000;
+INSERT INTO Usuario (tipo_Usuario, nombres, apellido_P, apellido_M, telefono, email, contrasena)
+VALUES ('administrador', 'admin', 'admin', 'admin', '00000000', 'admin@gmail.com', 'admin');
+
+/* ---------------------------------------------------     TRIGGERS      -------------------------------------------------------------------- */
+
 DELIMITER //
 CREATE TRIGGER delete_info_noticia
 BEFORE DELETE

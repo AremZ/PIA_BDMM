@@ -92,20 +92,6 @@ div#noticiaBG.row{
     margin-right:2em;
     margin-top:0.5em;
 }
-#option-1 {
-    background-color: rgb(124, 0, 0) !important;
-  }
-  #option-2 {
-    background-color: rgb(0, 65, 0) !important;
-  }
-  
-  #option-3 {
-    background-color: rgb(233, 233, 124) !important;
-  }
-  
-  #option-4 {
-    background-color: rgb(0, 0, 88) !important;
-  }
 
   .btnEdit, .btnDel{
     color: var(--TitleFont);
@@ -117,6 +103,10 @@ div#noticiaBG.row{
  .btnEdit:hover, .btnDel:hover{
     color: var(--TitleFont);
     font-family: 'Oswald', sans-serif !important;
+ }
+ 
+ #saveOrderBtn, .btnAdd{
+  font-family: 'Oswald', sans-serif !important;
  }
 
  @media (max-width: 425px){

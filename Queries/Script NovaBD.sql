@@ -1,5 +1,4 @@
 CREATE DATABASE novaDB;
-
 USE novaDB;
 
 CREATE TABLE usuario(
